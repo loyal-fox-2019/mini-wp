@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mini_WP</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/styling.css">
+    <script src="https://kit.fontawesome.com/171a190a63.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="mainPage">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#" id="logo"><i class="fab fa-wordpress-simple" style="font-size: 30px;margin-right: 7px;"></i>My Sites</a>
+            <i class="far fa-newspasper" style="font-size: 30px;margin-right: 7px;"></i>
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="navbar-brand" href="#" style="color: white;">Reader</a>
+                </li>
+              </ul>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto justify-content-right ">
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="far fa-edit"></i>Write</button>
+                        <a class="nav-link" href="#"><i class="fas fa-user-friends" style="color: white;"></i></a><a class="nav-link" href="#"><i class="far fa-comments" style="color: white;"></i></a>
+                  </ul>
+              </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="sidebar-sticky left-overflow">
+                        <div class="list-group">
+                            <h5>Manage</h5>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-file-alt"></i>Site Pages</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-paper-plane"></i>Blog Posts</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-photo-video"></i>Media</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-comment-dots"></i>Comments</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-list-ol"></i>Feedback</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-plug"></i>Plugins</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-cloud-upload-alt"></i>Import</a>
+                        </div>
+                        <div class="list-group">
+                            <h5>Information</h5>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-eye"></i>View Site</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-chart-bar"></i>Stats</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-history"></i>Activity</a>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-wallet"></i>Plan</a>
+                        </div>
+                        <div class="list-group">
+                            <h5>Personalize</h5>
+                            <a href="#" class="list-group-item list-group-item-action"><i class="far fa-file-alt"></i>Customize</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="container">
+                        <div class="row justify-content-between" id="publish">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link postsAccess" href="#">Published</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link postsAccess" href="#">Draft</a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link postsAccess" href="#">Search</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="row blogs" >
+                            <div class="col-md-8">
+                                <h5>The Journey Begins</h5>
+                                <p>7 minutes ago</p>
+                            </div>
+                            <div class="col-md-2 d-flex ">
+                                <img src="./assets/pics/hack.png" class="img-thumbnail">
+                            </div>
+                            <div class="col-md justify-content-right">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="formUpdate" style="display: none;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Close</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">demit-fox</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Saved</a>
+                </li>
+              </ul>
+              <ul class="form-inline">
+                <button type="button" class="btn btn-outline-dark" id="menu-toggle"><i class="fas fa-wrench" style="font-size: 30px;"></i></button>
+                <button type="button" class="btn btn-light">Preview</button>
+                <button type="button" class="btn btn-danger">Publish</button>
+                </ul>
+            </div>
+          </nav>
+    
+          <div id="wrapper" class="menuDisplayed">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li><a href="#">Status</a></li>
+                    <li><a href="#">Categorized & Tags</a></li>
+                    <li><a href="#">Featured Image</a</li>
+                    <li><a href="#">Sharing</a></li>
+                    <li><a href="#">More Options</a</li>
+                </ul>
+              </div>
+              <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                                replace this
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+    </div>
+    
+    <script src="./ckeditor/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="./index.js"></script>
+    <script>
+        CKEDITOR.replace( 'editor1' );
+    </script>
+</body>
+</html>

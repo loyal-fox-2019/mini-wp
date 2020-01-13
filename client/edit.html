@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Page</title>
+    <link rel="stylesheet" href="./assets/css/bootstrap.css">
+    <link rel="stylesheet" href="./assets/css/styling2.css">
+    <script src="https://kit.fontawesome.com/171a190a63.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div id="formUpdate">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Close</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">demit-fox</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Saved</a>
+                </li>
+              </ul>
+              <ul class="form-inline">
+                <button type="button" class="btn btn-outline-dark" id="menu-toggle"><i class="fas fa-wrench" style="font-size: 30px;"></i></button>
+                <button type="button" class="btn btn-light">Preview</button>
+                <button type="button" class="btn btn-danger">Publish</button>
+                </ul>
+            </div>
+          </nav>
+    
+          <div id="wrapper" class="menuDisplayed">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li><a href="#">Status</a></li>
+                    <li><a href="#">Categorized & Tags</a></li>
+                    <li><a href="#">Featured Image</a</li>
+                    <li><a href="#">Sharing</a></li>
+                    <li><a href="#">More Options</a</li>
+                </ul>
+              </div>
+              <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                                replace this
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+    </div>
+    
+      
+    <script src="./ckeditor/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="./edit.js"></script>
+    <script>
+        CKEDITOR.replace( 'editor1' );
+    </script>
+</body>
+</html>
