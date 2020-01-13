@@ -472,5 +472,8 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# KeyFilename
+KeyFilename.json
+
 # End of https://www.gitignore.io/api/linux,node,visualstudio,dotenv
 n
