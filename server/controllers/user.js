@@ -32,7 +32,6 @@ class UserController {
         // if user doesn't exist server will respond errors
         next({ auth: true, status: 401, message: 'Invalid email or password' });
       } else {
-        console.log('masuk ini?')
         if (compare(password, user.password)) {
           // if the password match then server respond with status 202 and send accessToken to client
           const { _id, email, fullname } = user
