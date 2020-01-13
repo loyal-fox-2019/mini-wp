@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4ad1f9b94b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Mini WP</title>
+  </head>
+  <body>
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-fixed-top navbar-light bg-dark text-light justify-content-between">
+            <a class="navbar-brand"><i class="fab fa-wordpress-simple fa-lg"></i> Mini WP</a>
+            <form class="form-inline">
+              <i class="far fa-user-circle fa-2x" id="user-img"></i>
+              <button class="btn btn-outline-danger my-2 my-sm-0 font-weight-bold" type="submit">Logout</button>
+            </form>
+        </nav>
+
+        <!-- Sidebar -->
+
+    </header>
+
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- SIDEBAR -->
+                <div class="col-md-3" id="sidebar">
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-desktop fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Home</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-chart-bar fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Stats</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-history fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Activity</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-clipboard-list fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Plan</div>
+                    </div>
+                    <div class="dashboard-subtitle">Manage</div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="far fa-file-alt fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Site Pages</div>
+                    </div>
+                    <div class="row dashboard-items active">
+                        <div class="col-2">
+                            <i class="fas fa-align-left fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Blog Posts</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="far fa-image fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Media</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-comments fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Comments</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-shapes fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Feedback</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-plug fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Plugins</div>
+                    </div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-cloud-download-alt fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Import</div>
+                    </div>
+                    <div class="dashboard-subtitle">Personalize</div>
+                    <div class="row dashboard-items">
+                        <div class="col-2">
+                            <i class="fas fa-tools fa-lg dashboard-img"></i>
+                        </div>
+                        <div class="col-10">Import</div>
+                    </div>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="col-md-9" id="content">
+                    <div class="d-flex flex-column">
+                        <div class="row p-2 mt-2 mx-2">
+                            <div class="col-1">
+                                <h4 class="d-inline-block">Title: </h4>
+                            </div>
+                            <div class="col-8">
+                                <input class="d-inline-block" type="text" id="title-box">
+                            </div>
+                            <div class="col-3" style="text-align: end;">
+                                <button class="btn btn-outline-primary my-2 my-sm-0 font-weight-bold" type="submit">Publish</button>
+                            </div>
+                        </div>
+                        <div class="row p-2 mt-1 mx-2">
+                            <div class="col-1">
+                                <h4>Content:</h4>
+                            </div>
+                            <textarea rows="18" cols="80" id="new-blog"></textarea>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
