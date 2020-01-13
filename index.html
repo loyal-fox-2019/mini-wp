@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Mini Wordpress</title>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="sticky font-weight-bold">
+        <nav class="navbar d-flex justify-content-between navbar-expand-lg text-white">
+            <div>
+                <p class="navbar-brand mr-5" href="#"><i class="fab fa-wordpress-simple mr-3"></i>My Sites</p>
+            </div>
+            <button id="nav-btn" class="navbar-toggler border-none" type="button" data-toggle="collapse"
+                data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item mr-3">
+                        <button class="btn btn-light font-weight-bold w-full">
+                            <i class="fas fa-pen mr-2"></i>
+                            Write
+                        </button>
+                    </li>
+                    <li class="nav-item hover:bg-blue-400 rounded-full">
+                        <a class="nav-link hover:text-gray-300" href="#">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:bg-blue-400 rounded-full" href="#">
+                            <i class="fas fa-bell"></i>
+                            Link
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container-fluid">
+
+        <div class="row">
+
+            <!-- SIDEBAR KIRI -->
+            <nav
+                class="col-sm-2 lg:h-screen xl:h-screen md:overflow-auto lg:overflow-auto xl:overflow-auto sticky top-0 py-4">
+                <ul class="nav flex-column text-base font-weight-bold">
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-desktop mr-1"></i>
+                            View Site
+                        </a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-chart-bar mr-1"></i>
+                            Stats
+                        </a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-history mr-1"></i>
+                            Activity
+                        </a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-credit-card ml-1"></i>
+                            Plan
+                        </a>
+                    </li>
+                    <li class="py-3">
+                        <p class="" href="#">Site Pages</p>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-image ml-1"></i>
+                            Site Pages
+                        </a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Blog Posts</a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Media</a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Comments</a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Feedback</a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Plugins</a>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Import</a>
+                    </li>
+                    <li class="py-3">
+                        <p class="" href="#">Personalize</p>
+                    </li>
+                    <li class="nav-item hover:bg-gray-500">
+                        <a class="nav-link" href="#">Customize</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- CONTENT KANAN-->
+            <div class="col-sm-10 bg-gray-300">
+                <div class="container flex flex-col bg-white my-5 p-3">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="published-tab" data-toggle="tab" href="#published" role="tab"
+                                aria-controls="published" aria-selected="true">
+                                Published
+                                <span class="badge badge-pill badge-primary" id="published-badge">9</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="draft-tab" data-toggle="tab" href="#draft" role="tab"
+                                aria-controls="draft" aria-selected="false">
+                                Draft
+                                <span class="badge badge-pill badge-primary" id="draft-badge">9</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active p-5" id="published" role="tabpanel"
+                            aria-labelledby="published-tab">
+                        </div>
+                        <div class="tab-pane fade p-5" id="draft" role="tabpanel" aria-labelledby="draft-tab">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+    <script src="scripts/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/2148529d89.js" crossorigin="anonymous"></script>
+    <script src="scripts/bootstrap.js"></script>
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
