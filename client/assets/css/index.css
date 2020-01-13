@@ -1,0 +1,10 @@
+#title-page{
+    font-size: xx-large;
+    font-weight: 500;
+}
+#border-title-page{
+    border: 2px solid #0169C2;
+    border-radius: 10px;
+    background-color: #0169C2;
+    width: 50px;
+}
