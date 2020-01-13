@@ -26,8 +26,16 @@ class ArticleController {
     const { articleId } = req.params;
     const tagsValue = tags.split(',')
     try {
-      const response = await Article.updateOne({ _id: articleId }, { $push: { tags: { $each: tagsValue } } })
-      res.status(200).json({ message: 'Tag(s) added' })
+      const duplicate = await Article.findOne({ _id: articleId })
+      const isDuplicate = tagsValue.filter(function (tag, i) {
+        return duplicate.tags.indexOf(tag) == -1
+      })
+      if (isDuplicate.length === 0) {
+        next({ auth: true, status: 400, message: `Your article already contains those tags` });
+      } else {
+        const response = await Article.updateOne({ _id: articleId }, { $push: { tags: { $each: isDuplicate } } })
+        res.status(200).json({ message: 'Tag(s) added' })
+      }
     } catch (err) {
       next(err);
     }
