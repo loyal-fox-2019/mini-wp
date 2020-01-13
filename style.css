@@ -1,0 +1,16 @@
+.dashboard, .content, .utama {
+    height: 100vh;
+}
+
+.scrollIt{
+    overflow: scroll;
+}
+
+.navbar{
+    /* background-color: ; */
+}
+
+.profilePicture{
+    width: 40px;
+    height: 30px;
+}
