@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Mini WP</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="assets/package/bootstrap-4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/package/fontawesome-free-5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/package/bootstrap-select-1.13.9/dist/css/bootstrap-select.min.css">
+  <!-- Custom styles for this template -->
+  <link href="assets/css/sidebar.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/index.css">
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <header>
+      <div class="bg-light border-right position-sticky" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom">Mini WP</div>
+        <div class="mt-2 mb-3" id="sidebar-profile">
+          <img src="http://via.placeholder.com/100" class="mx-auto d-block" id="sidebar-image" alt="image-profile">
+          <h2 class="mx-auto pt-1" id="sidebar-name">Ahmad muzakki</h2>
+        </div>
+        <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard <i class="icon-nav fas fa-chart-bar p-1"></i> </a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">New post<i class="icon-nav fas fa-plus p-1"></i></a>
+          <a href="#" class="list-group-item list-group-item-action bg-light">Post <i class="icon-nav fas fa-pencil-alt p-1"></i> </a>
+        </div>
+      </div>
+    </header>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <main>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+          <button class="btn text-muted" id="menu-toggle"> <i class="fas fa-list"></i> </button>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user"></i> 
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="#">Logout</a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="container-fluid">
+          <div class="mt-4 ">
+            <h1 class="float-left mr-4" id="title-page">Add Post </h1>
+            <button class="btn btn-sm btn-outline-primary float-left mt-1" style="margin-top: 10px;">List Post</button>
+          </div>
+          <div style="clear: both;"></div>
+          <div id="border-title-page"></div>
+          <div class="mt-3" id="main-page">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <ul>
+                            <li style="list-style-type: cjk-ideographic;">
+                                <style>
+                                    #titlePost[value] {
+                                        font-size: xx-large;
+                                        font-weight: 600;
+                                        font-family: cursive;
+                                    }
+                                    #titlePost{
+                                        border: none;
+                                    }
+                                </style>
+                                <input class="form-control form-control-lg" type="text" placeholder="Title post" id="titlePost" value="">
+                            </li>
+                            <li class="mt-3" style="list-style-type: none;">
+                              <textarea name="articlePost" id="articlePost" rows="10" cols="80">
+                              </textarea>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                           <p><span class="fas fa-cogs fa-lg"></span> Post Settings</p>
+                           <div class="form-group">
+                              <label for="exampleInputEmail1">Categories</label>
+                              <select class="selectpicker" id="categorysPost" multiple data-size="5" data-live-search="true">
+                                <option>JS</option>
+                                <option>HTML</option>
+                                <option>CSS</option>
+                              </select>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+    <!-- /#page-content-wrapper -->
+    <footer style="position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 35px;
+    width: 100%;">
+        <aside style="
+            padding: 10px;
+            text-align: center;
+        ">
+            site design / logo © 2020 Dzakki Inc;
+        </aside>
+    </footer>
+  </div>
+  <!-- /#wrapper -->
+
+  <script src="assets/package/jquery/jquery.min.js"></script>
+  <script src="assets/package/bootstrap-4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/package/ckeditor/ckeditor.js"></script>
+  <script src="assets/package/bootstrap-select-1.13.9/dist/js/bootstrap-select.min.js"></script>
+  <!-- Menu Toggle Script -->
+  <script>
+    CKEDITOR.replace( 'articlePost' );
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass(["toggled"]);
+      $('#categorysPost').selectpicker();
+    });
+  </script>
+
+</body>
+
+</html>
