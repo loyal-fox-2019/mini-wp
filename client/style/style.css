@@ -1,0 +1,62 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ /* 
+    font-color-dark = #636e72
+    fonnt-color-dark2 = #2d3436
+    font-color-light = #dfe6e9
+    font-color-light2 = #b2bec3 
+ */
+#logo {
+    height: 50px;
+    padding: 10px;
+}
+
+.sidebar .sidebar-sticky h6 {
+    text-transform: uppercase;
+}
+
+.navbar a:link {
+    color: #dfe6e9;
+}
+.navbar a:hover {
+    color: #b2bec3 ;
+}
+
+.navbar {
+    color: #dfe6e9;
+    background-color: #205f9e;
+}
+.nav a:link {
+    color: #2d3436;   
+}
+
+.nav{
+    list-style: none;
+}
+
+.nav-link {
+    display: block;
+    padding: .5rem 1rem;
+}
+
+/* .sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+} */
+
+.sidebar-sticky {
+    position: sticky;
+    top: 48px;
+    height: calc(100vh - 48px);
+    padding-top: .5em;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
