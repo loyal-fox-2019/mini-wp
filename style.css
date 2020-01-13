@@ -1,0 +1,52 @@
+.navbar {
+    height: 50px;
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+.content {
+    width: 95vw;
+    display: flex;
+    align-items: stretch; 
+}
+
+.main {       
+    overflow-y: auto;
+    height: calc(100vh - 50px);
+    padding-top: 25px;
+    padding-left: 25px;
+    line-height: 25px;
+}
+
+.side-bar {
+    background: rgb(68, 116, 248);
+    height: calc(100vh - 50px);
+    position: sticky;   
+    overflow-y: auto;
+}
+
+.side-bar ul li {
+    list-style-type: none;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+.side-bar ul li.list-heading {
+    padding-left: 0px !important;
+}
+
+.side-bar ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.side-bar ul li a:hover {
+    color: black;
+    transition-duration: 500ms;
+}
+
+.side-bar ul li.active a {
+    color: rgb(0, 0, 168);
+}
