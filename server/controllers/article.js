@@ -53,7 +53,7 @@ class ArticleController {
 
   static async getArticles(req, res, next) {
     try {
-      const response = await Article.find().sort({ createdAt: -1 }).select('title _id tags featured_image').populate({ path: 'author', select: '-password -_id -email' })
+      const response = await Article.find().sort({ createdAt: -1 }).select('title _id tags featured_image createdAt').populate({ path: 'author', select: '-password -_id -email' })
       res.status(200).json(response);
     } catch(err) {
       next(err);
@@ -63,7 +63,7 @@ class ArticleController {
   static async searchArticles(req, res, next) {
     const { title, f } = req.query;
     try {
-      const response = await Article.find({ title: { $regex: title, $options: 'i' }, tags: { $regex: f, $options: 'i' } }).sort({ createdAt: -1 }).select('title _id tags').populate({ path: 'author', select: '-password -_id -email' })
+      const response = await Article.find({ title: { $regex: title, $options: 'i' }, tags: { $regex: f, $options: 'i' } }).sort({ createdAt: -1 }).select('title _id tags featured_image createdAt').populate({ path: 'author', select: '-password -_id -email' })
       res.status(200).json(response);
     } catch (err) {
       next(err);

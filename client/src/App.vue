@@ -8,7 +8,7 @@
     @signupattempt="singupAttempt"
     @loginattempt="loginAttempt"
     v-show="page === 'signin'" @googlelogin="google"></loginpage>
-    <articles v-show="page === 'articles'" :loading="loading"></articles>
+    <articles :page="page" class="mt-3" v-show="page === 'articles'" :loading="loading"></articles>
   </div>
 </template>
 
@@ -26,7 +26,6 @@ export default {
       message: 'Hello world',
       isLogin: false,
       fullname: null,
-      newestArticles: [],
       loading: false,
     };
   },
@@ -118,19 +117,12 @@ export default {
         this.fullname = localStorage.getItem('fullname')
         this.isLogin = true;
         this.page = 'home'
-        this.fetchData();
       } else {
         this.isLogin = false;
         this.page = 'home'
       }
     },
-    fetchData() {
-      this.loading = true
-    },
     changePage(value) {
-      if (value === 'articles') {
-        this.fetchData();
-      }
       this.pageController(value);
     },
     pageController(value) {
@@ -197,7 +189,6 @@ export default {
     }
   },
   mounted() {
-    console.log('Checking...')
     this.checkLogin();
   },
 };
