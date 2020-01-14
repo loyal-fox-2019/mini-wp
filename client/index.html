@@ -109,10 +109,10 @@
                     {{ post.title }}
                   </h5>
                   <div class="d-flex flex-row-reverse bd-highlight">
-                    <button type="button" class="btn btn-primary trash">
+                    <button v-on:click="deleteData(post);" type="button" class="btn btn-primary trash">
                       <i class="fas fa-trash-alt"></i>
                     </button>
-                    <button type="button" class="btn btn-primary edit">
+                    <button v-on:click="viewOne(post);" type="button" class="btn btn-primary edit">
                       <i class="fas fa-pen"></i>
                     </button>
                   </div>
@@ -133,6 +133,8 @@
                   placeholder="Title Post"
                   aria-label="Input group example"
                   aria-describedby="btnGroupAddon"
+                  id="inputTitle"
+                  v-model="currPost.title"
                 />
               </div>
               <br />
@@ -143,13 +145,13 @@
               </div>
               <br />
               <div class="d-flex flex-row-reverse bd-highlight">
-                <button v-on:click="saveData();" type="submit" class="btn btn-primary" id="save">
-                  Save!
+                <button v-on:click="updateData();" type="submit" class="btn btn-primary" id="update">
+                  Edit!
                 </button>
               </div>
             </div>
           </div>
-  
+          
           <div v-if="state === 1" class="form col-sm-5">
             <div class="container">
               <div class="input-group">
@@ -157,6 +159,7 @@
                   <div class="input-group-text" id="btnGroupAddon">Title</div>
                 </div>
                 <input
+                  v-model="newTitle"
                   type="text"
                   class="form-control"
                   placeholder="Title Post"
@@ -180,6 +183,8 @@
           </div>
         </div>
       </main>
+
+      
   
       <footer class="footer mt-3 border-top">
         <div class="container text-center">

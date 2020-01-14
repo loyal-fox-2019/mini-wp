@@ -9,7 +9,6 @@ const articleSchema = new Schema(
     },
     content: {
       type: String,
-      required: true,
       default: ''
     }
   },
