@@ -144,3 +144,15 @@
             text-align: center;
             margin: 0;
         }
+
+        #cust-post-search {
+            margin-top: 5px;
+        }
+
+        .cust-post-search-bar {
+            width: 25vw!important;
+        }
+
+        #articleSearch {
+            font-family:Arial, FontAwesome
+        }

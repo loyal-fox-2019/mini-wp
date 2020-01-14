@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/12d44f92ab.js" crossorigin="anonymous"></script>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
+
+    <title>Mini-WP</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- Start of App Div -->
+        <!-- Start of NavBar -->
+        <nav class="navbar navbar-expand-md navbar-fixed-top navbar-dark bg-dark main-nav web-nav">
+            <div class="left-nav navbar-brand" id="first-left-nav">
+                <a class="navbar-brand text-warning" href='#'><img id="web-logo" src="./images/logo.png"
+                        alt="Logo Here"> My
+                    Sites</a>
+            </div>
+            <div class="left-nav">
+                <a class="nav-link text-warning" id="reader-link" href="#"><i class="far fa-newspaper"></i> Reader</a>
+            </div>
+            <ul class="nav navbar-nav mx-auto text-warning">
+                <li>Website Name</li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li class="nav-item right-nav">
+                    <button type="button nav-link" class="write" v-on:click="viewAdd" id="write-button"><i class="far fa-edit"></i>
+                        write</button>
+                </li>
+                <li class="nav-item right-nav">
+                    <a class="nav-link text-warning" href="#"><i class="fas fa-user-circle nav-fas"></i></a>
+                </li>
+                <li class="nav-item right-nav">
+                    <a class="nav-link text-warning" href="#"><i class="far fa-comments nav-fas"></i></a>
+                </li>
+            </ul>
+        </nav>
+        <!-- End of NavBar -->
+        <!-- Start of Main Container -->
+        <div class="container-fluid custom-main-content">
+            <div class="row">
+                <!-- SideBar -->
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky custom-sidebar">
+                        <div class="row page-detail-row" id="page-details">
+                            <div class="col-sm-3 cust-page-details">
+                                <img src="./images/image-placeholder.png">
+                            </div>
+                            <div class="col-sm cust-page-details">
+                                <h4>Website Name</h4>
+                                <p>View (domain name)</p>
+                                <button id="page-details-button">Private</button>
+                            </div>
+                        </div>
+                        <ul class="nav flex-column custom-main-sidebar custom-sidebar-items">
+                            <li class="nav-item">
+                                <div class="row custom-nav-row">
+                                    <div class="col-sm">
+                                        <a class="nav-link active custom-nav-li" href="#">
+                                            <i class="fas fa-home"></i> My Home
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row">
+                                    <div class="col-sm">
+                                        <a class="nav-link active custom-nav-li" href="#">
+                                            <i class="fas fa-chart-line"></i> Stats
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row">
+                                    <div class="col-sm">
+                                        <a class="nav-link active custom-nav-li" href="#">
+                                            <i class="fas fa-money-bill-wave"></i> Plan
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row" id="site-dropdown-1">
+                                    <div class="col-sm-10 custom-nav-label">
+                                        <i class="fas fa-pencil-alt"></i> Site
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="nav-link active custom-nav-li-dropdown" href="#">
+                                            <i class="fas fa-chevron-down" id="dropdown-1-link"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-1">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Pages</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-1">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#" v-on:click="viewPosts" id="posts-button">Posts</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-1">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Media</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-1">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Comments</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-1">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Feedback</a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row" id="site-dropdown-2">
+                                    <div class="col-sm-10 custom-nav-label">
+                                        <i class="fas fa-paint-brush"></i> Design
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="nav-link active custom-nav-li-dropdown" href="#">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-2">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Customize</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-2">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Themes</a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row" id="site-dropdown-3">
+                                    <div class="col-sm-10 custom-nav-label">
+                                        <i class="fas fa-tools"></i> Tools
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="nav-link active custom-nav-li-dropdown" href="#">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Plugins</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Import</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">export</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Marketin</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Earn</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-3">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Activity</a>
+                            </li>
+                            <li class="nav-item">
+                                <div class="row custom-nav-row" id="site-dropdown-4">
+                                    <div class="col-sm-10 custom-nav-label">
+                                        <i class="fas fa-cogs"></i> Manage
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <a class="nav-link active custom-nav-li-dropdown" href="#">
+                                            <i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-4">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Hosting Configuration</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-4">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Domains</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-4">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">People</a>
+                            </li>
+                            <li class="nav-item cust-dropdown cust-dropdown-4">
+                                <a class="nav-link active custom-nav-li-dropdown" href="#">Settings</a>
+                            </li>
+                        </ul>
+                        <div class="side-add-button">
+                            <a class="nav-link active custom-nav-li side-add-button" href="#">
+                                <i class="fas fa-plus-circle"></i> Add new site
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+                <!-- End of SideBar -->
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 custom-main">
+
+                    <!-- Start of Main Content-Articles -->
+                    <div class="main-content-article" v-if="posts">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h1>Posts</h1>
+                            </div>
+                            <div class="col-sm-6" id="cust-post-search">
+                                <form class="form-inline my-2 my-lg-0">
+                                    <input class="form-control mr-sm-2 cust-post-search-bar" v-model="articleSearch"
+                                        v-on:keyup="searchArticle" type="text" id="articleSearch"
+                                        placeholder="&#xF002; Search" aria-label="Search">
+                                </form>
+                            </div>
+                        </div>
+
+                        <hr class="main-content-article-hr">
+
+                        <div class="row">
+                            <div class="col-sm-6" v-for="article in articles">
+                                <div class="card mb-3 article-card">
+                                    <img v-bind:src="article.image_url" class="card-img-top article-image" alt="...">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5 class="card-title">{{article.title}}</h5>
+                                            </div>
+                                            <div class="col-sm d-flex justify-content-end">
+                                                <button type="button" class="btn btn-outline-warning" v-on:click="viewEdit(article._id)"><i class="fas fa-edit"></i></button>
+                                            </div>
+                                        </div>
+                                        
+                                        <p class="card-text">{{article.content}}</p>
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <p class="card-text"><small class="text-muted">{{article.created_at}}</small>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm d-flex justify-content-end">
+                                                <button type="button" class="btn btn-outline-danger" v-on:click="deleteArticle(article._id)"><i class="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Main Content-Articles -->
+                    <!-- Start of add an Article -->
+                    <div v-if="addPart">
+                    <h1 v-if="updateArticle">Edit an Article</h1>
+                    <h1 v-else>Add an Article</h1>
+                    <hr class="main-content-article-hr">
+                    <div class="add-an-article-section col-sm-6">
+                        <form>
+                            <div class="form-group">
+                                <label for="articleTitle">Title:</label>
+                                <input type="text" class="form-control" id="articleTitle" v-model="addTitle">
+                            </div>
+                            <div class="form-group">
+                                <label for="articleImage">Image Url:</label>
+                                <input type="text" class="form-control" id="articleImage" v-model="addImage">
+                            </div>
+                            <div class="form-group">
+                                <label for="articleContent">Article:</label>
+                                <textarea type="text" class="form-control" id="articleContent"
+                                    v-model="addContent"></textarea>
+                            </div>
+                            <div v-if="updateArticle">
+                                <button type="button" class="btn btn-warning" v-on:click="editArticle">Edit
+                                    Article</button>
+                            </div>
+                            <div v-else>
+                                <button type="button" class="btn btn-warning" v-on:click="addArticle">Submit
+                                    Article</button>
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+                    <!-- End of Add an Article -->
+                </main>
+            </div>
+            <!-- End of Main Container -->
+
+            <footer class="bg-dark">
+                <h4 id="cust-footer">This is a MockUp page designed by: Okka Linardi</h4>
+            </footer>
+
+
+        </div>
+    </div> <!-- End of App Div -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./script/jquery-3.4.1.min.js"></script>
+    <script src="./script/bootstrap.min.js"></script>
+
+    <script src="./script/script.js"></script>
+</body>
+
+</html>
