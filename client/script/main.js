@@ -14,13 +14,9 @@ const app = new Vue({
     },
     computed: {
         filterArticle() {
-            if (this.search.length > 0) {
-                const regex = new RegExp(this.search, "i")
-                const filterd = this.dataArticles.filter(article => { return regex.test(article.title) })
-                return filterd
-            } else {
-                return this.dataArticles
-            }
+            return this.dataArticles.filter(article => {
+                return article.title.toLowerCase().includes(this.search.toLowerCase())
+            })
         }
     },
     methods: {
