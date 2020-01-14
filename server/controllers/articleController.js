@@ -47,6 +47,26 @@ class ArticleController {
                 })
             })
     }
+
+    static editArticle(req, res, next){
+        let id = req.params.id
+        let data = {
+            title: req.body.title,
+            content: req.body.content
+        }
+        Article.updateOne({_id: id}, data)
+            .then(result => {
+                res.status(200).json({
+                    message: 'Data updated',
+                    result
+                })
+            })
+            .catch(err => {
+                res.status(404).json({
+                    message: 'Data not found!'
+                })
+            })
+    }
 }
 
 module.exports = ArticleController
