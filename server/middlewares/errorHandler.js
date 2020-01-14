@@ -1,6 +1,6 @@
 
 function errorHandler(err, req, res, next) {
-   console.log(Object.keys(err.errors))
+   console.log(Object.keys(err))
    console.log(err)
 
    const errorCode = err.errorCode || 500
@@ -8,3 +8,5 @@ function errorHandler(err, req, res, next) {
 
    res.status(errorCode).json(message)
 }
+
+module.exports = errorHandler
