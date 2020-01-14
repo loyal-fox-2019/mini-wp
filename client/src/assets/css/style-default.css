@@ -1171,6 +1171,9 @@ main.posts-listing .post-footer {
   font-size: 0.8em;
 }
 
+.widget.search {
+  width: 100%;
+}
 .widget.search .form-group {
   position: relative;
 }

@@ -107,9 +107,9 @@ Website: http://thevectorlab.net/
 */
 
 /* Import fonts */
-@import url(
+/* @import url(
   //fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic
-);
+); */
 
 body {
   color: #797979;
@@ -806,7 +806,7 @@ ul.top-menu > li > a:focus {
 }
 
 .log-arrow-up {
-  background: url("../img/arrow-up.png") no-repeat;
+  /* background: url("../img/arrow-up.png") no-repeat; */
   width: 20px;
   height: 11px;
   position: absolute;
@@ -860,7 +860,7 @@ ul.top-menu > li > a:focus {
   transition: all 0.3s ease;
   border: 1px solid #fff;
   box-shadow: none;
-  background: url("../img/search-icon.png") no-repeat 10px 10px;
+  /* background: url("../img/search-icon.png") no-repeat 10px 10px; */
   padding: 0 5px 0 35px;
   color: #000;
 }
@@ -1140,7 +1140,7 @@ ul.top-menu > li > a:focus {
 /**/
 
 .card-body.chart-texture {
-  background: url("../img/chart-texture.jpg");
+  /* background: url("../img/chart-texture.jpg"); */
   -webkit-border-radius: 4px 4px 0px 0px;
   border-radius: 4px 4px 0px 0px;
 }
@@ -1742,7 +1742,7 @@ ul.ft-link li a i {
 
 .owl-buttons .owl-prev {
   text-indent: -9999px;
-  background: url("../img/left-arrow.png") no-repeat;
+  /* background: url("../img/left-arrow.png") no-repeat; */
   width: 6px;
   height: 10px;
   display: inline-block;
@@ -1750,7 +1750,7 @@ ul.ft-link li a i {
 
 .owl-buttons .owl-next {
   text-indent: -9999px;
-  background: url("../img/right-arrow.png") no-repeat;
+  /* background: url("../img/right-arrow.png") no-repeat; */
   width: 6px;
   height: 10px;
   display: inline-block;
@@ -2508,7 +2508,7 @@ ul.inbox-pagination li {
 }
 
 .error-wrapper .icon-404 {
-  background: url("../img/404_icon.png") no-repeat;
+  /* background: url("../img/404_icon.png") no-repeat; */
   width: 289px;
   height: 274px;
   display: inline-block;
@@ -2556,7 +2556,7 @@ ul.inbox-pagination li {
 }
 
 .error-wrapper .icon-500 {
-  background: url("../img/500_icon.png") no-repeat;
+  /* background: url("../img/500_icon.png") no-repeat; */
   width: 289px;
   height: 274px;
   display: inline-block;
@@ -3431,7 +3431,7 @@ input.spinner[type="url"],
 input.spinner[type="search"],
 input.spinner[type="tel"],
 input.spinner[type="color"] {
-  background: url("../img/input-spinner.gif") right no-repeat !important;
+  /* background: url("../img/input-spinner.gif") right no-repeat !important; */
 }
 
 /*form validation*/
@@ -3838,7 +3838,7 @@ table.sliders tr td {
 .has-js .label_radio {
   padding-left: 34px;
 }
-
+/* 
 .has-js .label_radio {
   background: url(../img/checkbox/radio-off.png) no-repeat;
 }
@@ -3853,7 +3853,7 @@ table.sliders tr td {
 
 .has-js label.r_on {
   background: url(../img/checkbox/radio-on.png) no-repeat;
-}
+} */
 
 .has-js .label_check input,
 .has-js .label_radio input {
@@ -4439,7 +4439,7 @@ span.customSelect.changed {
   background-color: #fff;
 }
 .customSelectInner {
-  background: url(../img/customSelect-arrow.gif) no-repeat center right;
+  /* background: url(../img/customSelect-arrow.gif) no-repeat center right; */
 }
 
 /*boxed page */
@@ -4923,7 +4923,7 @@ tr.odd.gradeU td.sorting_1 {
 /*lock screen*/
 
 .lock-screen {
-  background: #02bac6 url("../img/lock-bg.jpg");
+  /* background: #02bac6 url("../img/lock-bg.jpg"); */
   background-size: cover;
   background-repeat: repeat;
 }
@@ -5682,7 +5682,7 @@ tr.odd.gradeU td.sorting_1 {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   box-shadow: none;
-  background: #01a6b2 url("../img/chat-search.png") no-repeat 12px 9px;
+  /* background: #01a6b2 url("../img/chat-search.png") no-repeat 12px 9px; */
   padding: 0 5px 0 35px;
   margin-top: 2px;
   border: none;
@@ -6228,7 +6228,7 @@ a.guest-on i {
 }
 
 .mega-bg {
-  background-image: url("../img/mega-menu/corner_image.jpg");
+  /* background-image: url("../img/mega-menu/corner_image.jpg"); */
   background-repeat: no-repeat;
   background-position: bottom right;
   position: absolute;
@@ -6562,7 +6562,7 @@ header.blue-bg .search {
   transition: all 0.3s ease;
   border: 1px solid #fff;
   box-shadow: none;
-  background: url("../img/search-icon-white.png") no-repeat 10px 8px;
+  /* background: url("../img/search-icon-white.png") no-repeat 10px 8px; */
   padding: 0 5px 0 35px;
   color: #000;
 }

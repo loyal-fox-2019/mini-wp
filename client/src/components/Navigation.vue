@@ -27,9 +27,9 @@
           <!-- Navbar Menu -->
           <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a href="#" class="nav-link">Home</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click="hideDetail">Home</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link">Add Post</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click="showAdd">Add Post</a>
               </li>
               <li class="nav-item"><a href="#" class="nav-link" @click="logout">Log Out</a>
               </li>
@@ -47,6 +47,12 @@ export default {
   methods: {
     logout() {
       this.$emit('logout')
+    },
+    hideDetail() {
+      this.$emit('hide-detail')
+    },
+    showAdd() {
+      this.$emit('show-add')
     }
   }
 }
