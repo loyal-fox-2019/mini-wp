@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Blog Post</title>
+    <style>
+        body {
+            line-height: 1.5;
+        }
+
+        header .bg-wordpress {
+            background: #006088;
+        }
+
+        header .navbar-brand {
+            padding: 12px 7px;
+            background: #002c40;
+        }
+
+        header .collapse {
+            font-size: 18px;
+        }
+
+        .responseVertical {
+            overflow-y: auto;
+            height: 625px;
+        }
+
+        .responseVertical #v-list-tab a {
+            color: black;
+        }
+
+        .responseVertical a:hover {
+            background-color: #ccc;
+        }
+
+        .responseVertical a:active {
+            background-color: #c5d9ed;
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 0;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: #c5d9ed;
+        }
+
+        .nav {
+            background: white;
+        }
+
+        .navPages {
+            position: relative;
+            width: 100%;
+            padding: 0;
+            margin: 0 0 17px;
+        }
+
+        #col-left {
+            padding: 0;
+        }
+
+        .content header h4 {
+            margin: 0 0 16px;
+        }
+
+        .section-header.card {
+            display: flex;
+            flex-direction: row;
+            line-height: 28px;
+            padding: 11px 11px 11px;
+            position: relative;
+        }
+
+        .sectionHeaderLabel {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sectionHeaderAction .btn {
+            font-size: 12px;
+            border-radius: 0;
+            background-color: #c9356e;
+        }
+
+        .page {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .card.is-compact {
+            padding: 16px;
+        }
+
+        .pageMain {
+            flex-grow: 1;
+        }
+
+        .pageMain .pageTitle {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .pageJudulItem {
+            vertical-align: middle;
+            padding: 2px 10px;
+        }
+
+        .pageCardInfo {
+            margin: 5px;
+            font-size: 12px;
+            color: #646970;
+        }
+
+        .pageCardInfo img {
+            height: 13px;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- START NAVBAR -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-wordpress p-0">
+            <a class="navbar-brand fab fa-wordpress-simple"> My Site</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link fab fa-readme" href="#"> Reader</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="right-nav">
+                <button type="button" class="btn btn-light far fa-edit"> Write</button>
+                <a href="">
+                    <img src="http://via.placeholder.com/75x75" alt="..." class="rounded-circle"
+                        style="height: 25px; padding-right: 30px; padding-left: 30px;">
+                </a>
+                <a href="">
+                    <img src="https://www.iconsdb.com/icons/preview/white/bell-xxl.png" alt="" srcset=""
+                        style="height: 25px; padding-right: 30px;">
+                </a>
+            </div>
+        </nav>
+    </header>
+    <!-- END NAVBAR -->
+
+    <!-- START CONTENT AND NAVIGATION LEFT -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 bg-white responseVertical" id="col-left">
+                <div class=" nav flex-column nav-pills" id="v-list-tab" role="tablist" aria-orientation="vertical">
+                    <p style="padding: .5rem 1rem;">manage</p>
+                    <a class="nav-link active" id="sitePages-tab" data-toggle="pill" href="#sitePages" role="tab"
+                        aria-controls="sitePages" aria-selected="true">Site Pages</a>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                        aria-controls="v-pills-profile" aria-selected="false">Blog Posts</a>
+                    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                        aria-controls="v-pills-messages" aria-selected="false">Media</a>
+                </div>
+            </div>
+
+            <div class="col-10 bg-light responseVertical">
+                <div class="tab-pane fade show active" id="sitePages" role="tabpanel" aria-labelledby="sitePages-tab">
+                    <main class="content p-5">
+                        <header>
+                            <h4>Pages</h4>
+                        </header>
+                        <div class="navPages">
+                            <div class="box border">
+                                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="pills-published-tab" data-toggle="pill" href="# "
+                                            role="tab" aria-controls="pills-published"
+                                            aria-selected="true">Published</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-draft-tab" data-toggle="pill" href="#pills-draft"
+                                            role="tab" aria-controls="pills-draft" aria-selected="false">Drafts</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-draft-tab" data-toggle="pill" href="#pills-draft"
+                                            role="tab" aria-controls="pills-draft" aria-selected="false">Scheduled</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-draft-tab" data-toggle="pill" href="#pills-draft"
+                                            role="tab" aria-controls="pills-draft" aria-selected="false">Trashed</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="contentPages" id="pills-published">
+                            <div class="box border">
+                                <div id="pages" class="pagesList">
+                                    <div class="card section-header is-compact">
+                                        <div class="sectionHeaderLabel">
+                                            <span>Pages</span>
+                                        </div>
+                                        <div class="button sectionHeaderAction">
+                                            <a class="btn btn-danger" href="#">Add New Page</a>
+                                        </div>
+                                    </div>
+                                    <div class="card page is-compact">
+                                        <div class="pageMain">
+                                            <a class="pageTitle" href="">Home</a>
+                                            <div class="pageCardInfo">
+                                                <div>
+                                                    <span class="pageInfoItem">
+                                                        <img src="https://image.flaticon.com/icons/png/512/37/37663.png"
+                                                            alt="..." class="rounded-circle">
+                                                        <span>
+                                                            infoItem
+                                                        </span>
+
+                                                    </span>
+                                                    <span class="pageJudulItem">
+                                                        <img src="https://wonderfuleastjava.com/wp-content/uploads/2018/03/logo-kantor.png"
+                                                            alt="..." class="rounded-circle">
+                                                        <span>
+                                                            lencana
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </a>
+                                    </div>
+                                    <div class="card page is-compact">
+                                        <div class="pageMain">
+                                            <a class="pageTitle" href="">Blog Feed</a>
+                                            <div class="pageCardInfo">
+                                                <div>
+                                                    <span class="pageInfoItem">
+                                                        <img src="https://image.flaticon.com/icons/png/512/37/37663.png"
+                                                            alt="..." class="rounded-circle">
+                                                        <span>
+                                                            infoItem
+                                                        </span>
+
+                                                    </span>
+                                                    <span class="pageJudulItem">
+                                                        <img src="https://wonderfuleastjava.com/wp-content/uploads/2018/03/logo-kantor.png"
+                                                            alt="..." class="rounded-circle">
+                                                        <span>
+                                                            lencana
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentPages" id="pills-draft">
+                            <div class="box border">
+                                <div id="pages" class="pagesList">
+
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Sunt amet incidunt impedit nobis sequi ad similique natus eveniet ipsa, id fuga voluptates et,
+                    perferendis nihil alias porro. Nihil, recusandae doloremque.</div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Sunt amet incidunt impedit nobis sequi ad similique natus eveniet ipsa, id fuga voluptates et,
+                    perferendis nihil alias porro. Nihil, recusandae doloremque.</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- END CONTENT AND NAVIGATION LEFT -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src=" https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/9c97b4f45c.js" crossorigin="anonymous"></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+</body>
+
+</html>
