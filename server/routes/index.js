@@ -3,6 +3,6 @@
 const routes = require('express').Router()
 const articleRouter = require('./article')
 
-routes.use('/article', articleRouter)
+routes.use('/articles', articleRouter)
 
 module.exports = routes

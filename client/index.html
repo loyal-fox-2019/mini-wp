@@ -105,9 +105,9 @@
                                             </div>
                                             <form>
                                                 <div class="modal-body">
-                                                    <input v-model="title" name="title" class="form-control" type="text"
+                                                    <input v-model="title" class="form-control" type="text"
                                                         placeholder="Title">
-                                                    <textarea v-model="content" name="content" class="form-control"
+                                                    <textarea v-model="content" class="form-control"
                                                         id="demoTranslations" rows="15"></textarea>
                                                 </div>
                                                 <div class="modal-footer">
@@ -122,8 +122,9 @@
                                     </div>
                                 </div>
                                 <!-- END Modal Add Article -->
-                                <div v-for="article in dataArticles" class="card post is-compact">
-                                    <div v-if="!search" class="postMain">
+                                <div v-for="article in filterArticle" class="card post is-compact">
+                                    <!-- <div v-if="!search" class="postMain"> -->
+                                    <div class="postMain">
                                         <a class="postTitle" href="">{{article.title}}</a>
                                         <div class="postCardInfo">
                                             <span class="postInfoItem">
@@ -133,22 +134,46 @@
                                                     {{article.createdAt}}
                                                 </span>
                                             </span>
-                                            <button type="button" class="btn btn-secondary">Update</button>
-                                            <button type="button" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                    <div v-else-if="article.title.includes(search)" class="postMain">
-                                        <a class="postTitle" href="">{{article.title}}</a>
-                                        <div class="postCardInfo">
-                                            <span class="postInfoItem">
-                                                <img src="https://image.flaticon.com/icons/png/512/37/37663.png"
-                                                    alt="..." class="rounded-circle">
-                                                <span>
-                                                    {{article.createdAt}}
-                                                </span>
-                                            </span>
-                                            <button type="button" class="btn btn-secondary">Update</button>
-                                            <button type="button" class="btn btn-danger">Delete</button>
+                                            <button v-on:click.prevent="findArticle(article._id)" type="button"
+                                                class="btn btn-secondary" data-toggle="modal"
+                                                data-target="#editArticleModal">Update</button>
+
+                                            <!-- START Modal EDIT Article -->
+                                            <div class="modal fade bd-example-modal-lg" id="editArticleModal"
+                                                tabindex="-1" role="dialog" aria-labelledby="editArticleModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editArticleModalLabel">Edit
+                                                                Article</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form>
+                                                            <div class="modal-body">
+                                                                <input v-model="title" class="form-control" type="text">
+                                                                <textarea v-model="content" class="form-control"
+                                                                    rows="15"></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button @click="emptyFormEdit" type="button"
+                                                                    class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button v-on:click.prevent="updateArticle(id)"
+                                                                    class="btn btn-primary" data-dismiss="modal">Edit
+                                                                    Article</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END Modal EDIT Article -->
+
+                                            <button v-on:click.prevent="deleteArticle(article._id)" type="button"
+                                                class="btn btn-danger">Delete</button>
                                         </div>
                                     </div>
                                 </div>
