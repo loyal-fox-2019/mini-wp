@@ -145,8 +145,14 @@
 }
 /* conainer end */
 
-
+.content-image{
+    width: 200px;
+    height: 200px;
+}
 
 footer{
     background: #a8d0e6;
+}
+.article-title{
+    padding: 0%;
 }

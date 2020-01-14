@@ -1,3 +1,12 @@
+// Vue.transition('custom-fade',{
+//     enterClass:'bounce',
+//     leaveClass:'bounce'
+// })
+
+
+Vue.component('test', {
+    template: '<p>sdbsdsbdsb</p>'
+})
 
 new Vue ({
     el: '#postarea',
@@ -22,7 +31,7 @@ new Vue ({
                 created_at: new Date ()
             })
             .then((data)=>{
-                this.articles.push(data.data)
+                this.articles.unshift(data.data)
                 this.form = false
                 this.postwall = true
 
@@ -42,9 +51,16 @@ new Vue ({
         },
         showform: function() {
             this.form = true
+            this.edit = false
+
+            this.title = ''
+            this.content = ''
+            this.image = ''
         },
         showallpost: function() {
             this.postwall = true
+            this.form = false
+            this.edit = false
         },
         editpost: function (data, index) {
             this.edit = true
