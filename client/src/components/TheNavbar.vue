@@ -1,14 +1,15 @@
 <template>
-  <div >
-    <div class="bg-blue-400">
+  <div class="container fixed top-0 max-w-full">
+    <div class="bg-blue-500">
       <div class="container mx-auto px-4">
         <div class="flex items-center md:justify-between py-4">
           <div class="w-1/4 md:hidden">
             <svg class="fill-current text-white h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"/></svg>
-            <div id="myDropdown" v-if="true" class="absolute bg-blue-400 text-white mt-4 p-4 overflow-auto z-30">
-              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-user fa-fw"></i> Profile</a>
-              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i> Settings</a>
-              <div class="border border-gray-800"></div>
+            <div id="myDropdown" v-if="true" class="absolute bg-blue-500 text-white mt-4 p-4 overflow-auto z-30">
+              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-user fa-fw"></i>Create New Post</a>
+              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>My Posts</a>
+              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>Feeds</a>
+              <div class="border border-white"></div>
               <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
             </div>
           </div>
@@ -29,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="hidden bg-blue-400 md:block md:bg-white md:border-b">
+    <div class="hidden bg-blue-400 md:hidden md:bg-white md:border-b">
       <div class="container mx-auto px-4">
         <div class="md:flex">
           <div class="flex mr-8">

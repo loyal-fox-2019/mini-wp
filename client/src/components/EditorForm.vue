@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-white p-8 w-4/5 mx-auto rounded-lg shadow mt-4">
+  <div class=" bg-white p-8 w-4/5 mx-auto max-w-xl rounded-lg shadow mt-4">
     <div id="preview" class="mt-4">
       <img v-if="url" :src="url" class=" max-w-lg rounded-lg mx-auto" />
     </div>
@@ -7,7 +7,7 @@
       <div>
         <input class="shadow-md border rounded-sm border-gray-200 w-full p-2" placeholder="Title">
       </div>
-      <div class="overflow-auto">
+      <div class="overflow-auto z-0">
         <wysiwyg class="h-full my-4 w-full rounded-sm shadow-md overflow-auto" v-model="content"/>
       </div>
       <div class="mb-4">
