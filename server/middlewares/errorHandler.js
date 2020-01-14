@@ -27,3 +27,5 @@ function errorHandler (err, req, res, next) {
     message
   })
 }
+
+module.exports = errorHandler
