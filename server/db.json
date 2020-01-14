@@ -1,0 +1,24 @@
+{
+  "wordpress": [
+    {
+      "id": 1,
+      "title": "SomeOne",
+      "content": "content"
+    },
+    {
+      "title": "sample",
+      "content": "content",
+      "id": 2
+    },
+    {
+      "title": "sample",
+      "content": "contentNya",
+      "id": 3
+    },
+    {
+      "title": "title",
+      "content": "content",
+      "id": 4
+    }
+  ]
+}
