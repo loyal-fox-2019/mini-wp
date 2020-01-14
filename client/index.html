@@ -202,6 +202,38 @@
                                                         <p>{{ article.content }}</p>
                                                         <span class="small">{{ article.created_at }}</span>
                                                     </div>
+                                                    <div class="action mt-5">
+                                                        <!-- edit form edit -->
+                                                        <button v-on:click="editTitle(article._id)" type="button" data-toggle="modal" class="btn btn-primary btn-sm mr-2" data-target="#editModal">Edit</button>
+                                                        
+                                                        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                  <h5 class="modal-title" id="exampleModalLabel">Update article</h5>
+                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label>Title</label>
+                                                                        <input v-model="editInputTitle" class="form-control" placeholder="Title">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Content</label>
+                                                                        <textarea v-model="editInputContent" class="form-control" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                  <button v-on:click.prevent="clickEditArticle" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        <!-- end of edit form edit -->
+                                                        <button v-on:click="deleteTitle(article._id)" class="btn btn-danger btn-sm">Delete</button>
+                                                    </div>
                                                 </div>
 
                                                 <div v-else-if="(article.title).includes(search)">
@@ -212,6 +244,10 @@
                                                     <div class="page-info">
                                                         <p>{{ article.content }}</p>
                                                         <span class="small">{{ article.created_at }}</span>
+                                                    </div>
+                                                    <div class="action mt-5">
+                                                        <button v-on:click="editTitle(article._id)" class="btn btn-primary">Edit</button>
+                                                        <button v-on:click="deleteTitle(article._id)" class="btn btn-danger">Delete</button>
                                                     </div>
                                                 </div>
                                                 
