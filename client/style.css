@@ -14,8 +14,15 @@
     overflow: auto;
 }
 
+#right-page{
+    height: 100vh;
+    overflow: auto;
+}
+
 #content {
     background-color: rgb(240, 240, 240);
+    height: 100vh;
+    overflow: auto;
 }
 
 .dashboard-img {
@@ -51,25 +58,16 @@
 
 #search-bar {
     width: 50%;
-    border-radius: 13px;
-    margin: 0 10px;
-    padding: 0 20px;
-    box-shadow: 3px 2px gray;
-    border: 3px solid rgb(20, 106, 112);
-}
-
-#title-box {
-    width: 50%;
-    border-radius: 13px;
+    border-radius: 5px;
     margin: 0 10px;
     padding: 0 20px;
     box-shadow: 3px 2px gray;
     border: 2px solid rgb(20, 106, 112);
 }
 
-#new-blog {
-    width: 100%;
-    border-radius: 13px;
+#title-box {
+    width: 50%;
+    border-radius: 5px;
     margin: 0 10px;
     padding: 0 20px;
     box-shadow: 3px 2px gray;
@@ -90,19 +88,34 @@
     font-weight: bold;
 }
 
-.fa-eye:hover {
+.fa-eye {
+    filter: opacity(90%);
     text-shadow: 1px 2px gray;
+}
+
+.fa-eye:hover {
     cursor: pointer;
+    filter: opacity(100%)
+}
+
+.fa-edit {
+    filter: opacity(90%);
+    text-shadow: 1px 2px gray;
 }
 
 .fa-edit:hover {
-    text-shadow: 1px 2px gray;
     cursor: pointer;
+    filter: opacity(100%)
+}
+
+.fa-trash-alt {
+    filter: opacity(90%);
+    text-shadow: 1px 2px gray;
 }
 
 .fa-trash-alt:hover {
-    text-shadow: 1px 2px gray;
     cursor: pointer;
+    filter: opacity(100%)
 }
 
 .fa-eye:active {
