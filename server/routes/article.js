@@ -13,6 +13,7 @@ router.get('/', articleController.getArticles);
 router.get('/search', articleController.searchArticles);
 router.get('/:articleId', articleController.readArticle);
 router.use(authentication);
+router.get('/myarticle', articleController.getMyArticle);
 router.post('/', articleController.postNewArticle)
 router.put('/:articleId', authorization, articleController.updateArticle);
 router.delete('/:articleId', authorization, articleController.removeArticle);

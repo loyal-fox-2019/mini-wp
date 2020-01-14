@@ -21,6 +21,16 @@ class ArticleController {
     }
   }
 
+  static async getMyArticle(req, res, next) {
+    const { id } = req.token;
+    try {
+      const myArticle = await Article.find({ author: id })
+      res.status(200).json(myArticle);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async addTags(req, res, next) {
     const { tags } = req.body;
     const { articleId } = req.params;
@@ -43,17 +53,17 @@ class ArticleController {
 
   static async getArticles(req, res, next) {
     try {
-      const response = await Article.find().select('title _id tags').populate({ path: 'author', select: '-password -_id -email' })
+      const response = await Article.find().sort({ createdAt: -1 }).select('title _id tags featured_image').populate({ path: 'author', select: '-password -_id -email' })
       res.status(200).json(response);
     } catch(err) {
-      new(err);
+      next(err);
     };
   }
 
   static async searchArticles(req, res, next) {
     const { title, f } = req.query;
     try {
-      const response = await Article.find({ title: { $regex: title, $options: 'i' }, tags: { $regex: f, $options: 'i' } }).select('title _id tags').populate({ path: 'author', select: '-password -_id -email' })
+      const response = await Article.find({ title: { $regex: title, $options: 'i' }, tags: { $regex: f, $options: 'i' } }).sort({ createdAt: -1 }).select('title _id tags').populate({ path: 'author', select: '-password -_id -email' })
       res.status(200).json(response);
     } catch (err) {
       next(err);

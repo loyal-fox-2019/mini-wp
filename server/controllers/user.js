@@ -54,6 +54,8 @@ class UserController {
   }
 
   static async googleLogin(req, res, next) {
+    // console.log(req.body.idToken, 'ini idToken')
+    // console.log(req.headers, 'ini headers')
     try {
       const googlePayload = await Client.verifyIdToken({ idToken: req.body.idToken, audience: process.env.GOOGLE_CLIENTID })
       const { name, email } = googlePayload.getPayload();
