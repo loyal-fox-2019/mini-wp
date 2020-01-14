@@ -8,7 +8,7 @@
           <form action="" @submit.prevent="requestAjax(form)">
             
             <header class="text-center mb-4">
-              <h4>- MIDIUM -</h4>
+              <h4 class="header-font">- MIDIUM -</h4>
               <span><em>mini wordpress platform</em></span>
             </header>
 
@@ -99,9 +99,9 @@
     border-radius: 8px;
     box-shadow: 0px -2px 20px -8px rgba(0, 0, 0, 0.6);
   }
-  .form-wrapper header h4 {
+  /* .form-wrapper header h4 {
     font-family: 'Fugaz One', cursive;
-  }
+  } */
   #logo-img {
     position: absolute;
     top: 0;

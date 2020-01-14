@@ -1,18 +1,23 @@
 <template>
-  <registerPage></registerPage>
+  <div>
+    <registerView v-show="!isLogin"></registerView>
+    <homeView v-show="isLogin"></homeView>
+  </div>
 </template>
 
 <script>
-import registerPage from './views/registerView'
+import registerView from './views/registerView'
+import homeView from './views/homeView'
 
 export default {
   data() {
     return {
-      
+      isLogin: true
     };
   },
   components: {
-      registerPage
+      registerView,
+      homeView
     }
 };
 
@@ -21,15 +26,16 @@ export default {
 <style>
   * {
     font-family: 'Roboto', Arial, Helvetica;
+    color: #4a4c57;
   }
   .input-group-text {
     width: 40px;
     justify-content: center;
   }
-  a {
+  a, a span {
     color: #ff43f6 !important;
   }
-  a:hover {
+  a:hover, a span:hover {
     transition: 1s color;
     color: #a462ca !important;
   }
@@ -53,5 +59,8 @@ export default {
     transition: 0.4s all;
     color: #2e2f35 !important;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+  }
+  .header-font {
+    font-family: 'Fugaz One', cursive;
   }
 </style>
