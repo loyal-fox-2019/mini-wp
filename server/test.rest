@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+@id1 = 5e1d6e95d077ca6a70e615fa
+@id2 = 5e1d6ec7d077ca6a70e615fb 
+
+### CREATE
+POST {{baseUrl}}/articles HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Express for Dummies",
+  "content": "Use MEAN stack today!"
+}
+
+### READ ALL
+GET {{baseUrl}}/articles HTTP/1.1
+
+### READ ONE ID 1
+GET {{baseUrl}}/articles/{{id1}} HTTP/1.1
+
+### READ ONE ID 2
+GET {{baseUrl}}/articles/{{id2}} HTTP/1.1
+
+### UPDATE ONE
+PUT {{baseUrl}}/articles/{{id1}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Pencerahan & Tuhan"
+}
+
+### DELETE ONE
+DELETE {{baseUrl}}/articles/{{id1}} HTTP/1.1
