@@ -80,8 +80,8 @@ nav #write i{
 }
 
 .overflow-auto {   
-    max-height: 93vh;
-    min-height: 93vh;
+    max-height: 85.4vh;
+    min-height: 85.4vh;
     max-width: 100%;
     min-width: 80%;
 }
@@ -144,11 +144,7 @@ span .badges {
 }
 
 #titik {
-    margin: 0 0 0 40px;
-    padding-left: 20px;
-    font-size: 24px;
-    font-weight: 1000;
-    text-align: center;
+    margin: 0;
 }
 
 #form-post {

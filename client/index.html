@@ -104,14 +104,15 @@
                         <div id="article-list" v-for='(data, i) in articles'>
                             <div class="card">
                                 <div class="card-body row">
-                                    <div class="col-md-9">
+                                    <div class="col-md-8">
                                         <h4 class="card-title"><b>{{data.title}}</b></h4>
                                         <p>{{data.content}}</p>
                                         <p>{{new Date(data.created_at).toLocaleString()}}</p>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4" id="titik">
                                         <img src="./assets/sawah.jpg" alt="img" width="120" height="80">
                                         <a href="#"><button class="btn btn-outline-danger" v-on:click.prevent="removeArticle(data._id, i)"> Delete </button></a>
+                                        <a href="#"><button class="btn btn-outline-warning" v-on:click.prevent="viewEdit(data._id)" data-toggle="modal" data-target="#add-post"> Edit </button></a>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +122,8 @@
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
                                <div class="container" id="form-post">
-                                    <h4>Add Blog Post</h4>
+                                    <h4 v-if="editArticle">Edit Blog Post</h4>
+                                    <h4 v-else>Add Blog Post</h4>
                                     <form>
                                         <div class="form-group">
                                             <label for="title">Title</label>
@@ -132,7 +134,8 @@
                                             <label for="body-content">Body</label>
                                             <textarea class="form-control" id="body-content" v-model="articleContent" rows="4"></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-primary col-12" @click.prevent='createArticle' id="save-btn" data-dismiss="modal">Primary</button>
+                                        <button type="submit" class="btn btn-primary col-12" v-on:click.prevent="editPost" v-if="editArticle" id="save-btn" data-dismiss="modal">Edit Post!</button>
+                                        <button type="submit" class="btn btn-primary col-12" @click.prevent='createArticle' v-else id="save-btn" data-dismiss="modal">Add Post!</button>
                                     </form>
                                 </div>
                           </div>
