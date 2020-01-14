@@ -17,7 +17,6 @@
         <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#236088">
             <a class="navbar-brand" href="#" style="font-size: 22px;"><i class="fab fa-wordpress-simple"></i>
                 Mini WordPress</a>
-            <a class="navbar-brand" href="#" id="btn-menu"><i class="fas fa-bars"></i> Menu</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,8 +35,9 @@
     <!--  -->
 
     <!-- content -->
-    <div class="container-fluid">
+    <div class="container-fluid" id="app">
         <div class="row">
+            <!-- SIDEBAR -->
             <div class="col-md-3 d-md-block bg-light sidebar no-pad" id='sidebar-menu'>
                 <div class="sidebar-sticky left-sidebar">
                     <div class="row mb-3">
@@ -51,14 +51,11 @@
                     </div>
                     <div class="list-group">
                         <h6 class="nav-item">Manage</h6>
-                        <a href="#" class="nav-link list-group-item-action" id='site-pages'><i
-                                class="far fa-file-alt add-pad"></i> Site
-                            Pages</a>
-                        <a href="#" class="nav-link list-group-item-action" id='blog-post'><i
-                                class="fas fa-align-justify add-pad"></i>
+                        <a href="#" class="nav-link list-group-item-action" v-on:click="showArticlePage"
+                            id='blog-post'><i class="fas fa-align-justify add-pad"></i>
                             Blog
                             Posts</a>
-                        <a href="#" class="nav-link list-group-item-action" id='add-post'><i
+                        <a href="#" class="nav-link list-group-item-action" id='add-post' v-on:click='addArticle'><i
                                 class="fas fa-plus-square add-pad"></i>
                             Add New Post</a>
                         <a href="#" class="nav-link list-group-item-action" id='media'><i
@@ -71,57 +68,84 @@
                     </div>
                 </div>
             </div>
+            <!-- SIDEBAR -->
+            <!-- MAIN CONTENT -->
             <main role="main" class="col-md-9 content-right">
-                <div class="site-pages">
+                <!-- ARTICLE PAGE -->
+                <div class="site-pages" v-show='articlePage'>
                     <h3>Your Blog Post</h3>
                     <hr>
+                    <div class="input-group mb-3" style="width: 45%;">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text" width=><i class="fas fa-search"></i></div>
+                        </div>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Search Article"
+                            autocomplete="off" v-model="searchBar" v-on:keyup="searchArticle">
+                    </div>
                     <div class="container col-md-9">
-                        <div class="card">
+                        <div class="card mb-3 list-article" v-for="item in listArticle"
+                            v-on:click.stop="showById(item._id)">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-7 d-flex flex-column justify-content-center">
-                                        <h4 class="card-title align-self-start" style="margin-bottom: 5px;">The Journey
-                                            Begins</h4>
-                                        <p class="card-subtite text-muted align-self-start" style="margin-bottom: 5px;">
-                                        </p>
-                                        7 Minutes ago</p>
+                                        <h4 class="card-title align-self-start" style="margin-bottom: 5px;">
+                                            {{item.title}}</h4>
+                                        <p class="card-subtitle text-muted mt-2 align-self-start"
+                                            style="margin-bottom: 5px;">
+                                            {{item.created_at}}</p>
                                     </div>
-                                    <div class="col-md-4 d-flex justify-content-center">
-                                        <img src="https://placekitten.com/250/160" alt="article-pict"
+                                    <div class="col-md-4 d-flex justify-content-end">
+                                        <img src="https://picsum.photos/250/160" alt="article-pict"
                                             class="article-pict">
                                     </div>
                                     <div class="col-md-1 d-flex justify-content-center align-items-center">
-                                        <i class="fas fa-ellipsis-h"></i>
+                                        <button class="btn btn-danger" v-on:click.stop="deleteArticle(item._id)"><i
+                                                class="far fa-trash-alt"></i></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="new-article">
+                <!-- ARTICLE PAGES -->
+                <!-- ADD ARTICLE PAGES -->
+                <div class="new-article" v-show="newArticle">
                     <h3>Add New Article</h3>
                     <hr>
-                    <textarea class="form-control" id="article-new" name="article" rows="3"></textarea>
-                    <button class="btn btn-primary" id="btn-check">BUTTON CHECK</button>
+                    <div class="form-group" style="width: 45%;">
+                        <label for="title">Article Title</label>
+                        <input type="text" class="form-control" id="title" v-model="titleArticle">
+                    </div>
+                    <div class="form-group" style="width: 75%;">
+                        <label for="content">Example textarea</label>
+                        <textarea class="form-control" id="content" rows="5" v-model="contentArticle"></textarea>
+                    </div>
+                    <button class="btn btn-primary mt-3" v-on:click="addNewArticle">Add New Article</button>
                 </div>
+                <!-- ADD ARTICLE PAGE -->
+                <!-- DETAIL ARTICLE -->
+                <div class="detail-article" v-show="detailArticle">
+                    <div class="d-flex justify-content-end ">
+                        <button class="btn btn-info edit-btn" v-on:click="editPage">Edit</button>
+                    </div>
+                    <h3>Detail Article</h3>
+                    <hr>
+                    <h4 align="center">{{showTitle}}</h4>
+                    <p>{{showDescription}}</p>
+                </div>
+                <!-- DETAIL ARTICLE -->
             </main>
+            <!-- MAIN CONTENT -->
         </div>
     </div>
     <!-- content -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <script src="https://kit.fontawesome.com/ae2162c6de.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-    <script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./js/main.js"></script>
-    <script>
-        CKEDITOR.replace('article-new');
-    </script>
 </body>
 
 </html>
