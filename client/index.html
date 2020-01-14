@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <!--Fontawsome CSS-->
+        <link rel="stylesheet" type="text/css" href="assets/css/all.css"> 
+        <!--Animate CSS-->
+        <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+        <!--Google Fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Baskervville|Poppins&display=swap" rel="stylesheet">
+        <!--Style CSS-->
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+        <title>Mini-Wp!</title>
+    </head>
+    <body>
+    <!--My Site-->
+    <div id="my-site" >
+    
+    <!-- Modal -->
+    <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-update-article" v-on:submit.prevent="updateArticle(dataArticle._id)">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" v-model="dataArticle.title" class="form-control" id="update-article-title">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Content</label>
+                            <textarea class="form-control" v-model="dataArticle.content" id="update-article-content" rows="3"></textarea>
+                        </div>
+                        <div class="button-container mt-4" style="text-align: center;">
+                            <button type="submit" class="btn btn-dark btn-lg" style="width: 100%;">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Top Navbar-->
+    <nav class="navbar navbar-light justify-content-between">
+        <div class="navbar-item-left d-flex">
+            <div class="my-site" v-on:click="hideAndShowRead('1')" style="cursor: pointer; color: white;">
+                <i class="wordpress-logo fab fa-wordpress mr-1"></i>
+                <span class="navbar-brand-text text-white mr-3">My Site</span>
+            </div>
+            <div class="reader" v-on:click="hideAndShowRead('2')" style="cursor: pointer; color: white;">
+                <i class="newspaper-logo far fa-newspaper mr-1"></i>
+                <span class="navbar-brand-text text-white mr-3">Reader</span>
+            </div>
+            <div class="new-article" v-if="page_index === 1" v-on:click="hideAndShowNewArticle" style="cursor: pointer; color: white;">
+                <i class="clipboard-logo fas fa-clipboard mr-1"></i>
+                <span class="navbar-brand-text text-white mr-3">New Article</span>
+            </div>
+        </div>
+        <div class="navbar-item-right d-flex flex-row justify-content-center align-item-center">
+            <div class="navbar-write d-flex justify-content-center align-item-center pl-2 mr-4">
+                <i class="plus-logo far fa-plus-square mr-1 mt-1"></i>
+                <span class="navbar-brand-text text-black mr-4 mt-2">Write</span>
+            </div>
+            <img src="assets/img/user.png" class="mr-4" width="40" height="40" style="border: 1px solid #ffff; border-radius: 50%;">
+            <i class="logo-bell fas fa-bell mr-4"></i>
+        </div>
+    </nav>
+    <!--Top Navbar-->
+    <div v-show="mySiteShow">
+    <!--Sidebar Nav-->
+    <div id="sidebar-nav" class="container-fluid">
+        <div class="row" style="margin-right: 0;">
+            <div class="col-2 col-left">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-home mr-3"></i>Home</a>
+                    <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-pages" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="far fa-file mr-3"></i>Pages</a>
+                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-post" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="far fa-clone mr-3"></i>Posts</a>
+                </div>
+            </div>
+            <div class="col-10 col-right">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                        <h2>My Home</h2>
+                        <h6>Your home base for all the posting, editing, and growing of your site</h6>
+                        <div class="row mt-4">
+                            <div class="accordion col-lg-8" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" style="padding-top: 20px; padding-bottom: 20px;">
+                                        <h2 class="mb-0">Site Setup List</h2>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Update your homepage
+                                        </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            We've created the basics, now it's time for you to update the images and text.
+                                            <br>
+                                            <button class="btn btn-danger" style="padding: 10px; margin-top: 15px; margin-bottom: 15px; box-shadow: 2px 2px 1px #dc3545;"> Update Homepage</button>
+                                            <br>
+                                            Estimated time 20 minutes
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Launch your site
+                                        </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            Your site is private and only visible to you. When you're ready, launch your site to make it public.
+                                            <br>
+                                            <button class="btn btn-danger" style="padding: 10px; margin-top: 15px; margin-bottom: 15px; box-shadow: 2px 2px 1px #dc3545;"> Update Homepage</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Get the WordPress app
+                                        </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="col-right-container d-flex flex-column">
+                                    <div class="card col-lg-12 mb-3" style="height: 247.5px; padding: 0">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Site privacy</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">Your site is private</h6>
+                                            <p class="card-text">Only you and those you invite can view your site. Launch your site to make it visible to the public.</p>
+                                            <button type="button" class="col-right-button-card btn btn-light btn-lg">Launch my site</button>
+                                        </div>
+                                    </div>
+                                    <div class="card col-lg-12 mb-3" style="height: 220px; padding: 0">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Support</h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">Get the all help you need</h6>
+                                            <div class="support-container d-flex flex-row mt-4 justify-content-between">
+                                                <a href="#">Support Articles</a>
+                                                <i class="fas fa-share-square" style="font-size: 22px; color: #a7aaad;"></i>
+                                            </div>
+                                            <hr>
+                                            <div class="support-container d-flex flex-row justify-content-between">
+                                                <a href="#">Contact Us</a>
+                                                <i class="fas fa-share-square" style="font-size: 22px; color: #a7aaad;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="tab-pane fade show" id="v-pills-pages" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <h2>Pages</h2>
+                        <ul id="navbar-page" class="nav nav-pills mt-3 mb-3 border" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active nav-link-page" id="pills-published-tab" data-toggle="pill" href="#pills-published" role="tab" aria-controls="pills-home" aria-selected="true">Published</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-page" id="pills-drafts-tab" data-toggle="pill" href="#pills-drafts" role="tab" aria-controls="pills-profile" aria-selected="false">Drafts</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-published" role="tabpanel" aria-labelledby="pills-published-tab">
+                                <div class="card">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item list-1">
+                                            <h5 class="align-item-center">Pages</h5>
+                                            <button class="btn btn-danger btn-add-new-page">Add New Page</button>
+                                        </li>
+                                        <li class="list-group-item list-2">
+                                            <h3>Home</h3>
+                                        </li>
+                                        <li class="list-group-item list-3">
+                                            <h3>About</h3>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-drafts" role="tabpanel" aria-labelledby="pills-drafts-tab">...</div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-post" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!--Sidebar Nav-->
+    <!--Reader Area-->
+    <div v-show="myReader">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 p-5">
+                <h2>Show Article</h2>
+                <input class="form-control mr-sm-2" type="search" v-model="tempArticle" placeholder="Search" aria-label="Search">
+                    <div class="row mt-4">
+                        <div class="col-lg-3" v-for="article in searchArticle" style="padding-bottom: 30px;">
+                            <div class="card" style="height: 100%;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{article.title}}</h5>
+                                    <p class="card-text">{{article.content.slice(0, 65) + '....'}}</p>
+                                    <p class="card-date">{{article.created_at}}</p>
+                                    <div class="button_card_container d-flex justify-content-between">
+                                        <button class="btn btn-danger" v-on:click="deleteArticle(article._id)"><i class="fas fa-trash mr-2"></i>Delete</button>
+                                        <button class="btn btn-info" data-toggle="modal" data-target="#update-modal" v-on:click="findOneArticle(article._id)"><i class="fas fa-edit"></i>Update</button>
+                                    </div>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Reader Area-->
+    <!--Create Article Area-->
+    <div v-show="myNewArticle" class="container-fluid">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-6">
+                <div class="new-article-form-container">
+                    <h2 style="text-align: center;" class="pt-5">Create New Article</h2>
+                    <form id="form-create-article" v-on:submit.prevent="createNewArticle()">
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Title</label>
+                            <input type="text" v-model="newArticle.title" class="form-control" id="new-article-title" placeholder="Insert your title article here">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Content</label>
+                            <textarea class="form-control" v-model="newArticle.content" id="new-article-content" rows="3"></textarea>
+                        </div>
+                        <div class="button-container mt-4" style="text-align: center;">
+                            <button type="submit" class="btn btn-success btn-lg" style="width: 100%;">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Create Article Area-->
+    </div>
+    <!--My Site-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>        
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
