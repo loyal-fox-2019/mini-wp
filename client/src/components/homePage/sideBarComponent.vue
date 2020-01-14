@@ -57,7 +57,7 @@
                     method: 'get',
                     url: '/articles',
                     headers: {
-                        token: localStorage.token
+                        Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
                     console.log(data);

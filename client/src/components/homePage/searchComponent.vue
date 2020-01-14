@@ -24,7 +24,7 @@
                     method: "get",
                     url: `/articles/${this.searchValue}`,
                     headers: {
-                        token: localStorage.token
+                        Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
                     console.log(data);

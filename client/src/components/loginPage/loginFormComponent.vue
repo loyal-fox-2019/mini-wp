@@ -55,7 +55,7 @@
                 email: null,
                 password: null,
                 googleSignInParams: {
-                    client_id: process.env.googleClientIdDev
+                    client_id: this.$googleId
                 },
                 header: null,
                 content: null,

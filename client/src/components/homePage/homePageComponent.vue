@@ -30,7 +30,7 @@
                     method: 'get',
                     url: '/authors',
                     headers: {
-                        token: this.token
+                        Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
                     if (data) {

@@ -38,7 +38,7 @@
                     method: 'delete',
                     url: `/articles/${this.article._id}`,
                     headers: {
-                        token: localStorage.token
+                        Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
                     console.log(data.message);

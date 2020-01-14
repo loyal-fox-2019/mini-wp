@@ -82,7 +82,7 @@
                     data: formData,
                     headers: {
                         'Content-Type': 'multipart/form-data',
-                        token: localStorage.token
+                        Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
                     this.$emit('clicked');
