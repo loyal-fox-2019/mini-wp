@@ -7,6 +7,11 @@
     height: 30px;
 }
 
+#write:hover{
+    background: #f76c6c;
+}
+
+
 #reader{
     margin-left: 20px;
 }
@@ -61,6 +66,10 @@
     float: right;
 }
 
+.bn:hover{
+    background: #f76c6c;
+}
+
 
 .rotate:hover{
     color: #f76c6c;
@@ -81,6 +90,18 @@
 /* container start */
 #search-{
     padding-left: 50px;
+}
+
+.edit{
+    position: absolute;
+    left: 80%;
+    font-size: 20px;
+    color: #f76c6c;
+}
+
+.edit:hover{
+    color: #a8d0e6;
+ 
 }
 
 #icon-search{
@@ -111,6 +132,16 @@
     width: 50px;
     height: 50px;
     position: relative;
+}
+
+.delete{
+    background: none;
+    border: solid 1px rgba(116, 92, 92, 0.5);
+    border-radius: 6px;
+}
+
+.delete:hover{
+    background: #f76c6c;
 }
 /* conainer end */
 
