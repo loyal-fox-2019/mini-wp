@@ -83,7 +83,7 @@
                             autocomplete="off" v-model="searchBar" v-on:keyup="searchArticle">
                     </div>
                     <div class="container col-md-9">
-                        <div class="card mb-3 list-article" v-for="item in listArticle"
+                        <div class="card mb-3 list-article" v-for="item in searchArticleComputed"
                             v-on:click.stop="showById(item._id)">
                             <div class="card-body">
                                 <div class="row">
@@ -110,7 +110,7 @@
                 <!-- ARTICLE PAGES -->
                 <!-- ADD ARTICLE PAGES -->
                 <div class="new-article" v-show="newArticle">
-                    <h3>Add New Article</h3>
+                    <h3>{{pageTitle}}</h3>
                     <hr>
                     <div class="form-group" style="width: 45%;">
                         <label for="title">Article Title</label>
@@ -120,7 +120,10 @@
                         <label for="content">Example textarea</label>
                         <textarea class="form-control" id="content" rows="5" v-model="contentArticle"></textarea>
                     </div>
-                    <button class="btn btn-primary mt-3" v-on:click="addNewArticle">Add New Article</button>
+                    <button class="btn btn-primary mt-3" v-show='buttonAdd' v-on:click="addNewArticle">Add New
+                        Article</button>
+                    <button class="btn btn-primary mt-3" v-show='buttonEdit' v-on:click="editArticle">Edit
+                        Article</button>
                 </div>
                 <!-- ADD ARTICLE PAGE -->
                 <!-- DETAIL ARTICLE -->
