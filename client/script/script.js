@@ -4,35 +4,62 @@ var app = new Vue({
         axios
             .get('http://localhost:3000/articles')
             .then(articleData=>{
-                this.articles = articleData.data
-                this.show = articleData.data
+                let articleDatas = articleData.data
+                // articleDatas.forEach(element => {
+                //     element.content = element.content.slice(0, 100)
+                // });
+                // console.log(articleDatas)
+                this.articles = articleDatas
+                this.archive = articleData.data
             })
             .catch(err=>{
-                console.log(err)
+                connectionError = err
             })
     },
     data: {
+      connectionError: null,
       addPart: false,
-      posts: true,
+      posts: false,
+      fullArticle: false,
       updateArticle: null,
       articles: [],
-      show: [],
+      archive: [],
       addTitle: '',
       addImage: '',
       addContent: '',
-      articleSearch: ''
+      articleSearch: '',
+      editSearchId:''
+    },
+    computed: {
+        filterArticle(){
+            if(this.articleSearch==''||this.articleSearch==null){
+                return this.articles
+            }
+            return this.articles.filter(element=> element.title.includes(this.articleSearch))
+        },
+        editArticleSearch(){
+            return this.articles.filter(element=> element._id == this.editSearchId)
+        }
     },
     methods: {
+        newImage(){
+            // alert('Changed')
+            this.addImage = event.target.files[0]
+        },
         addArticle(){
-            axios.post('http://localhost:3000/articles', {
-                title: this.addTitle,
-                content: this.addContent,
-                image: this.addImage
-            })
+            // console.log(this.addImage)
+            let data = new FormData()
+            data.append('title', this.addTitle)
+            data.append('content', this.addContent)
+            data.append('image_url', this.addImage)
+            // console.log(data)
+            axios.post('http://localhost:3000/articles', 
+                data
+            )
             .then(addedArticle=>{
                 // console.log(addedArticle.data)
                 this.articles.push(addedArticle.data)
-                this.show = this.articles
+                this.archive = this.articles
                 this.addTitle = ''
                 this.addContent = ''
                 this.addImage = ''
@@ -43,13 +70,9 @@ var app = new Vue({
                 console.log(err)
             })
         },
-        searchArticle(){
-            let tmp = this.show
-            // console.log(tmp)
-            this.articles = tmp.filter(element=> element.title.includes(this.articleSearch))
-        },
         viewPosts(){
             this.updateArticle = null
+            this.fullArticle = false
             this.addPart = false
             this.posts = true
         },
@@ -58,32 +81,32 @@ var app = new Vue({
             this.addContent = ''
             this.addImage = ''
             this.posts = false
+            this.fullArticle = false
             this.updateArticle = null
             this.addPart = true
         },
         viewEdit(id){
-            let tmp = this.show
-            tmp = tmp.filter(art=>art._id==id)
-            
+            this.editSearchId = id
             // console.log(tmp[0].title)
-            this.addTitle = tmp[0].title
-            this.addContent = tmp[0].content
-            this.addImage = tmp[0].image_url
+            this.addTitle = this.editArticleSearch[0].title
+            this.addContent = this.editArticleSearch[0].content
+            this.addImage = this.editArticleSearch[0].image_url
             // console.log(addTitle, addContent, addImage)
             this.posts = false
+            this.fullArticle = false
             this.updateArticle = id
             this.addPart = true
         },
         editArticle(){
             // console.log(this.addTitle)
-            axios.put(`http://localhost:3000/articles/${this.updateArticle}`,{
-                title: this.addTitle,
-                content: this.addContent,
-                image: this.addImage
-            })
+            let data = new FormData()
+            data.append('title', this.addTitle)
+            data.append('content', this.addContent)
+            data.append('image_url', this.addImage)
+            axios.put(`http://localhost:3000/articles/${this.updateArticle}`,data)
             .then(success=>{
                 // console.log(success.data)
-                let tmp = this.show
+                let tmp = this.archive
                 for (let i = 0; i < tmp.length; i++) {
                     if(tmp[i]._id == this.updateArticle){
                         tmp[i].title = this.addTitle
@@ -92,10 +115,11 @@ var app = new Vue({
                     }
                 }
                 this.articles = tmp
-                this.show = tmp
+                this.archive = tmp
                 this.addTitle = ''
                 this.addContent = ''
                 this.addImage = ''
+                this.editSearchId = ''
                 this.updateArticle = null
                 this.addPart = false
                 this.posts = true
@@ -108,20 +132,25 @@ var app = new Vue({
             axios.delete(`http://localhost:3000/articles/${id}`)
             .then(success=>{
                 if(success.data.deletedCount == 1){
-                    let tmp = this.show
+                    let tmp = this.archive
                     for (let i = 0; i < tmp.length; i++) {
                         if(tmp[i]._id == id){
                             tmp.splice(i, 1)
                         }
                     }
                     this.articles = tmp
-                    this.show = this.articles
+                    this.archive = this.articles
                     this.searchArticle()
                 }
             })
             .catch(err=>{
                 console.log(err)
             })
+        },
+        readFullArticle(params){
+            // alert(params)
+            this.posts = false
+            this.fullArticle = true
         }
     }
   })

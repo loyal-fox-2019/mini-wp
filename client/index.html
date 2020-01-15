@@ -206,7 +206,7 @@
                             <div class="col-sm-6" id="cust-post-search">
                                 <form class="form-inline my-2 my-lg-0">
                                     <input class="form-control mr-sm-2 cust-post-search-bar" v-model="articleSearch"
-                                        v-on:keyup="searchArticle" type="text" id="articleSearch"
+                                        type="text" id="articleSearch"
                                         placeholder="&#xF002; Search" aria-label="Search">
                                 </form>
                             </div>
@@ -215,7 +215,10 @@
                         <hr class="main-content-article-hr">
 
                         <div class="row">
-                            <div class="col-sm-6" v-for="article in articles">
+                            <div class="col-sm" v-if="connectionError">
+                                <h1>{{connectionError}}</h1>
+                            </div>
+                            <div class="col-sm-6" v-if="articles" v-for="article in filterArticle">
                                 <div class="card mb-3 article-card">
                                     <img v-bind:src="article.image_url" class="card-img-top article-image" alt="...">
                                     <div class="card-body">
@@ -241,6 +244,11 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-sm" v-else>
+                                <h1>You Don't have any articles yet! Click the 'Write' button to start making articles</h1>
+                            </div>
+
                         </div>
                     </div>
                     <!-- End of Main Content-Articles -->
@@ -250,15 +258,15 @@
                     <h1 v-else>Add an Article</h1>
                     <hr class="main-content-article-hr">
                     <div class="add-an-article-section col-sm-6">
-                        <form>
+                        <form action="/upload-single" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="articleTitle">Title:</label>
                                 <input type="text" class="form-control" id="articleTitle" v-model="addTitle">
                             </div>
                             <div class="form-group">
-                                <label for="articleImage">Image Url:</label>
-                                <input type="text" class="form-control" id="articleImage" v-model="addImage">
-                            </div>
+                                <label for="articleImage">Image:</label>
+                                <input type="file" name="file" v-on:change="newImage" />                           
+                             </div>
                             <div class="form-group">
                                 <label for="articleContent">Article:</label>
                                 <textarea type="text" class="form-control" id="articleContent"
@@ -277,6 +285,22 @@
                     </div>
                 </div>
                     <!-- End of Add an Article -->
+
+                    <!-- Start of Full Article -->
+                    <!-- <div v-if="fullArticle">
+                    <div class="row">
+                        <div class="col-sm-12 d-flex justify-content-center">
+                            <img id="full-article-img">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 d-flex justify-content-sm-center" id="full-article-content">
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div> -->
+                    <!-- End of Full Article -->
                 </main>
             </div>
             <!-- End of Main Container -->

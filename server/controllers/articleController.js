@@ -12,11 +12,11 @@ class ArticleController {
     }
 
     static createArticle(req, res, next){
-        // console.log(req.body)
+        // console.log(req.body.image_url)
         article.create({
            title: req.body.title,
            content: req.body.content,
-           image_url: req.body.image,
+           image_url: req.body.image_url,
            created_at: new Date() 
         })
         .then(newArticle=>{
@@ -42,7 +42,7 @@ class ArticleController {
         article.updateOne({_id:req.params.id}, {
             title: req.body.title,
             content: req.body.content,
-            image_url: req.body.image
+            image_url: req.body.image_url
         })
         .then(success=>{
             res.status(200).json(success)

@@ -156,3 +156,16 @@
         #articleSearch {
             font-family:Arial, FontAwesome
         }
+        #full-article-img {
+            max-width: 100%;
+            max-height: 50vh;
+            margin-top: 10px;
+        }
+        #full-article-content {
+            margin-top: 20px;
+            font-size: 20px;
+            text-indent: 50px;
+        }
+        .cust-activated-div-side {
+            background-color: #686868
+        }

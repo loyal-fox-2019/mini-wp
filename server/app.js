@@ -1,3 +1,4 @@
+if(process.env.NODE_ENV === 'development') require('dotenv').config()
 const express = require('express')
 const app = express()
 const PORT = 3000
@@ -7,7 +8,7 @@ const cors = require('cors')
 
 app.use(cors())
 
-mongoose.connect('mongodb://localhost:27017/mini-wp', {useNewUrlParser: true, useUnifiedTopology:true})
+mongoose.connect(process.env.MONGO_ATLAS, {useNewUrlParser: true, useUnifiedTopology:true})
 .then(success=>{
     console.log(`connected to mini-wp on mongoDB`)
 })
