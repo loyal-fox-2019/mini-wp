@@ -13,9 +13,9 @@
   <body>
     <div id="app">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary" id="navBarMiniWP">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-primary" id="navBarMiniWP">
         <a class="navbar-brand" href="#">
-           <img src="./assets/Wordpress_logo_8.png" alt="Wordpress Logo" id="wpLogo"><span class="text-white ml-3">Mini WP</span>
+           <img src="./assets/Wordpress_logo_8.png" alt="Wordpress Logo" id="wpLogo"><span class="text-white ml-3">Mini Word Press</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
 
     <div class="container-fluid" id="containerFluid">
         <div class="row" id="rowMenuInfo">
-            <div class="col-3" id="colMenu">
+            <div class="col-3 sticky-top" id="colMenu">
                 <span class="h3">Menu Navigation</span>
                 <ul class="nav flex-column font-weight-bold">
                     <li class="nav-item">
@@ -64,11 +64,13 @@
 
             <div v-if="page === 'addPage'">
                 <p class="h3">Add Article</p>
-                <form id="formInputArticle">
+                <form id="formInputArticle" enctype="multipart/form-data">
                     <div class="form-row mb-2" style="width: 800px;">
                         <input type="text" class="form-control mb-2" placeholder="Title" v-model="title">
                         <textarea class="form-control" rows="10" cols="30" aria-label="With textarea" placeholder="Content" v-model="content"></textarea>
                     </div>
+                    <p class="h6">Choose file to upload :</p>
+                    <input type="file" name="file" v-on:change="upload()">
                     <div class="d-flex justify-content-around">
                         <div>
                             <button type="submit" id="btnAddArticle" class="btn btn-primary mb-2" v-on:click.prevent="addArticle">Save Article</button>
@@ -82,7 +84,7 @@
 
             <div v-if="page === 'editPage'">
                 <p class="h3">Edit Article</p>
-                <form id="formInputArticle">
+                <form id="formInputArticle" enctype="multipart/form-data">
                     <div class="form-row mb-2" style="width: 800px;">
                         <input type="text" id="dataId" v-model="id" style="display: none;">
                         <input type="text" class="form-control mb-2" placeholder="Title" v-model="title">
@@ -118,7 +120,8 @@
                     <div class="row">
                         <div class="card-group col-4" v-for="article in filterArticle">
                             <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                                <div class="card-header">Article-{{article.created_At}}</div>
+                                <div class="card-header">Article {{article.created_At}}</div>
+                                <img v-bind:src="article.file" class="card-img-top" style="width: 100px;" alt="...">
                                 <div class="card-body" style="height: 200px; overflow-y: scroll;">
                                     <h5 class="card-title">{{article.title}}</h5>
                                     <p class="card-text">{{article.content}}.</p>
@@ -126,11 +129,11 @@
                                 <a href="#" class="btn btn-secondary" v-on:click.prevent="findOneArticle(article._id)">Edit</a>
                                 <a href="#" class="btn btn-warning" v-on:click.prevent="deleteArticle(article._id)">Delete</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         
     </div>

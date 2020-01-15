@@ -17,17 +17,19 @@ new Vue ({
         content: '',
         search: '',
         page: 'main',
-        articleOne: []
+        articleOne: [],
+        file: ''
     },
     methods: {
         addArticle: function() {
+            let obj = new FormData;
+            obj.append('title', this.title);
+            obj.append('content', this.content);
+            obj.append('file', this.file);
             axios({
                 url: `http://localhost:3000/article`,
                 method: 'post',
-                data: {
-                    title: this.title,
-                    content: this.content
-                }
+                data: obj
             })
             .then(article => {
                 this.articles.push(article.data);
@@ -100,6 +102,9 @@ new Vue ({
             .catch(err => {
                 console.log(err.message);
             });
+        },
+        upload() {
+            this.file = event.target.files[0];
         }
     }
 });

@@ -14,6 +14,9 @@ const ArticleSchema = new Schema ({
     created_At: {
         type: Date,
         default: new Date()
+    },
+    file: {
+        type: String
     }
 });
 

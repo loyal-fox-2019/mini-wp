@@ -6,9 +6,11 @@ class ArticleController {
     static create(req, res, next) {
         const title = req.body.title;
         const content = req.body.content;
+        const file = req.body.file;
         Article.create({
             title,
-            content
+            content,
+            file
         })
         .then(article => {
             res.status(201).json(article);
