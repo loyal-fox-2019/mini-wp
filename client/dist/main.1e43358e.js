@@ -8931,6 +8931,9 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
 var _default = {
   data: function data() {
     return {
@@ -8972,10 +8975,10 @@ exports.default = _default;
       },
       [
         _c(
-          "a",
+          "router-link",
           {
             staticClass: "font-semibold text-3xl pl-8 green-text",
-            attrs: { href: "#" }
+            attrs: { to: { name: "articleList" } }
           },
           [_vm._v("Clean WordPress")]
         ),
@@ -9028,7 +9031,8 @@ exports.default = _default;
           ],
           1
         )
-      ]
+      ],
+      1
     ),
     _vm._v(" "),
     _c(
@@ -9047,10 +9051,30 @@ exports.default = _default;
                   "router-link",
                   {
                     staticClass:
-                      "font-semibold text-xl text-gray-500 hover:text-teal-500",
+                      "mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500",
                     attrs: { to: { name: "articleList" } }
                   },
                   [_vm._v("Article list")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500",
+                    attrs: { to: { name: "articleList" } }
+                  },
+                  [_vm._v("Read article")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500",
+                    attrs: { to: { name: "articleList" } }
+                  },
+                  [_vm._v("Edit article")]
                 )
               ],
               1
@@ -13719,7 +13743,76 @@ axiosInstance.interceptors.request.use(function (config) {
 });
 var _default = axiosInstance;
 exports.default = _default;
-},{"axios":"node_modules/axios/index.js"}],"src/views/articleList.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js"}],"src/components/articleListCard.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+var _default = {
+  name: 'ArticleListCard',
+  data: function data() {
+    return {};
+  },
+  props: {
+    article: Object
+  },
+  methods: {}
+};
+exports.default = _default;
+        var $ac443f = exports.default || module.exports;
+      
+      if (typeof $ac443f === 'function') {
+        $ac443f = $ac443f.options;
+      }
+    
+        /* template */
+        Object.assign($ac443f, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$ac443f', $ac443f);
+          } else {
+            api.reload('$ac443f', $ac443f);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/views/articleList.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13728,6 +13821,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _server = _interopRequireDefault(require("../services/server"));
+
+var _articleListCard = _interopRequireDefault(require("../components/articleListCard"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13783,7 +13878,6 @@ var _default = {
     }
   },
   created: function created() {
-    console.log(3, localStorage.token);
     this.fetchArticles();
   }
 };
@@ -13800,7 +13894,7 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", {}, [_vm._v("\n   sdafnsiafnai\n")])
+  return _c("div", {})
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -13835,7 +13929,7 @@ render._withStripped = true
       
       }
     })();
-},{"../services/server":"src/services/server.js","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/login.vue":[function(require,module,exports) {
+},{"../services/server":"src/services/server.js","../components/articleListCard":"src/components/articleListCard.vue","_css_loader":"../../../../../../../../../../usr/local/lib/node_modules/parcel/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/login.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28614,7 +28708,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39569" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,11 +1,12 @@
 <template>
   <div class="">
-     sdafnsiafnai
+     
   </div>
 </template>
 
 <script>
 import axios from '../services/server'
+import ArticleCard from '../components/articleListCard'
 
 export default {
    name: 'ArticleList',
@@ -34,7 +35,6 @@ export default {
    },
 
    created() {
-      console.log(3, localStorage.token)
       this.fetchArticles()
    }
 }

@@ -1,7 +1,8 @@
 <template>
   <div class="flex flex-col">
      <div id="navbar" class="flex justify-between items-center shadow py-3">
-        <a href="#" class="font-semibold text-3xl pl-8 green-text">Clean WordPress</a>
+        <!-- <a href="#" class="font-semibold text-3xl pl-8 green-text">Clean WordPress</a> -->
+        <router-link :to="{name: 'articleList'}" class="font-semibold text-3xl pl-8 green-text">Clean WordPress</router-link>
         <div class="pr-6">
            <router-link
                v-if="!isLoggedIn"
@@ -19,7 +20,9 @@
      </div>
      <div class="flex">
          <div id="left-nav" class="flex flex-col items-end px-4 mt-10" v-if="isLoggedIn">
-            <router-link :to="{name: 'articleList'}" class="font-semibold text-xl text-gray-500 hover:text-teal-500">Article list</router-link>
+            <router-link :to="{name: 'articleList'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Article list</router-link>
+            <router-link :to="{name: 'articleList'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Read article</router-link>
+            <router-link :to="{name: 'articleList'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Edit article</router-link>
             <!-- <router-link :to=""></router-link>
             <router-link :to=""></router-link>
             <router-link :to=""></router-link> -->
