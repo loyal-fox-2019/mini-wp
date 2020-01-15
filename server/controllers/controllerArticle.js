@@ -14,16 +14,22 @@ class controllerArticle {
 
     static createArticle(req, res, next) {
         let path = "";
+        let tags = [];
 
-        if (!req.file) {
-            path = "";
-        } else {
+        if (req.body.tags) {
+            let tagsSplit = req.body.tags.split(",");
+            tagsSplit.forEach(tag => {
+                tags.push(tag.trim())
+            })
+        }
+
+        if (req.file) {
             path = req.file.path;
         }
 
         Article.create({
             title: req.body.title,
-            category: req.body.category,
+            tags: tags,
             author: req.token.userId,
             content: req.body.content,
             quillContent: req.body.quillContent,
@@ -39,9 +45,19 @@ class controllerArticle {
 
     static findArticle(req, res, next) {
         Article.find({
-            title: {
-                $regex: req.params.title, $options: 'i'
-            }
+            $and: [
+                {
+                    $or: [{
+                        title: {$regex: req.params.title, $options: 'i'}
+                    }, {
+                        tags: {
+                            $in: req.params.title
+                        }
+                    }]
+                }, {
+                    author: req.token.userId
+                }
+            ]
         }).populate(
             "author", "name"
         ).then(data => {

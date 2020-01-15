@@ -1,36 +1,55 @@
 <template>
-    <form class="ui form" @submit.prevent="registration">
+    <sui-form @submit.prevent="registration">
         <p>
             <message-component :header="header" :content="content" :visible="visible"></message-component>
         </p>
         <h1>Sign Up</h1>
         <p></p>
-        <div class="field">
+        <sui-form-field>
             <label>Full Name</label>
             <div class="ui left icon input">
-                <input type="text" placeholder="Full Name" v-model="name" required>
+                <input type="text"
+                       placeholder="Full Name"
+                       v-model="name"
+                       minlength="5"
+                       maxlength="30"
+                       required>
                 <i class="user icon"></i>
             </div>
-        </div>
-        <div class="field">
+            <sui-label pointing>
+                5 - 30 character
+            </sui-label>
+        </sui-form-field>
+        <sui-form-field>
             <label>Email</label>
             <div class="ui left icon input">
-                <input type="email" placeholder="Email" v-model="email" required>
+                <input type="email"
+                       placeholder="Email"
+                       v-model="email"
+                       required>
                 <i class="mail icon"></i>
             </div>
-        </div>
-        <div class="field">
+        </sui-form-field>
+        <sui-form-field>
             <label>Password</label>
             <div class="ui left icon input">
-                <input type="password" placeholder="Password" v-model="password" required>
+                <input type="password"
+                       placeholder="Password"
+                       v-model="password"
+                       minlength="8"
+                       maxlength="30"
+                       required>
                 <i class="lock icon"></i>
             </div>
-        </div>
+            <sui-label pointing>
+                8 - 30 character
+            </sui-label>
+        </sui-form-field>
         <button type="submit" class="ui black labeled icon button">
             Sign Up
             <i class="user icon"></i>
         </button>
-    </form>
+    </sui-form>
 </template>
 
 <script>

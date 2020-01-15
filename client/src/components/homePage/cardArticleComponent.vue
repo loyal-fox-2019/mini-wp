@@ -1,17 +1,24 @@
 <template lang="html">
     <sui-card id="cardArticle">
-        <div id="remove" @click="remove">
-            <i class="remove icon"></i>
-        </div>
-        <a>
-            <sui-image :src="article.featured_image"/>
-        </a>
-        <sui-card-content @click="showContent">
+        <sui-card-header>
+            <i class="remove icon" id="remove" @click="remove"></i>
+        </sui-card-header>
+        <sui-card-content @click.native="showContent">
+            <a>
+                <sui-image :src="article.featured_image"/>
+            </a>
+        </sui-card-content>
+        <sui-card-content @click.native="showContent">
             <small id="created_at">{{createdDate}}</small>
-            <p></p>
-            <sui-card-header><a>{{article.title}}</a></sui-card-header>
+            <p>
+                <sui-card-header><a>{{article.title}}</a></sui-card-header>
+            </p>
+        </sui-card-content>
+        <sui-card-content>
             <sui-card-meta>
-                <a>{{article.category}}</a>
+                <sui-label color="teal" v-for="tag, index in article.tags" :key="index">
+                    #{{tag}}
+                </sui-label>
             </sui-card-meta>
         </sui-card-content>
     </sui-card>
@@ -66,6 +73,7 @@
 
     #remove {
         color: gray;
-        margin: 10px
+        margin: 10px;
+        cursor: pointer;
     }
 </style>

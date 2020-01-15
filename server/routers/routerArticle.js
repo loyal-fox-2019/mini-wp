@@ -9,7 +9,7 @@ router.use(authenticationToken);
 const uploadHandler = multer({
     storage: multerGoogleStorage.storageEngine(),
     limits: {
-        fileSize: 1e6 // in bytes
+        fileSize: 5e6 // in bytes
     }
 });
 

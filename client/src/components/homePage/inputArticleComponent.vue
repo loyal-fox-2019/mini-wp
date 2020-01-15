@@ -2,7 +2,8 @@
     <div>
         <message-component :header="header" :content="contentMsg" :visible="visible"></message-component>
         <form class="w-100" @submit.prevent="submitArticle" action="" enctype="multipart/form-data">
-            <label for="article-title">Title</label>
+            <label for="article-title">Title : </label>
+            <sui-label color="teal" basic>10 - 100 character</sui-label>
             <div class="field">
                 <div class="ui input">
                     <input type="text"
@@ -10,38 +11,50 @@
                            placeholder="Title"
                            v-model="title"
                            size="100"
+                           minlength="10"
+                           maxlength="100"
                            required>
                 </div>
             </div>
-
-            <label for="article-category">Category</label>
+            <br>
+            <label for="article-tags">Tags : </label>
+            <sui-label color="teal" basic>
+                min 1 tag, 3 - 15 character
+            </sui-label>
             <div class="field">
                 <div class="ui input">
-                    <input type="text"
-                           id="article-category"
-                           placeholder="Category"
-                           v-model="category"
-                           size="50"
-                           required>
+                    <sui-dropdown
+                            multiple
+                            id="article-tags"
+                            :options="tags"
+                            v-model="tags"
+                            placeholder="Tags"
+                            search
+                            selection
+                            allow-additions
+                            v-model="current"
+                            required/>
                 </div>
             </div>
-
+            <br>
+            <label>Feature Image : </label>
+            <sui-label color="teal" basic>max size 5 Mb</sui-label>
             <div class="field">
                 <div class="ui input">
                     <input type="file" ref="featured_image" name="featured_image" @change="handleFileUpload"/>
                 </div>
             </div>
-
-            <label>Content</label>
+            <br>
+            <label>Content : </label>
+            <div class="field">
+                <sui-label color="teal" basic>100 - 50.000 character</sui-label>
+                <button class="ui button blue" type="submit" class="btn btn-primary">Submit</button>
+            </div>
             <div class="field">
                 <local-quill-editor v-model="content"
                                     ref="quillEditor"
                                     :options="editorOption">
                 </local-quill-editor>
-            </div>
-
-            <div class="field">
-                <button class="ui button blue" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
@@ -56,7 +69,6 @@
         data() {
             return {
                 title: "",
-                category: "",
                 featured_image: "",
                 content: "",
                 editorOption: {
@@ -64,14 +76,16 @@
                 },
                 header: null,
                 contentMsg: null,
-                visible: false
+                visible: false,
+                current: null,
+                tags: [],
             }
         },
         methods: {
             submitArticle: function () {
                 let formData = new FormData();
                 formData.set('title', this.title);
-                formData.set('category', this.category);
+                formData.set('tags', this.tags);
                 formData.set('content', this.content);
                 formData.set('quillContent', this.content);
                 formData.set('featured_image', this.featured_image);
