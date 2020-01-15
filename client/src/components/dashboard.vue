@@ -12,7 +12,9 @@
       <div id="create" v-show="show === 'create'">
         <h1 style="text-align: center;">Create New Article</h1>
         <section id="form">
-          {{featured_image}}
+          <div class="justify-content-center" v-show="featured_image != ''">
+            <b-img :src="featured_image" fluid alt="Responsive image"></b-img>
+          </div>
           <b-form-input
             v-model="title"
             class="mt-3 mb-2"
@@ -28,10 +30,7 @@
           </quill-editor>
           <!--  -->
           <b-form-tags v-model="tags" class="mb-2 mt-2"></b-form-tags>
-          <form action="/upload-single" method="post" enctype="multipart/form-data">
-            <input type="file" @change="uploadToGCS" ref="file"
-            class="mt-2 mb-2"/>
-          </form>
+          <input type="file" v-on:change="fileHandle" ref="file" />
           <!-- <b-form-file
             v-on:change="uploadToGCS" ref="file"
             placeholder="Choose an image or drop it here..."
@@ -110,20 +109,20 @@ export default {
     publishAttempt() {
       this.loading = true;
       const docs = {
-        title: this.title,
-        content: this.content,
-        tags: this.tags,
-        featured_image: this.featured_image,
-      };
-      axios
-        .post('/articles', docs, { headers: { token: localStorage.getItem('token') } })
-        .then(() => {
-          this.$Swal('Article published!');
-          this.$emit('pagearticle', 'articles')
-        })
-        .catch((error) => {
-          if (!error.response.data.errors) {
-            this.$swal(
+      title: this.title,
+      content: this.content,
+      tags: this.tags,
+      featured_image: this.featured_image,
+    };
+    axios
+      .post('/articles', docs, { headers: { token: localStorage.getItem('token') } })
+      .then(() => {
+        this.$Swal('Article published!');
+        this.$emit('pagearticle', 'articles')
+      })
+      .catch((error) => {
+        if (!error.response.data.errors) {
+          this.$swal(
               'Something went wrong with the Server.',
               "i'm sorry but, i might screwed up now :(",
               'error'
@@ -159,27 +158,51 @@ export default {
     navigation(value) {
       this.show = value;
     },
-    uploadToGCS () {
-      this.loading = true;
+    fileHandle() {
+      this.loading = true
       let formData = new FormData();
-      formData.append("image", this.$refs.file.files[0]);
-      Axios({
-        method: 'post',
-        url: 'http://localhost:3000/articles/featuredimage',
-        data: {
-          formData,
-        },
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-        .then((data) => {
-          console.log(data)
-          this.featured_image = data;
-          console.log(data, "ini")
+        formData.append("image", this.$refs.file.files[0]);
+        axios({
+          method: "POST",
+          url: "http://localhost:3000/articles/image",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: localStorage.getItem("token")
+          }
         })
-        .catch((err) => {
-          this.$swal(err.response.data)
+        .then(({ data }) => {
+          this.featured_image = data;
+        })
+        .catch((error) => {
+          this.loading = false;
+          if (!error.response.data.errors) {
+            this.$swal(
+              'Something went wrong with the Server.',
+              "i'm sorry but, i might screwed up now :(",
+              'error'
+            )
+          }
+          const errors = error.response.data.errors;
+          let text = '';
+          if (errors.length === 1) {
+            text = `${errors[0]}.`;
+          } else {
+            errors.forEach((err, i) => {
+              if(i === errors.length-1 && error.length > 1) {
+                let str = `and ${err}.`;
+                text += str;
+              } else {
+                let str = `${err}, `;
+                text += str;
+              }
+            });
+          }
+          this.$swal(
+            'Validation Error',
+            text,
+            'error'
+          );
         })
         .finally(() => {
           this.loading = false;
@@ -209,6 +232,10 @@ export default {
 </script>
 
 <style scoped>
+#create {
+  width: 100vw;
+  overflow-x: hidden;
+}
 #form {
   left: 25%;
   width: 50vw;

@@ -1,14 +1,24 @@
 'use strict';
 const router = require('express').Router();
-const upload = require('../middlewares/gcsupload');
 const authentication = require('../middlewares/authentication');
 const { articleController }  = require('../controllers');
 const authorization = require('../middlewares/authorization');
+const gcsUpload = require('gcs-upload')
 
-router.post('/featuredimage', upload.single('image'), (req, res) => {
-  // this endpoint is used to upload 'featured image' to google bucket
-  res.status(201).json(req.body.image)
+const upload = gcsUpload({
+  limits: {
+    fileSize: 1e6 // in bytes
+  },
+  gcsConfig: {
+    keyFilename: process.env.GOOGLE_KEYFILENAME,
+    bucketName: process.env.GOOGLE_BUCKET_NAME,
+  }
 })
+
+router.post('/image', upload.single('image'), (req, res) => {
+  res.status(200).json(req.body.image)
+})
+
 router.get('/', articleController.getArticles);
 router.get('/search', articleController.searchArticles);
 router.get('/:articleId', articleController.readArticle);
