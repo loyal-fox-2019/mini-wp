@@ -8,15 +8,11 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 // const router = require('./routes')
 // const errorHandler = require('./middlewares/errorHandler')
-const databaseAccess = process.env.MONGO_URI
 
-mongoose.connect(databaseAccess, {
-  useNewUrlParser: true, 
-  useUnifiedTopology: true, 
-  useFindAndModify: false
-}, function(err) {
+mongoose.connect(process.env.MONGOURI, {
+  useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, function(err) {
   if(err) console.log('database is an Error')
-  else console.log(`database in an active ${databaseAccess}`)
+  else console.log(`database in an active`)
 })
 
 app.use(cors())
