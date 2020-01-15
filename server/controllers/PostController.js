@@ -2,11 +2,13 @@ const Post = require('../models/Post')
 
 class PostController {
     static create(req, res, next){
+        console.log(req.body.image)
         Post
             .create({
                 title: req.body.title,
                 article: req.body.article,
                 categories: req.body.categories,
+                image: req.body.image,
                 author: 'dzakki'
             })
             .then(post => {
@@ -41,13 +43,21 @@ class PostController {
     }
 
     static update(req, res, next){
+        console.log(req.body)
         Post
             .updateOne({
                 _id: req.params.id
             },{
                 title: req.body.title,
                 article: req.body.article,
-                categories: req.body.categories
+                categories: req.body.categories,
+                image: req.body.image
+            })
+            .then(results => {
+                return Post
+                        .findOne({
+                            _id: req.params.id
+                        })
             })
             .then(post => {
                 res.status(200).json({

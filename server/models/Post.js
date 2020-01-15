@@ -13,6 +13,9 @@ const postSchema = new Schema({
         type: String
     },
     categories: [],
+    image: {
+        type:String
+    },
     comments: []
 }, {
     timestamps: { 

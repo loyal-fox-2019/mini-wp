@@ -6,6 +6,7 @@ new Vue({
         posts: [],
         form: {
             _id: null,
+            image: '',
             title: '',
             article: '',
             categories: []
@@ -14,10 +15,19 @@ new Vue({
         isUpdate: false,
     },
     methods: {
+        preSave(){
+            let form = new FormData()
+            const data = this.form
+            for (const key in data) {
+                form.append(key, data[key])
+            }
+            return form
+        },
         save(){
+            const form = this.preSave()
             let self = this
             axios
-                .post(this.urlApi, this.form)
+                .post(this.urlApi, form)
                 .then(function ({data}) {
                     self.posts.push(data.post)
                     self.elForm = false
@@ -33,14 +43,16 @@ new Vue({
             this.form.categories = post.categories
         },
         update(){
+            let form = this.preSave()
             let self = this
             let index = self.posts.findIndex(post => post._id === self.form._id)
             axios
-                .put(`${this.urlApi}/${this.form._id}`, this.form)
+                .put(`${this.urlApi}/${this.form._id}`, form)
                 .then(function ({data}) {  
                     self.elForm = false
                     self.isUpdate = false
-                    self.$set(self.posts, index, self.form)
+                    console.log(data)
+                    self.$set(self.posts, index, data.post)
                 })
                 .catch(errs => {
                     console.log(errs)
@@ -68,6 +80,12 @@ new Vue({
                 article: '',
                 categories: []
             }
+        },
+        onFileChange(e){
+            const image = e.target.files[0]
+            if (!image.length) {
+                this.form.image = image
+            }
         }
     },
     computed: {
@@ -76,7 +94,7 @@ new Vue({
             return self.posts.filter(function (post) {  
                 return post.title.indexOf(self.searchTitle) !== -1
             })
-        }  
+        }
     },
     created () {
         let self = this
