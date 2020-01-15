@@ -4,14 +4,13 @@ const { Article } = require('../models');
 class ArticleController {
   static async postNewArticle(req, res, next) {
     const { title, content, featured_image, tags } = req.body;
-    const tagsValue = tags.split(',')
     const { id } = req.token;
     const doc = {
       title,
       content,
       featured_image,
       author: id,
-      tags: tagsValue
+      tags
     };
     try {
       const response = await Article.create(doc)

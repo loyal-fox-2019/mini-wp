@@ -20,7 +20,6 @@ module.exports = function(err, req, res, next) {
     if (stringifiedErr.indexOf('email') !== -1) {
       errors = ['Email is already in use'];
     }
-
     res.status(409).json({ errors });
   } else if (err.auth) {
     let errors = null;

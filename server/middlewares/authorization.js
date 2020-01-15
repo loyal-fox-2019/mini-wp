@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     .then((article) => {
       if (article.author == id) next();
       else {
-        next({ auth: true, statsu: 401, message: 'Unauthorized' });
+        next({ auth: true, statsu: 403, message: 'Forbidden' });
       }
     })
     .catch(next);

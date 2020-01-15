@@ -79,6 +79,9 @@ export default {
     loading: {
       type: Boolean,
     },
+    lockLogin: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -103,6 +106,7 @@ export default {
         email: this.email,
         password: this.password,
       };
+      this.password = '';
       this.$emit('loginattempt', docs);
     },
     onSuccess(googleUser) {

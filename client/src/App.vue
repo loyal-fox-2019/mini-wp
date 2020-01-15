@@ -1,14 +1,26 @@
 <template>
   <div id="root">
+    
     <navbar :loginstatus="isLogin" @navbarlogout="logoutAttempt"
     @navbarcontrol="changePage" :fullname="fullname"
     ></navbar>
-    <homepage v-show="page === 'home'"></homepage>
+
+    <homepage class="animated fadeIn" v-show="page === 'home'"></homepage>
+
     <loginpage :loading="loading"
+    class="animated fadeIn"
     @signupattempt="singupAttempt"
     @loginattempt="loginAttempt"
     v-show="page === 'signin'" @googlelogin="google"></loginpage>
-    <articles :page="page" class="mt-3" v-show="page === 'articles'" :loading="loading"></articles>
+
+    <articles :page="page"
+    class="mt-3 animated fadeIn" v-show="page === 'articles'" :loading="loading"></articles>
+
+    <dashboard v-show="page === 'Dashboard'"
+    :pagearticle="changePage"
+    >
+    </dashboard>
+
   </div>
 </template>
 
@@ -18,6 +30,7 @@ import navbar from './components/navbar.vue';
 import homepage from './components/homepage.vue';
 import loginpage from './components/loginPage.vue';
 import articles from './components/articles.vue';
+import dashboard from './components/dashboard.vue';
 
 export default {
   data() {
@@ -167,7 +180,11 @@ export default {
             'error'
           );
         })
-        .finally(() => this.loading = false)
+        .finally(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        });
     },
     logoutAttempt() {
       this.checkLogin();
@@ -178,6 +195,7 @@ export default {
     homepage,
     loginpage,
     articles,
+    dashboard,
   },
   created() {
     this.checkLogin();

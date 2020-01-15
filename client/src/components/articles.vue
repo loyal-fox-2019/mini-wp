@@ -45,7 +45,7 @@
           </section>
 
 
-          <div class="row row-cols-4 justify-content-center">
+          <div class="row row-cols-4 justify-content-center animated fadeIn">
             <b-card
               v-for="article in articles"
               :key="article._id"
