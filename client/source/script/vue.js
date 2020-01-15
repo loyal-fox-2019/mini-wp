@@ -27,8 +27,7 @@ new Vue ({
             .then((data)=>{
                 this.form = false
                 this.postwall = true
-                this.articles.unshift(data.data)
-                
+                this.articles.unshift(data.data)  
             })
         }, 
         delet: function(params, index){

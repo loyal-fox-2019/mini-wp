@@ -6,7 +6,7 @@ const upload = gcsUpload({
         fileSize: 1e6
     },
     gcsConfig:{
-        keyFilename: 'hack-tiv8 project-4bdb4ee78a06.json',
+        keyFilename: 'token.json',
         bucketName: 'article-image-miniwp'
     }
 })
