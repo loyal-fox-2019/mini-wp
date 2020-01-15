@@ -1,3 +1,6 @@
+const htmlPort = 'http://localhost:3000'
+// const htmlPort = 'http://34.87.102.199:3000'
+
 new Vue ({
     el: '#app',
     created() {
@@ -27,7 +30,7 @@ new Vue ({
             obj.append('content', this.content);
             obj.append('file', this.file);
             axios({
-                url: `http://localhost:3000/article`,
+                url: `${htmlPort}/article`,
                 method: 'post',
                 data: obj
             })
@@ -43,7 +46,7 @@ new Vue ({
         },
         findArticle: function() {
             axios({
-                url: `http://localhost:3000/article`,
+                url: `${htmlPort}/article`,
                 method: 'get',
             })
             .then(articlesDB => {
@@ -57,7 +60,7 @@ new Vue ({
         },
         deleteArticle: function(id) {
             axios({
-                url: `http://localhost:3000/article/${id}`,
+                url: `${htmlPort}/article/${id}`,
                 method: 'delete'
             })
             .then(deletedArticle => {
@@ -71,7 +74,7 @@ new Vue ({
         },
         findOneArticle: function(id) {
             axios({
-                url: `http://localhost:3000/article/${id}`,
+                url: `${htmlPort}/article/${id}`,
                 method: 'get'
             })
             .then(articleDB => {
@@ -87,7 +90,7 @@ new Vue ({
         },
         updateOne: function(id) {
             axios({
-                url: `http://localhost:3000/article/${id}`,
+                url: `${htmlPort}/article/${id}`,
                 method: 'put',
                 data: {
                     title: this.title,
