@@ -1,10 +1,10 @@
 <template>
   <div>
     <TheNavbar></TheNavbar>
-    <LoginForm></LoginForm>
-    <RegisterForm></RegisterForm>
-    <EditorForm></EditorForm>
-    <PostCards></PostCards>
+    <LoginForm v-if="!isLogin && page === 'login'"></LoginForm>
+    <RegisterForm v-if="!isLogin && page === 'register'" ></RegisterForm>
+    <EditorForm v-if="isLogin && page === 'editor'"></EditorForm>
+    <MyPostCards v-if="isLogin && page === 'myposts'"></PostCards>
   </div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
   },
   data () {
     return {
-
+      isLogin: false,
+      page: 'login'
     }
   },
   methods: {

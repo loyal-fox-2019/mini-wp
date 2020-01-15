@@ -10158,7 +10158,7 @@ var staticRenderFns = [
         "div",
         {
           staticClass:
-            "mx-auto mt-4 max-w-xl rounded overflow-hidden shadow-lg bg-white"
+            "mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white"
         },
         [
           _c("img", {
@@ -10219,7 +10219,7 @@ var staticRenderFns = [
         "div",
         {
           staticClass:
-            "mx-auto mt-4 max-w-xl rounded overflow-hidden shadow-lg bg-white"
+            "mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white"
         },
         [
           _c("img", {
@@ -10350,7 +10350,10 @@ var _default = {
     PostCards: _PostCards.default
   },
   data: function data() {
-    return {};
+    return {
+      isLogin: false,
+      page: 'login'
+    };
   },
   methods: {},
   created: function created() {}
@@ -10373,13 +10376,13 @@ exports.default = _default;
     [
       _c("TheNavbar"),
       _vm._v(" "),
-      _c("LoginForm"),
+      !_vm.isLogin && _vm.page === "login" ? _c("LoginForm") : _vm._e(),
       _vm._v(" "),
-      _c("RegisterForm"),
+      !_vm.isLogin && _vm.page === "register" ? _c("RegisterForm") : _vm._e(),
       _vm._v(" "),
-      _c("EditorForm"),
+      _vm.isLogin && _vm.page === "editor" ? _c("EditorForm") : _vm._e(),
       _vm._v(" "),
-      _c("PostCards")
+      _vm.isLogin && _vm.page === "myposts" ? _c("MyPostCards") : _vm._e()
     ],
     1
   )
@@ -13457,7 +13460,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45091" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44933" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

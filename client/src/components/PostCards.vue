@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mx-auto mt-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
+    <div class="mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
     <img class="w-full" src="https://source.unsplash.com/uG26FNjM4EU/480x320">
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
@@ -15,7 +15,7 @@
         <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
       </div>
     </div>
-    <div class="mx-auto mt-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
+    <div class="mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
       <img class="w-full" src="https://source.unsplash.com/uG26FNjM4EU/480x320">
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
