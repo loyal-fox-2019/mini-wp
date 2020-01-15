@@ -10,6 +10,9 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
+    image:{
+        type: String,
+    },
     created_at: {
         type: Date
     }

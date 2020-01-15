@@ -18,6 +18,7 @@ class ArticleController {
         let data = {
             title: req.body.title,
             content: req.body.content,
+            image: req.body.image,
             created_at: new Date()
         }
         Article.create(data)
@@ -52,8 +53,10 @@ class ArticleController {
         let id = req.params.id
         let data = {
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            image: req.body.image
         }
+        console.log(data)
         Article.updateOne({_id: id}, data)
             .then(result => {
                 res.status(200).json({
