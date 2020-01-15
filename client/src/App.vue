@@ -2,21 +2,28 @@
   <div>
     <TheNavbar
       :isLogin="isLogin"
+      @changePage="changePage"
     >
     </TheNavbar>
     <LoginForm
       v-if="!isLogin && page === 'login'"
       @changePage="changePage"
-      @setIsLogin="setIsLogin"
-      >
+      @setIsLogin="setIsLogin">
     </LoginForm>
     <RegisterForm
       v-if="!isLogin && page === 'register'"
-      @changePage="changePage"
-      >
+      @changePage="changePage">
     </RegisterForm>
-    <MyPosts v-if="isLogin && page === 'myposts'"></MyPosts>
-    <!-- <EditorForm v-if="isLogin && page === 'editor'"></EditorForm> -->
+    <MyPosts
+      v-if="isLogin && page === 'myposts'"
+      @singlePost="toSinglePost">
+
+    </MyPosts>
+    <EditorForm v-if="isLogin && page === 'editor'"></EditorForm>
+    <SinglePost
+      :articleId="articleId"
+      v-if="isLogin && page === 'post'">
+    </SinglePost>
   </div>
 </template>
 
@@ -26,6 +33,7 @@ import EditorForm from './components/EditorForm'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
 import MyPosts from './components/MyPosts'
+import SinglePost from './components/SinglePost'
 export default {
   name: 'app',
   components: {
@@ -33,12 +41,14 @@ export default {
     LoginForm,
     RegisterForm,
     EditorForm,
-    MyPosts
+    MyPosts,
+    SinglePost
   },
   data () {
     return {
       isLogin: false,
-      page: 'login'
+      page: 'login',
+      articleId: null
     }
   },
   methods: {
@@ -48,6 +58,10 @@ export default {
     setIsLogin(value) {
       this.isLogin = value
       this.page = 'myposts'
+    },
+    toSinglePost(articleId) {
+      this.page = 'post'
+      this.articleId = articleId
     }
   },
   created () {

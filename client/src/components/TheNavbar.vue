@@ -34,12 +34,16 @@
       <div class="container mx-auto px-4">
         <div class="md:flex">
           <div class="flex mr-8">
-            <a href="#" class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
+            <a href="#"
+              @click.prevent="$emit('changePage', 'editor')"
+              class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
               Create New Post
             </a>
           </div>
           <div class="flex mr-8">
-            <a href="#" class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
+            <a href="#"
+              @click.prevent="$emit('changePage', 'myposts')"
+              class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
               My Posts
             </a>
           </div>
@@ -74,9 +78,6 @@ export default {
     toggleDropdown() {
       this.myDropdown = !this.myDropdown
     },
-    toLogin() {
-      this.$emit('setForm', 'login')
-    }
   },
   created () {
 

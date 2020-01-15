@@ -80,7 +80,7 @@
 
 <script>
 import Swal from 'sweetalert2'
-import axios from '../../config/axios'
+import axios from '../../helpers/axios'
 import WarningCard from './WarningCard'
 import errorHandler from '../../helpers/errorHandler'
 export default {

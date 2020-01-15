@@ -54,7 +54,7 @@
         <div class="flex items-center mt-4">
           <span class="mx-auto text-sm text-gray-500">
             Don't have an account?
-            <a href="#" @click.prevent="toRegister" class="text-blue-500 hover:text-blue-900" @click.prevent="toRegister">Register</a>
+            <a href="#" @click.prevent="toRegister" class="text-blue-500 hover:text-blue-900">Register</a>
           </span>
         </div>
       </form>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import axios from '../../config/axios'
+import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
 import WarningCard from './WarningCard'
 import errorHandler from '../../helpers/errorHandler'

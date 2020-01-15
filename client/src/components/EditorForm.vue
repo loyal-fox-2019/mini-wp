@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-white p-8 w-4/5 mx-auto max-w-xl rounded-lg shadow mt-4">
+  <div class="bg-white p-8 w-4/5 mx-auto max-w-xl rounded-lg shadow mt-32">
     <div id="preview" class="mt-4">
       <img v-if="url" :src="url" class=" max-w-lg rounded-lg mx-auto" />
     </div>

@@ -8956,6 +8956,10 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
 var _default = {
   name: 'TheNavbar',
   props: {
@@ -8969,9 +8973,6 @@ var _default = {
   methods: {
     toggleDropdown: function toggleDropdown() {
       this.myDropdown = !this.myDropdown;
-    },
-    toLogin: function toLogin() {
-      this.$emit('setForm', 'login');
     }
   },
   created: function created() {}
@@ -9094,7 +9095,51 @@ exports.default = _default;
           {
             staticClass: "hidden bg-blue-400 md:block md:bg-white md:border-b"
           },
-          [_vm._m(5)]
+          [
+            _c("div", { staticClass: "container mx-auto px-4" }, [
+              _c("div", { staticClass: "md:flex" }, [
+                _c("div", { staticClass: "flex mr-8" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.$emit("changePage", "editor")
+                        }
+                      }
+                    },
+                    [_vm._v("\n            Create New Post\n          ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "flex mr-8" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.$emit("changePage", "myposts")
+                        }
+                      }
+                    },
+                    [_vm._v("\n            My Posts\n          ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm._m(6)
+              ])
+            ])
+          ]
         )
       : _vm._e()
   ])
@@ -9180,56 +9225,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container mx-auto px-4" }, [
-      _c("div", { staticClass: "md:flex" }, [
-        _c("div", { staticClass: "flex mr-8" }, [
-          _c(
-            "a",
-            {
-              staticClass:
-                "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
-              attrs: { href: "#" }
-            },
-            [_vm._v("\n            Create New Post\n          ")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex mr-8" }, [
-          _c(
-            "a",
-            {
-              staticClass:
-                "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
-              attrs: { href: "#" }
-            },
-            [_vm._v("\n            My Posts\n          ")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex mr-8" }, [
-          _c(
-            "a",
-            {
-              staticClass:
-                "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
-              attrs: { href: "#" }
-            },
-            [_vm._v("\n            Feeds\n          ")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "flex" }, [
-          _c(
-            "a",
-            {
-              staticClass:
-                "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
-              attrs: { href: "#" }
-            },
-            [_vm._v("\n            Settings\n          ")]
-          )
-        ])
-      ])
+    return _c("div", { staticClass: "flex mr-8" }, [
+      _c(
+        "a",
+        {
+          staticClass:
+            "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
+          attrs: { href: "#" }
+        },
+        [_vm._v("\n            Feeds\n          ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex" }, [
+      _c(
+        "a",
+        {
+          staticClass:
+            "no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900",
+          attrs: { href: "#" }
+        },
+        [_vm._v("\n            Settings\n          ")]
+      )
     ])
   }
 ]
@@ -9329,7 +9350,7 @@ exports.default = _default;
   return _c(
     "div",
     {
-      staticClass: " bg-white p-8 w-4/5 mx-auto max-w-xl rounded-lg shadow mt-4"
+      staticClass: "bg-white p-8 w-4/5 mx-auto max-w-xl rounded-lg shadow mt-32"
     },
     [
       _c("div", { staticClass: "mt-4", attrs: { id: "preview" } }, [
@@ -14218,7 +14239,7 @@ module.exports.default = axios;
 
 },{"./utils":"node_modules/axios/lib/utils.js","./helpers/bind":"node_modules/axios/lib/helpers/bind.js","./core/Axios":"node_modules/axios/lib/core/Axios.js","./core/mergeConfig":"node_modules/axios/lib/core/mergeConfig.js","./defaults":"node_modules/axios/lib/defaults.js","./cancel/Cancel":"node_modules/axios/lib/cancel/Cancel.js","./cancel/CancelToken":"node_modules/axios/lib/cancel/CancelToken.js","./cancel/isCancel":"node_modules/axios/lib/cancel/isCancel.js","./helpers/spread":"node_modules/axios/lib/helpers/spread.js"}],"node_modules/axios/index.js":[function(require,module,exports) {
 module.exports = require('./lib/axios');
-},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"config/axios.js":[function(require,module,exports) {
+},{"./lib/axios":"node_modules/axios/lib/axios.js"}],"helpers/axios.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14399,7 +14420,7 @@ exports.default = void 0;
 
 var _sweetalert = _interopRequireDefault(require("sweetalert2"));
 
-var _axios = _interopRequireDefault(require("../../config/axios"));
+var _axios = _interopRequireDefault(require("../../helpers/axios"));
 
 var _WarningCard = _interopRequireDefault(require("./WarningCard"));
 
@@ -14785,7 +14806,7 @@ render._withStripped = true
       
       }
     })();
-},{"sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","../../config/axios":"config/axios.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/LoginForm.vue":[function(require,module,exports) {
+},{"sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","../../helpers/axios":"helpers/axios.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/LoginForm.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14793,7 +14814,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _axios = _interopRequireDefault(require("../../config/axios"));
+var _axios = _interopRequireDefault(require("../../helpers/axios"));
 
 var _sweetalert = _interopRequireDefault(require("sweetalert2"));
 
@@ -15145,24 +15166,20 @@ render._withStripped = true
       
       }
     })();
-},{"../../config/axios":"config/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/MyPosts.vue":[function(require,module,exports) {
+},{"../../helpers/axios":"helpers/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/MyPosts.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+var _axios = _interopRequireDefault(require("../../helpers/axios"));
+
+var _sweetalert = _interopRequireDefault(require("sweetalert2"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 //
 //
 //
@@ -15188,7 +15205,34 @@ exports.default = void 0;
 //
 //
 var _default = {
-  name: 'MyPosts'
+  name: 'MyPosts',
+  data: function data() {
+    return {
+      myArticles: []
+    };
+  },
+  methods: {
+    fetchMyPosts: function fetchMyPosts() {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: 'get',
+        url: '/articles',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+        console.log(data);
+        _this.myArticles = data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchMyPosts();
+  }
 };
 exports.default = _default;
         var $de2b0b = exports.default || module.exports;
@@ -15203,36 +15247,43 @@ exports.default = _default;
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-32" }, [
-      _c(
+  return _c(
+    "div",
+    { staticClass: "mt-32" },
+    _vm._l(_vm.myArticles, function(article) {
+      return _c(
         "div",
         {
+          key: article._id,
           staticClass:
-            "mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white"
+            "mb-4 mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white"
         },
         [
           _c("img", {
             staticClass: "w-full",
-            attrs: { src: "https://source.unsplash.com/uG26FNjM4EU/480x320" }
+            attrs: { src: article.featured_image }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "px-6 py-4" }, [
-            _c("div", { staticClass: "font-bold text-xl mb-2" }, [
-              _vm._v("The Coldest Sunset")
-            ]),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "font-bold text-xl mb-2 cursor-pointer hover:underline",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.$emit("singlePost", article._id)
+                  }
+                }
+              },
+              [_vm._v("\n        " + _vm._s(article.title) + "\n      ")]
+            ),
             _vm._v(" "),
-            _c("p", { staticClass: "text-gray-700 text-base mb-2" }, [
-              _vm._v(
-                "\n      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.\n    "
-              )
-            ]),
+            _c("div", {
+              staticClass: "text-gray-700 mb-2",
+              domProps: { innerHTML: _vm._s(article.content) }
+            }),
             _vm._v(" "),
             _c(
               "a",
@@ -15241,100 +15292,29 @@ var staticRenderFns = [
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "px-6 py-4" }, [
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              },
-              [_vm._v("#photography")]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              },
-              [_vm._v("#travel")]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
-              },
-              [_vm._v("#winter")]
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white"
-        },
-        [
-          _c("img", {
-            staticClass: "w-full",
-            attrs: { src: "https://source.unsplash.com/uG26FNjM4EU/480x320" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "px-6 py-4" }, [
-            _c("div", { staticClass: "font-bold text-xl mb-2" }, [
-              _vm._v("The Coldest Sunset")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-gray-700 text-base mb-2" }, [
-              _vm._v(
-                "\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.\n      "
+          _c(
+            "div",
+            { staticClass: "px-6 py-4" },
+            _vm._l(article.tags, function(tag) {
+              return _c(
+                "span",
+                {
+                  key: tag,
+                  staticClass:
+                    "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+                },
+                [_vm._v(_vm._s(tag))]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "text-gray-700 hover:text-gray-900 underline" },
-              [_vm._v("Read more")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "px-6 py-4" }, [
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              },
-              [_vm._v("#photography")]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
-              },
-              [_vm._v("#travel")]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700"
-              },
-              [_vm._v("#winter")]
-            )
-          ])
+            }),
+            0
+          )
         ]
       )
-    ])
-  }
-]
+    }),
+    0
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
           return {
@@ -15367,7 +15347,174 @@ render._withStripped = true
       
       }
     })();
-},{"_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
+},{"../../helpers/axios":"helpers/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/SinglePost.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _axios = _interopRequireDefault(require("../../helpers/axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'SinglePost',
+  props: {
+    articleId: String
+  },
+  data: function data() {
+    return {
+      title: '',
+      content: '',
+      date: '',
+      author: '',
+      featuredImage: '',
+      tags: ''
+    };
+  },
+  methods: {
+    fetchPost: function fetchPost(articleId) {
+      var _this = this;
+
+      (0, _axios.default)({
+        method: 'get',
+        url: "/articles/".concat(articleId),
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (_ref) {
+        var data = _ref.data;
+        _this.title = data.title;
+        _this.author = data.author.username;
+        _this.content = data.content;
+        _this.date = data.created_at;
+        _this.featuredImage = data.featured_image;
+        _this.tags = data.tags;
+      }).catch(function (_ref2) {
+        var response = _ref2.response;
+        console.log(response);
+      });
+    }
+  },
+  created: function created() {
+    this.fetchPost(this.articleId);
+  },
+  computed: {}
+};
+exports.default = _default;
+        var $7eed72 = exports.default || module.exports;
+      
+      if (typeof $7eed72 === 'function') {
+        $7eed72 = $7eed72.options;
+      }
+    
+        /* template */
+        Object.assign($7eed72, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "mx-auto my-32 max-w-xl rounded overflow-hidden shadow-lg bg-white"
+    },
+    [
+      _c("img", { staticClass: "w-full", attrs: { src: _vm.featuredImage } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "px-6 py-4" }, [
+        _c("div", { staticClass: "font-bold text-xl mb-2" }, [
+          _vm._v(_vm._s(_vm.title))
+        ]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "text-gray-700 text-base mb-2",
+          domProps: { innerHTML: _vm._s(_vm.content) }
+        }),
+        _vm._v(" "),
+        _c(
+          "a",
+          { staticClass: "text-gray-700 hover:text-gray-900 underline" },
+          [_vm._v("Read more")]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "px-6 py-4" },
+        _vm._l(_vm.tags, function(tag) {
+          return _c(
+            "span",
+            {
+              key: tag,
+              staticClass:
+                "inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+            },
+            [_vm._v("\n      " + _vm._s(tag) + "\n    ")]
+          )
+        }),
+        0
+      )
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$7eed72', $7eed72);
+          } else {
+            api.reload('$7eed72', $7eed72);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"../../helpers/axios":"helpers/axios.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/App.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15385,8 +15532,17 @@ var _LoginForm = _interopRequireDefault(require("./components/LoginForm"));
 
 var _MyPosts = _interopRequireDefault(require("./components/MyPosts"));
 
+var _SinglePost = _interopRequireDefault(require("./components/SinglePost"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15416,12 +15572,14 @@ var _default = {
     LoginForm: _LoginForm.default,
     RegisterForm: _RegisterForm.default,
     EditorForm: _EditorForm.default,
-    MyPosts: _MyPosts.default
+    MyPosts: _MyPosts.default,
+    SinglePost: _SinglePost.default
   },
   data: function data() {
     return {
       isLogin: false,
-      page: 'login'
+      page: 'login',
+      articleId: null
     };
   },
   methods: {
@@ -15431,6 +15589,10 @@ var _default = {
     setIsLogin: function setIsLogin(value) {
       this.isLogin = value;
       this.page = 'myposts';
+    },
+    toSinglePost: function toSinglePost(articleId) {
+      this.page = 'post';
+      this.articleId = articleId;
     }
   },
   created: function created() {
@@ -15460,7 +15622,10 @@ exports.default = _default;
   return _c(
     "div",
     [
-      _c("TheNavbar", { attrs: { isLogin: _vm.isLogin } }),
+      _c("TheNavbar", {
+        attrs: { isLogin: _vm.isLogin },
+        on: { changePage: _vm.changePage }
+      }),
       _vm._v(" "),
       !_vm.isLogin && _vm.page === "login"
         ? _c("LoginForm", {
@@ -15472,7 +15637,15 @@ exports.default = _default;
         ? _c("RegisterForm", { on: { changePage: _vm.changePage } })
         : _vm._e(),
       _vm._v(" "),
-      _vm.isLogin && _vm.page === "myposts" ? _c("MyPosts") : _vm._e()
+      _vm.isLogin && _vm.page === "myposts"
+        ? _c("MyPosts", { on: { singlePost: _vm.toSinglePost } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isLogin && _vm.page === "editor" ? _c("EditorForm") : _vm._e(),
+      _vm._v(" "),
+      _vm.isLogin && _vm.page === "post"
+        ? _c("SinglePost", { attrs: { articleId: _vm.articleId } })
+        : _vm._e()
     ],
     1
   )
@@ -15510,7 +15683,7 @@ render._withStripped = true
       
       }
     })();
-},{"./components/TheNavbar":"src/components/TheNavbar.vue","./components/EditorForm":"src/components/EditorForm.vue","./components/RegisterForm":"src/components/RegisterForm.vue","./components/LoginForm":"src/components/LoginForm.vue","./components/MyPosts":"src/components/MyPosts.vue","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-wysiwyg/dist/vueWysiwyg.js":[function(require,module,exports) {
+},{"./components/TheNavbar":"src/components/TheNavbar.vue","./components/EditorForm":"src/components/EditorForm.vue","./components/RegisterForm":"src/components/RegisterForm.vue","./components/LoginForm":"src/components/LoginForm.vue","./components/MyPosts":"src/components/MyPosts.vue","./components/SinglePost":"src/components/SinglePost.vue","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"node_modules/vue-wysiwyg/dist/vueWysiwyg.js":[function(require,module,exports) {
 var define;
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function (obj) { return typeof obj; }; } else { _typeof = function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -18550,7 +18723,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38859" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33979" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

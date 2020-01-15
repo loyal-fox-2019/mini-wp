@@ -1,41 +1,58 @@
 <template>
   <div class="mt-32">
-    <div class="mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white">
-    <img class="w-full" src="https://source.unsplash.com/uG26FNjM4EU/480x320">
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
-      <p class="text-gray-700 text-base mb-2">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-      </p>
-      <a class="text-gray-700 hover:text-gray-900 underline">Read more</a>
-      </div>
+    <div v-for="article in myArticles" :key="article._id" class="mb-4 mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white">
+      <img class="w-full" :src="article.featured_image">
       <div class="px-6 py-4">
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#photography</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#travel</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
-      </div>
-    </div>
-    <div class="mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
-      <img class="w-full" src="https://source.unsplash.com/uG26FNjM4EU/480x320">
-      <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
-        <p class="text-gray-700 text-base mb-2">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-        </p>
+        <div
+          @click.prevent="$emit('singlePost', article._id)"
+          class="font-bold text-xl mb-2 cursor-pointer hover:underline">
+          {{ article.title }}
+        </div>
+        <div v-html="article.content" class="text-gray-700 mb-2">
+          
+        </div>
         <a class="text-gray-700 hover:text-gray-900 underline">Read more</a>
       </div>
+      <!-- Tags -->
       <div class="px-6 py-4">
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#photography</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#travel</span>
-        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
+        <span v-for="tag in article.tags" :key="tag" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ tag }}</span>
       </div>
+      <!-- End of Tags -->
     </div>
   </div>
 </template>
 
 <script>
+import axios from '../../helpers/axios'
+import Swal from 'sweetalert2'
 export default {
-  name: 'MyPosts'
+  name: 'MyPosts',
+  data () {
+    return {
+      myArticles: []
+    }
+  },
+  methods: {
+    fetchMyPosts() {
+      axios({
+        method: 'get',
+        url: '/articles',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          this.myArticles = data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created() {
+    this.fetchMyPosts()
+  }
 }
 </script>
 
