@@ -95,8 +95,7 @@
                                             {{item.created_at}}</p>
                                     </div>
                                     <div class="col-md-4 d-flex justify-content-end">
-                                        <img src="https://picsum.photos/250/160" alt="article-pict"
-                                            class="article-pict">
+                                        <img v-bind:src="item.thumbnail" alt="article-pict" class="article-pict">
                                     </div>
                                     <div class="col-md-1 d-flex justify-content-center align-items-center">
                                         <button class="btn btn-danger" v-on:click.stop="deleteArticle(item._id)"><i
@@ -112,18 +111,24 @@
                 <div class="new-article" v-show="newArticle">
                     <h3>{{pageTitle}}</h3>
                     <hr>
-                    <div class="form-group" style="width: 45%;">
-                        <label for="title">Article Title</label>
-                        <input type="text" class="form-control" id="title" v-model="titleArticle">
-                    </div>
-                    <div class="form-group" style="width: 75%;">
-                        <label for="content">Example textarea</label>
-                        <textarea class="form-control" id="content" rows="5" v-model="contentArticle"></textarea>
-                    </div>
-                    <button class="btn btn-primary mt-3" v-show='buttonAdd' v-on:click="addNewArticle">Add New
-                        Article</button>
-                    <button class="btn btn-primary mt-3" v-show='buttonEdit' v-on:click="editArticle">Edit
-                        Article</button>
+                    <form enctype="multipart/form-data">
+                        <div class="form-group" style="width: 45%;">
+                            <label for="title">Article Title</label>
+                            <input type="text" class="form-control" id="title" v-model="titleArticle">
+                        </div>
+                        <div class="form-group" style="width: 75%;">
+                            <label for="content">Example textarea</label>
+                            <textarea class="form-control" id="content" rows="5" v-model="contentArticle"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlFile1">Example file input</label>
+                            <input type="file" class="form-control-file" name="file" v-on:change="upload">
+                        </div>
+                        <button class="btn btn-primary mt-3" v-show=' buttonAdd' v-on:click="addNewArticle">Add New
+                            Article</button>
+                        <button class="btn btn-primary mt-3" v-show='buttonEdit' v-on:click="editArticle">Edit
+                            Article</button>
+                    </form>
                 </div>
                 <!-- ADD ARTICLE PAGE -->
                 <!-- DETAIL ARTICLE -->

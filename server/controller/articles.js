@@ -4,7 +4,8 @@ class Article {
     static create(req, res, next) {
         Model.create({
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            thumbnail: req.body.file
         })
             .then(success => {
                 res.status(201).json(success)

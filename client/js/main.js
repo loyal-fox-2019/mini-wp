@@ -7,6 +7,7 @@ new Vue({
         idArticle: '',
         titleArticle: '',
         contentArticle: '',
+        file: '',
         searchBar: '',
         showTitle: '',
         showDescription: '',
@@ -22,6 +23,9 @@ new Vue({
         }
     },
     methods: {
+        upload() {
+            this.file = event.target.files[0]
+        },
         showArticlePage() {
             axios({
                 method: 'get',
@@ -62,13 +66,14 @@ new Vue({
             this.buttonEdit = true
         },
         addNewArticle() {
+            const form = new FormData()
+            form.append('title', this.titleArticle)
+            form.append('content', this.contentArticle)
+            form.append('file', this.file)
             axios({
                 method: 'post',
                 url: '//localhost:3000/articles/',
-                data: {
-                    title: this.titleArticle,
-                    content: this.contentArticle
-                }
+                data: form
             })
                 .then(({ data }) => {
                     this.showArticlePage()

@@ -1,3 +1,4 @@
+if (process.env.NODE_ENV === 'development') require('dotenv').config();
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -7,7 +8,7 @@ const router = require('./router')
 const port = 3000
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/minWp', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGOODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(success => {
         console.log('MiniWP Connected to MongoDB')
     })
