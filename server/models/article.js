@@ -10,6 +10,10 @@ const articleSchema = new Schema(
     content: {
       type: String,
       default: ''
+    },
+    image: {
+      type: String,
+      default: ''
     }
   },
   { timestamps: true }

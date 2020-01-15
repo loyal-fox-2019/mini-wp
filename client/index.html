@@ -44,6 +44,13 @@
         background-size: cover;
         background-repeat: no-repeat;
       } 
+
+      img {
+        width: 30%;
+        margin: auto;
+        display: block;
+        margin-bottom: 10px;
+      }
     </style>
 
     <title>Mini WordPress</title>
@@ -51,6 +58,7 @@
 
   <body>
     <div class="d-flex flex-column" id="app">
+      <!-- nav bar -->
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
           <div class="nav navbar-nav mr-auto">
@@ -71,9 +79,11 @@
         </div>
       </header>
   
+      <!-- main content -->
       <main role="main" class="container">
         <!-- <div class="container-fluid"> -->
         <div class="row">
+          <!-- side bar -->
           <ul class="list-group col-sm-2 sidebar">
             <li v-on:click="changeToViewAll();" class="list-group-item list-group-item-action" id="view-posts">
               View All Posts
@@ -85,8 +95,9 @@
             </li>
           </ul>
   
+          <!-- all articles -->
           <ul v-if="state === 0" class="list-group col-sm-5 list-of-posts">
-            <!-- example post -->
+            <!-- search article -->
             <li class="list-group-item">
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -102,17 +113,19 @@
                 />
               </div>
             </li>
+
+            <!-- display post -->
             <li v-for="post in displayPosts" class="list-group-item list-group-item-action" id="post-1">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body" v-on:click="viewOne(post);">
                   <h5 class="card-title">
                     {{ post.title }}
                   </h5>
                   <div class="d-flex flex-row-reverse bd-highlight">
-                    <button v-on:click="deleteData(post);" type="button" class="btn btn-primary trash">
+                    <button v-on:click.stop="deleteData(post);" type="button" class="btn btn-primary trash">
                       <i class="fas fa-trash-alt"></i>
                     </button>
-                    <button v-on:click="viewOne(post);" type="button" class="btn btn-primary edit">
+                    <button type="button" class="btn btn-primary edit">
                       <i class="fas fa-pen"></i>
                     </button>
                   </div>
@@ -121,8 +134,11 @@
             </li>
           </ul>
 
+          <!-- edit article -->
           <div v-if="state === 0" class="list-group col-sm-5">
             <div class="container">
+
+              <!-- input title -->
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text" id="btnGroupAddon">Title</div>
@@ -138,12 +154,26 @@
                 />
               </div>
               <br />
-              <div id="editor-edit">
-                <p>Hello World!</p>
-                <p>Some initial <strong>bold</strong> text</p>
-                <p><br /></p>
+
+              <!-- input image -->
+              <div class="input-image">
+                <div v-if="!image">
+                  <input type="file" @change="onFileChange">
+                </div>
+                <div v-else>
+                  <img :src="image" />
+                  <button @click="removeImage">Remove image</button>
+                </div>
               </div>
               <br />
+              <!-- editor -->
+              <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea v-model="currPost.content" class="form-control" id="content" rows="3"></textarea>
+              </div>
+              <br />
+
+              <!-- button to update article -->
               <div class="d-flex flex-row-reverse bd-highlight">
                 <button v-on:click="updateData();" type="submit" class="btn btn-primary" id="update">
                   Edit!
@@ -154,6 +184,7 @@
           
           <div v-if="state === 1" class="form col-sm-5">
             <div class="container">
+              <!-- input title -->
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text" id="btnGroupAddon">Title</div>
@@ -163,17 +194,31 @@
                   type="text"
                   class="form-control"
                   placeholder="Title Post"
-                  aria-label="Input group example"
+                  ari a-label="Input group example"
                   aria-describedby="btnGroupAddon"
                 />
               </div>
               <br />
-              <div id="editor-add">
-                <p>Hello World!</p>
-                <p>Some initial <strong>bold</strong> text</p>
-                <p><br /></p>
+              <!-- input image -->
+              <div class="input-image">
+                <div v-if="!image">
+                  <input type="file" @change="onFileChange">
+                </div>
+                <div v-else>
+                  <img :src="image" />
+                  <button @click="removeImage">Remove image</button>
+                </div>
               </div>
               <br />
+              <br />
+              <!-- editor -->
+              <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea v-model="newContent" class="form-control" id="content" rows="3"></textarea>
+              </div>
+              <br />
+
+              <!-- button to add article -->
               <div class="d-flex flex-row-reverse bd-highlight">
                 <button v-on:click="saveData();" type="submit" class="btn btn-primary" id="save">
                   Save!
@@ -184,8 +229,6 @@
         </div>
       </main>
 
-      
-  
       <footer class="footer mt-3 border-top">
         <div class="container text-center">
           <span class="text-muted">&copy; 2018 My Personal Site LLC.</span>

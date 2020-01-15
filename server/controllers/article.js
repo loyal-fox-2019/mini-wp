@@ -2,8 +2,10 @@ const { Article } = require('../models');
 
 class ArticleController {
   static create(req, res, next) {
-    const { title, content } = req.body;
-    Article.create({ title, content })
+    const { title, content, file } = req.body;
+
+    // console.log(JSON.stringify(req.body, null, 2), "ini body");
+    Article.create({ title, content, image: file })
       .then(article => res.status(200).json(article))
       .catch(err => next(err));
   }
@@ -43,7 +45,11 @@ class ArticleController {
 
   static update(req, res, next) {
     const { id } = req.params;
-    Article.findByIdAndUpdate(id, req.body)
+    const { title, content, file } = req.body
+
+    console.log(req.body);
+
+    Article.findByIdAndUpdate(id, { title, content, image: file })
       .then(article => {
         if (!article) {
           const err = new Error(`Article not found!`);
