@@ -8,7 +8,7 @@ const router = require('./router')
 const port = 3000
 const app = express()
 
-mongoose.connect(process.env.MONGOODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(success => {
         console.log('MiniWP Connected to MongoDB')
     })

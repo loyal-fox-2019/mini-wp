@@ -80,7 +80,7 @@
                             <div class="input-group-text" width=><i class="fas fa-search"></i></div>
                         </div>
                         <input type="text" class="form-control" id="search" name="search" placeholder="Search Article"
-                            autocomplete="off" v-model="searchBar" v-on:keyup="searchArticle">
+                            autocomplete="off" v-model="searchBar" v-on:keyup="searchArticleComputed">
                     </div>
                     <div class="container col-md-9">
                         <div class="card mb-3 list-article" v-for="item in searchArticleComputed"
