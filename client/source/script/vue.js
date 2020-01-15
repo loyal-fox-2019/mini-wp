@@ -29,6 +29,9 @@ new Vue ({
                 this.postwall = true
                 this.articles.unshift(data.data)  
             })
+            .catch((err)=>{
+                console.log(err)
+            })
         }, 
         delet: function(params, index){
             let id = params['_id']

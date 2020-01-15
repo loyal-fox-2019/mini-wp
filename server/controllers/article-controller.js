@@ -15,11 +15,13 @@ class Controller{
             created_at: req.body['created_at'],
             image: req.body.image
         }
+        console.log('--------ini dari controller create')
         Article.create(data)
         .then((data)=>{
             res.status(201).json(data)
         })
         .catch((err)=>{
+            console.log('--------ini dari controller create err')
             res.status(500).json(err)
         })
     }
