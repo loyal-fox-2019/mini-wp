@@ -1,4 +1,4 @@
-let url = 'http://miniwp.kennys.my.id:3000'
+let url = 'http://miniwp-server.kennys.my.id:3000'
 
 new Vue({
     el: '#app',
