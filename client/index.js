@@ -25,21 +25,28 @@ new Vue({
     contentPlace:'',
     formUpdate: false,
     articleId: '',
-    created: ''
+    created: '',
+    picture: ''
   },
   methods:{
+    uploadPicture(){
+      this.picture = event.target.files[0]
+      console.log(event.target.files)
+    },
     update(id){
-      // console.log('masuk ga', id)
+      // console.log('picture yang ke upload', this.picture)
+      const formData = new FormData()
+      formData.append('title', this.articleTitle)
+      formData.append('content', this.articleContent)
+      formData.append('created_at', new Date())
+      formData.append('picture', this.picture)
       axios({
         method: 'patch',
         url: `http://localhost:3000/articles/${id}`,
-        data:{
-          title: this.articleTitle,
-          content: this.articleContent,
-          created_at: this.created
-        }
+        data: formData
       })
       .then(({data})=>{
+        console.log(data,'di update()')
         this.formUpdate=false
         return axios({
           method:'get',
@@ -62,11 +69,12 @@ new Vue({
         url: `http://localhost:3000/articles/${id}`
       })
       .then(({data})=>{
-        console.log(data)
+        console.log(data,'di updateArticle()')
         this.titlePlace = data.result.title
         this.contentPlace = data.result.content
         this.created = data.result.created_at
         this.articleId = data.result._id
+        this.picture = data.result.picture
       })
       .catch(err=>{
         console.log(err)
@@ -105,43 +113,44 @@ new Vue({
       this.searchedList = findList
     },
     showPublished(){
-      console.log('show published')
+      // console.log('show published')
       this.searchedList = this.listArticles
       this.formWrite=false
+      this.formUpdate=false
     },
     showForm(){
       if(this.formWrite==false){
         this.formWrite = true
         this.searchedList = []
-        // this.mainPage = false
+        this.formUpdate=false
       }else{
-        // console.log('hide form')
         this.formWrite = false
         this.showPublished()
-        // this.mainPage = true
       }
     },
     publishArticle(){
+      const formData = new FormData()
       let list = this.listArticles
-      let title=this.articleTitle
-      let content = this.articleContent
-      let created_at = new Date()
+      formData.append('title', this.articleTitle)
+      formData.append('content', this.articleContent)
+      formData.append('picture', this.picture)
+      formData.append('created_at', new Date())
+      console.log(this.picture)
+      console.log(formData, 'mau liat hasil yg keinput aja')
       this.formWrite = false
       axios({
         method: 'post',
         url: 'http://localhost:3000/articles',
-        data:{
-          title,
-          content,
-          created_at
-        }
+        data: formData
       })
       .then(({data})=>{
-        // console.log(data)
+        console.log(data, 'result dari publish article')
         list.push({
+          id: data._id,
           title:data.title,
           content:data.content,
-          created_at: data.created_at
+          created_at: data.created_at,
+          picture: data.picture
         })
         this.showPublished()
       })

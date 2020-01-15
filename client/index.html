@@ -58,32 +58,39 @@
                                   </div>
                             </div>
                             <div id="formWrite" style="display: none;" v-show="formWrite">
-                                <p>Title</p>
-                                <input type="text" v-model="articleTitle">
-                                <p>Content</p>
-                                <input type="text" v-model="articleContent">
                                 <!-- <textarea name="editor1" id="editor1" rows="10" cols="80" v-model="articleContent">
                                 </textarea> -->
+                                <form method="post" enctype="multipart/form-data">
+                                    <p>Title</p>
+                                    <input type="text" v-model="articleTitle">
+                                    <p>Content</p>
+                                    <textarea type="text" v-model="articleContent"></textarea>
+                                    <input type="file" name="file" v-on:change="uploadPicture"/>
+                                  </form>
                                 <p>
                                     <button type="button" class="btn btn-danger" v-on:click="publishArticle">Publish</button>
                                 </p>
                             </div>
                             <div id="formUpdate" style="display: none;" v-show="formUpdate">
-                                <p>Title</p>
-                                <input type="text" v-model="articleTitle" v-bind:placeholder="titlePlace">
-                                <p>Content</p>
-                                <input type="text" v-model="articleContent" v-bind:placeholder="contentPlace">
-                                <!-- <textarea name="editor1" id="editor1" rows="10" cols="80" v-model="articleContent">
-                                </textarea> -->
+                                <form method="post" enctype="multipart/form-data">
+                                    <p>Title</p>
+                                    <input type="text" v-model="articleTitle" v-bind:placeholder="titlePlace">
+                                    <p>Content</p>
+                                    <textarea type="text" v-model="articleContent" v-bind:placeholder="contentPlace"></textarea>
+                                    <input type="file" name="file" v-on:change="uploadPicture"/>
+                                    <!-- <textarea name="editor1" id="editor1" rows="10" cols="80" v-model="articleContent">
+                                    </textarea> -->
+                                </form>
                                 <p>
                                     <button type="button" class="btn btn-danger" v-on:click="update(articleId)">Update</button>
                                 </p>
                             </div>
-                            <div class="row blogs" v-for="item in searchedList" v-show="searchedList">
-                                <div class="col-md-10">
+                            <div class="row blogs d-flex justify-content-between" v-for="item in searchedList" v-show="searchedList">
+                                <div class="col-md-3">
                                     <h5>{{ item.title }}</h5>
                                     <p>{{ item.content }}</p>
                                 </div>
+                                <img class="col-md " v-bind:src="item.picture" alt="" style="width: 25%;height: 25%;">
                                 <div class="col-md justify-content-right">
                                     <button type="button" class="btn btn-warning" v-on:click="updateArticle(item._id)">Edit</button>
                                     <button type="button" class="btn btn-danger" v-on:click="deleteArticle(item._id)">Delete</button>

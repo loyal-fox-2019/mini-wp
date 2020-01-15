@@ -21,18 +21,20 @@ class ArticleController{
         })
     }
     static create(req,res,next){
-        // console.log(req.body)
+        console.log(req.body, 'controller create')
         Article.create({
             title:req.body.title,
             content: req.body.content,
-            created_at: req.body.created_at
+            created_at: req.body.created_at,
+            picture: req.body.picture
         })
         .then(result=>{
             // console.log(result)
             res.json({
                 title: result.title,
                 content: result.content,
-                created_at: result.created_at
+                created_at: result.created_at,
+                picture: result.picture
             })
         })
         .catch(err=>{
@@ -57,10 +59,12 @@ class ArticleController{
         })
     }
     static update(req,res,next){
+        console.log(req.body,'di controller update')
         Article.findByIdAndUpdate(req.params.id,{
             title: req.body.title,
             content: req.body.content,
-            created_at: req.body.created_at
+            created_at: req.body.created_at,
+            picture: req.body.picture
         })
         .then(result=>{
             res.json({
