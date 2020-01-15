@@ -1,7 +1,3 @@
-window.onload = function(){
-    CKEDITOR.replace( 'editor1' );
-}
-
 new Vue({
     el: '#app',
     data: {
@@ -10,6 +6,7 @@ new Vue({
       search_box: '',
       newTitle: '',
       newContent: '',
+      newPicture: '',
       selectedId: '',
 
       showList: '',
@@ -19,6 +16,9 @@ new Vue({
       showUpdateBtn: ''
     },
     methods: {
+        getImage(event){
+            this.newPicture = event.target.files[0]
+        },
         newArticle(){
             this.showList = 'none'
             this.showNoArticle = 'none'
@@ -29,6 +29,7 @@ new Vue({
             this.newTitle = ''
             this.newContent = ''
             this.selectedId = ''
+            this.newPicture = ''
         },
         deleteArticle(id){
             axios({
@@ -52,6 +53,7 @@ new Vue({
             this.selectedId = id
             this.newTitle = title
             this.newContent = content
+            this.newPicture = ''
         },
         updateArticle(){
             let title = this.newTitle
@@ -72,17 +74,15 @@ new Vue({
             })
         },
         publishArticle(){
-            let title = this.newTitle
-            let content = this.newContent
-            let created_at = new Date()
+            let formData = new FormData()
+            formData.append('title', this.newTitle)
+            formData.append('content', this.newContent)
+            formData.append('created_at', new Date())
+            formData.append('picture', this.newPicture)
             axios({
                 method: 'post',
                 url: 'http://localhost:3000/articles',
-                data: {
-                    title,
-                    content,
-                    created_at
-                }
+                data: formData
             })
             .then(({data})=>{
                 this.getArticles()
@@ -121,6 +121,7 @@ new Vue({
                 this.showList = ''
                 this.showNoArticle = ''
                 this.selectedId = ''
+                this.newPicture = ''
             })
             .catch(err=>{
                 console.log(err)
@@ -146,6 +147,7 @@ new Vue({
             this.showWrite = 'none'
             this.showNoArticle = ''
             this.showList = ''
+            this.newPicture = ''
         })
         .catch(err=>{
             console.log(err)

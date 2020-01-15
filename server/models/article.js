@@ -11,6 +11,9 @@ const articleSchema = new Schema({
     },
     created_at: {
         type: Date
+    },
+    picture: {
+        type: String
     }
 })
 

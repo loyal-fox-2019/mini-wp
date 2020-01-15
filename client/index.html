@@ -128,7 +128,7 @@
                             <div v-bind:style="{ display: showList }">
                                 <div class="row px-4 mt-3 mb-4" >
                                     <div class="card col-sm-6 col-nd-6 col-lg-4 col-xl-3 p-2" style="width: 18rem;" v-for="item in articles">
-                                        <img class="card-img-top" src="https://images-na.ssl-images-amazon.com/images/I/81-yKbVND-L.png" alt="Card image cap">
+                                        <img class="card-img-top rounded" v-bind:src="item.picture" alt="Card image cap">
                                         <div class="card-body">
                                         <h5 class="card-title">{{ item.title }}</h5>
                                         <p class="card-text">{{ item.content_preview }}</p>
@@ -150,30 +150,37 @@
 
                             <!-- WRITE ARTICLE -->
                             <div v-bind:style="{ display: showWrite }">
-                                <div class="row px-4 mt-3">
-                                    <div class="col-1">
-                                        <h4 class="d-inline-block">Title: </h4>
+                                <form action="/upload-single" method="post" enctype="multipart/form-data">
+                                    <div class="row px-4 mt-3">
+                                        <div class="col-1">
+                                            <h4 class="d-inline-block">Title: </h4>
+                                        </div>
+                                        <div class="col-8">
+                                            <input class="d-inline-block" placeholder="Article title" type="text" id="title-box" v-model="newTitle" required>
+                                        </div>
                                     </div>
-                                    <div class="col-8">
-                                        <input class="d-inline-block" placeholder="Article title" type="text" id="title-box" v-model="newTitle" required>
+                                    <div class="row px-4 mt-3">
+                                        <div class="col-1">
+                                            <h4>Image:</h4>
+                                        </div>
+                                        <div class="col ml-3">
+                                            <input type="file" name="file" ref="picture" v-on:change="getImage" />
+                                        </div>
                                     </div>
-                                    <div class="col-3" style="text-align: end;" v-bind:style="{ display: showPublishBtn }">
-                                        <button class="btn btn-outline-primary my-2 my-sm-0 font-weight-bold" type="submit" v-on:click="publishArticle">Publish</button>
+                                    <div class="row px-4 mt-3">
+                                        <div class="col-1">
+                                            <h4>Content:</h4>
+                                        </div>
                                     </div>
-                                    <div class="col-3" style="text-align: end;" v-bind:style="{ display: showUpdateBtn }">
-                                        <button class="btn btn-outline-danger my-2 my-sm-0 font-weight-bold" type="submit" v-on:click="updateArticle">Update</button>
+                                    <div class="row px-4 mb-4">
+                                        <div class="col">
+                                            <textarea rows="8" cols="90" v-model="newContent"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row px-4 mt-3">
-                                    <div class="col-1">
-                                        <h4>Content:</h4>
-                                    </div>
-                                </div>
+                                </form>
                                 <div class="row px-4 mb-4">
-                                    <div class="col">
-                                        <textarea rows="3" cols="80" v-model="newContent"></textarea>
-                                        <textarea name="editor1"></textarea>
-                                    </div>
+                                    <button class="btn btn-outline-primary my-2 my-sm-0 font-weight-bold ml-3" type="submit" v-on:click="publishArticle" v-bind:style="{ display: showPublishBtn }">Publish</button>
+                                    <button class="btn btn-outline-danger my-2 my-sm-0 font-weight-bold ml-3" type="submit" v-on:click="updateArticle" v-bind:style="{ display: showUpdateBtn }">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +195,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     <script src="main.js"></script>
   </body>
 </html>
