@@ -1,3 +1,5 @@
+let url = 'http://miniwp.kennys.my.id:3000'
+
 new Vue({
     el: '#app',
     data: {
@@ -34,7 +36,7 @@ new Vue({
         deleteArticle(id){
             axios({
                 method: 'delete',
-                url: `http://localhost:3000/articles/${id}`
+                url: `${url}/articles/${id}`
             })
             .then(({data})=>{
                 this.getArticles()
@@ -60,7 +62,7 @@ new Vue({
             let content = this.newContent
             axios({
                 method: 'patch',
-                url: `http://localhost:3000/articles/${this.selectedId}`,
+                url: `${url}/articles/${this.selectedId}`,
                 data: {
                     title,
                     content
@@ -81,7 +83,7 @@ new Vue({
             formData.append('picture', this.newPicture)
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/articles',
+                url: `${url}/articles`,
                 data: formData
             })
             .then(({data})=>{
@@ -103,7 +105,7 @@ new Vue({
         getArticles(){
             axios({
                 method: 'get',
-                url: 'http://localhost:3000/articles'
+                url: `${url}/articles`
             })
             .then(({data})=>{
                 for(obj of data){
@@ -131,7 +133,7 @@ new Vue({
     created() {
         axios({
             method: 'get',
-            url: 'http://localhost:3000/articles'
+            url: `${url}/articles`
         })
         .then(({data})=>{
             for(obj of data){
