@@ -2,7 +2,7 @@ var app = new Vue({
     el: '#app',
     created(){
         axios
-            .get('http://localhost:3000/articles')
+            .get('http://api-blog-center.lieprojects.com:3000/articles')
             .then(articleData=>{
                 let articleDatas = articleData.data
                 // articleDatas.forEach(element => {
@@ -53,7 +53,7 @@ var app = new Vue({
             data.append('content', this.addContent)
             data.append('image_url', this.addImage)
             // console.log(data)
-            axios.post('http://localhost:3000/articles', 
+            axios.post('http://api-blog-center.lieprojects.com:3000/articles', 
                 data
             )
             .then(addedArticle=>{
@@ -103,7 +103,7 @@ var app = new Vue({
             data.append('title', this.addTitle)
             data.append('content', this.addContent)
             data.append('image_url', this.addImage)
-            axios.put(`http://localhost:3000/articles/${this.updateArticle}`,data)
+            axios.put(`http://api-blog-center.lieprojects.com:3000/articles/${this.updateArticle}`,data)
             .then(success=>{
                 // console.log(success.data)
                 let tmp = this.archive
@@ -129,7 +129,7 @@ var app = new Vue({
             })
         },
         deleteArticle(id){
-            axios.delete(`http://localhost:3000/articles/${id}`)
+            axios.delete(`http://api-blog-center.lieprojects.com:3000/articles/${id}`)
             .then(success=>{
                 if(success.data.deletedCount == 1){
                     let tmp = this.archive
