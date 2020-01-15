@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="hidden bg-blue-400 md:hidden md:bg-white md:border-b">
+    <div v-if="isLogin" class="hidden bg-blue-400 md:block md:bg-white md:border-b">
       <div class="container mx-auto px-4">
         <div class="md:flex">
           <div class="flex mr-8">

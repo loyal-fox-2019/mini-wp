@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto mt-20 z-20 flex">
+  <div class="container mx-auto h-screen flex">
     <div class="mx-auto self-center w-full max-w-xs">
       <h4 class="text-center p-4 font-bold text-gray-700">Log in to your account</h4>
       <form
@@ -34,7 +34,7 @@
           <button
             @click.prevent="submitLogin"
             class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-            type="button">
+            type="submit">
             Log In
           </button>
           <hr>
@@ -46,7 +46,10 @@
           </button>
         </div>
         <div class="flex items-center mt-4">
-          <span class="mx-auto text-sm text-gray-500">Don't have an account? <a href="#" class="text-blue-500 hover:text-blue-900" @click.prevent="toRegister">Register</a></span>
+          <span class="mx-auto text-sm text-gray-500">
+            Don't have an account?
+            <a href="#" @click.prevent="toRegister" class="text-blue-500 hover:text-blue-900" @click.prevent="toRegister">Register</a>
+          </span>
         </div>
       </form>
       <p class="text-center text-gray-500 text-xs">
@@ -57,6 +60,8 @@
 </template>
 
 <script>
+import axios from '../../config/axios'
+import Swal from 'sweetalert2'
 export default {
   name: 'LoginForm',
   components: {
@@ -71,12 +76,32 @@ export default {
   },
   methods: {
     toRegister() {
-      this.$emit('setForm', 'register')
+      this.$emit('changePage', 'register')
     },
     closeWarning() {
       this.warning = false
     },
     submitLogin() {
+      axios({
+        method: 'post',
+        url: '/user/login',
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, '<<')
+          localStorage.setItem('access_token', data.access_token)
+          this.$emit('setIsLogin', true)
+        })
+        .catch(err => {
+          let msg = err.response.data.errors.message
+          Swal.fire({
+            icon: 'error',
+            text: msg
+          })
+        })
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="mx-auto my-4 max-w-xl rounded overflow-hidden shadow-lg bg-white">
+  <div class="mt-32">
+    <div class="mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white">
     <img class="w-full" src="https://source.unsplash.com/uG26FNjM4EU/480x320">
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'PostCards'
+  name: 'MyPosts'
 }
 </script>
 

@@ -48,9 +48,8 @@
         </div>
         <div class="flex-col items-center justify-between">
           <button
-            @click.prevent="submitRegister"
             class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-            type="button"
+            type="submit"
             > Register
           </button>
         </div>
@@ -74,6 +73,8 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+import axios from '../../config/axios'
 export default {
   name: 'LoginForm',
   components: {
@@ -89,10 +90,10 @@ export default {
   },
   methods: {
     toLogin() {
-      this.$emit('setForm', 'login')
+      this.$emit('changePage', 'login')
     },
     submitRegister() {
-      ax({
+      axios({
         method: 'post',
         url: '/user/register',
         data: {
@@ -103,16 +104,20 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
-          this.$emit('setIsLogin', true)
+          this.$emit('changePage', 'login')
+          Swal.fire({
+            icon: 'success',
+            text: 'Successfully registered'
+          })
         })
-        .catch(({ response })  => {
-          console.log(response.data.errors.message, '<<<')
-          this.errorMsg = errorHandler(response)
-          this.warning = true
+        .catch(err => {
+          console.log(err.response.data.errors.message)
+          let msg = err.response.data.errors.message
+          Swal.fire({
+            icon: 'error',
+            text: msg
+          })
         })
-    },
-    closeWarning() {
-      this.warning = false
     }
   }
 }

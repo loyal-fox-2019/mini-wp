@@ -1,10 +1,22 @@
 <template>
   <div>
-    <TheNavbar></TheNavbar>
-    <LoginForm v-if="!isLogin && page === 'login'"></LoginForm>
-    <RegisterForm v-if="!isLogin && page === 'register'" ></RegisterForm>
-    <EditorForm v-if="isLogin && page === 'editor'"></EditorForm>
-    <MyPostCards v-if="isLogin && page === 'myposts'"></PostCards>
+    <TheNavbar
+      :isLogin="isLogin"
+    >
+    </TheNavbar>
+    <LoginForm
+      v-if="!isLogin && page === 'login'"
+      @changePage="changePage"
+      @setIsLogin="setIsLogin"
+      >
+    </LoginForm>
+    <RegisterForm
+      v-if="!isLogin && page === 'register'"
+      @changePage="changePage"
+      >
+    </RegisterForm>
+    <!-- <EditorForm v-if="isLogin && page === 'editor'"></EditorForm> -->
+    <MyPosts v-if="isLogin && page === 'myposts'"></MyPosts>
   </div>
 </template>
 
@@ -13,7 +25,7 @@ import TheNavbar from './components/TheNavbar'
 import EditorForm from './components/EditorForm'
 import RegisterForm from './components/RegisterForm'
 import LoginForm from './components/LoginForm'
-import PostCards from './components/PostCards'
+import MyPosts from './components/MyPosts'
 export default {
   name: 'app',
   components: {
@@ -21,7 +33,7 @@ export default {
     LoginForm,
     RegisterForm,
     EditorForm,
-    PostCards
+    MyPosts
   },
   data () {
     return {
@@ -30,10 +42,22 @@ export default {
     }
   },
   methods: {
-
+    changePage(page) {
+      this.page = page
+    },
+    setIsLogin(value) {
+      this.isLogin = value
+      this.page = 'myposts'
+    }
   },
   created () {
-
+    const access_token = localStorage.getItem('access_token')
+    if (!access_token) {
+      this.isLogin = false
+    } else {
+      this.isLogin = true
+      this.page = 'myposts'
+    }
   }
 }
 </script>
