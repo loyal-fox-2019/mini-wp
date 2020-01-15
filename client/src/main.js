@@ -1,11 +1,23 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueQuill from 'vue-quill'
+import router from './router'
 import './css/quill.snow.css'
 import './css/tailwind.css'
+import babelPolyfill from 'babel-polyfill'
 
-App.use(VueQuill)
+import wysiwyg from "vue-wysiwyg";
+import 'vue-wysiwyg/dist/vueWysiwyg.css'
+Vue.use(wysiwyg, {
+   // image: {
+   //    uploadURL: "http://localhost:3000/imgUpload",
+   //    dropzoneOptions: {}
+   // },
+
+   // // limit content height if you wish. If not set, editor size will grow with content.
+   // maxHeight: "500px"
+})
 
 const app = new Vue({
-   render: h => h(app)
+   router,
+   render: h => h(App)
 }).$mount('#app')

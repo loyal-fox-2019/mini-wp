@@ -4,17 +4,24 @@ const jwt = require('jsonwebtoken')
 
 class AuthorController {
    static async register(req, res, next) {
-      const {username, email, password} = req.body
-      const inputs = {}
+      try {
+         const {username, email, password} = req.body
+         const inputs = {}
+   
+         if(username) inputs.username = username
+         if(email) inputs.email = email
+         if(password) inputs.password = password
 
-      if(username) inputs.username = username
-      if(email) inputs.email = email
-      if(password) inputs.password = password
-
-      const author = await Author.create(inputs)
-      const token = jwt.sign({authorId: author._id}, process.env.JWT_SECRET)
-      
-      res.status(201).json({token})
+         console.log(username, email, 'this is inputs\n-----------\n')
+   
+         const author = await Author.create(inputs)
+         const token = jwt.sign({authorId: author._id}, process.env.JWT_SECRET)
+         
+         res.status(201).json({token})
+      }
+      catch (error) {
+         next(error)
+      }
    }
 
    static async login(req, res, next) {
