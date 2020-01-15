@@ -21,7 +21,7 @@
               <th scope="row">{{articleEdit._id}}</th>
               <td>{{articleEdit.title}}</td>
               <td>
-                <b-button pill class="mr-2" @click="updateArticle(articleEdit)" variant="outline-primary">EDIT</b-button><b-button pill variant="outline-primary">REMOVE</b-button>
+                <b-button pill class="mr-2" @click="updateArticle(articleEdit)" variant="outline-primary">EDIT</b-button><b-button @click="removeArticle(articleEdit._id)" pill variant="outline-primary">REMOVE</b-button>
               </td>
             </tr>
           </tbody>
@@ -152,6 +152,60 @@ export default {
       this.title = this.currentItem.title;
       this.content = this.currentItem.content;
       this.navigation('create');
+    },
+    removeArticle(articleId) {
+      // alert(value)
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          axios
+            .delete(`/articles/${articleId}`, { headers: { token: localStorage.getItem('token') } })
+            .then(() => {
+              this.$swal(
+                'Deleted!',
+                'Your article has been deleted.',
+                'success'
+              )
+              this.fetchMyData();
+            })
+            .catch((error) => {
+              if (!error.response.data.errors) {
+                this.$swal(
+                    'Something went wrong with the Server.',
+                    "i'm sorry but, i might screwed up now :(",
+                    'error'
+                  )
+                }
+                const errors = error.response.data.errors;
+                let text = '';
+                if (errors.length === 1) {
+                  text = `${errors[0]}.`;
+                } else {
+                  errors.forEach((err, i) => {
+                    if(i === errors.length-1 && error.length > 1) {
+                      let str = `and ${err}.`;
+                      text += str;
+                    } else {
+                      let str = `${err}, `;
+                      text += str;
+                    }
+                  });
+                }
+                this.$swal(
+                  'Validation Error',
+                  text,
+                  'error'
+                );
+              })
+              }
+            })
     },
     fetchMyData() {
       this.loading = true;
