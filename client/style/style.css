@@ -10,9 +10,34 @@
     font-color-light = #dfe6e9
     font-color-light2 = #b2bec3 
  */
+
+ /* login-style */
+
+
+
+.login {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,0);
+    background-color: #b2bec3;
+    border-radius: 10px;
+    width: 30rem;
+    height: 30vh;
+}
+
+ /* end login-style */
 #logo {
     height: 50px;
     padding: 10px;
+}
+
+.card-title-img {
+    background-image: url('../img/logo.png');
+}
+
+.card-text{
+    flex-direction: column;
 }
 
 .sidebar .sidebar-sticky h6 {
