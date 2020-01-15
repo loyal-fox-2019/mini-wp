@@ -6,9 +6,6 @@ const authorization = require('../middlewares/authorization');
 const gcsUpload = require('gcs-upload')
 
 const upload = gcsUpload({
-  limits: {
-    fileSize: 1e6 // in bytes
-  },
   gcsConfig: {
     keyFilename: process.env.GOOGLE_KEYFILENAME,
     bucketName: process.env.GOOGLE_BUCKET_NAME,
@@ -21,9 +18,8 @@ router.post('/image', upload.single('image'), (req, res) => {
 
 router.get('/', articleController.getArticles);
 router.get('/search', articleController.searchArticles);
-router.get('/:articleId', articleController.readArticle);
 router.use(authentication);
-router.get('/myarticle', articleController.getMyArticle);
+router.get('/:articleId', articleController.readArticle);
 router.post('/', articleController.postNewArticle)
 router.put('/:articleId', authorization, articleController.updateArticle);
 router.delete('/:articleId', authorization, articleController.removeArticle);

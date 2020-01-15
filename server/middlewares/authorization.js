@@ -2,6 +2,7 @@
 const { Article } = require('../models');
 
 module.exports = (req, res, next) => {
+  console.log('masuk ini?')
   const { articleId } = req.params;
   const { id } = req.token;
   Article

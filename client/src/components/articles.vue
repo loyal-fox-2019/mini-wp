@@ -5,11 +5,11 @@
     <!-- If loading display this section -->
     <section>
       <section id="header-text" class="mb-5 mt-2 text-center"
-      style="color: #007bff">
+      style="color: #007bff" v-show="!showDetail">
         <h1>TODAY A READER TOMORROW A LEADER</h1>
         <hr>
       </section>
-      <section id="list-articles" class="container">
+      <section id="list-articles" class="container" v-if="!showDetail">
 
 
         <b-nav-form class="justify-content-center mb-5">
@@ -65,10 +65,25 @@
                 <br>
                 <em>Tags: <a v-for="tag in article.tags" @click.prevent="changeTag(tag)" :key="tag" href="#" >{{tag}},</a></em>
               </b-card-text>
-              <b-button href="#" variant="outline-primary">Read full</b-button>
+              <b-button href="#" @click="current(article)" variant="outline-primary">Read full</b-button>
             </b-card>
           </div>
 
+        </div>
+      </section>
+      <section v-else>
+        <h1 class="text-center">{{currentArticle.title}}</h1>
+        <div class="text-center">
+          <b-button variant="outline-primary" @click="back">Back to articles list</b-button>
+        </div>
+        <div class="mt-3 mb-0" id="featuredimage">
+          <b-img :src="currentArticle.featured_image" fluid alt="Responsive image"></b-img>
+        </div>
+        <div id="detail" v-html="currentArticle.content"></div>
+        <div id="footer">
+          <strong>{{currentArticle.title}}</strong> was published at {{date(currentArticle.createdAt)}}.<br>
+          Author: <strong>{{currentArticle.author.fullname}}</strong> <br>
+          <em>Tags: <a v-for="tag in currentArticle.tags" @click.prevent="changeTag(tag)" :key="tag" href="#" >{{tag}},</a></em>
         </div>
       </section>
     </section>
@@ -92,14 +107,30 @@ export default {
       loading: true,
       tagSearch: '',
       notFound: false,
+      currentArticle: {},
+      showDetail: false,
     };
   },
   methods: {
+    back() {
+      this.showDetail = false;
+      this.currentArticle = {};
+    },
+    current(value) {
+      this.loading = true;
+      this.currentArticle = value;
+      setTimeout(() => {
+        this.loading = false;
+        this.showDetail = true;
+      }, 500);
+    },
     changeTag(value) {
       this.tagSearch = value
       this.titleSearchMethod();
     },
     titleSearchMethod() {
+      this.showDetail = false
+      this.currentArticle = {};
       // method to filter articles by it title or it tags
       this.loading = true;
       axios
@@ -112,6 +143,8 @@ export default {
             this.notFound = false;
           }
           this.articles = data
+          this.tagSearch = '';
+          this.titlesearch = '';
         })
         .catch((error) => {
           this.loading = false;
@@ -172,6 +205,8 @@ export default {
       return month;
     },
     fetchData() {
+      this.showDetail = false
+      this.currentArticle = {};
       this.loading = true;
       axios
         .get('/articles')
@@ -263,5 +298,25 @@ hr {
 
 #image-notfound {
   height: 50vh;
+}
+#detail {
+  position: relative;
+  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%
+}
+
+#footer {
+  margin-top: 3em;
+  text-align: left;
+  margin-left: 10%;
+  margin-right: 10%
+}
+#featuredimage {
+  position: relative;
+  left: 50%;
+  margin-top: 5%;
+  width: 40vw;
+  transform: translate(-50%, 0%)
 }
 </style>

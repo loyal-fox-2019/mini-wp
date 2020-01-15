@@ -6,8 +6,34 @@
         <b-nav-item class="nav-item" @click="navigation('create')">Create Article</b-nav-item>
       </b-nav>
     </div>
+    <div id="my-article" v-show="show === 'myarticle'">
+      <div id="my-article-table" class="mt-5">
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">TITLE</th>
+              <th scope="col">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="articleEdit in myArticles" :key="articleEdit._id">
+              <th scope="row">{{articleEdit._id}}</th>
+              <td>{{articleEdit.title}}</td>
+              <td>
+                <b-button pill class="mr-2" @click="updateArticle(articleEdit)" variant="outline-primary">EDIT</b-button><b-button pill variant="outline-primary">REMOVE</b-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- Modal here -->
+    <b-modal id="modal-center" centered :title="currentItem.title">
+      <p class="my-4" v-html="currentItem.content"></p>
+    </b-modal>
+    <!--  -->
     <div id="page" class="mt-2">
-
       <!-- Create new article -->
       <div id="create" v-show="show === 'create'">
         <h1 style="text-align: center;">Create New Article</h1>
@@ -29,39 +55,45 @@
             @ready="onEditorReady($event)">
           </quill-editor>
           <!--  -->
-          <b-form-tags v-model="tags" class="mb-2 mt-2"></b-form-tags>
-          <input type="file" v-on:change="fileHandle" ref="file" />
-          <!-- <b-form-file
-            v-on:change="uploadToGCS" ref="file"
-            placeholder="Choose an image or drop it here..."
-            drop-placeholder="Drop image here..."
-          ></b-form-file> -->
-          <div class="text-center mt-3">
-            <b-button
-              pill variant="outline-primary"
-              v-b-modal.modal-1>
-              Preview
-            </b-button>
-            <b-button
-              v-if="!loading"
-              pill variant="outline-primary"
-              @click="publishAttempt">Publish
-            </b-button>
-            <b-button pill v-else
-            variant="outline-primary" disabled>
-              <b-spinner small></b-spinner>
-            </b-button>
+          <div v-if="!isUpdate">
+            <b-form-tags v-model="tags" class="mb-2 mt-2"></b-form-tags>
+            <input type="file" v-on:change="fileHandle" ref="file"/>
+
+            <div class="text-center mt-3">
+              <b-button
+                pill variant="outline-primary"
+                v-b-modal.modal-1>
+                Preview
+              </b-button>
+              <b-button
+                v-if="!loading"
+                pill variant="outline-primary"
+                @click="publishAttempt">Publish
+              </b-button>
+              <b-button pill v-else
+              variant="outline-primary" disabled>
+                <b-spinner small></b-spinner>
+              </b-button>
+            </div>
+          </div>
+          <div v-else>
+            <div class="text-center mt-3">
+              <b-button
+                v-if="!loading"
+                pill variant="outline-primary"
+                @click="updateAttempt">Update
+              </b-button>
+              <b-button pill v-else
+              variant="outline-primary" disabled>
+                <b-spinner small></b-spinner>
+              </b-button>
+            </div>
           </div>
 
         </section>
       </div>
       <div id="my-article" v-show="show === 'myarticle'"></div>
     </div>
-    <!-- Modal here -->
-    <b-modal id="modal-1" ok-only :title="title">
-      <p class="my-4" v-html="content"></p>
-    </b-modal>
-    <!--  -->
   </section>
 </template>
 
@@ -74,11 +106,19 @@ export default {
   name: 'dashboard',
   data() {
     return {
+      isUpdate: false,
+      currentItem: {},
+      myArticles: [],
+      fields: [
+        { key: '_id', label: 'Article Id' },
+        { key: 'title', label: 'title' }
+      ],
+      edit: true,
       title: '',
       content: '',
       tags: [],
       featured_image: '',
-      show: 'myarticle',
+      show: 'create',
       loading: false,
       editorOption: {
           modules: {
@@ -106,6 +146,108 @@ export default {
     };
   },
   methods: {
+    updateArticle(value) {
+      this.isUpdate = true;
+      this.currentItem = value;
+      this.title = this.currentItem.title;
+      this.content = this.currentItem.content;
+      this.navigation('create');
+    },
+    fetchMyData() {
+      this.loading = true;
+      axios
+        .get('/user/articles', { headers: { token: localStorage.getItem('token') } })
+        .then(({ data }) => {
+          this.myArticles = data;
+        })
+        .catch((error) => {
+        if (!error.response.data.errors) {
+          this.$swal(
+              'Something went wrong with the Server.',
+              "i'm sorry but, i might screwed up now :(",
+              'error'
+            )
+          }
+          const errors = error.response.data.errors;
+          let text = '';
+          if (errors.length === 1) {
+            text = `${errors[0]}.`;
+          } else {
+            errors.forEach((err, i) => {
+              if(i === errors.length-1 && error.length > 1) {
+                let str = `and ${err}.`;
+                text += str;
+              } else {
+                let str = `${err}, `;
+                text += str;
+              }
+            });
+          }
+          this.$swal(
+            'Validation Error',
+            text,
+            'error'
+          );
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        })
+
+    },
+    updateAttempt() {
+      this.loading = true;
+      const docs = {
+        title: this.title,
+        content: this.content,
+      };
+      axios
+        .put(`/articles/${this.currentItem._id}`, docs, { headers: { token: localStorage.getItem('token') } })
+        .then(() => {
+          this.$swal('Article updated!')
+          this.fetchMyData();
+          this.currentItem = {};
+          this.title = '';
+          this.content = ''
+          this.isUpdate = false;
+          this.navigation('myarticle');
+        })
+        .catch((error) => {
+        if (!error.response.data.errors) {
+          this.$swal(
+              'Something went wrong with the Server.',
+              "i'm sorry but, i might screwed up now :(",
+              'error'
+            )
+          }
+          const errors = error.response.data.errors;
+          let text = '';
+          if (errors.length === 1) {
+            text = `${errors[0]}.`;
+          } else {
+            errors.forEach((err, i) => {
+              if(i === errors.length-1 && error.length > 1) {
+                let str = `and ${err}.`;
+                text += str;
+              } else {
+                let str = `${err}, `;
+                text += str;
+              }
+            });
+          }
+          this.$swal(
+            'Validation Error',
+            text,
+            'error'
+          );
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        })
+    },
     publishAttempt() {
       this.loading = true;
       const docs = {
@@ -117,8 +259,11 @@ export default {
     axios
       .post('/articles', docs, { headers: { token: localStorage.getItem('token') } })
       .then(() => {
-        this.$Swal('Article published!');
-        this.$emit('pagearticle', 'articles')
+        this.title = '';
+        this.content = '';
+        this.featured_image = '';
+        this.$swal('Article published!');
+        this.$emit('pagearticle', 'articles');
       })
       .catch((error) => {
         if (!error.response.data.errors) {
@@ -156,10 +301,12 @@ export default {
         })
     },
     navigation(value) {
+      if (value === 'myarticle') this.fetchMyData();
       this.show = value;
     },
     fileHandle() {
       this.loading = true
+      this.featured_image = '';
       let formData = new FormData();
         formData.append("image", this.$refs.file.files[0]);
         axios({
@@ -232,6 +379,9 @@ export default {
 </script>
 
 <style scoped>
+#main {
+  overflow-x: hidden;
+}
 #create {
   width: 100vw;
   overflow-x: hidden;
@@ -249,5 +399,15 @@ export default {
   font-size: 20px;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
+}
+#my-article-table {
+  position: relative;
+  left: 25%;
+  width: 50vw;
+}
+#my-article-table {
+  position: absolute;
+  left: 25%;
+  top: 30%;
 }
 </style>

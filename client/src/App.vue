@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    
+
     <navbar :loginstatus="isLogin" @navbarlogout="logoutAttempt"
     @navbarcontrol="changePage" :fullname="fullname"
     ></navbar>
@@ -18,8 +18,8 @@
 
     <dashboard v-show="page === 'Dashboard'"
     :pagearticle="changePage"
-    >
-    </dashboard>
+    class="animated fadeIn"
+    ></dashboard>
 
   </div>
 </template>
