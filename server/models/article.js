@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
+    file: {
+        type: String
+    },
     title: {
         type: String,
         required: [true, 'Title field cannot be empty']

@@ -7,11 +7,12 @@ new Vue({
         articles: [],
         page_index: 0,
         newArticle: {
+            file: '',
             title: '',
             content: ''
         },
         dataArticle: '',
-        tempArticle: ''
+        tempArticle: '',
     },
     created() {
         this.showArticle();
@@ -39,6 +40,7 @@ new Vue({
                 this.mySiteShow = true;
                 this.myReader = false;
                 this.page_index = 0;
+                this.myNewArticle = false;
             }
         },
         hideAndShowNewArticle() {
@@ -47,13 +49,14 @@ new Vue({
             this.titleUpdateCreate = 'Create New Article';
         },
         createNewArticle() {
+            const formData = new FormData();
+            formData.append("file", this.newArticle.file);
+            formData.append("title", this.newArticle.title);
+            formData.append("content", this.newArticle.content);
             axios({
                 method: 'post',
                 url: 'http://localhost:3000/article',
-                data: {
-                    title: this.newArticle.title,
-                    content: this.newArticle.content
-                }
+                data: formData
             })
             .then(({data}) => {
                 this.newArticle.title = '';
@@ -63,6 +66,7 @@ new Vue({
                 this.myReader = true;
             })
             .catch(error => {
+                console.log(error.response.data)
                 console.log(error.message)
             })
         },
@@ -121,6 +125,9 @@ new Vue({
             .catch(error => {
                 console.log(error);
             })
+        },
+        inputToFile(event) {
+            this.newArticle.file = event.target.files[0];
         }
     }
 })

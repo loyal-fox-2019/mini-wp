@@ -18,6 +18,7 @@ class ArticleController {
 
     static create(req, res, next) {
         const newArticle = {
+            file: req.body.file,
             title: req.body.title,
             content: req.body.content,
         }
