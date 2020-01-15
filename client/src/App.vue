@@ -15,8 +15,8 @@
       @changePage="changePage"
       >
     </RegisterForm>
-    <!-- <EditorForm v-if="isLogin && page === 'editor'"></EditorForm> -->
     <MyPosts v-if="isLogin && page === 'myposts'"></MyPosts>
+    <!-- <EditorForm v-if="isLogin && page === 'editor'"></EditorForm> -->
   </div>
 </template>
 

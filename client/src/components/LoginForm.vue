@@ -1,7 +1,13 @@
 <template>
   <div class="container mx-auto h-screen flex">
-    <div class="mx-auto self-center w-full max-w-xs">
+    <div class="mx-auto my-24 w-full max-w-xs">
       <h4 class="text-center p-4 font-bold text-gray-700">Log in to your account</h4>
+      <WarningCard
+        @closeWarning="closeWarning"
+        v-if="warning"
+        class="my-2 px-10"
+        :errorMsg="errorMsg">
+      </WarningCard>
       <form
         @submit.prevent="submitLogin"
         @keyup.enter="submitLogin"
@@ -62,9 +68,12 @@
 <script>
 import axios from '../../config/axios'
 import Swal from 'sweetalert2'
+import WarningCard from './WarningCard'
+import errorHandler from '../../helpers/errorHandler'
 export default {
   name: 'LoginForm',
   components: {
+    WarningCard
   },
   data () {
     return {
@@ -91,16 +100,13 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data, '<<')
           localStorage.setItem('access_token', data.access_token)
           this.$emit('setIsLogin', true)
         })
-        .catch(err => {
-          let msg = err.response.data.errors.message
-          Swal.fire({
-            icon: 'error',
-            text: msg
-          })
+        .catch(({ response }) => {
+          console.log(response)
+          this.errorMsg = errorHandler(response)
+          this.warning = true
         })
     }
   }

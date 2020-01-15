@@ -14236,7 +14236,160 @@ var ax = _axios.default.create({
 
 var _default = ax;
 exports.default = _default;
-},{"axios":"node_modules/axios/index.js"}],"src/components/RegisterForm.vue":[function(require,module,exports) {
+},{"axios":"node_modules/axios/index.js"}],"src/components/WarningCard.vue":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  name: 'WarningCard',
+  props: {
+    errorMsg: {
+      type: String
+    }
+  },
+  methods: {
+    closeWarning: function closeWarning() {
+      this.$emit('closeWarning');
+    }
+  }
+};
+exports.default = _default;
+        var $9913ef = exports.default || module.exports;
+      
+      if (typeof $9913ef === 'function') {
+        $9913ef = $9913ef.options;
+      }
+    
+        /* template */
+        Object.assign($9913ef, (function () {
+          var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative",
+      attrs: { role: "alert" }
+    },
+    [
+      _c("strong", { staticClass: "font-bold" }, [_vm._v("Oops...")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", {
+        staticClass: "block sm:inline",
+        domProps: { innerHTML: _vm._s(_vm.errorMsg) }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "absolute top-0 bottom-0 right-0 px-4 py-3" }, [
+        _c(
+          "svg",
+          {
+            staticClass: "fill-current h-6 w-6 text-red-500",
+            attrs: {
+              role: "button",
+              xmlns: "http://www.w3.org/2000/svg",
+              viewBox: "0 0 20 20"
+            },
+            on: { click: _vm.closeWarning }
+          },
+          [
+            _c("title", [_vm._v("Close")]),
+            _c("path", {
+              attrs: {
+                d:
+                  "M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"
+              }
+            })
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+          return {
+            render: render,
+            staticRenderFns: staticRenderFns,
+            _compiled: true,
+            _scopeId: null,
+            functional: undefined
+          };
+        })());
+      
+    /* hot reload */
+    (function () {
+      if (module.hot) {
+        var api = require('vue-hot-reload-api');
+        api.install(require('vue'));
+        if (api.compatible) {
+          module.hot.accept();
+          if (!module.hot.data) {
+            api.createRecord('$9913ef', $9913ef);
+          } else {
+            api.reload('$9913ef', $9913ef);
+          }
+        }
+
+        
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+      }
+    })();
+},{"_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"helpers/errorHandler.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function errorHandler(res) {
+  var msg = '';
+
+  if (_typeof(res.data.errors.message) === 'object') {
+    res.data.errors.message.forEach(function (errMsg) {
+      return msg += "".concat(errMsg, " <br/>");
+    });
+  } else {
+    msg = res.data.errors.message;
+  }
+
+  return msg;
+}
+
+var _default = errorHandler;
+exports.default = _default;
+},{}],"src/components/RegisterForm.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14247,6 +14400,10 @@ exports.default = void 0;
 var _sweetalert = _interopRequireDefault(require("sweetalert2"));
 
 var _axios = _interopRequireDefault(require("../../config/axios"));
+
+var _WarningCard = _interopRequireDefault(require("./WarningCard"));
+
+var _errorHandler = _interopRequireDefault(require("../../helpers/errorHandler"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14324,9 +14481,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'LoginForm',
-  components: {},
+  components: {
+    WarningCard: _WarningCard.default
+  },
   data: function data() {
     return {
       username: '',
@@ -14339,6 +14504,9 @@ var _default = {
   methods: {
     toLogin: function toLogin() {
       this.$emit('changePage', 'login');
+    },
+    closeWarning: function closeWarning() {
+      this.warning = false;
     },
     submitRegister: function submitRegister() {
       var _this = this;
@@ -14361,14 +14529,10 @@ var _default = {
           icon: 'success',
           text: 'Successfully registered'
         });
-      }).catch(function (err) {
-        console.log(err.response.data.errors.message);
-        var msg = err.response.data.errors.message;
-
-        _sweetalert.default.fire({
-          icon: 'error',
-          text: msg
-        });
+      }).catch(function (_ref2) {
+        var response = _ref2.response;
+        _this.errorMsg = (0, _errorHandler.default)(response);
+        _this.warning = true;
       });
     }
   }
@@ -14387,175 +14551,188 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container mx-auto h-screen flex" }, [
-    _c("div", { staticClass: "mx-auto self-center w-full max-w-xs" }, [
-      _c("h4", { staticClass: "text-center p-4 font-bold text-gray-700" }, [
-        _vm._v("Register a new account")
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.submitRegister($event)
-            },
-            keyup: function($event) {
-              if (
-                !$event.type.indexOf("key") &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
+    _c(
+      "div",
+      { staticClass: "mx-auto my-24 w-full max-w-xs" },
+      [
+        _c("h4", { staticClass: "text-center p-4 font-bold text-gray-700" }, [
+          _vm._v("Register a new account")
+        ]),
+        _vm._v(" "),
+        _vm.warning
+          ? _c("WarningCard", {
+              staticClass: "my-2 px-10",
+              attrs: { errorMsg: _vm.errorMsg },
+              on: { closeWarning: _vm.closeWarning }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submitRegister($event)
+              },
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.submitRegister($event)
               }
-              return _vm.submitRegister($event)
             }
-          }
-        },
-        [
-          _c("div", { staticClass: "mb-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                attrs: { for: "reg-username" }
-              },
-              [_vm._v(" Username\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.username,
-                  expression: "username"
-                }
-              ],
-              staticClass:
-                "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-              attrs: {
-                id: "reg-username",
-                type: "text",
-                placeholder: "username"
-              },
-              domProps: { value: _vm.username },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.username = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                attrs: { for: "reg-email" }
-              },
-              [_vm._v(" Email\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass:
-                "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-              attrs: {
-                id: "reg-email",
-                type: "email",
-                placeholder: "example@mail.com"
-              },
-              domProps: { value: _vm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                attrs: { for: "reg-password" }
-              },
-              [_vm._v("\n          Password\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              staticClass:
-                "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
-              attrs: {
-                id: "reg-password",
-                type: "password",
-                placeholder: "******",
-                autocomplete: "on"
-              },
-              domProps: { value: _vm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.password = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex items-center mt-4" }, [
-            _c("span", { staticClass: "mx-auto text-sm text-gray-500" }, [
-              _vm._v("Already have an account? \n          "),
+          },
+          [
+            _c("div", { staticClass: "mb-4" }, [
               _c(
-                "a",
+                "label",
                 {
-                  staticClass: "text-blue-500 hover:text-blue-900",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.toLogin($event)
-                    }
-                  }
+                  staticClass: "block text-gray-700 text-sm font-bold mb-2",
+                  attrs: { for: "reg-username" }
                 },
-                [_vm._v(" Log in\n          ")]
-              )
+                [_vm._v(" Username\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.username,
+                    expression: "username"
+                  }
+                ],
+                staticClass:
+                  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                attrs: {
+                  id: "reg-username",
+                  type: "text",
+                  placeholder: "username"
+                },
+                domProps: { value: _vm.username },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.username = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "block text-gray-700 text-sm font-bold mb-2",
+                  attrs: { for: "reg-email" }
+                },
+                [_vm._v(" Email\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
+                  }
+                ],
+                staticClass:
+                  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                attrs: {
+                  id: "reg-email",
+                  type: "email",
+                  placeholder: "example@mail.com"
+                },
+                domProps: { value: _vm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "block text-gray-700 text-sm font-bold mb-2",
+                  attrs: { for: "reg-password" }
+                },
+                [_vm._v("\n          Password\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                staticClass:
+                  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+                attrs: {
+                  id: "reg-password",
+                  type: "password",
+                  placeholder: "******",
+                  autocomplete: "on"
+                },
+                domProps: { value: _vm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex items-center mt-4" }, [
+              _c("span", { staticClass: "mx-auto text-sm text-gray-500" }, [
+                _vm._v("Already have an account? \n          "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "text-blue-500 hover:text-blue-900",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.toLogin($event)
+                      }
+                    }
+                  },
+                  [_vm._v(" Log in\n          ")]
+                )
+              ])
             ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-center text-gray-500 text-xs" }, [
-        _vm._v(" ©2019 Deprak. All rights reserved.\n    ")
-      ])
-    ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-center text-gray-500 text-xs" }, [
+          _vm._v(" ©2019 Deprak. All rights reserved.\n    ")
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -14608,7 +14785,7 @@ render._withStripped = true
       
       }
     })();
-},{"sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","../../config/axios":"config/axios.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/LoginForm.vue":[function(require,module,exports) {
+},{"sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","../../config/axios":"config/axios.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/LoginForm.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14619,6 +14796,10 @@ exports.default = void 0;
 var _axios = _interopRequireDefault(require("../../config/axios"));
 
 var _sweetalert = _interopRequireDefault(require("sweetalert2"));
+
+var _WarningCard = _interopRequireDefault(require("./WarningCard"));
+
+var _errorHandler = _interopRequireDefault(require("../../helpers/errorHandler"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14683,9 +14864,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'LoginForm',
-  components: {},
+  components: {
+    WarningCard: _WarningCard.default
+  },
   data: function data() {
     return {
       email: '',
@@ -14713,17 +14902,14 @@ var _default = {
         }
       }).then(function (_ref) {
         var data = _ref.data;
-        console.log(data, '<<');
         localStorage.setItem('access_token', data.access_token);
 
         _this.$emit('setIsLogin', true);
-      }).catch(function (err) {
-        var msg = err.response.data.errors.message;
-
-        _sweetalert.default.fire({
-          icon: 'error',
-          text: msg
-        });
+      }).catch(function (_ref2) {
+        var response = _ref2.response;
+        console.log(response);
+        _this.errorMsg = (0, _errorHandler.default)(response);
+        _this.warning = true;
       });
     }
   }
@@ -14742,171 +14928,188 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container mx-auto h-screen flex" }, [
-    _c("div", { staticClass: "mx-auto self-center w-full max-w-xs" }, [
-      _c("h4", { staticClass: "text-center p-4 font-bold text-gray-700" }, [
-        _vm._v("Log in to your account")
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: " bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4",
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.submitLogin($event)
-            },
-            keyup: function($event) {
-              if (
-                !$event.type.indexOf("key") &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
+    _c(
+      "div",
+      { staticClass: "mx-auto my-24 w-full max-w-xs" },
+      [
+        _c("h4", { staticClass: "text-center p-4 font-bold text-gray-700" }, [
+          _vm._v("Log in to your account")
+        ]),
+        _vm._v(" "),
+        _vm.warning
+          ? _c("WarningCard", {
+              staticClass: "my-2 px-10",
+              attrs: { errorMsg: _vm.errorMsg },
+              on: { closeWarning: _vm.closeWarning }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: " bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.submitLogin($event)
+              },
+              keyup: function($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.submitLogin($event)
               }
-              return _vm.submitLogin($event)
             }
-          }
-        },
-        [
-          _c("div", { staticClass: "mb-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                attrs: { for: "email" }
-              },
-              [_vm._v("\n          Email\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass:
-                "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-              attrs: {
-                id: "username",
-                type: "email",
-                placeholder: "example@mail.com"
-              },
-              domProps: { value: _vm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "block text-gray-700 text-sm font-bold mb-2",
-                attrs: { for: "password" }
-              },
-              [_vm._v("\n          Password\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              staticClass:
-                "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
-              attrs: {
-                id: "password",
-                type: "password",
-                autocomplete: "on",
-                placeholder: "******"
-              },
-              domProps: { value: _vm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.password = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex-col items-center justify-between" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4",
-                attrs: { type: "submit" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.submitLogin($event)
-                  }
-                }
-              },
-              [_vm._v("\n          Log In\n        ")]
-            ),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass:
-                  "w-full bg-transparent hover:bg-blue-700 hover:text-white border border-blue-500 text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.githubLogin($event)
-                  }
-                }
-              },
-              [_vm._v("\n          Continue with Github\n        ")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "flex items-center mt-4" }, [
-            _c("span", { staticClass: "mx-auto text-sm text-gray-500" }, [
-              _vm._v("\n          Don't have an account?\n          "),
+          },
+          [
+            _c("div", { staticClass: "mb-4" }, [
               _c(
-                "a",
+                "label",
                 {
-                  staticClass: "text-blue-500 hover:text-blue-900",
-                  attrs: { href: "#" },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.toRegister($event)
-                    }
-                  }
+                  staticClass: "block text-gray-700 text-sm font-bold mb-2",
+                  attrs: { for: "email" }
                 },
-                [_vm._v("Register")]
-              )
+                [_vm._v("\n          Email\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
+                  }
+                ],
+                staticClass:
+                  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+                attrs: {
+                  id: "username",
+                  type: "email",
+                  placeholder: "example@mail.com"
+                },
+                domProps: { value: _vm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mb-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "block text-gray-700 text-sm font-bold mb-2",
+                  attrs: { for: "password" }
+                },
+                [_vm._v("\n          Password\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                staticClass:
+                  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+                attrs: {
+                  id: "password",
+                  type: "password",
+                  autocomplete: "on",
+                  placeholder: "******"
+                },
+                domProps: { value: _vm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "flex-col items-center justify-between" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4",
+                    attrs: { type: "submit" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.submitLogin($event)
+                      }
+                    }
+                  },
+                  [_vm._v("\n          Log In\n        ")]
+                ),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "w-full bg-transparent hover:bg-blue-700 hover:text-white border border-blue-500 text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.githubLogin($event)
+                      }
+                    }
+                  },
+                  [_vm._v("\n          Continue with Github\n        ")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "flex items-center mt-4" }, [
+              _c("span", { staticClass: "mx-auto text-sm text-gray-500" }, [
+                _vm._v("\n          Don't have an account?\n          "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "text-blue-500 hover:text-blue-900",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.toRegister($event)
+                      }
+                    }
+                  },
+                  [_vm._v("Register")]
+                )
+              ])
             ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-center text-gray-500 text-xs" }, [
-        _vm._v("\n      ©2019 Deprak. All rights reserved.\n    ")
-      ])
-    ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("p", { staticClass: "text-center text-gray-500 text-xs" }, [
+          _vm._v("\n      ©2019 Deprak. All rights reserved.\n    ")
+        ])
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -14942,7 +15145,7 @@ render._withStripped = true
       
       }
     })();
-},{"../../config/axios":"config/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/MyPosts.vue":[function(require,module,exports) {
+},{"../../config/axios":"config/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","./WarningCard":"src/components/WarningCard.vue","../../helpers/errorHandler":"helpers/errorHandler.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/MyPosts.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18347,7 +18550,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46541" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38859" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

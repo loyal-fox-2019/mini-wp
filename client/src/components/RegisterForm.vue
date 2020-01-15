@@ -1,7 +1,13 @@
 <template>
   <div class="container mx-auto h-screen flex">
-    <div class="mx-auto self-center w-full max-w-xs">
+    <div class="mx-auto my-24 w-full max-w-xs">
       <h4 class="text-center p-4 font-bold text-gray-700">Register a new account</h4>
+      <WarningCard
+        @closeWarning="closeWarning"
+        v-if="warning"
+        class="my-2 px-10"
+        :errorMsg="errorMsg">
+      </WarningCard>
       <form
         @submit.prevent="submitRegister"
         @keyup.enter="submitRegister"
@@ -75,9 +81,12 @@
 <script>
 import Swal from 'sweetalert2'
 import axios from '../../config/axios'
+import WarningCard from './WarningCard'
+import errorHandler from '../../helpers/errorHandler'
 export default {
   name: 'LoginForm',
   components: {
+    WarningCard
   },
   data () {
     return {
@@ -91,6 +100,9 @@ export default {
   methods: {
     toLogin() {
       this.$emit('changePage', 'login')
+    },
+    closeWarning() {
+      this.warning = false
     },
     submitRegister() {
       axios({
@@ -110,13 +122,9 @@ export default {
             text: 'Successfully registered'
           })
         })
-        .catch(err => {
-          console.log(err.response.data.errors.message)
-          let msg = err.response.data.errors.message
-          Swal.fire({
-            icon: 'error',
-            text: msg
-          })
+        .catch(({ response }) => {
+          this.errorMsg = errorHandler(response)
+          this.warning = true
         })
     }
   }
