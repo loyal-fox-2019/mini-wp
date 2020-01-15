@@ -55,11 +55,23 @@
             @ready="onEditorReady($event)">
           </quill-editor>
           <!--  -->
+          <b-form-tags v-model="tags" class="mb-2 mt-2"></b-form-tags>
           <div v-if="!isUpdate">
-            <b-form-tags v-model="tags" class="mb-2 mt-2"></b-form-tags>
-            <input type="file" v-on:change="fileHandle" ref="file"/>
+            <!-- <input type="file" v-on:change="fileHandle" ref="file"/> -->
+            <b-form-file
+              v-model="file"
+              :state="Boolean(file)"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
 
             <div class="text-center mt-3">
+              <b-button
+                pill variant="outline-primary"
+                @click="fileHandle"
+                >
+                Upload
+              </b-button>
               <b-button
                 pill variant="outline-primary"
                 v-b-modal.modal-1>
@@ -106,6 +118,7 @@ export default {
   name: 'dashboard',
   data() {
     return {
+      file: null,
       isUpdate: false,
       currentItem: {},
       myArticles: [],
@@ -151,6 +164,7 @@ export default {
       this.currentItem = value;
       this.title = this.currentItem.title;
       this.content = this.currentItem.content;
+      this.tags = this.currentItem.tags;
       this.navigation('create');
     },
     removeArticle(articleId) {
@@ -255,6 +269,7 @@ export default {
       const docs = {
         title: this.title,
         content: this.content,
+        tags: this.tags,
       };
       axios
         .put(`/articles/${this.currentItem._id}`, docs, { headers: { token: localStorage.getItem('token') } })
@@ -362,16 +377,8 @@ export default {
       this.loading = true
       this.featured_image = '';
       let formData = new FormData();
-        formData.append("image", this.$refs.file.files[0]);
-        axios({
-          method: "POST",
-          url: "http://localhost:3000/articles/image",
-          data: formData,
-          headers: {
-            "Content-Type": "multipart/form-data",
-            token: localStorage.getItem("token")
-          }
-        })
+        formData.append("image", this.file);
+        axios.post(`/articles/image`, formData, { headers: { token: localStorage.getItem('token'), "Content-Type": "multipart/form-data", } })
         .then(({ data }) => {
           this.featured_image = data;
         })

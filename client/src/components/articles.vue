@@ -144,7 +144,7 @@ export default {
           }
           this.articles = data
           this.tagSearch = '';
-          this.titlesearch = '';
+          // this.titlesearch = '';
         })
         .catch((error) => {
           this.loading = false;
@@ -284,7 +284,6 @@ hr {
 .centered {
   color: white;
   border-radius: 1rem;
-  /* background: rgba(0,0,0,0.7); */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -293,7 +292,6 @@ hr {
   padding: 1rem;
   -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: black;
-  /* text-shadow: 2px 2px black; */
 }
 
 #image-notfound {
