@@ -1,12 +1,3 @@
-// Vue.transition('custom-fade',{
-//     enterClass:'bounce',
-//     leaveClass:'bounce'
-// })
-
-
-Vue.component('test', {
-    template: '<p>sdbsdsbdsb</p>'
-})
 
 new Vue ({
     el: '#postarea',
@@ -32,7 +23,7 @@ new Vue ({
             data.append('image', this.image)
             data.append('created_at', new Date())
 
-            axios.post('http://localhost:3000/articles',data)
+            axios.post('http://35.240.217.140:3000/articles/',data)
             .then((data)=>{
                 this.form = false
                 this.postwall = true
@@ -42,7 +33,7 @@ new Vue ({
         }, 
         delet: function(params, index){
             let id = params['_id']
-            axios.delete('http://localhost:3000/articles/'+id)
+            axios.delete('http://35.240.217.140:3000/articles/'+id)
             .then((data)=>{
                 this.articles = this.articles.filter(arc => arc['_id'] != id) 
             })
@@ -75,7 +66,7 @@ new Vue ({
             data.append('image', this.image)
             data.append('created_at', new Date())
         
-            axios.put('http://localhost:3000/articles/'+this.idpost,data)
+            axios.put('http://35.240.217.140:3000/articles/'+this.idpost,data)
             .then((data)=>{
                 this.edit = false
                 this.form = false
@@ -105,7 +96,7 @@ new Vue ({
     },
     created(){
         let arti = this
-        axios.get('http://localhost:3000/articles')
+        axios.get('http://35.240.217.140:3000/articles')
         .then(function(data){
             arti.articles = data.data
         })
