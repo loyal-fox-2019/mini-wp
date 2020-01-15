@@ -55,10 +55,11 @@ new Vue({
             formData.append("content", this.newArticle.content);
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/article',
+                url: 'http://130.211.124.27/article',
                 data: formData
             })
             .then(({data}) => {
+                console.log('awdawdaw')
                 this.newArticle.title = '';
                 this.newArticle.content = '';
                 this.myNewArticle = false;
@@ -73,7 +74,7 @@ new Vue({
         showArticle() {
             axios({
                 method: 'get',
-                url: 'http://localhost:3000/article'
+                url: 'http://130.211.124.27/article'
             })
             .then(({data}) => {
                 const articles = data.data;
@@ -86,7 +87,7 @@ new Vue({
         deleteArticle(id) {
             axios({
                 method: 'delete',
-                url: 'http://localhost:3000/article',
+                url: 'http://130.211.124.27/article',
                 data: {
                     article_id: id
                 }
@@ -101,7 +102,7 @@ new Vue({
         findOneArticle(id) {
             axios({
                 method: 'get',
-                url: `http://localhost:3000/article/findOne/${id}`
+                url: `http://130.211.124.27/article/findOne/${id}`
             })
             .then(({data}) => {
                 this.dataArticle = data.data
@@ -113,7 +114,7 @@ new Vue({
         updateArticle(id) {
             axios({
                 method: 'put',
-                url: `http://localhost:3000/article/${id}`,
+                url: `http://130.211.124.27/article/${id}`,
                 data: {
                     title: this.dataArticle.title,
                     content: this.dataArticle.content
