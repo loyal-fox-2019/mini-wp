@@ -87,7 +87,7 @@ new Vue({
             if(this.searchKey === null || this.searchKey === ''){
                 return this.articles
             }
-            return this.articles.filter(data => data.title.toLowerCase().includes(this.searchKey.toLowerCase()) || data.content.toLowerCase().includes(this.searchKey.toLowerCase()))
+            return this.articles.filter(data => data.title.toLowerCase().includes(this.searchKey.toLowerCase()) || data.toLowerCase().includes(this.searchKey.toLowerCase()))
         }
     },
     created(){
