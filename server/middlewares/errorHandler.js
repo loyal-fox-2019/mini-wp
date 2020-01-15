@@ -11,7 +11,7 @@ function errorHandler (err, req, res, next) {
       for (const key in err.errors) {
         arr.push(err.errors[key].message)
       }
-      message = err
+      message = arr
       break;
     case 'JsonWebTokenError':
       status = 401
