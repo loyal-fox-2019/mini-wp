@@ -19,7 +19,10 @@
       @singlePost="toSinglePost">
 
     </MyPosts>
-    <EditorForm v-if="isLogin && page === 'editor'"></EditorForm>
+    <EditorForm
+      @changePage="changePage"
+      v-if="isLogin && page === 'editor'">
+    </EditorForm>
     <SinglePost
       :articleId="articleId"
       v-if="isLogin && page === 'post'">
