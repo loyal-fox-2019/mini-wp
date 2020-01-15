@@ -17,36 +17,34 @@ new Vue ({
         form: false,
         postwall: false,
         articles: null,
-        archive: null,
         key:'',
         idpost: null,   
         edit:false
     },
     methods:{
+        uploadimage:function (params) {
+          this.image = event.target.files[0]  
+        },
         postArticle: function () {
-            axios.post('http://localhost:3000/articles',{
-                title : this.title,
-                content: this.content,
-                image: this.image,
-                created_at: new Date ()
-            })
+            let data  = new FormData
+            data.append('title', this.title)
+            data.append('content', this.content)
+            data.append('image', this.image)
+            data.append('created_at', new Date())
+
+            axios.post('http://localhost:3000/articles',data)
             .then((data)=>{
-                this.articles.unshift(data.data)
                 this.form = false
                 this.postwall = true
-
+                this.articles.unshift(data.data)
+                
             })
         }, 
-        search: function() {
-            let tmp = this.archive
-            this.articles = tmp.filter(arc => arc.title.includes(this.key))
-        },
         delet: function(params, index){
             let id = params['_id']
             axios.delete('http://localhost:3000/articles/'+id)
             .then((data)=>{
                 this.articles = this.articles.filter(arc => arc['_id'] != id) 
-                this.archive = this.archive.filter(arc => arc['_id'] != id)
             })
         },
         showform: function() {
@@ -71,26 +69,23 @@ new Vue ({
             this.idpost = data['_id']
         },
         submiteidt:function(){
+            let data  = new FormData
+            data.append('title', this.title)
+            data.append('content', this.content)
+            data.append('image', this.image)
+            data.append('created_at', new Date())
         
-            let data = {
-                title : this.title,
-                content : this.content,
-                image : this.image
-            }
             axios.put('http://localhost:3000/articles/'+this.idpost,data)
             .then((data)=>{
                 this.edit = false
                 this.form = false
                 let index = null
-                this.archive.forEach((element, indx) => {
+                this.articles.forEach((element, indx) => {
                     if(element['_id'] == this.idpost){
                         index = indx
                     }
                 });
-                this.archive[index].title = this.title
-                this.archive[index].content = this.content
-                this.archive[index].image = this.image
-                this.articles = this.archive
+                this.articles[index] = data.data
 
                 this.title = ''
                 this.content = ''
@@ -99,12 +94,20 @@ new Vue ({
             })
         }
     },
+    computed:{
+        search: function () {
+            if(this.key === null || this.key === ''){
+                return this.articles
+            } else {
+                return this.articles.filter(arc => arc.title.toLowerCase().includes(this.key.toLowerCase()))
+            }
+        }
+    },
     created(){
         let arti = this
         axios.get('http://localhost:3000/articles')
         .then(function(data){
             arti.articles = data.data
-            arti.archive = data.data
         })
     }
 

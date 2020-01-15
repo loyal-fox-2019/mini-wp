@@ -3,7 +3,7 @@ const router = express.Router()
 const article = require('./article-router')
 
 
-router.use('/articles', article)
+router.use('/articles',article)
 
 
 

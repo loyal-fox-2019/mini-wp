@@ -9,7 +9,13 @@ class Controller{
     }
 
     static create(req,res,next){
-        Article.create(req.body)
+        let data = {
+            title: req.body.title,
+            content: req.body.content,
+            created_at: req.body['created_at'],
+            image: req.body.image
+        }
+        Article.create(data)
         .then((data)=>{
             res.status(201).json(data)
         })
@@ -32,6 +38,9 @@ class Controller{
 
     static updateArticle(req,res,next){
         Article.updateOne({'_id': req.params.id},req.body)
+        .then((data)=>{
+            return Article.findById(req.params.id)
+        })
         .then((data)=>{
             res.status(200).json(data)
         })
