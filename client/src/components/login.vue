@@ -25,16 +25,15 @@ export default {
 
    methods: {
       submitFormLogin: async function() {
-         console.log('a')
+         console.log(axios)
          try {
             const {data} = await axios.post('/author/login', {
                email: this.email,
                password: this.password
             })
 
-
             localStorage.token = data.token
-
+            console.log(1, localStorage.token)
             Swal.fire({
                position: 'center',
                icon: 'success',
@@ -42,6 +41,7 @@ export default {
                showConfirmButton: false,
                timer: 1000
             })
+            console.log(2, localStorage.token)
 
             this.$emit('loginLoggingIn', true)
             this.$router.push({name: 'articleList'})

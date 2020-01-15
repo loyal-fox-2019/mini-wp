@@ -14,7 +14,6 @@ class ArticleController {
          if(tags) inputs.tags = tags
          if(audience) inputs.audience = audience
 
-
          const article = await Article.create(inputs)
 
          res.status(201).json({article})
@@ -36,7 +35,7 @@ class ArticleController {
             ]
          })
          .limit(limit)
-         .page(limit * (page - 1))
+         .skip(limit * (page - 1))
 
          res.status(200).json({articles})
       }

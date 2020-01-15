@@ -21,6 +21,11 @@ const routes = [
       path: '/',
       name: 'articleList',
       component: ArticleList
+   },
+   {
+      path: '/:tag',
+      name: 'articleListByTag',
+      component: ArticleList
    }
 ]
 
@@ -45,7 +50,7 @@ router.beforeEach((to, from, next) => {
          timer: 1000
        })
 
-      next({name: 'register'})
+      next({name: 'login'})
    }
    else next()
 })

@@ -9,6 +9,17 @@
 .auth-links:hover {
   color: #38b2ac;
 }
+
+#left-nav,
+#right-nav {
+  min-width: 13rem;
+}
+
+.main {
+  min-width: 70vw;
+  margin-left: 3.82rem;
+  margin-top: 2.5rem;
+}
 .half[data-v-ab226b] {
   width: 50%;
 }

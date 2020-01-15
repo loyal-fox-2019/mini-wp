@@ -35,7 +35,6 @@
 
 <script>
 import axios from '../services/server'
-import Swal from 'sweetalert2'
 
 export default {
    name: 'register',

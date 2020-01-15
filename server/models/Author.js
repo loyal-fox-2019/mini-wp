@@ -27,7 +27,9 @@ const authorSchema = new Schema({
    articles: [{
       type: Schema.Types.ObjectId,
       ref: 'Article'
-   }]
+   }],
+
+   tags: [{type: String}]
 })
 
 authorSchema.plugin(timestamp)

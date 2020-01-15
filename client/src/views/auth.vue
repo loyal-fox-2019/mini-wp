@@ -44,9 +44,9 @@ export default {
    },
 
    watch: {
-      $route(to, from) {
-         this.page = to.name
-      }
+      // $route(to, from) {
+      //    this.page = to.name
+      // }
    }
 }
 </script>

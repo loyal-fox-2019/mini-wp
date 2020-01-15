@@ -17,7 +17,20 @@
                href="#">Log out</a>
         </div>
      </div>
-      <router-view :key="$route.fullpath" @loggingIn="setIsLoggedIn($event)"></router-view>
+     <div class="flex">
+         <div id="left-nav" class="flex flex-col items-end px-4 mt-10" v-if="isLoggedIn">
+            <router-link :to="{name: 'articleList'}" class="font-semibold text-xl text-gray-500 hover:text-teal-500">Article list</router-link>
+            <!-- <router-link :to=""></router-link>
+            <router-link :to=""></router-link>
+            <router-link :to=""></router-link> -->
+         </div>
+         <router-view :key="$route.fullPath" @loggingIn="setIsLoggedIn($event)" :class="{main: isLoggedIn}"></router-view>
+         <div id="right-nav" class="flex flex-col px-4 mt-10" v-if="isLoggedIn">
+            <h5 class="font-bold text-2xl text-gray-700 mb-4">Watched tags</h5>
+
+            <router-link :to="{name: 'articleListByTag', params: {tag: 'Adventure'}}" class="font-semibold text-xl text-gray-500 hover:text-teal-500">Adventure</router-link>
+         </div>
+     </div>
   </div>
 </template>
 
@@ -55,6 +68,17 @@ export default {
 
 .auth-links:hover {
    color: #38b2ac;
+}
+
+#left-nav,
+#right-nav {
+   min-width: 13rem;
+}
+
+.main {
+   min-width: 70vw;
+   margin-left: 3.82rem;
+   margin-top: 2.5rem;
 }
 
 </style>

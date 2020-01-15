@@ -9,15 +9,15 @@ async function authorAuthentication(req, res, next) {
          message: 'Need token for authentication'
       }
 
-      const authorId = jwt.verify(req.headers.token, process.env.JWT_SECRET)
-      const author = await Author.findOne({_id: authorId})
+      const decoded = jwt.verify(req.headers.token, process.env.JWT_SECRET)
+      const author = await Author.findOne({_id: decoded.authorId})
 
       if(!author) throw {
          errorCode: 403,
          message: 'This account does not exist in our server.'
       }
 
-      req.authorid = author._id
+      req.authorId = author._id
       next()
    }
    catch (error) {
