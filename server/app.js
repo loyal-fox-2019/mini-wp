@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const article = require('./routes/article');
 const errorHandler = require('./middleware/errorHandler');
 
-mongoose.connect('mongodb://localhost:27017/mini_wp', {useNewUrlParser: true, useUnifiedTopology: true}, function() {
+mongoose.connect('mongodb+srv://rafaelhrhp:b1625nfb@mini-wp-nxpmp.gcp.mongodb.net/mini-wp?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true}, function() {
     console.log('Connected to MongoDB');
 })
 
