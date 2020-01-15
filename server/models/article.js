@@ -18,7 +18,7 @@ const articleSchema = new Schema ({
   tags: {
     type: [String]
   },
-  userId : {
+  author : {
     type: ObjectId,
     ref: 'User'
   }
