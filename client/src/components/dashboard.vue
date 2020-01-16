@@ -453,13 +453,14 @@ export default {
   position: absolute;
 }
 #navigation {
-  color: white;
+  
   background-color: darkslategray
 }
 .nav-item {
   font-size: 20px;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: black;
+  color: white !important;
+  /* -webkit-text-stroke-width: 1px; */
+  /* -webkit-text-stroke-color: black; */
 }
 #my-article-table {
   position: relative;

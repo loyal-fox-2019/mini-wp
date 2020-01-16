@@ -308,7 +308,8 @@ hr {
   margin-top: 3em;
   text-align: left;
   margin-left: 10%;
-  margin-right: 10%
+  margin-right: 10%;
+  margin-bottom: 10%;
 }
 #featuredimage {
   position: relative;

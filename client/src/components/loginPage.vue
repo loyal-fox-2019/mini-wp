@@ -29,19 +29,28 @@
           <div v-if="page === 'signup'" class="mt-3 ml-5 mr-5">
             <span>Sign Up is always free!</span>
             <b-form-input v-model="fullname"
-            class="mt-3"
-             type="text"
-            placeholder="Enter your fullname"></b-form-input>
+            class="mt-3 my-form"
+            type="text"
+            placeholder="Enter your fullname" required></b-form-input>
             <b-form-input v-model="email"
-            class="mt-2"
-             type="email"
-            placeholder="Enter your email"></b-form-input>
-            <b-form-input v-model="password"
-            class="mt-2"
-            type="password" placeholder="Enter your password"></b-form-input>
-            <div id="button-holder" class="mt-3 mb-2" v-if="!loading">
+            class="mt-1 my-form"
+            type="email"
+            placeholder="Enter your email" required></b-form-input>
+            <password v-model="password"
+            id="passwordchecker"
+            class="mt-1"
+            :toggle="true"
+            :secureLength="6"
+            :badge="false"
+            :required="true"
+            @score="showScore"
+            ></password>
+            <div id="button-holder" class="mt-0 mb-2" v-if="!loading">
               <b-button pill @click="changePage('signin')" variant="outline-primary">Sign In</b-button>
-              <b-button pill @click.prevent="signUpAttempt" variant="outline-primary">Sign Up</b-button>
+              <b-button pill disabled variant="outline-primary" v-show="!isPasswordAllowed">Sign Up</b-button>
+              <b-button pill @click.prevent="signUpAttempt"
+              v-show="isPasswordAllowed"
+              variant="outline-primary">Sign Up</b-button>
             </div>
             <div class="text-center mt-3 mb-2" v-else>
               <b-spinner variant="primary" label="Text Centered"></b-spinner>
@@ -72,6 +81,7 @@
 <script>
 import GoogleLogin from 'vue-google-login';
 import axios from '../../api/server.js';
+import Password from 'vue-password-strength-meter'
 
 export default {
   name: 'loginPage',
@@ -85,12 +95,14 @@ export default {
   },
   data() {
     return {
+      isPasswordAllowed: false,
+      type: 'password',
       fullname: '',
       email: '',
       password: '',
       page: 'signin',
       googleSignInParams: {
-        client_id: '16331000744-eogg0oadrtbd8rlq0udpjujrh3qm4rin.apps.googleusercontent.com'
+        client_id: '507377424775-f3825a1cf4ldhi585infn32s27di00pq.apps.googleusercontent.com'
       },
       renderParams: {
         width: 250,
@@ -130,9 +142,17 @@ export default {
       this.email = '';
       this.password = '';
     },
+    showScore (score) {
+      if (score < 2) {
+        this.isPasswordAllowed = false;
+      } else {
+        this.isPasswordAllowed = true;
+      }
+    },
   },
   components: {
     GoogleLogin,
+    Password,
   },
 };
 </script>
@@ -164,5 +184,14 @@ export default {
   height: 40vh;
 }
 
+.my-form {
+  /* border: none; */
+  background-color: #f1f1f1;
+  border: 1px solid #f1f1f1;
+}
+
+#passwordchecker {
+  height: calc(1.5em + 0.75rem + 2px) !important;
+}
 
 </style>
