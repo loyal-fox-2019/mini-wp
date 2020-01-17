@@ -42,12 +42,12 @@ class ArticleController {
   }
 
   static editArticle(req, res, next) {
-    console.log(req.body)
     req.article.title = req.body.title || req.article.title
     req.article.content = req.body.content || req.article.content
     req.article.featuredImage =
       req.body.featuredImage || req.article.featuredImage
     req.article.tags = req.body.tags || req.article.tags
+    req.article.status = req.body.status || req.article.status
 
     req.article
       .save()

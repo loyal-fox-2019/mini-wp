@@ -19,6 +19,10 @@ const articleSchema = new Schema(
       type: String,
     },
     tags: [String],
+    status: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 )
