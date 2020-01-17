@@ -1,8 +1,20 @@
 <template>
   <div id="root">
 
+    <!-- Show this when loading -->
+     <loading 
+    :color="'#007bff'"
+    :background-color="'#000'"
+    :active.sync="isLoading" 
+    :is-full-page="fullPage"
+    :loader="'bars'"
+    ></loading>
+    <!--  -->
+
     <navbar :loginstatus="isLogin" @navbarlogout="logoutAttempt"
     @navbarcontrol="changePage" :fullname="fullname"
+    id="navbar"
+    class="fixed-top"
     ></navbar>
 
     <homepage class="animated fadeIn" v-show="page === 'home'"></homepage>
@@ -28,16 +40,20 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay';
 import axios from '../api/server';
 import navbar from './components/navbar.vue';
 import homepage from './components/homepage.vue';
 import loginpage from './components/loginPage.vue';
 import articles from './components/articles.vue';
 import dashboard from './components/dashboard.vue';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
     return {
+      fullPage: true,
+      isLoading: false,
       page: 'home',
       message: 'Hello world',
       isLogin: false,
@@ -48,6 +64,7 @@ export default {
   methods: {
     loginAttempt(value) {
       this.loading = true;
+      this.isLoading = true;
       axios
         .post('/user', value)
         .then(({ data }) => {
@@ -85,10 +102,14 @@ export default {
             'error'
           );
         })
-        .finally(() => this.loading = false)
+        .finally(() => {
+          this.loading = false;
+          this.isLoading = false;
+        }, 500)
     },
     singupAttempt(value) {
       this.loading = true;
+      this.isLoading = true;
       axios
         .post('/user/register', value)
         .then(({ data }) => {
@@ -98,6 +119,8 @@ export default {
           this.checkLogin();
         })
         .catch((error) => {
+          this.loading = false;
+          this.isLoading = false;
           if (!error.response.data.errors) {
             this.$swal(
               'Something went wrong with the Server.',
@@ -126,7 +149,10 @@ export default {
             'error'
           );
         })
-        .finally(() => this.loading = false)
+        .finally(() => {
+          this.loading = false;
+          this.isLoading = false;
+        }, 500)
     },
     checkLogin() {
       if (localStorage.getItem('token')) {
@@ -145,7 +171,7 @@ export default {
       this.page = value;
     },
     google(idToken) {
-      console.log('Please wait...')
+      this.isLoading = true;
       axios
         .post('/user/google-signin', { idToken }, { headers: { token: 'test' } })
         .then(({ data }) => {
@@ -184,10 +210,9 @@ export default {
           );
         })
         .finally(() => {
-          setTimeout(() => {
-            this.loading = false;
-          }, 500);
-        });
+          this.loading = false;
+          this.isLoading = false;
+        }, 500)
     },
     logoutAttempt() {
       this.checkLogin();
@@ -199,6 +224,7 @@ export default {
     loginpage,
     articles,
     dashboard,
+    Loading,
   },
   created() {
     this.checkLogin();
@@ -220,5 +246,8 @@ export default {
   overflow-x: hidden;
   width: 100vw;
   height: 100vh;
+}
+#navbar {
+  background-color: darkslategray;
 }
 </style>

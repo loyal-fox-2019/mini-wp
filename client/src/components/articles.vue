@@ -4,7 +4,7 @@
 
     <!-- If loading display this section -->
     <section>
-      <section id="header-text" class="mb-5 mt-2 text-center"
+      <section id="header-text" class="mt-5 text-center"
       style="color: #007bff" v-show="!showDetail">
         <h1>TODAY A READER TOMORROW A LEADER</h1>
         <hr>
@@ -45,8 +45,9 @@
           </section>
 
 
-          <div class="row row-cols-4 justify-content-center animated fadeIn">
+          <div class="row row-cols-4 mb-5 justify-content-center animated fadeIn">
             <b-card
+              href="#"
               v-for="article in articles"
               :key="article._id"
               :title="article.title"
@@ -56,6 +57,7 @@
               tag="article"
               style="max-width: 15rem; margin: 5px"
               class="mb-2"
+              @click.prevent="current(article)"
             >
               <b-card-text>
                 Published at: <strong>{{date(article.createdAt)}}</strong>
@@ -71,17 +73,17 @@
 
         </div>
       </section>
-      <section v-else>
+      <section v-else id="detail-section">
         <h1 class="text-center">{{currentArticle.title}}</h1>
         <div class="text-center">
-          <b-button variant="outline-primary" @click="back">Back to articles list</b-button>
+          <b-button variant="primary" @click="back">Back to articles list</b-button>
         </div>
         <div class="mt-3 mb-0" id="featuredimage">
-          <b-img :src="currentArticle.featured_image" fluid alt="Responsive image"></b-img>
+          <b-img id="article-img" :src="currentArticle.featured_image" fluid alt="Responsive image"></b-img>
         </div>
         <div id="detail" v-html="currentArticle.content"></div>
         <div id="footer">
-          <strong>{{currentArticle.title}}</strong> was published at {{date(currentArticle.createdAt)}}.<br>
+          <strong>"{{currentArticle.title}}"</strong> was published at {{date(currentArticle.createdAt)}}.<br>
           Author: <strong>{{currentArticle.author.fullname}}</strong> <br>
           <em>Tags: <a v-for="tag in currentArticle.tags" @click.prevent="changeTag(tag)" :key="tag" href="#" >{{tag}},</a></em>
         </div>
@@ -274,7 +276,10 @@ hr {
   width: 50vw;
 }
 
-
+#header-text {
+  /* margin-top: 10% !; */
+  padding: 2rem;
+}
 
 #empty {
   position: relative;
@@ -301,7 +306,9 @@ hr {
   position: relative;
   margin-top: 5%;
   margin-left: 10%;
-  margin-right: 10%
+  margin-right: 10%;
+  border: 2px solid darkslategray;
+  padding: 1em;
 }
 
 #footer {
@@ -309,7 +316,10 @@ hr {
   text-align: left;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 10%;
+  margin-bottom: 2%;
+  border: 1px solid darkslategray;
+  padding: 1em;
+  width: 20vw;
 }
 #featuredimage {
   position: relative;
@@ -317,5 +327,26 @@ hr {
   margin-top: 5%;
   width: 40vw;
   transform: translate(-50%, 0%)
+}
+#article-img{
+  border: 2px dotted darkslategray;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 1rem;
+  box-shadow: 1rem 1rem 1rem darkslategray;
+  border-radius: 1em;
+}
+#detail-section {
+  margin-top: 5%;
+  margin-bottom: 2%;
+  width: 70vw;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  background-color: snow;
+  /* background: rgba(0, 0, 0, 0.384); */
+  border-radius: 1rem;
+  padding: 1em;
 }
 </style>

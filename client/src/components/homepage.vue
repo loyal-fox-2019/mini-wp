@@ -73,11 +73,11 @@ h1 {
 #main-div {
   position: relative;
   width: 100vw;
-  height: 90vh;
+  height: 93vh;
   background-image: url("../assets/background.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-  margin-top: 11px;
+  margin-top: 44px;
 }
 </style>

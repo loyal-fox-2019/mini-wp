@@ -18,8 +18,8 @@
             class="mt-2"
             type="password" placeholder="Enter your password"></b-form-input>
             <div id="button-holder" class="mt-3 mb-2">
-              <b-button pill @click="loginAttempt" variant="outline-primary">Sign In</b-button>
-              <b-button pill @click.prevent="changePage('signup')" variant="outline-primary">Sign Up</b-button>
+              <b-button pill @click="loginAttempt" variant="primary">Sign In</b-button>
+              <b-button pill @click.prevent="changePage('signup')" variant="primary">Sign Up</b-button>
             </div>
           </div>
           <!-- End of sign in with email & password -->
@@ -46,11 +46,11 @@
             @score="showScore"
             ></password>
             <div id="button-holder" class="mt-0 mb-2" v-if="!loading">
-              <b-button pill @click="changePage('signin')" variant="outline-primary">Sign In</b-button>
-              <b-button pill disabled variant="outline-primary" v-show="!isPasswordAllowed">Sign Up</b-button>
+              <b-button pill @click="changePage('signin')" variant="primary">Sign In</b-button>
+              <b-button pill disabled variant="primary" v-show="!isPasswordAllowed">Sign Up</b-button>
               <b-button pill @click.prevent="signUpAttempt"
               v-show="isPasswordAllowed"
-              variant="outline-primary">Sign Up</b-button>
+              variant="primary">Sign Up</b-button>
             </div>
             <div class="text-center mt-3 mb-2" v-else>
               <b-spinner variant="primary" label="Text Centered"></b-spinner>

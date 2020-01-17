@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="info" variant="light" class="ml-3 mr-3 mb-0">
-      <b-navbar-brand href="#" @click.prevent="changePage('home')">HotBlog</b-navbar-brand>
+    <b-navbar toggleable="lg" id="navbar" type="info" variant="light" class="ml-3 mr-3 mb-0">
+      <b-navbar-brand href="#" @click.prevent="changePage('home')"><strong>HotBlog</strong></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -24,7 +24,7 @@
               Sign Out
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-button size="sm" variant="outline-primary" pill
+          <b-button size="sm" variant="primary" pill
             class="my-2 my-sm-0 ml-2" type="submit" @click.prevent="changePage('signin')" v-else>Sign In</b-button>
 
         </b-navbar-nav>
@@ -62,9 +62,26 @@ export default {
       this.$emit('navbarcontrol', page)
     },
     logoutMethod() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('fullname');
-      this.$emit('navbarlogout');
+      this.$swal.fire({
+        title: 'Sign out??',
+        text: "I know you have another things todo but, are you sure?!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Sign Out!'
+      }).then((result) => {
+        if (result.value) {
+          this.$swal.fire(
+            'Sign Out Sucess!',
+            'See you soon!',
+            'success'
+          )
+          localStorage.removeItem('token');
+          localStorage.removeItem('fullname');
+          this.$emit('navbarlogout');
+        }
+      })
     },
   },
   computed: {
@@ -77,4 +94,7 @@ export default {
 </script>
 
 <style scoped>
+#navbar {
+  background-color: darkslategray !important;
+}
 </style>

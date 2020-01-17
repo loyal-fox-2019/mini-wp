@@ -2,7 +2,7 @@
   <section id="main">
 
     <!-- Show vue-loading-overlay -->
-     <loading 
+    <loading 
     :color="'#007bff'"
     :background-color="'#000'"
     :active.sync="isLoading" 
