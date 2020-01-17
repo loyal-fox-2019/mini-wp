@@ -69,6 +69,16 @@ class ArticleController {
     };
   }
 
+  // static async allSearch(req, res, next) {
+  //   try {
+  //     const { query } = req.query;
+  //     const response = await Article.find({ title: { $regex: query, $options: 'i' }, tags: { $regex: query, $options: 'i' } }).sort({ createdAt: -1 }).populate({ path: 'author', select: '-password -_id -email' })
+  //     res.status(200).json(response);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
+
   static async readArticle(req, res, next) {
     const { articleId } = req.params;
     try {

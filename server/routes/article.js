@@ -18,6 +18,7 @@ router.post('/image', upload.single('image'), (req, res) => {
 
 router.get('/', articleController.getArticles);
 router.get('/search', articleController.searchArticles);
+// router.get('/searchall', articleController.allSearch);
 router.use(authentication);
 router.get('/:articleId', articleController.readArticle);
 router.post('/', articleController.postNewArticle)
