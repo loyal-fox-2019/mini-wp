@@ -1,5 +1,14 @@
 <template>
   <section id="main">
+
+    <!-- Show vue-loading-overlay -->
+     <loading 
+    :active.sync="isLoading" 
+    :is-full-page="fullPage"
+    :loader="'bars'"
+    ></loading>
+    <!-- vue-loading-overlay -->
+
     <div id="navigation">
       <b-nav class="justify-content-center">
         <b-nav-item class="nav-item" @click="navigation('myarticle')">My Articles</b-nav-item>
@@ -112,12 +121,15 @@
 <script>
 import hljs from 'highlight.js';
 import axios from '../../api/server.js';
-import Axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   name: 'dashboard',
   data() {
     return {
+      fullPage: true,
+      isLoading: false,
       file: null,
       isUpdate: false,
       currentItem: {},
@@ -168,7 +180,6 @@ export default {
       this.navigation('create');
     },
     removeArticle(articleId) {
-      // alert(value)
       this.$swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -179,6 +190,7 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.value) {
+          this.isLoading = true
           axios
             .delete(`/articles/${articleId}`, { headers: { token: localStorage.getItem('token') } })
             .then(() => {
@@ -219,6 +231,12 @@ export default {
                 );
               })
               }
+            })
+            .finally(() => {
+              setTimeout(() => {
+                this.isLoading = false;
+                this.show = 'myarticle';
+              }, 500)
             })
     },
     fetchMyData() {
@@ -318,6 +336,7 @@ export default {
         })
     },
     publishAttempt() {
+      this.isLoading = true;
       this.loading = true;
       const docs = {
       title: this.title,
@@ -332,7 +351,7 @@ export default {
         this.content = '';
         this.featured_image = '';
         this.$swal('Article published!');
-        this.$emit('pagearticle', 'articles');
+        this.fetchMyData();
       })
       .catch((error) => {
         if (!error.response.data.errors) {
@@ -366,6 +385,8 @@ export default {
         .finally(() => {
           setTimeout(() => {
             this.loading = false;
+            this.isLoading = false;
+            this.show = 'myarticle';
           }, 500);
         })
     },
@@ -374,7 +395,8 @@ export default {
       this.show = value;
     },
     fileHandle() {
-      this.loading = true
+      this.isLoading = true;
+      this.loading = true;
       this.featured_image = '';
       let formData = new FormData();
         formData.append("image", this.file);
@@ -414,7 +436,8 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-        })
+          this.isLoading = false;
+        }, 500)
     },
     onEditorBlur(editor) {
       console.log('editor blur!', editor)
@@ -435,11 +458,13 @@ export default {
     }
   },
   components: {
+    Loading,
   },
 };
 </script>
 
 <style scoped>
+
 #main {
   overflow-x: hidden;
 }
