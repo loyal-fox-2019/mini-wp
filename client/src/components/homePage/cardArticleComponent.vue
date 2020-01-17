@@ -1,7 +1,8 @@
 <template lang="html">
     <sui-card id="cardArticle">
         <sui-card-header>
-            <i class="remove icon" id="remove" @click="remove"></i>
+            <i class="remove icon" @click="remove"></i>
+            <i class="pencil icon" @click=""></i>
         </sui-card-header>
         <sui-card-content @click.native="showContent">
             <a>
@@ -35,7 +36,7 @@
         computed: {
             createdDate: function () {
                 let date = new Date(this.article.created_at);
-                return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} -
+                return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}
                 ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
             }
         },
@@ -71,9 +72,9 @@
         color: gray;
     }
 
-    #remove {
+    .icon {
         color: gray;
-        margin: 10px;
+        margin: 5px 0px 10px 10px;
         cursor: pointer;
     }
 </style>

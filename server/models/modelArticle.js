@@ -25,7 +25,11 @@ const articleSchema = new Schema(
             minlength: [3, 'tag min length 6 character'],
             maxlength: [15, 'tag max length 15 character']
         }],
-        author: {type: Schema.Types.ObjectId, ref: 'Author'},
+        author: {
+            type: Schema.Types.ObjectId, ref: 'Author',
+            required: [true, 'Author is required']
+        },
+        updateBy: {type: Schema.Types.ObjectId, ref: 'Author'},
         content: {
             type: String,
             required: [true, 'content is required'],
@@ -37,7 +41,11 @@ const articleSchema = new Schema(
             required: [true, 'content is required'],
         },
         featured_image: String,
-        created_at: Date
+        created_at: {
+            type: Date,
+            required: [true, 'created_at date is required']
+        },
+        updated_at: Date
     }
 );
 

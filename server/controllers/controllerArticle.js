@@ -83,6 +83,37 @@ class controllerArticle {
             })
             .catch(next)
     }
+
+    static updateArticle(req, res, next) {
+        let path = "";
+        let tags = [];
+
+        if (req.body.tags) {
+            let tagsSplit = req.body.tags.split(",");
+            tagsSplit.forEach(tag => {
+                tags.push(tag.trim())
+            })
+        }
+
+        if (req.file) {
+            path = req.file.path;
+        }
+        Article.updateOne({
+            _id: req.params.id
+        }, {
+            title: req.body.title,
+            tags: tags,
+            author: req.token.userId,
+            content: req.body.content,
+            quillContent: req.body.quillContent,
+            featured_image: path,
+        }).then(data => {
+            res.status(200).json({
+                message: "data successfully updated",
+                details: data
+            });
+        }).catch(next)
+    }
 }
 
 module.exports = controllerArticle;

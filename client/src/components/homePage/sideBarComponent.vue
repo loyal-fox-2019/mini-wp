@@ -1,7 +1,9 @@
 <template>
     <div>
-        <sui-tab :menu="{ vertical: true, fluid: true, tabular: true }" id="suiTab">
-            <sui-tab-pane title="ListArticle" id="list-article">
+        <sui-tab :active-index="tabActive" :menu="{ vertical: true, fluid: true, tabular: true }" id="suiTab">
+            <sui-tab-pane
+                    title="List Article"
+                    id="list-article">
                 <search-component @search="searchArticle"></search-component>
                 <message-component
                         :header="header"
@@ -15,19 +17,19 @@
                             :article="article"
                             @clicked="listOfArticle"
                             @showContent="showContent"
-                            @data="selectedArticle">
-                    </card-article-component>
+                            @data="selectedArticle"/>
                 </sui-card-group>
             </sui-tab-pane>
-            <sui-tab-pane title="New Article" id="new-article">
-                <input-article-component @clicked="listOfArticle"></input-article-component>
+            <sui-tab-pane
+                    title="New Article"
+                    id="new-article">
+                <input-article-component @clicked="listOfArticle"/>
             </sui-tab-pane>
         </sui-tab>
         <content-component
                 v-if="contentVisible"
                 @dismiss="showContent"
-                :data="article"
-        ></content-component>
+                :data="article"/>
     </div>
 </template>
 
@@ -48,7 +50,8 @@
                 contentMsg: null,
                 visible: false,
                 contentVisible: false,
-                article: null
+                article: null,
+                tabActive: 0
             }
         },
         methods: {
@@ -60,7 +63,6 @@
                         Authorization: "token " + localStorage.token
                     }
                 }).then(({data}) => {
-                    console.log(data);
                     if (data.length > 0) {
                         this.articles = data.reverse();
                     } else {
@@ -91,6 +93,7 @@
         },
         mounted() {
             this.listOfArticle();
+            this.goTabInputData(0);
         },
         components: {
             cardArticleComponent,
