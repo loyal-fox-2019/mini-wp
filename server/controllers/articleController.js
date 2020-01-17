@@ -1,8 +1,9 @@
 const Article = require('../models/article')
+const User = require('../models/user')
 
 class ArticleController{
     static findAll(req,res,next){
-        Article.find()
+        Article.find().populate('author', '-password')
         .then(result=>{
             if(result){
                 res.json({
@@ -21,20 +22,27 @@ class ArticleController{
         })
     }
     static create(req,res,next){
-        console.log(req.body, 'controller create')
-        Article.create({
-            title:req.body.title,
-            content: req.body.content,
-            created_at: req.body.created_at,
-            picture: req.body.picture
+        console.log(req.payload, 'controller create')
+        User.findOne({
+            email: req.payload.email
         })
-        .then(result=>{
+        .then(user=>{
+            return Article.create({
+                    title:req.body.title,
+                    content: req.body.content,
+                    created_at: new Date(),
+                    picture: req.body.picture,
+                    author: user._id
+                })
+        })
+        .then(article=>{
             // console.log(result)
             res.json({
-                title: result.title,
-                content: result.content,
-                created_at: result.created_at,
-                picture: result.picture
+                title: article.title,
+                content: article.content,
+                created_at: article.created_at,
+                picture: article.picture,
+                author: article.author
             })
         })
         .catch(err=>{
@@ -45,11 +53,16 @@ class ArticleController{
     }
     static delete(req,res,next){
         // console.log('masuk delete', req.params)
-        Article.findByIdAndDelete(req.params.id)
+        Article.findByIdAndDelete({_id: req.params.id}).populate('author', '-password')
         .then(result=>{
             
             res.json({
-                result
+                _id: result._id,
+                title: result.title,
+                content: result.content,
+                created_at: result.created_at,
+                picture: result.picture,
+                author: result.author
             })
         })
         .catch(err=>{
@@ -78,11 +91,16 @@ class ArticleController{
         })
     }
     static findOne(req,res,next){
-        Article.findById(req.params.id)
+        Article.findById({_id:req.params.id}).populate('author', '-password')
         .then(result=>{
             if(result){
                 res.json({
-                    result
+                    _id: result._id,
+                    title: result.title,
+                    content: result.content,
+                    created_at: result.created_at,
+                    picture: result.picture,
+                    author: result.author
                 })
             }else{
                 res.json({
