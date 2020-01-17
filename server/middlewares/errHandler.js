@@ -1,5 +1,4 @@
 module.exports = function(err, req, res, next) {
-  console.log(err)
   const stringifiedErr = JSON.stringify(err);
   if (err.code === 404) {
     res.status(err.code).json({
