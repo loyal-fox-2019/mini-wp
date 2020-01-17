@@ -1,6 +1,8 @@
 <template>
     <div>
-        <message-component :header="header" :content="contentMsg" :visible="visible"></message-component>
+        <message-component :header="header"
+                           :content="contentMsg"
+                           :visible="visible" />
         <form class="w-100" @submit.prevent="submitArticle" action="" enctype="multipart/form-data">
             <label for="article-title">Title : </label>
             <sui-label color="teal" basic>10 - 100 character</sui-label>
@@ -40,7 +42,10 @@
             <sui-label color="teal" basic>max size 5 Mb</sui-label>
             <div class="field">
                 <div class="ui input">
-                    <input type="file" ref="featured_image" name="featured_image" @change="handleFileUpload"/>
+                    <input type="file"
+                           ref="featured_image"
+                           name="featured_image"
+                           @change="handleFileUpload"/>
                 </div>
             </div>
             <br>

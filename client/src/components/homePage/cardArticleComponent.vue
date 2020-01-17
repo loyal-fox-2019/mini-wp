@@ -2,14 +2,14 @@
     <sui-card id="cardArticle">
         <sui-card-header>
             <i class="remove icon" @click="remove"></i>
-            <i class="pencil icon" @click=""></i>
+            <i class="pencil icon" @click="showContent(true)"></i>
         </sui-card-header>
-        <sui-card-content @click.native="showContent">
+        <sui-card-content @click.native="showContent(false)">
             <a>
                 <sui-image :src="article.featured_image"/>
             </a>
         </sui-card-content>
-        <sui-card-content @click.native="showContent">
+        <sui-card-content @click.native="showContent(false)">
             <small id="created_at">{{createdDate}}</small>
             <p>
                 <sui-card-header><a>{{article.title}}</a></sui-card-header>
@@ -55,8 +55,8 @@
                     console.log(err);
                 })
             },
-            showContent: function () {
-                this.$emit('showContent');
+            showContent: function (isEdit) {
+                this.$emit('showContent', isEdit);
                 this.$emit('data', this.article);
             }
         }

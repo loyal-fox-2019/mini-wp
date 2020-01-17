@@ -29,7 +29,10 @@
         <content-component
                 v-if="contentVisible"
                 @dismiss="showContent"
-                :data="article"/>
+                :data="article"
+                @updateData="listOfArticle"
+                :editVisibility="editVisibility"
+        />
     </div>
 </template>
 
@@ -45,6 +48,7 @@
         name: "sideBarComponent",
         data() {
             return {
+                editVisibility: false,
                 articles: [],
                 header: null,
                 contentMsg: null,
@@ -80,12 +84,13 @@
                     this.visible = false;
                 }, 2000);
             },
-            showContent: function () {
+            showContent: function (isEdit) {
                 if (this.contentVisible) {
                     this.contentVisible = false;
                 } else {
                     this.contentVisible = true;
                 }
+                this.editVisibility = isEdit
             },
             selectedArticle: function (data) {
                 this.article = data;
@@ -93,7 +98,6 @@
         },
         mounted() {
             this.listOfArticle();
-            this.goTabInputData(0);
         },
         components: {
             cardArticleComponent,
