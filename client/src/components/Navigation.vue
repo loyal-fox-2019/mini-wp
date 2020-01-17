@@ -29,9 +29,11 @@
             <ul class="navbar-nav ml-auto">
               <li class="nav-item"><a href="#" class="nav-link" @click="hideDetail">Home</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link" @click="showAdd">Add Post</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click="showAdd" v-show="logedIn">Add Post</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link" @click="logout">Log Out</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click="logout" v-show="logedIn">Log Out</a>
+              </li>
+              <li class="nav-item"><a href="#" class="nav-link" @click="showLogin" v-show="!logedIn">Log in</a>
               </li>
             </ul>
             <div class="navbar-text"><a href="#" class="search-btn"><i class="fa fa-search"></i></a></div>
@@ -44,7 +46,13 @@
 <script>
 export default {
   name: 'Navigation',
+  props: {
+    logedIn: Boolean
+  },
   methods: {
+    showLogin() {
+      this.$emit('show-login')
+    },
     logout() {
       this.$emit('logout')
     },

@@ -2,7 +2,8 @@ const Article = require('../models/article')
 
 class ArticleController {
   static create (req, res, next) {
-    const { title, content, tags, featured_image } = req.body,
+    const { title, content, featured_image } = req.body,
+      tags = req.body.tags.split(','),
       author = req.user._id
     Article.create({ title, content, tags, featured_image, author })
       .then(article => {
@@ -12,6 +13,7 @@ class ArticleController {
   }
   static all (req, res, next) {
     Article.find()
+    .populate('author', 'username -_id')
       .then(articles => {
         res.send(articles)
       })

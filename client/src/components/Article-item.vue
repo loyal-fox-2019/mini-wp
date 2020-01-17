@@ -1,22 +1,16 @@
 <template>
-  <div @click="showDetail">
+  <div @click="showDetail" class="article-item">
     <div class="post-thumbnail">
       <img
-        src="https://images.unsplash.com/photo-1569429379101-35f2598ece66"
+        :src="article.featured_image"
         alt="..."
         class="img-fluid"
       />
     </div>
     <div class="post-details">
-      <div class="post-meta d-flex justify-content-between">
-        <div class="category">
-          <a href="#">Business</a>
-          <a href="#">Financial</a>
-        </div>
-      </div>
       <h1>
+        {{article.title}}
         <a href="#">
-        test altas db
           <i class="fa fa-bookmark-o"></i>
         </a>
       </h1>
@@ -26,7 +20,7 @@
             <img src="https://image.flaticon.com/icons/svg/2431/2431970.svg" alt="..." class="img-fluid" />
           </div>
           <div class="title">
-            <span>John Doe</span>
+            <span>{{article.author.username}}</span>
           </div>
         </a>
         <div class="d-flex align-items-center flex-wrap">
@@ -41,8 +35,23 @@
           </div>
         </div>
       </div>
+      <div class="post-meta">
+        <div class="category">
+          <div class="widget tags border-0 m-0">
+            <ul class="list-inline">
+              <li class="list-inline-item" v-for="(tag, i) in article.tags"
+                @remove="removeTag(tag)"
+                :key="i"
+                :title="tag"> 
+                <a href="#" class="tag">#{{tag}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div class="post-body">
-        <span>content article</span>
+        <!-- <p>{{article.content.slice(0, 100)}} ...</p> -->
+        <span v-html="article.content"></span>
       </div>
     </div>
   </div>
@@ -51,6 +60,9 @@
 <script>
 export default {
   name: "ArticleItem",
+  props: {
+    article: Object
+  },
   methods: {
     showDetail() {
       this.$emit('show-detail')
@@ -59,5 +71,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.article-item {
+  margin-bottom: 10vh
+}
 </style>

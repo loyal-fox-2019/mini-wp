@@ -1,7 +1,7 @@
 <template>
   <div>
-    <login-form v-show="!registered" @set-login="setLogin" @set-register="setRegister"></login-form>
-    <register-form v-show="registered" @set-register="setRegister"></register-form>
+    <login-form v-if="!registered" @set-login="setLogin" @set-register="setRegister"></login-form>
+    <register-form v-if="registered" @set-register="setRegister"></register-form>
   </div>
 </template>
 

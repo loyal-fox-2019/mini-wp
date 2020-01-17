@@ -1,16 +1,21 @@
 <template>
   <div class="container">
-    <form class="form-signin" action="#">
+    <form class="form-signin" action="#" @submit.prevent="login">
       <h2 class="form-signin-heading">sign in now</h2>
       <div class="login-wrap">
+        <div v-for="(error, i) in errors" :key="i" class="alert alert-danger text-center" role="alert">
+          {{error}}
+        </div>
         <input
           type="email"
           class="form-control"
           placeholder="Email"
           autofocus=""
+          required
+          v-model="email"
         />
-        <input type="password" class="form-control" placeholder="Password" />
-        <button class="btn btn-lg btn-login btn-block" type="submit" @click="setLogin"> 
+        <input type="password" class="form-control" placeholder="Password" required v-model="password"/>
+        <button class="btn btn-lg btn-login btn-block" type="submit"> 
           Sign in
         </button>
         <p>or you can sign in via oAuth</p>
@@ -36,8 +41,16 @@
 </template>
 
 <script>
+import axios from '../config/api'
 export default {
   name: 'LoginForm',
+  data() {
+    return {
+      email: '',
+      password: '',
+      errors: []
+    }
+  },
   methods: {
     setLogin() {
       this.$emit('set-login')
@@ -45,6 +58,26 @@ export default {
     setRegister() {
       this.$emit('set-register')
     },
+    login() {
+      this.errors = []
+      axios({
+        method: 'POST',
+        url: `/login`,
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          this.email = ''
+          this.password = ''
+          this.setLogin()
+        })
+        .catch(err => {
+          this.errors.push(err.response.data.message)
+        })
+    }
   }
 }
 </script>
