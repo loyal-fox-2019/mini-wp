@@ -3,6 +3,8 @@
 
     <!-- Show vue-loading-overlay -->
      <loading 
+    :color="'#007bff'"
+    :background-color="'#000'"
     :active.sync="isLoading" 
     :is-full-page="fullPage"
     :loader="'bars'"
@@ -16,6 +18,11 @@
       </b-nav>
     </div>
     <div id="my-article" v-show="show === 'myarticle'">
+      <h1 style="text-align: center;" class="mt-1">My Articles</h1>
+      <div class="text-center mt-0" v-if="myArticles.length < 1">
+        <p id="text"><em>If your article empty, click refresh</em></p>
+        <b-button pill @click="fetchMyData" variant="outline-secondary">Refresh</b-button>
+      </div>
       <div id="my-article-table" class="mt-5">
         <table class="table table-striped table-dark">
           <thead>
@@ -30,7 +37,7 @@
               <th scope="row">{{articleEdit._id}}</th>
               <td>{{articleEdit.title}}</td>
               <td>
-                <b-button pill class="mr-2" @click="updateArticle(articleEdit)" variant="outline-primary">EDIT</b-button><b-button @click="removeArticle(articleEdit._id)" pill variant="outline-primary">REMOVE</b-button>
+                <b-button pill class="mr-2" @click="updateArticle(articleEdit)" variant="primary">EDIT</b-button><b-button @click="removeArticle(articleEdit._id)" pill variant="primary">REMOVE</b-button>
               </td>
             </tr>
           </tbody>
@@ -45,7 +52,7 @@
     <div id="page" class="mt-2">
       <!-- Create new article -->
       <div id="create" v-show="show === 'create'">
-        <h1 style="text-align: center;">Create New Article</h1>
+        <h1 style="text-align: center;" class="mt-5">Create New Article</h1>
         <section id="form">
           <div class="justify-content-center" v-show="featured_image != ''">
             <b-img :src="featured_image" fluid alt="Responsive image"></b-img>
@@ -74,17 +81,19 @@
               drop-placeholder="Drop file here..."
             ></b-form-file>
 
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 mb-3" v-show="!buttonPressed">
               <b-button
                 pill variant="outline-primary"
                 @click="fileHandle"
                 >
-                Upload
+                Upload Image
               </b-button>
               <b-button
                 pill variant="outline-primary"
-                v-b-modal.modal-1>
-                Preview
+                v-show="file"
+                @click="removeImage"
+                >
+                Remove Image
               </b-button>
               <b-button
                 v-if="!loading"
@@ -96,9 +105,34 @@
                 <b-spinner small></b-spinner>
               </b-button>
             </div>
+
+
+            <div class="text-center mt-3 mb-3" v-show="buttonPressed">
+              <b-button
+                disabled
+                pill variant="outline-primary"
+                @click="fileHandle"
+                >
+                Upload Image
+              </b-button>
+              <b-button
+                disabled
+                pill variant="outline-primary"
+                @click="removeImage"
+                >
+                Remove Image
+              </b-button>
+              <b-button
+                disabled
+                pill variant="outline-primary"
+                @click="publishAttempt">Publish
+              </b-button>
+            </div>
+
+
           </div>
           <div v-else>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 mb-3" v-show="!buttonPressed">
               <b-button
                 v-if="!loading"
                 pill variant="outline-primary"
@@ -107,6 +141,15 @@
               <b-button pill v-else
               variant="outline-primary" disabled>
                 <b-spinner small></b-spinner>
+              </b-button>
+            </div>
+
+            <div class="text-center mt-3 mb-3" v-show="buttonPressed">
+              <b-button
+                disabled
+                v-if="!loading"
+                pill variant="outline-primary"
+                @click="updateAttempt">Update
               </b-button>
             </div>
           </div>
@@ -129,6 +172,7 @@ export default {
   data() {
     return {
       fullPage: true,
+      buttonPressed: false,
       isLoading: false,
       file: null,
       isUpdate: false,
@@ -143,7 +187,7 @@ export default {
       content: '',
       tags: [],
       featured_image: '',
-      show: 'create',
+      show: 'myarticle',
       loading: false,
       editorOption: {
           modules: {
@@ -171,6 +215,9 @@ export default {
     };
   },
   methods: {
+    removeImage() {
+      this.file = null;
+    },
     updateArticle(value) {
       this.isUpdate = true;
       this.currentItem = value;
@@ -240,7 +287,7 @@ export default {
             })
     },
     fetchMyData() {
-      this.loading = true;
+      this.isLoading = true;
       axios
         .get('/user/articles', { headers: { token: localStorage.getItem('token') } })
         .then(({ data }) => {
@@ -278,11 +325,13 @@ export default {
         .finally(() => {
           setTimeout(() => {
             this.loading = false;
+            this.isLoading = false;
           }, 500);
         })
 
     },
     updateAttempt() {
+      this.buttonPressed = true;
       this.loading = true;
       const docs = {
         title: this.title,
@@ -331,11 +380,13 @@ export default {
         })
         .finally(() => {
           setTimeout(() => {
+            this.buttonPressed = false;
             this.loading = false;
           }, 500);
         })
     },
     publishAttempt() {
+      this.buttonPressed = true;
       this.isLoading = true;
       this.loading = true;
       const docs = {
@@ -352,6 +403,7 @@ export default {
         this.featured_image = '';
         this.$swal('Article published!');
         this.fetchMyData();
+        this.show = 'myarticle';
       })
       .catch((error) => {
         if (!error.response.data.errors) {
@@ -384,17 +436,22 @@ export default {
         })
         .finally(() => {
           setTimeout(() => {
+            this.buttonPressed = false;
             this.loading = false;
             this.isLoading = false;
-            this.show = 'myarticle';
           }, 500);
         })
     },
     navigation(value) {
+      this.title = '';
+      this.content = '';
+      this.tags = '';
+      this.featured_image = '';
       if (value === 'myarticle') this.fetchMyData();
       this.show = value;
     },
     fileHandle() {
+      this.buttonPressed = true;
       this.isLoading = true;
       this.loading = true;
       this.featured_image = '';
@@ -437,6 +494,7 @@ export default {
         .finally(() => {
           this.loading = false;
           this.isLoading = false;
+          this.buttonPressed = false;
         }, 500)
     },
     onEditorBlur(editor) {
@@ -496,5 +554,8 @@ export default {
   position: absolute;
   left: 25%;
   top: 30%;
+}
+#text {
+  text-align: center;
 }
 </style>
