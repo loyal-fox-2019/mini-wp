@@ -168,6 +168,11 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
+  props: {
+    page: {
+      type: String,
+    },
+  },
   name: 'dashboard',
   data() {
     return {
@@ -521,6 +526,13 @@ export default {
     contentCode() {
       return hljs.highlightAuto(this.content).value
     }
+  },
+  watch: {
+    page: function(value) {
+      if (value === 'Dashboard') {
+        this.fetchMyData();
+      }
+    },
   },
   components: {
     Loading,

@@ -257,7 +257,7 @@ export default {
         this.fetchData();
       }
     },
-  }
+  },
 };
 </script>
 

@@ -18,6 +18,7 @@
 
     <dashboard v-show="page === 'Dashboard'"
     :pagearticle="changePage"
+    :page="page"
     class="animated fadeIn"
     ></dashboard>
 
