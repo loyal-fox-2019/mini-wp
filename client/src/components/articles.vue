@@ -210,6 +210,7 @@ export default {
       axios
         .get('/articles')
         .then(({ data }) => {
+          this.articles = null;
           this.articles = data;
           setTimeout(() => {
             this.loading = false;

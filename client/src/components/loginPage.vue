@@ -17,13 +17,9 @@
             <b-form-input v-model="password"
             class="mt-2"
             type="password" placeholder="Enter your password"></b-form-input>
-            <div id="button-holder" class="mt-3 mb-2" v-show="!buttonPressed">
+            <div id="button-holder" class="mt-3 mb-2">
               <b-button pill @click="loginAttempt" variant="outline-primary">Sign In</b-button>
               <b-button pill @click.prevent="changePage('signup')" variant="outline-primary">Sign Up</b-button>
-            </div>
-            <div id="button-holder" class="mt-3 mb-2" v-show="buttonPressed">
-              <b-button pill disabled @click="loginAttempt" variant="outline-primary">Sign In</b-button>
-              <b-button pill disabled @click.prevent="changePage('signup')" variant="outline-primary">Sign Up</b-button>
             </div>
           </div>
           <!-- End of sign in with email & password -->
@@ -49,7 +45,7 @@
             :required="true"
             @score="showScore"
             ></password>
-            <div id="button-holder" class="mt-0 mb-2" v-if="!loading" v-show="!but">
+            <div id="button-holder" class="mt-0 mb-2" v-if="!loading">
               <b-button pill @click="changePage('signin')" variant="outline-primary">Sign In</b-button>
               <b-button pill disabled variant="outline-primary" v-show="!isPasswordAllowed">Sign Up</b-button>
               <b-button pill @click.prevent="signUpAttempt"
@@ -99,7 +95,6 @@ export default {
   },
   data() {
     return {
-      buttonPressed: false,
       isPasswordAllowed: false,
       type: 'password',
       fullname: '',

@@ -19,9 +19,9 @@
     </div>
     <div id="my-article" v-show="show === 'myarticle'">
       <h1 style="text-align: center;" class="mt-1">My Articles</h1>
-      <div class="text-center mt-0" v-if="myArticles.length < 1">
+      <div class="text-center mt-0" >
         <p id="text"><em>If your article empty, click refresh</em></p>
-        <b-button pill @click="fetchMyData" variant="outline-secondary">Refresh</b-button>
+        <b-button pill @click="refresh" variant="outline-secondary">Refresh</b-button>
       </div>
       <div id="my-article-table" class="mt-5">
         <table class="table table-striped table-dark">
@@ -215,6 +215,9 @@ export default {
     };
   },
   methods: {
+    refresh() {
+      this.fetchMyData();
+    },
     removeImage() {
       this.file = null;
     },
@@ -283,10 +286,12 @@ export default {
               setTimeout(() => {
                 this.isLoading = false;
                 this.show = 'myarticle';
+                this.fetchMyData();
               }, 500)
             })
     },
     fetchMyData() {
+      this.myArticles = null;
       this.isLoading = true;
       axios
         .get('/user/articles', { headers: { token: localStorage.getItem('token') } })
@@ -382,6 +387,7 @@ export default {
           setTimeout(() => {
             this.buttonPressed = false;
             this.loading = false;
+            this.fetchMyData();
           }, 500);
         })
     },
@@ -439,15 +445,16 @@ export default {
             this.buttonPressed = false;
             this.loading = false;
             this.isLoading = false;
+            this.fetchMyData();
           }, 500);
         })
     },
     navigation(value) {
-      this.title = '';
-      this.content = '';
       this.tags = '';
       this.featured_image = '';
-      if (value === 'myarticle') this.fetchMyData();
+      if (value === 'myarticle') {
+        this.fetchMyData();
+      }
       this.show = value;
     },
     fileHandle() {
