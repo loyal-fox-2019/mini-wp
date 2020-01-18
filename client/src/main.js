@@ -5,14 +5,14 @@ import GSignInButton from 'vue-google-signin-button';
 import VueQuill from 'vue-quill';
 import GAuth from 'vue-google-oauth2';
 
-const googleClientIdProd = '1077663190419-3fl32g86v8evqq5ud7ivlusngc81k965.apps.googleusercontent.com';
+const googleClientId = '1077663190419-3fl32g86v8evqq5ud7ivlusngc81k965.apps.googleusercontent.com';
 const googleClientIdDev = '1077663190419-fkbutpat7sloejjac79gs8tnfa1bmi3k.apps.googleusercontent.com';
 
 const gauthOption = {
-    clientId: googleClientIdDev
+    clientId: googleClientId
 };
 
-Vue.prototype.$googleId = googleClientIdDev;
+Vue.prototype.$googleId = googleClientId;
 Vue.use(GAuth, gauthOption);
 Vue.use(SuiVue);
 Vue.use(GSignInButton);
