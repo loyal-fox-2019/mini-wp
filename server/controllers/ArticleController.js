@@ -95,14 +95,18 @@ class ArticleController {
 
     static update(req, res, next){
         const form = req.body
+        const data = {
+            title: form.title,
+            slug: ArticleController.generateSlug(form.title),
+            content: form.content,
+            featured_image: form.featured_image,
+            tags: form.tags
+        }
+        if (form.featured_image) {
+            data.featured_image = form.featured_image
+        }
         Article
-            .updateOne({ _id: req.params.id },{
-                title: form.title,
-                slug: ArticleController.generateSlug(form.title),
-                content: form.content,
-                featured_image: form.featured_image,
-                tags: form.tags
-            })
+            .updateOne({ _id: req.params.id }, data)
             .then(result => {
                 return Article.findOne({ _id: req.params.id })
             })
