@@ -11,13 +11,15 @@ class Controller {
     }
 
     static getMyArticle(req, res, next) {
-        Article.find({ id: req.decoded.id }).populate('creator', 'name')
+        Article.find({ creator: req.decoded.id }).populate('creator', 'name')
             .then((article) => {
                 res.status(200).json(article)
             }).catch(next);
     }
 
     static createArticle(req, res, next) {
+        console.log(req.body);
+        
         let createInput = {}
         createInput.creator = req.decoded.id
         for (const request in req.body) {

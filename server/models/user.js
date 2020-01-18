@@ -6,7 +6,8 @@ const UserSchema = new Schema({
 
     name: {
         type: String,
-        minlength: 3,
+        minlength: [3, "Need more than 3 characters"],
+        maxlength: [25, "You may use your short name"],
         required: [true, "Doesn't have name? find one on google"],
         // match: [/[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\[\]\:\;\'\"\|\~\`\_\-]/g, 'Name must not contain special character'],
         validate: {
@@ -36,7 +37,6 @@ const UserSchema = new Schema({
         required: [true, 'Password harus diisi']
     },
     bookmark: [{ type: Schema.Types.ObjectId, ref: 'Article' }],
-    about: String,
     fav_tags: [{ type: String }]
 
 

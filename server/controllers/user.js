@@ -21,7 +21,7 @@ class Controller {
 
             let token = genToken({ id: user.id, name: user.name, email: user.email })
 
-            res.status(200).json(token)
+            res.status(200).json({token})
         } catch (error) {
             next(error)
         }
@@ -30,11 +30,12 @@ class Controller {
     static async register(req, res, next) {
         try {
             const { email, name, password } = req.body
+console.log(req.body);
 
             let user = await User.create({ email, name, password })
             let token = genToken({ id: user.id, name: user.name, email: user.email })
 
-            res.status(201).json(token)
+            res.status(201).json({token, name})
         } catch (error) {
             next(error)
         }

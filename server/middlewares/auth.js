@@ -22,7 +22,7 @@ function authorization(req, res, next) {
     Article.findById(req.params.id)
     .then((article) => {
         if(!article) throw ({statusCode: 404, message: 'Article not found'})
-        else if(article.creator !== req.decoded.id) throw({statusCode: 403, message: 'Unauthorized'})
+        else if(article.creator != req.decoded.id) throw({statusCode: 403, message: 'Unauthorized'})
         else next()
     })
     .catch(next);
