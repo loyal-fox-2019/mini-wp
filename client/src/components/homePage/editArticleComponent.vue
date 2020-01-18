@@ -122,7 +122,6 @@
                 formData.set('title', this.title);
                 formData.set('tags', this.tags);
                 formData.set('content', this.content);
-                formData.set('quillContent', this.content);
                 formData.set('featured_image', this.featured_image);
 
                 instance({

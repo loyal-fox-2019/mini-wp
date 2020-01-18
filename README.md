@@ -1,46 +1,59 @@
 # mini-wp
 
-### Documentation : 
-``` API-BASE-URL: http://35.184.99.60:3000 ```
-### https://documenter.getpostman.com/view/6308027/SWE57ez3?version=latest
-
 ### Web Url : http://miniwp.mputong.com/
 
-# favorite-shows-app-server
+### api-Documentation : 
+``` API-BASE-URL: http://35.184.99.60:3000 ```
+### https://documenter.getpostman.com/view/6308027/SWE58KR8?version=latest
 
 List of available endpoints:
-- `POST /register`
-- `POST /login`
+#### Articles
+- `POST /articles`
+- `GET /articles`
+- `GET /articles/:title`
+- `DELETE /articles/:id`
+- `PUT /articles/:id`
 
-Manage logged in user data:
-- `GET /shows`
-- `POST /shows`
-- `DELETE /shows/:id`
+#### Authors
+- `POST /authors`
+- `POST /authors/login`
+- `POST /authors/login/oauth/:googleToken`
+- `GET /authors`
 
 Error response format:
 ```json
 {
-  "errors": [
-    "Connection to mongodb error",
-    "username required",
-    "password required",
-    "password minimal 6 characters",
-    "username already registered",
-    "Internal server error, check the console",
-    "title required",
-    "title already registered",
-    "you don't have authorized to do this action"
-  ]
+  "message": "..."
 }
 ```
 
-## POST /register
-
+## POST /articles
 - Request Header(s):
-  - `Content-Type`: `application/x-www-form-urlencoded` or `application/json`
+  - `Content-Type`: `application/x-www-form-urlencoded`
+  - `Authorization`: `token {jwt token}` 
 - Request Body:
-  - `username`: `String (required, unique)`
-  - `password`: `String (required, min length: 6)`
+  - `title: {
+                type: String,
+                required: true,
+                unique: true,
+                minlength: 10,
+                maxlength: 100
+            }`
+  - `tags: [{
+                 type: String,
+                 required: true,
+                 minlength: 3,
+                 maxlength: 15
+             }],`
+  - `content: {
+                 type: String/ html,
+                 required: true,
+                 minlength: 100,
+                 maxlength: 50000
+             }`
+  - `featured_image: {
+                 file
+             }`          
 - Response:
   - `status`: `201`
   - `body`:
