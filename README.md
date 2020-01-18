@@ -1,1 +1,1 @@
-# mini-wp
+# Mini WordPress
