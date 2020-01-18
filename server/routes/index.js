@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const auth = require('./auth')
+
 const user = require('./user')
 const article = require('./article')
 const tag = require('./tag')

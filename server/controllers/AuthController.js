@@ -28,7 +28,6 @@ class AuthController {
                 username: form.username
             })
             .then(user => {
-                console.log(user)
                 const error = {
                     name: 'ValidationError',
                     message: 'username/password incorrect'
