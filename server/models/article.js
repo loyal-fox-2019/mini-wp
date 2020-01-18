@@ -10,23 +10,21 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
-    created_at: {
-        type: Date
-    },
-    user: {
+    author: {
         type: Schema.Types.ObjectId,
         //required: true,
         ref: "User" 
-    }
-});
+    },
+    featured_image: {
+        type: String
+    },
+    slug: {
+        type: String
+    },
+}, {timestamps : true},{versionKey : false});   //timestamps add createdAt, updatedAt fields
 
 articleSchema.pre('save',function(next) {
-    //this.user = ObjectId(this.user);
-    if(!this.created_at)
-    {
-        this.created_at = new Date();
-    }
-    
+    //this.author = ObjectId(this.author);    
 
     next()
 })

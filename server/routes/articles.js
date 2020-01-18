@@ -1,38 +1,35 @@
 const articlesRouter = require("express").Router();
 
-const express = require("express");
-articlesRouter.use(express.urlencoded({extended:true}));
-
 const ArticleController = require("../controllers/articleController");
 
-articlesRouter.post('/',(req,res) => {
+articlesRouter.post('/',(req,res,next) => {
     //res.send('add Article');
-    ArticleController.addArticle(req,res);
+    ArticleController.addArticle(req,res,next);
 });
 
-articlesRouter.get('/',(req,res) => {
+articlesRouter.get('/',(req,res,next) => {
     //res.send('Article list');
-    ArticleController.showAllArticles(req,res);
+    ArticleController.showAllArticles(req,res,next);
 });
 
-articlesRouter.get('/:id',(req,res) => {
+articlesRouter.get('/:id',(req,res,next) => {
     //res.send('Article detail');
-    ArticleController.showArticleById(req,res);
+    ArticleController.showArticleById(req,res,next);
 });
 
-articlesRouter.put('/:id',(req,res) => {
+articlesRouter.put('/:id',(req,res,next) => {
     //res.send('update Article');
-    ArticleController.updateArticle(req,res);
+    ArticleController.updateArticle(req,res,next);
 });
 
-articlesRouter.patch('/:id',(req,res) => {
+articlesRouter.patch('/:id',(req,res,next) => {
     //res.send('update Article');
-    ArticleController.updateArticle(req,res);
+    ArticleController.updateArticle(req,res,next);
 });
 
-articlesRouter.delete('/:id',(req,res) => {
+articlesRouter.delete('/:id',(req,res,next) => {
     //res.send('delete Article');
-    ArticleController.deleteArticle(req,res);
+    ArticleController.deleteArticle(req,res,next);
 });
 
 module.exports = articlesRouter;

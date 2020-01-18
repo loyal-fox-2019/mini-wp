@@ -1,16 +1,10 @@
-const mongoose = require("mongoose");
-mongoose.set('useUnifiedTopology', true);
-mongoose.set('useCreateIndex', true);
-const url = "mongodb://localhost:27017/mini_wp"
-mongoose.connect(url, {useNewUrlParser: true});
-
 const _ = require("underscore");
 
 const Article = require("../models/article");
 
 class ArticleController
 {
-    static showAllArticles(req,res)
+    static showAllArticles(req,res,next)
     {
         Article.find()
         .exec()
@@ -18,11 +12,11 @@ class ArticleController
             res.status(200).json(articles);
         })
         .catch((err) => {
-            res.status(400).json(err);
+            next(err);
         })
     }
 
-    static showArticleById(req,res)
+    static showArticleById(req,res,next)
     {
         Article.findById(req.params.id)
         .exec()
@@ -30,11 +24,11 @@ class ArticleController
             res.status(200).json(article);
         })
         .catch((err) => {
-            res.status(400).json(err);
+            next(err);
         })
     }
 
-    static addArticle(req,res)
+    static addArticle(req,res,next)
     {
         const data = _.pick(req.body,'title','content');
                 
@@ -43,11 +37,11 @@ class ArticleController
             res.status(201).json(article);
         })
         .catch((err) => {
-            res.status(400).json(err);
+            next(err);
         });
     }
     
-    static updateArticle(req,res)
+    static updateArticle(req,res,next)
     {
         const data = _.pick(req.body,'title','content');
 
@@ -68,9 +62,7 @@ class ArticleController
             }
             else
             {
-                res.status(403).json({
-                    msg: "not found"
-                });
+                next({status: 404, message: "not found"})
             }
         })
         .then((updated) => {
@@ -80,13 +72,11 @@ class ArticleController
             });
         })
         .catch((err) => {
-            res.status(403).json({
-                msg: "not found"
-            });
+            next(err)
         });
     }
 
-    static deleteArticle(req,res)
+    static deleteArticle(req,res,next)
     {
         Article.findByIdAndDelete(req.params.id)
         .exec()
@@ -94,7 +84,7 @@ class ArticleController
             res.sendStatus(204);
         })
         .catch((err) => {
-            res.status(400).json(err);
+            next(err);
         })
     }
 }
