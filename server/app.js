@@ -4,14 +4,14 @@ const app = express()
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
 const cors = require('cors')
-const Routes = require('./routes/article')
+const Routes = require('./routes/index')
 
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-mongoose.connect(`mongodb+srv://ilhammarzlik:${process.env.MONGO_PASS}@clusterzero-2cc7x.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(`mongodb+srv://ilhammarzlik:${process.env.MONGO_PASS}@clusterzero-2cc7x.mongodb.net/test?retryWrites=true&w=majority`, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
     .then(()=> {
         console.log('===DATABASE CONNECTED===')
     })

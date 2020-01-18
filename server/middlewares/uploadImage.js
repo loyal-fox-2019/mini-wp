@@ -5,7 +5,7 @@ module.exports = gcsUpload({
       fileSize: 1e6 // in bytes
     },
     gcsConfig: {
-      keyFilename: 'mini-wp-743d656d0977.json',
+      keyFilename: 'mini-wp-de6d30ea0822.json',
       bucketName: 'storage-miniwp-mashumuro'
     }
 })

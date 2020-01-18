@@ -6,12 +6,19 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     content: {
         type: String,
         required: true
     },
-    image:{
+    featured_image:{
         type: String,
+    },
+    tags: {
+        type: [String]
     },
     created_at: {
         type: Date
