@@ -8968,6 +8968,16 @@ exports.default = void 0;
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'TheNavbar',
   props: {
@@ -8975,12 +8985,16 @@ var _default = {
   },
   data: function data() {
     return {
-      myDropdown: false
+      myDropdown: false,
+      searchDropdown: false
     };
   },
   methods: {
     toggleDropdown: function toggleDropdown() {
       this.myDropdown = !this.myDropdown;
+    },
+    toggleSearchDropdown: function toggleSearchDropdown() {
+      this.searchDropdown = !this.searchDropdown;
     }
   },
   created: function created() {}
@@ -9031,7 +9045,13 @@ exports.default = _default;
                     {
                       staticClass:
                         "absolute bg-blue-500 text-white mt-4 p-4 overflow-auto z-30",
-                      attrs: { id: "myDropdown" }
+                      attrs: { id: "myDropdown" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.toggleDropdown($event)
+                        }
+                      }
                     },
                     [
                       _vm._m(0),
@@ -9170,17 +9190,30 @@ exports.default = _default;
                       }
                     }),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "absolute right-0 mr-4",
-                        attrs: { type: "submit" }
-                      },
-                      [
+                    _c("div", { staticClass: "flex absolute right-0 mr-4" }, [
+                      _c(
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.toggleSearchDropdown($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fas fa-caret-down p-2",
+                            staticStyle: { "font-size": "24px" }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("button", { attrs: { type: "submit" } }, [
                         _c(
                           "svg",
                           {
-                            staticClass: "h-4 w-4 fill-current",
+                            staticClass: "h-4 w-4 fill-current ",
                             staticStyle: {
                               "enable-background": "new 0 0 56.966 56.966"
                             },
@@ -9206,8 +9239,33 @@ exports.default = _default;
                             })
                           ]
                         )
-                      ]
-                    )
+                      ]),
+                      _vm._v(" "),
+                      _vm.searchDropdown
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "absolute flex flex-col bg-blue-500 right-0 text-white mt-8 w-24 z-10"
+                            },
+                            [
+                              _c(
+                                "a",
+                                { staticClass: "p-2", attrs: { href: "#" } },
+                                [_vm._v("All")]
+                              ),
+                              _vm._v(" "),
+                              _c("hr", { staticClass: "mx-2" }),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                { staticClass: "p-2", attrs: { href: "#" } },
+                                [_vm._v("by Tag")]
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ])
                   ]
                 )
               ]
@@ -18989,7 +19047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35633" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
