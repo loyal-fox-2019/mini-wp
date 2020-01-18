@@ -13,7 +13,11 @@ const atricleSchema = new Schema({
     },
     created_at: {
         type: Date
-    }
+    },
+    authorID:[{
+        type: Schema.Types.ObjectId,
+        ref: "users"
+    }]
 })
 
 const article = mongoose.model('articles', atricleSchema)

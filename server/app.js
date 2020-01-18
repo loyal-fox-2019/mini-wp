@@ -8,10 +8,16 @@ const cors = require('cors')
 
 app.use(cors())
 
-mongoose.connect(process.env.MONGO_ATLAS, {useNewUrlParser: true, useUnifiedTopology:true})
+// mongoose.connect(process.env.MONGO_ATLAS, {useNewUrlParser: true, useUnifiedTopology:true})
+// .then(success=>{
+//     console.log(`connected to mini-wp on mongoDB`)
+// })
+
+mongoose.connect('mongodb://localhost:27017/mini-wp', {useNewUrlParser: true, useUnifiedTopology:true})
 .then(success=>{
     console.log(`connected to mini-wp on mongoDB`)
 })
+
 .catch(err=>{
     console.log(err)
 })
