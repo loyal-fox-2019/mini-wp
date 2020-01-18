@@ -4,7 +4,8 @@ new Vue({
     el: '#app',
     data: {
       email: '',
-      password: '123',
+      password: '',
+      login: false,
       article : [],
       BASE_URL: 'http://localhost:3000/miniwp'
     },
@@ -38,6 +39,26 @@ new Vue({
         })
         .catch(err => {
           console.log(err)
+        })
+      },
+      checkLogin: function(){
+        // if(this.email === 'takin@gmail.com' && this.password === 'asd123'){
+        //   this.login = true
+        // }
+        axious({
+          method: 'post',
+          url: `http://localhost:3000/miniwp/member/signin`,
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        })
+        .then((result) => {
+          localStorage.setItem('token', result.data.token)
+          this.login = true
+        })
+        .catch(err => {
+          console.log(err.message)
         })
       }
     }

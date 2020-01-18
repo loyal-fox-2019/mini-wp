@@ -11,95 +11,100 @@
 <body>
     <!-- login view -->
 <div id="app">  
-        <!-- <div class="p-3 login">
-            <div class="login-form ">
-                
-                <form>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" v-model="email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">password</label>
-                        <input type="password" v-model="password" class="form-control">
-                    </div>
-                    <button class="btn btn-primary" v-on:click="checkUser">Login</button>
-                </form>
-            </div>
-            <span>{{result}}</span>
-        </div> -->
+    <pre>{{$data}}</pre>
+    <div class="p-3 login" v-if="login == false">
+        <div class="login-form ">
+            
+            <form>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" v-model="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">password</label>
+                    <input type="password" v-model="password" class="form-control">
+                </div>
+                <!-- <button class="btn btn-primary" v-on:click="checkLogin">Login</button> -->
+                <a class="btn btn-primary" href="#" v-on:click="checkLogin">login</a>
+            </form>
+        </div>
+    </div>
         <!-- app -->
         <!-- top navbar -->
-        <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0">
+    <div v-if= "login == true">
+
+        <nav class="navbar navbar-dark sticky-top flex-md-nowrap p-0" v-if= "login == true">
             <div class="navbar-brand col-sm-3 col-md-2 mr-0 bg-dark">
-            <img id="logo" src="./img/logo.png" alt="logo">
-            <a href="#">My Sites</a>
-        </div>
-        <div class="col-sm-6 col-md-9">
-            <span>Reader</span>
-        </div>
-        
-        <div class="col-sm-3 col-md-1">
-            <button class="btn btn-primary">Log In</button>
-        </div>
-    </nav>
-    <!-- end of top navbar -->
-    
-    <div id="app" class="container-fluid">
-        <div class="row">
-            <!-- sidebar -->
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    
-                    <ul class="nav flex-column">
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> Create Article</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> List Article</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-comments"></i> Comment</a></li>
-                    </ul>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">properties</h6>
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="fab fa-intercom"></i>
-                                Customize
-                            </a>
-                        </li>
-                    </ul>
-                </div> -->
-            </nav>
-                <!-- end of sidebar -->
-                
-                <!-- main-content -->
-                <main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-primary" role="main" >
-                    <div class="card mb-3" v-for="article in article">
-                        <div class="card-header" >
-                            {{article.createdAt}}
-                        </div>
-                        <div class="card-body">
-                          <h5 class="card-title">{{article.title}}</h5>
-                          <p class="card-text"><a href="#" >read more...</a></p>
-                          <a href="#" class="btn btn-primary">Edit</a>
-                          <a href="#" class="btn btn-primary" v-on:click="remove(article._id)">delete</a>
-                        </div>
-                    </div>
-                    
-                    <!-- create article -->
-                    <form>
-                        <div class="form-group">
-                          <label for="imputTitle">Title:</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="title">
-                        </div>
-                        <div class="form-group">
-                            <label for="inputContent">Content</label>
-                            <textarea class="form-control" id="inputContent" rows="3"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                    <!-- end of create article -->
-                </main>
-                <!-- end of main-content -->
+                <img id="logo" src="./img/logo.png" alt="logo">
+                <a href="#">My Sites</a>
             </div>
-    </div> 
+            <div class="col-sm-6 col-md-9">
+                <span>Reader</span>
+            </div>
+            
+            <div class="col-sm-3 col-md-1">
+                <button class="btn btn-primary">Log In</button>
+            </div>
+        </nav>
+        <!-- end of top navbar -->
+        
+        <div id="app" class="container-fluid">
+            <div class="row">
+                <!-- sidebar -->
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                        
+                        <ul class="nav flex-column">
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> Create Article</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> List Article</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-comments"></i> Comment</a></li>
+                        </ul>
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">properties</h6>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fab fa-intercom"></i>
+                                    Customize
+                                </a>
+                            </li>
+                        </ul>
+                    </div> -->
+                </nav>
+                    <!-- end of sidebar -->
+                    
+                    <!-- main-content -->
+                    <main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 bg-primary" role="main" >
+                        <div class="card mb-3" v-for="article in article">
+                            <div class="card-header" >
+                                {{article.createdAt}}
+                            </div>
+                            <div class="card-body">
+                              <h5 class="card-title">{{article.title}}</h5>
+                              <p class="card-text"><a href="#" >read more...</a></p>
+                              <a href="#" class="btn btn-primary">Edit</a>
+                              <a href="#" class="btn btn-primary" v-on:click="remove(article._id)">delete</a>
+                            </div>
+                        </div>
+                        
+                        <!-- create article -->
+                        <form v-if="showCreate == true">
+                            <div class="form-group">
+                              <label for="imputTitle">Title:</label>
+                              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputContent">Content</label>
+                                <textarea class="form-control" id="inputContent" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                        <!-- end of create article -->
+                    </main>
+                    <!-- end of main-content -->
+                </div>
+        </div> 
+
+    </div>
                 <!-- end of app -->
     <footer>
         
