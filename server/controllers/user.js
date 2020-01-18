@@ -7,6 +7,7 @@ const { generateToken, verifyToken } = require('../helpers/verifyToken')
 class userController {
   static login(req, res, next) {
     const { email, password } = req.body
+    console.log(req.body)
 
     User
       .findOne({ email })
@@ -32,6 +33,21 @@ class userController {
             message: 'Your email is not registered'
           })
         }
+      })
+      .catch(next)
+  }
+
+  static register (req, res, next) {
+    const { username, email, password } = req.body
+    User
+      .create({ username, email, password })
+      .then( user => {
+        const token = generateToken({ id: user._id })
+        const data = {
+          username: user.username,
+          token
+        }
+        res.status(201).json(data)
       })
       .catch(next)
   }

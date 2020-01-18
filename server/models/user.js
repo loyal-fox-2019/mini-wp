@@ -6,7 +6,8 @@ const bcrypt = require('bcryptjs')
 const userSchema = new Schema ({
   username: {
     type: String,
-    require: [true, 'Username cannot be empty']
+    unique: true,
+    required: [true, 'Username cannot be empty'],
   },
   email: {
     type: String,
