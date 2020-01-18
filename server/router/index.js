@@ -1,9 +1,6 @@
 const router = require('express').Router()
-const articles = require('./articles')
+const user = require('./user')
 
-router.get('/', (req, res) => {
-    res.send('Welcome Page')
-})
-router.use('/articles', articles)
+router.use('/users/', user)
 
 module.exports = router
