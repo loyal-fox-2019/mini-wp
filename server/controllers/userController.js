@@ -12,11 +12,13 @@ class UserController {
 
         User.create(data)
             .then(result => {
+                let token = jwt.sign({id: result._id, name: result.name, email: result.email}, process.env.JWT_SECRET)
                 res.status(201).json({
                     message: 'User Created',
                     data: {
                         name: result.name,
-                        email: result.email
+                        email: result.email,
+                        token: token
                     }
                 })
             })
