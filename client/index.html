@@ -6,157 +6,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="./css/bootstrap.min.css">
-        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/eaf3b74b90.js" crossorigin="anonymous"></script>
 
         <title>Mini WP</title>
     </head>
     <body>
-        <!-- HEADER DAN NAVBAR! -->
-        <div class="header">
-            <nav class="navbar navbar-expand-lg">
-                <div class="navbar-nav">
-                    <a class="navbar-brand active" id="logo" href="#"><i class="fab fa-wordpress-simple"></i> My Sites</a>
-                    <a class="nav-item nav-link" href="#"><i class="far fa-newspaper" style="margin-right: 10px;"></i>  Reader</a>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"><i class="fas fa-align-justify"></i></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-                  <div class="navbar-nav">
-                    <a class="nav-item nav-link" data-toggle="modal" data-target="#add-post" id="write" href="#"><i class="fas fa-pen"></i>  Write</a>
-                    <a class="nav-item nav-link" href="#"><i class="fas fa-user-circle"></i></a>
-                    <a class="nav-item nav-link" href="#"><i class="fas fa-bell"></i></a>
-                  </div>
-                </div>
-            </nav>
+        <div id="app">
+            <!-- this will be rendered later -->
         </div>
-
-        <!-- CONTENT! -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2" style="padding: 0;">
-                    <div class="overflow-auto sidebar-sticky">
-                        <div class="list-group">
-                            <div class="action">
-                                <span>Account</span>
-                                <i class="fas fa-plus-square" id="account-icon"></i>
-                            </div>
-                            <div id="account-menu">
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-user-circle"></i><span>Account</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-desktop"></i><span>View Site</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-chart-bar"></i><span>Stats</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-history"></i><span>Activity</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-money-check"></i><span>Plan</span><span class="badge badge-success col col-md-4">Free</span></a>
-                            </div>
-                        </div>
-                        <div class="list-group">
-                            <div class="action">
-                                <span>Manage</span>
-                                <i class="fas fa-plus-square" id="manage-icon"></i>
-                            </div>
-                            <div id="manage-menu">
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-file"></i><span id="add-article">Site Pages</span></a>
-                                <a href="#" class="list-group-item list-group-item-action" id="blog-post"><i class="fas fa-newspaper"></i><span>Blog Posts</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-image"></i><span>Media</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-comments"></i><span>Comments</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-comment-alt"></i><span>Feedback</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-plug"></i><span>Plugins</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-upload"></i><span>Import</span></a>
-                            </div>
-                        </div>
-                        <div class="list-group">
-                            <div class="action">
-                                <span>Personalize</span>
-                                <i class="fas fa-plus-square" id="person-icon"></i>
-                            </div>
-                            <div id="person-menu">
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-wrench"></i><span>Costumize</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-american-sign-language-interpreting"></i><span>Contribution</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-archive"></i><span>Archive</span></a>
-                                <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-trash"></i><span>Delete</span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <footer class="footer mt-auto py-3" style="padding-top: 90vh;">
-                        <div class="container">
-                          <span>Dibuat di HACKTIV8 | Ilham A. Malik | 2020</span>
-                        </div>
-                    </footer>
-                </div>
-                <div class="col-md-10 overflow-auto" id="content-article">
-                    <div class="container" id="right-content" data-show="false">
-                        <div id="header">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                  <a class="nav-link active" href="#">Published</a>
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link" href="#">Drafts</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model="searchKey">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click.prevent='searchArticle'>Search</button>
-                        </form>
-                        <div id="article-list" v-for='(data, i) in getArticles'>
-                            <div class="card">
-                                <div class="card-body row">
-                                    
-                                    <div class="col-md-8">
-                                        <h4 class="card-title"><b>{{data.title}}</b></h4>
-                                        <p>{{data.content}}</p>
-                                        <p>{{new Date(data.created_at).toLocaleString()}}</p>
-                                    </div>
-                                    <div class="col-md-4" id="titik">
-                                        <img v-bind:src="data.image" alt="img" width="120" height="80">
-                                        <a href="#"><button class="btn btn-outline-danger" v-on:click.prevent="removeArticle(data._id, i)"> Delete </button></a>
-                                        <a href="#"><button class="btn btn-outline-warning" v-on:click.prevent="viewEdit(data, data._id)" data-toggle="modal" data-target="#add-post"> Edit </button></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade bd-example-modal-xl" data-backdrop="static" id="add-post" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                          <div class="modal-content">
-                               <div class="container" id="form-post">
-                                    <h4 v-if="editArticle">Edit Blog Post</h4>
-                                    <h4 v-else>Add Blog Post</h4>
-                                    <form action="/upload-single" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="title">Title</label>
-                                            <input type="text" class="form-control" id="title" v-model="articleTitle" placeholder="Blog Title" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="body-content">Body</label>
-                                            <textarea class="form-control" id="body-content" v-model="articleContent" rows="4"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image">Upload an Image</label>
-                                            <input type="file" ref="myFiles" name="file" id="file" @change="previewFiles">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary col-12" v-on:click.prevent="editPost" v-if="editArticle" id="save-btn" data-dismiss="modal">Edit Post!</button>
-                                        <button type="submit" class="btn btn-primary col-12" @click.prevent='createArticle' v-else id="save-btn" data-dismiss="modal">Add Post!</button>
-                                    </form>
-                                </div>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="./js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <!-- <script src="./js/script.js"></script> -->
-        <script src="./js/main.js"></script>
+        <script src="/src/main.js"></script>
     </body>
 </html>
