@@ -9,7 +9,7 @@ class ArticleController {
                 content: form.content,
                 featured_image: form.featured_image,
                 author: req.userId,
-                tags: form.tags
+                tags: form['tags']
             })
             .then(article => {
                 res.status(201).json({
