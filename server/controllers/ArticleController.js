@@ -7,9 +7,8 @@ class ArticleCtrl {
       filter['tags'] = req.query.tags
     }
     try {
-      console.log(filter)
       let article = await Article
-        .find({author: req.decodedId})
+        .find(filter)
         .sort({createdAt:-1})
       res.status(200).json(article)
     } catch (error) {
@@ -53,11 +52,14 @@ class ArticleCtrl {
  
   static async edit(req, res, next) {
     try {
-      const { title, content } = req.body
-      let article = await Article.updateOne({_id: req.params.id}, {title, content})
-      res.status(200).json(article)
+      const {title, content, tags, created_at, image} = req.body
+      const author = req.decodedId
+      let article = await Article.findByIdAndUpdate(req.params.id, {
+        title, content, tags, created_at, author, image
+      }, {omitUndefined: true})
+      res.status(201).json(article)
     } catch (error) {
-      next(error)      
+      next(error)
     }
   }
 

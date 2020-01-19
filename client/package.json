@@ -16,6 +16,8 @@
     "vue": "^2.6.11",
     "vue-google-login": "^2.0.3",
     "vue-hot-reload-api": "^2.3.4",
+    "vue-moment": "^4.1.0",
+    "vue-sweetalert2": "^3.0.1",
     "vue-wysiwyg": "^1.7.2"
   },
   "devDependencies": {

@@ -3,11 +3,18 @@
     <b-row>
         <navigationBar 
           @changeLogin="changeLogin($event)" 
+          @changePage="changePage($event)"
           :name="name">
         </navigationBar>
         <section class="pages-wrapper mt-5">
-          <formArticle v-if="page=='addArticle'" @changePage="changePage($event)"></formArticle>
-          <listArticle v-if="page=='listArticle'"></listArticle>
+          <formArticle v-if="page=='newArticle'" @changePage="changePage($event)" :idArticle="idArticle"></formArticle>
+          <listArticle 
+            @editArticle="editArticle($event)" 
+            @showArticle="showArticle($event)" 
+            v-if="page=='listArticle'"></listArticle>
+          <showArticle 
+            v-if="page=='showArticle'" 
+            :idArticle="idArticle"></showArticle>
         </section>
     </b-row>
   </b-container>
@@ -17,12 +24,14 @@
 import navigationBar from '../components/navigationBar'
 import formArticle from '../components/formArticle'
 import listArticle from '../components/listArticle'
+import showArticle from '../components/showArticle'
 
 export default {
   data() {
     return {
       name: '',
-      page: 'listArticle'
+      page: 'listArticle',
+      idArticle: ''
     }
   },
   methods: {
@@ -34,6 +43,14 @@ export default {
     },
     changePage(event) {
       this.page = event
+    },
+    editArticle(event) {
+      this.idArticle = event
+      this.changePage('newArticle')
+    },
+    showArticle(event) {
+      this.idArticle = event
+      this.changePage('showArticle')
     }
   },
   created() {
@@ -42,7 +59,8 @@ export default {
   components: {
     navigationBar,
     formArticle,
-    listArticle
+    listArticle,
+    showArticle
   }
 }
 </script>

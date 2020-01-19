@@ -6,14 +6,12 @@
     </div>
     <b-navbar>
       <b-navbar-nav>
-        <b-nav-item href="#">Home</b-nav-item>
+        <b-nav-item href="#" @click.prevent="changePage('listArticle')">Home</b-nav-item>
 
         <!-- Navbar dropdowns -->
-        <b-nav-item-dropdown text="Post" right>
-          <b-dropdown-item href="#">Create New</b-dropdown-item>
-          <b-dropdown-item href="#">Published</b-dropdown-item>
-          <b-dropdown-item href="#">Draft</b-dropdown-item>
-          <b-dropdown-item href="#">Trash</b-dropdown-item>
+        <b-nav-item-dropdown text="Article" right>
+          <b-dropdown-item href="#" @click.prevent="changePage('newArticle')">Create New</b-dropdown-item>
+          <b-dropdown-item href="#" @click.prevent="changePage('listArticle')">Article List</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item href="#" @click.prevent="signOut">Sign Out</b-nav-item>
         <!-- <b-nav-item-dropdown text="User" right>
@@ -42,11 +40,10 @@ export default {
     },
     signOut() {
       localStorage.clear()
-      // var auth2 = gapi.auth2.getAuthInstance();
-      // auth2.signOut().then(function () {
-      //   console.log('User signed out.');
-      // });
       this.$emit('changeLogin', false)
+    },
+    changePage(page) {
+      this.$emit('changePage', page)
     }
   }
 }

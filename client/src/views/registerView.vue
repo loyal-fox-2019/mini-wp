@@ -104,7 +104,11 @@
           })
           .catch(err => {
             this.isLoading = false
-            console.log(err.response.data.message)
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message
+            })
           })
       },
       onSuccess(googleUser) {
@@ -125,7 +129,11 @@
           })
           .catch(err => {
             this.isLoading = false
-            console.log(err.response.data.message)
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message
+            })
           })
       }
     },

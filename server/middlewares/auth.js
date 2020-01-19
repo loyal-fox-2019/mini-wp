@@ -1,10 +1,10 @@
 const { verifyToken } = require('../helpers/jwt')
 const User = require('../models/User')
+const Article = require('../models/article')
 
 module.exports = {
   async authenticate(req, res, next) {
     try {
-      console.log(req.headers.token)
       let { id } = verifyToken(req.headers.token)
       let user = await User.findById(id)
       if(user) {

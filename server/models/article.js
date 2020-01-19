@@ -15,7 +15,7 @@ const articleSchema = new Schema ({
     }, 
     image: {
       type: String,
-      default: 'https://picsum.photo/1300/800'
+      default: 'https://picsum.photos/1300/800'
     },
     tags: {
       type: Array,

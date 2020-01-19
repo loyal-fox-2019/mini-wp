@@ -20,6 +20,8 @@ export default {
 <style scoped>
   .hero-loading {
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 10;
     height: 100vh;
     width: 100vw;

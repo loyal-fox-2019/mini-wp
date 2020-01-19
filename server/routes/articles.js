@@ -8,7 +8,7 @@ router.use(authenticate)
 router.get('/', ArticleController.getAll)
 router.get('/:id', ArticleController.getOne)
 router.post('/', gcsUpload.single('image'), ArticleController.create)
-router.put('/:id', authorize, ArticleController.edit)
+router.put('/:id', authorize, gcsUpload.single('image'), ArticleController.edit)
 router.delete('/:id', authorize, ArticleController.delete)
 // router.get('/:username', ArticleController.getSelf)
 
