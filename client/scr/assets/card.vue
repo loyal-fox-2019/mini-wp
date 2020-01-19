@@ -40,8 +40,8 @@
         <b-card-img :src="data.image" class="rounded-0 profile"></b-card-img>
       </b-col>
       <b-col md="10">
-        <b-icon-trash font-scale="2" class="del" @click="del(data['_id'])"></b-icon-trash>
-        <b-icon-box-arrow-up-right font-scale="2" class="del" @click="edi"></b-icon-box-arrow-up-right>
+        <b-icon-trash font-scale="2" class="del" @click="del(data['_id'])" v-if="data.author['_id'] == userid"></b-icon-trash>
+        <b-icon-box-arrow-up-right font-scale="2" class="del" @click="edi" v-if="data.author['_id'] == userid"></b-icon-box-arrow-up-right>
         <b-card-body v-bind:title="data.title">
           <b-card-text v-html="data.content">
           </b-card-text>
@@ -101,7 +101,7 @@ export default {
           this.$emit('edit', data)
         }
     },
-    props:['index', 'data']
+    props:['index', 'data', 'userid']
 
 }
 </script>

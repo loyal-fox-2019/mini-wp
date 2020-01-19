@@ -5,7 +5,7 @@
         <h2 id="cen">Sign Up</h2>
         <hr>
         <b-form @submit.prevent="signin">
-            <b-alert show variant="danger" v-if="data">Email already use!</b-alert>
+            <b-alert show variant="danger" v-if="dt">Email already use!</b-alert>
             <b-form-group label='Email'>
                 <b-input-group class="mb-2">
                     <b-input-group-prepend is-text>
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-    props:['data'],
+    props:['dt'],
     data(){
         return{
             email: '',

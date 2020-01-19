@@ -46,7 +46,7 @@ export default {
             first_name:'',
             last_name: '',
             params: {
-                    client_id: "743446764204-2unp8cup503visgto4helr8u9f1lj9e3.apps.googleusercontent.com"
+                    client_id: "743446764204-21l37r58qdv70giujs3p8191243ka83j.apps.googleusercontent.com"
                 },
              renderParams: {
                     width: 250,

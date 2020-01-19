@@ -2,9 +2,7 @@ const Article = require('../models/article-model')
 
 class Controller{
     static findall(req,res,next){
-        Article.find({
-            author: req.userId.userId
-        })
+        Article.find().populate('author')
         .then((data)=>{
             res.status(200).json(data)
         })

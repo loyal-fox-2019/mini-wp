@@ -3,7 +3,7 @@
     <signup
     v-if="signup"
     @signup="account($event)"
-    v-bind:data="used"
+    v-bind:dt="used"
     >
     </signup>
     <login
@@ -37,7 +37,8 @@
                         ></post>
                         <posted 
                         @even="elr($event)" 
-                        v-for="(article, i) in fltr" 
+                        v-for="(article, i) in fltr"
+                        v-bind:userid="userId" 
                         v-bind:key="i" 
                         v-bind:data="article"
                         @del="del($event)"
@@ -76,7 +77,8 @@ export default {
             tag: '',
             faillog: false,
             used: false,
-            userName: ''
+            userName: '',
+            userId: ''
         };
     },
     methods:{
@@ -101,7 +103,11 @@ export default {
             })
             .then((data)=>{
                 this.form_post = false
-                this.articles.unshift(data.data)
+                let dta = data.data
+                dta.author={
+                    '_id': this.userId
+                }
+                this.articles.push(dta)
             })
         },
         del: function(params){
@@ -135,8 +141,9 @@ export default {
                 email: params.email})
             .then((data)=>{ 
                 localStorage.setItem('token', data.data.token)
-                let name = data.data['first_name'] + ' '+ data.data['last_name']
+                let name = data.data.user['first_name'] + ' '+ data.data.user['last_name']
                 this.userName = name
+                this.userId = data.data.user['_id']
                 this.log = false
                 this.login = true
                 this.signup = false
@@ -153,7 +160,11 @@ export default {
         account: function(params){
             axios.post('http://35.240.217.140:3000/users/signup', params)
             .then((data)=>{
-                this.signin({password: params.password, email: params.email})
+                if(data.data === null){
+                    this.used = true
+                } else {
+                    this.signin({password: params.password, email: params.email})
+                }
             })
             .catch((err)=>{
                 this.used = true
@@ -180,7 +191,11 @@ export default {
             })
             .then((data)=>{
                 this.articles = this.articles.filter(el => el['_id'] != data.data["_id"])
-                this.articles.unshift(data.data)
+                let dta = data.data
+                dta.author={
+                    '_id': this.userId
+                }
+                this.articles.push(dta)
             })
         },
         signout: function(){
