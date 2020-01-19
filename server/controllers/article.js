@@ -3,11 +3,10 @@ const { Article } = require('../models')
 
 class articleController {
   static createArticle (req, res, next) {
-    const { title, content, featured_image, tags } = req.body
-
+    const { title, content, image, tags } = req.body
     Article
       .create({
-        title, content, featured_image, tags, author: req.decoded.id
+        title, content, featured_image: image, tags, author: req.decoded.id
       })
       .then(article => {
         res.status(201).json({
@@ -55,8 +54,8 @@ class articleController {
 
   static updateArticle (req, res, next) {
     const _id = req.params.id
-    const { title, content, featured_image, tags } = req.body
-    const value = { title, content, featured_image, tags }
+    const { title, content, image, tags } = req.body
+    const value = { title, content, featured_image: image, tags }
 
     Article
       .findByIdAndUpdate(_id, value, { new: true, omitUndefined: true })
