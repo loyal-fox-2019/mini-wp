@@ -58,7 +58,7 @@ export default {
         login: function(){
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/user/login',
+                url: 'http://35.240.160.186:3000/user/login',
                 data: {
                     email: this.email,
                     password: this.password
@@ -85,7 +85,7 @@ export default {
             let id_token = googleUser.getAuthResponse().id_token
             axios({
                 method: 'post',
-                url: `http://localhost:3000/user/glogin/${id_token}`,
+                url: `http://35.240.160.186:3000/user/glogin/${id_token}`,
                 data: {}
             })
             .then(({data})=>{

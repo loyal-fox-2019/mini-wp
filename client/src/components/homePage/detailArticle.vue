@@ -33,7 +33,7 @@ export default {
     mounted(){
         axios({
             method: 'get',
-            url: `http://localhost:3000/articles/${this.articleId}`,
+            url: `http://35.240.160.186:3000/articles/${this.articleId}`,
             headers: {
                 token: localStorage.getItem('token')
             }
