@@ -67,7 +67,7 @@ export default {
     },
     fetchArticlesTag(payload) {
       this.errors = []
-      // if(localStorage.getItem('token')) {
+      if(localStorage.getItem('token')) {
         axios({
           method: 'get',
           url: `/articles/user?tag=${payload}`,
@@ -81,22 +81,22 @@ export default {
           .catch(err => {
             this.errors.push(err.response.data.message)
           })
-      // } else {
-      //   axios({
-      //     method: 'get',
-      //     url: `/articles`
-      //   })
-      //     .then(({ data }) => {
-      //       this.articles = data
-      //     })
-      //     .catch(err => {
-      //       this.errors.push(err.response.data.message)
-      //     })
-      // }
+      } else {
+        axios({
+          method: 'get',
+          url: `/articles?tag=${payload}`
+        })
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      }
     },
     fetchArticlesSearch(payload) {
       this.errors = []
-      // if(localStorage.getItem('token')) {
+      if(localStorage.getItem('token')) {
         axios({
           method: 'get',
           url: `/articles/user?search=${payload}`,
@@ -110,18 +110,18 @@ export default {
           .catch(err => {
             this.errors.push(err.response.data.message)
           })
-      // } else {
-      //   axios({
-      //     method: 'get',
-      //     url: `/articles`
-      //   })
-      //     .then(({ data }) => {
-      //       this.articles = data
-      //     })
-      //     .catch(err => {
-      //       this.errors.push(err.response.data.message)
-      //     })
-      // }
+      } else {
+        axios({
+          method: 'get',
+          url: `/articles?search=${payload}`
+        })
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      }
     }
   },
   created() {

@@ -25,7 +25,7 @@
         </a>
         <div class="d-flex align-items-center flex-wrap">
           <div class="date">
-            <i class="icon-clock"></i> 2 months ago
+            <i class="icon-clock"></i> {{article.createdAt.split('T')[0]}}
           </div>
           <div class="views">
             <i class="icon-eye"></i> 500

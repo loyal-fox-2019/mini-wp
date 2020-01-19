@@ -65,6 +65,9 @@ export default {
     }
   },
   methods: {
+    setLogin() {
+      this.$emit("set-login");
+    },
     setRegister() {
       this.$emit('set-register')
     },
@@ -94,7 +97,9 @@ export default {
             this.password = ''
             this.retype = ''
             this.tos = false
-            this.setRegister()
+            localStorage.setItem("token", data.token)
+            this.setLogin()
+            // this.setRegister()
           })
           .catch(err => {
             this.errors = err.response.data.message
