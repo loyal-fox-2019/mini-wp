@@ -12,7 +12,7 @@ class AuthorController {
       if (email) { email = email.toLowerCase() }
       let user = await User.create({ name, email, password })
       let token = generateToken({ id: user._id })
-      res.status(201).json({ token })
+      res.status(201).json({name:user.name, token})
     } catch (error) {
       next(error)
     }
@@ -23,12 +23,11 @@ class AuthorController {
       let { email, password } = req.body
       if (email) { email = email.toLowerCase() }
       let user = await User.findOne({ email })
-      console.log(user)
       if (!user || !compare(password, user.password)) {
         next({ status: 404, message: 'Invalid Email or Password' })
       } else {
         let token = generateToken({ id: user._id })
-        res.status(200).json({token})
+        res.status(200).json({name:user.name, token})
       }
     } catch (error) {
       next(error)
@@ -45,13 +44,13 @@ class AuthorController {
       let user = await User.findOne({ email: payload.email })
       if (user) {
         let token = generateToken({ id: user._id })
-        res.status(200).json({token})
+        res.status(200).json({name: user.name, token})
       } else {
         let { name, email } = payload
         let password = process.env.GOOGLE_DEFAULT_PASSWORD
         let user = await User.create({ name, email, password })
         let token = generateToken({ id: user._id })
-        res.status(201).json({ token })
+        res.status(201).json({name: user.name, token})
       }
     } catch (error) {
       next(error)

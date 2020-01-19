@@ -1,9 +1,13 @@
 <template>
   <b-container>
     <b-row>
-        <navigationBar></navigationBar>
+        <navigationBar 
+          @changeLogin="changeLogin($event)" 
+          :name="name">
+        </navigationBar>
         <section class="pages-wrapper mt-5">
-          <formArticle></formArticle>
+          <formArticle v-if="page=='addArticle'" @changePage="changePage($event)"></formArticle>
+          <listArticle v-if="page=='listArticle'"></listArticle>
         </section>
     </b-row>
   </b-container>
@@ -12,15 +16,33 @@
 <script>
 import navigationBar from '../components/navigationBar'
 import formArticle from '../components/formArticle'
+import listArticle from '../components/listArticle'
+
 export default {
   data() {
     return {
-
+      name: '',
+      page: 'listArticle'
     }
+  },
+  methods: {
+    getName() {
+      this.name = localStorage.getItem('name')
+    },
+    changeLogin(event) {
+      this.$emit('changeLogin', event)
+    },
+    changePage(event) {
+      this.page = event
+    }
+  },
+  created() {
+    this.getName()
   },
   components: {
     navigationBar,
-    formArticle
+    formArticle,
+    listArticle
   }
 }
 </script>
@@ -28,5 +50,6 @@ export default {
 <style scoped>
   .pages-wrapper {
     width: 100%;
+    padding: 2rem;
   }
 </style>

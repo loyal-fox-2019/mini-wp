@@ -15,22 +15,40 @@
           <b-dropdown-item href="#">Draft</b-dropdown-item>
           <b-dropdown-item href="#">Trash</b-dropdown-item>
         </b-nav-item-dropdown>
-        
-        <b-nav-item-dropdown text="User" right>
+        <b-nav-item href="#" @click.prevent="signOut">Sign Out</b-nav-item>
+        <!-- <b-nav-item-dropdown text="User" right>
           <b-dropdown-item href="#">Account</b-dropdown-item>
           <b-dropdown-item href="#">Log Out</b-dropdown-item>
-        </b-nav-item-dropdown>
+        </b-nav-item-dropdown> -->
       </b-navbar-nav>
     </b-navbar>
     <div class="nav-profile">
-      Somebody
+      Hi, {{name}}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  props: ['name'],
+  data() {
+    return {
+      
+    }
+  },
+  methods: {
+    getName() {
+      this.name = localStorage.getItem('name')
+    },
+    signOut() {
+      localStorage.clear()
+      // var auth2 = gapi.auth2.getAuthInstance();
+      // auth2.signOut().then(function () {
+      //   console.log('User signed out.');
+      // });
+      this.$emit('changeLogin', false)
+    }
+  }
 }
 </script>
 
@@ -41,6 +59,7 @@ export default {
     align-items: center;
     height: 64px;
     width: 100%;
+    padding: 0 2rem;
     border-bottom: 2px solid rgb(172, 172, 172);
     box-shadow: 0 24px 10px -20px rgba(0, 0, 0, 0.2)
   }

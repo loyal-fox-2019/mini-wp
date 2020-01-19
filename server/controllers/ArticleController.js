@@ -2,9 +2,14 @@ const Article = require('../models/article')
 
 class ArticleCtrl {
   static async getAll(req, res, next) {
+    let filter = {author: req.decodedId}
+    if (req.query.tags) {
+      filter['tags'] = req.query.tags
+    }
     try {
+      console.log(filter)
       let article = await Article
-        .find()
+        .find({author: req.decodedId})
         .sort({createdAt:-1})
       res.status(200).json(article)
     } catch (error) {
@@ -26,8 +31,7 @@ class ArticleCtrl {
   static async create(req, res, next) {
     try {
       const {title, content, tags, created_at, image} = req.body
-      console.log(image)
-      const author = req.decodedID
+      const author = req.decodedId
       let article = await Article.create({
         title, content, tags, created_at, author, image
       })

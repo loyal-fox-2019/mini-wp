@@ -1,7 +1,7 @@
 <template>
   <section id='register'>
       <div class="hero-image"></div>
-      
+      <loaderItem v-if="isLoading"></loaderItem>
       <div class="register-wrapper">      
         <div class="form-wrapper">
           <img id="logo-img" src="/assets/images/logo.png" alt="" srcset="">
@@ -9,34 +9,34 @@
             
             <header class="text-center mb-4">
               <h4 class="header-font">- MIDIUM -</h4>
-              <span><em>mini wordpress platform</em></span>
+              <span><em>mini blogging platform</em></span>
             </header>
 
             <div class="input-group mb-3" v-show="toggleForm">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-user"></i></div>
               </div>
-              <input type="text" class="form-control" placeholder="Full Name">
+              <input v-model="name" type="text" class="form-control" placeholder="Full Name">
             </div>
             
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="far fa-envelope"></i></div>
               </div>
-              <input type="text" class="form-control" placeholder="Email">
+              <input v-model="email" type="text" class="form-control" placeholder="Email">
             </div>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <div class="input-group-text"><i class="fas fa-lock"></i></div>
               </div>
-              <input type="password" class="form-control" placeholder="Password">
+              <input v-model="password" type="password" class="form-control" placeholder="Password">
             </div>
 
             <div class="form-group">
               <input class="btn btn-custom full-size" type="submit" :value="toggleButton">
-              <div v-show="toggleForm" class="text-center mt-2 mb-2">Or</div>
-              <button class="full-size" v-show="toggleForm">ceritanya google signin</button>
+              <div v-show="!toggleForm" class="text-center mt-2 mb-2">Or</div>
+              <GoogleLogin v-show="!toggleForm" :params="params" :renderParams="renderParams" :onSuccess="onSuccess"></GoogleLogin>
             </div>
 
             <div class="form-group text-center mt-4">
@@ -50,23 +50,88 @@
 </template>
 
 <script>
+  import GoogleLogin from 'vue-google-login'
+  import axios from '../../helpers/axios'
+  import loaderItem from '../components/loaderItem.vue'
+
   export default {
     data() {
       return {
         toggleForm: true,
         toggleButton: 'Sign Up',
-        form: 'register'
+        form: 'signup',
+        name: '',
+        email: '',
+        password: '',
+        isLoading: false,
+        params: {
+          client_id: "872238054308-oqvjq2lied1bl6l6horfa044j6q2igq1.apps.googleusercontent.com"
+        },
+        renderParams: {
+          width: 216,
+          height: 38,
+          longtitle: true
+        }
       }
     },
     methods: {
       changeForm(status) {
         this.toggleForm = status
-        this.form = 'login'
-        status ? this.toggleButton = 'Sign Up': this.toggleButton = 'Sign In'
+        if (status) {
+          this.toggleButton = 'Sign Up'
+          this.form = 'signup'
+        } else {
+          this.toggleButton = 'Sign In'
+          this.form = 'signin'
+        }
       },
-      requestAjax(a) {
-        console.log(a)
+      requestAjax(formType) {
+        this.isLoading = true
+        axios({
+          url: `/${formType}`,
+          method: 'POST',
+          data: {
+            name: this.name,
+            email: this.email,
+            password: this.password
+          }
+        })
+          .then(({data}) => {
+            this.isLoading = false
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('name', data.name)
+            this.$emit('changeLogin', true)
+          })
+          .catch(err => {
+            this.isLoading = false
+            console.log(err.response.data.message)
+          })
+      },
+      onSuccess(googleUser) {
+        this.isLoading = true
+        const idToken = googleUser.getAuthResponse().id_token;
+        axios({
+          url: "/googlesignin",
+          method: 'POST',
+          data: {
+            idToken
+          }
+        })
+          .then(({data}) => {
+            this.isLoading = false
+            localStorage.setItem('token', data.token)
+            localStorage.setItem('name', data.name)
+            this.$emit('changeLogin', true)
+          })
+          .catch(err => {
+            this.isLoading = false
+            console.log(err.response.data.message)
+          })
       }
+    },
+    components: {
+      GoogleLogin,
+      loaderItem
     }
   }
 </script>

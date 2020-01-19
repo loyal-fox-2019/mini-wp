@@ -11,8 +11,29 @@
 </template>
 
 <script>
-export default {
+import axios from '../../helpers/axios'
 
+export default {
+  methods: {
+    getArticles() {
+      axios({
+        url: '/articles/',
+        method: 'GET',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({data}) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err.response.data.message)
+        })      
+    }
+  },
+  created() {
+    this.getArticles()
+  }
 }
 </script>
 

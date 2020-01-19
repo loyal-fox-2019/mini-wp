@@ -1,7 +1,7 @@
 <template>
   <div>
-    <registerView v-show="!isLogin"></registerView>
-    <homeView v-show="isLogin"></homeView>
+    <registerView @changeLogin="changeLogin($event)" v-if="!isLogin"></registerView>
+    <homeView @changeLogin="changeLogin($event)" v-if="isLogin"></homeView>
   </div>
 </template>
 
@@ -12,13 +12,28 @@ import homeView from './views/homeView'
 export default {
   data() {
     return {
-      isLogin: true
+      isLogin: false
     };
   },
-  components: {
-      registerView,
-      homeView
+  methods: {
+    changeLogin(event) {
+      this.isLogin = event
+    },
+    checkLogin() {
+      if(localStorage.getItem('token')) {
+        this.isLogin = true
+      } else {
+        this.isLogin = false
+      }
     }
+  },
+  created() {
+    this.checkLogin()
+  },
+  components: {
+    registerView,
+    homeView
+  }
 };
 
 </script>
@@ -26,7 +41,7 @@ export default {
 <style>
   * {
     font-family: 'Roboto', Arial, Helvetica;
-    color: #4a4c57;
+    /* color: #4a4c57; */
   }
   .input-group-text {
     width: 40px;

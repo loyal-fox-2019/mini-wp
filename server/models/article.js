@@ -14,7 +14,8 @@ const articleSchema = new Schema ({
       ref: 'User'
     }, 
     image: {
-      type: String
+      type: String,
+      default: 'https://picsum.photo/1300/800'
     },
     tags: {
       type: Array,
