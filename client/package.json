@@ -1,0 +1,35 @@
+{
+  "name": "client1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckeditor/ckeditor5-basic-styles": "^16.0.0",
+    "@ckeditor/ckeditor5-build-classic": "^16.0.0",
+    "@ckeditor/ckeditor5-editor-classic": "^16.0.0",
+    "@ckeditor/ckeditor5-essentials": "^16.0.0",
+    "@ckeditor/ckeditor5-link": "^16.0.0",
+    "@ckeditor/ckeditor5-paragraph": "^16.0.0",
+    "@ckeditor/ckeditor5-theme-lark": "^16.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.1",
+    "@fortawesome/fontawesome-free": "^5.12.0",
+    "axios": "^0.19.1",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.2.2",
+    "jquery": "^1.9.1",
+    "tui-editor": "^1.4.10",
+    "vue": "^2.6.11",
+    "vue-google-signin-button": "^1.0.4",
+    "vue-hot-reload-api": "^2.3.4"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.1",
+    "vue-template-compiler": "^2.6.11"
+  }
+}
