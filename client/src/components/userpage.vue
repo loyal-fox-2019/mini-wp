@@ -98,7 +98,8 @@ export default {
         }
       },
       show: true,
-      baseUrl: "http://localhost:3000"
+      // baseUrl: "http://localhost:3000"
+      baseUrl: "http://miniwp-server.amadyanissa.my.id:3000"
     };
   },
   methods: {

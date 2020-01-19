@@ -46,7 +46,8 @@ export default {
   data() {
     return {
       title: "",
-      baseUrl: "http://localhost:3000"
+      // baseUrl: "http://localhost:3000"
+      baseUrl: "http://miniwp-server.amadyanissa.my.id:3000"
     };
   },
   methods: {

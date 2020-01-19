@@ -89,7 +89,8 @@ export default {
       myArticles: [],
       pageStatus: "allArticle",
       toEdit: null,
-      baseUrl: "http://localhost:3000",
+      // baseUrl: "http://localhost:3000",
+      baseUrl: "http://miniwp-server.amadyanissa.my.id:3000",
       toSee: null,
       searchResults: []
     };
