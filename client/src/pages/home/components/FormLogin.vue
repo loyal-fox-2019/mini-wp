@@ -27,6 +27,8 @@
           ></b-form-input>
         </b-form-group>
         <b-button variant="primary" size="sm" @click="onClick">Sign In</b-button>
+        or
+        <a href="https://github.com/login/oauth/authorize?client_id=567c195d2817565069d4" class="btn btn-sm btn-primary text-white">Github</a>
       </b-dropdown-form>
     </b-dropdown>
   </div>

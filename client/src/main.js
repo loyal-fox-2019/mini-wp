@@ -28,14 +28,14 @@ router.beforeEach((to, from, next) => {
     if (route.meta.isLoggedin) {
       if (token) {
         route.meta.username = localStorage.getItem('mini.wp.username')
+        route.meta.userLoggedIn = true
         next();
       } else {
         next({ path: '/' });
       }
     }else{
       if (token) {
-        route.meta.username = localStorage.getItem('mini.wp.username')
-        next({ path: '/dashboard' });
+        route.meta.userLoggedIn = true
       }
     }
   })

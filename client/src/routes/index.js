@@ -1,9 +1,10 @@
-import Home from '../pages/home/Index'
+import Home from '../pages/home/Index.vue'
+import PostBySlug from "../pages/home/Slug.vue";
 import Dashboard from '../pages/dashboard/Index.vue'
 import Post from '../pages/post/Index.vue'
 
 const routes = [    
-    { path: '/', name: 'Home', component: Home, meta: {
+    { path: '/', name: 'home', component: Home, meta: {
         isLoggedin: false
     }},
     { path: '/dashboard', name: 'dashboard', component: Dashboard,  meta: {
@@ -27,6 +28,7 @@ const routes = [
             }
         ]
     },
+    { path: '/:slug', name: 'post-slug', component: PostBySlug, meta: { isLoggedin: false }},
 ]
 
 export default routes

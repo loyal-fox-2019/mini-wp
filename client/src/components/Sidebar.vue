@@ -12,6 +12,11 @@
             Dashboard <b-icon-bar-chart class="icon-nav h5"></b-icon-bar-chart>
           </router-link>
           <router-link
+            :to="{name: 'home'}"
+            class="list-group-item list-group-item-action bg-light">
+            Home <b-icon-cloud class="icon-nav h5"></b-icon-cloud>
+          </router-link>
+          <router-link
             :to="{name: 'posts', query: { form: 'add' }}"
             class="list-group-item list-group-item-action bg-light">
             New post <b-icon-plus class="icon-nav h5"></b-icon-plus> 

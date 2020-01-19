@@ -14,7 +14,7 @@
                     <em>{{$route.meta.username}}</em>
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                <b-dropdown-item href="#" @click="signOut">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
             </ul>
         </div>
@@ -26,6 +26,10 @@ export default {
     methods: {
         menuToggle() {
             this.$emit('menuToggle')
+        },
+        signOut(){
+            localStorage.clear()
+            this.$router.push('/')
         }
     },
 }
