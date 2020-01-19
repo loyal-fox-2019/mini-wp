@@ -102,32 +102,41 @@
         },
         methods: {
             submitArticle: function () {
-                let formData = new FormData();
-                formData.set('title', this.title);
-                formData.set('tags', this.tags);
-                formData.set('content', this.content);
-                formData.set('featured_image', this.featured_image);
+                this.$dialog
+                    .confirm("Save this data ?")
+                .then(dialog => {
+                    let formData = new FormData();
+                    formData.set('title', this.title);
+                    formData.set('tags', this.tags);
+                    formData.set('content', this.content);
+                    formData.set('featured_image', this.featured_image);
 
-                instance({
-                    method: "post",
-                    url: "/articles",
-                    data: formData,
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: "token " + localStorage.token
-                    }
-                }).then(({data}) => {
-                    this.$emit('clicked');
-                    console.log(data);
-                    this.$toast.success({
-                        title: 'Success Saving Data',
-                        message: 'Data successfully saved'
+                    instance({
+                        method: "post",
+                        url: "/articles",
+                        data: formData,
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            Authorization: "token " + localStorage.token
+                        }
+                    }).then(({data}) => {
+                        this.$emit('clicked');
+                        console.log(data);
+                        this.$toast.success({
+                            title: 'Success',
+                            message: 'Data successfully saved'
+                        });
+                    }).catch(err => {
+                        console.log({err})
+                        this.$toast.error({
+                            title: 'Error',
+                            message: err.response.data.message
+                        });
                     });
                 }).catch(err => {
-                    console.log({err})
-                    this.$toast.error({
-                        title: 'Error Saving Data',
-                        message: err.response.data.message
+                    this.$toast.info({
+                        title: 'Cancel',
+                        message: 'You have cancel to save the data'
                     });
                 });
             },

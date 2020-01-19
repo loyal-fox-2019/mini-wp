@@ -42,23 +42,33 @@
         },
         methods: {
             remove: function () {
-                instance({
-                    method: 'delete',
-                    url: `/articles/${this.article._id}`,
-                    headers: {
-                        Authorization: "token " + localStorage.token
-                    }
-                }).then(({data}) => {
-                    console.log(data.message);
-                    this.$emit('clicked');
-                    this.$toast.success({
-                        title: 'Delete data',
-                        message: data.message
-                    });
-                }).catch(err => {
-                    console.log({err});
-                    this.$toast.error({
-                        title: 'Error deleting Data',
+                this.$dialog
+                .confirm('Delete this data ?')
+                .then(ok => {
+                    instance({
+                        method: 'delete',
+                        url: `/articles/${this.article._id}`,
+                        headers: {
+                            Authorization: "token " + localStorage.token
+                        }
+                    }).then(({data}) => {
+                        console.log(data.message);
+                        this.$emit('clicked');
+                        this.$toast.success({
+                            title: 'Delete',
+                            message: data.message
+                        });
+                    }).catch(err => {
+                        console.log({err});
+                        this.$toast.error({
+                            title: 'Error',
+                            message: err.response.data.message
+                        });
+                    })
+                })
+                .catch(err => {
+                    this.$toast.info({
+                        title: 'Cancel',
                         message: err.response.data.message
                     });
                 })

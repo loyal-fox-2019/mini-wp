@@ -17,7 +17,8 @@
     "vue-google-oauth2": "^1.4.0",
     "vue-google-signin-button": "^1.0.4",
     "vue-hot-reload-api": "^2.3.4",
-    "vue-quill": "^1.5.1"
+    "vue-quill": "^1.5.1",
+    "vuejs-dialog": "^1.4.1"
   },
   "name": "client",
   "version": "1.0.0",

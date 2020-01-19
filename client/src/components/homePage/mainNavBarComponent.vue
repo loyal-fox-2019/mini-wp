@@ -21,24 +21,33 @@
         },
         methods: {
             signOut: function () {
-                this.$gAuth.signOut()
-                    .then(() => {
-                        // things to do when sign-out succeeds
-                        localStorage.clear();
-                        location.reload();
-                        this.$toast.success({
-                            title: 'Success Sign Out',
-                            message: 'successfully sign Out, hope 2 c u again :)'
-                        });
-                    })
-                    .catch(error => {
-                        // things to do when sign-out fails
-                        console.log(error);
-                        this.$toast.error({
-                            title: 'Error Sign Out',
-                            message: error
-                        });
+                this.$dialog
+                    .confirm('Save this data and continue ?')
+                    .then(dialog => {
+                        this.$gAuth.signOut()
+                            .then(() => {
+                                // things to do when sign-out succeeds
+                                localStorage.clear();
+                                location.reload();
+                                this.$toast.success({
+                                    title: 'Success',
+                                    message: 'successfully sign Out, hope 2 c u again :)'
+                                });
+                            })
+                            .catch(error => {
+                                // things to do when sign-out fails
+                                console.log(error);
+                                this.$toast.error({
+                                    title: 'Error',
+                                    message: error
+                                });
+                            });
+                    }).catch(err => {
+                    this.$toast.info({
+                        title: 'Cancel',
+                        message: 'Nice, thank for choosing to stay in the application :)'
                     });
+                })
             }
         }
     }

@@ -66,31 +66,44 @@
         },
         methods: {
             registration: function () {
-                instance({
-                    method: 'post',
-                    url: '/authors',
-                    data: {
-                        name: this.name,
-                        email: this.email,
-                        password: this.password
-                    }
-                }).then(({data}) => {
-                    console.log(data);
-                    this.$toast.success({
-                        title: 'Success Sign Up',
-                        message: data.message,
-                        position: 'top left'
+                this.$dialog
+                    .confirm('Save this data and continue ?')
+                    .then(dialog => {
+                        console.log(dialog);
+                        instance({
+                            method: 'post',
+                            url: '/authors',
+                            data: {
+                                name: this.name,
+                                email: this.email,
+                                password: this.password
+                            }
+                        }).then(({data}) => {
+                            console.log(data);
+                            this.$toast.success({
+                                title: 'Success',
+                                message: data.message,
+                                position: 'top left'
+                            });
+                            localStorage.token = data.token;
+                            location.reload();
+                        }).catch(err => {
+                            console.log(err);
+                            this.$toast.error({
+                                title: 'Error',
+                                message: err.response.data.message,
+                                position: 'top left'
+                            });
+                        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$toast.info({
+                            title: 'Cancel',
+                            message: 'Sign up has been canceled :(',
+                            position: 'top left'
+                        });
                     });
-                    localStorage.token = data.token;
-                    location.reload();
-                }).catch(err => {
-                    console.log(err);
-                    this.$toast.error({
-                        title: 'Error Sign Up',
-                        message: err.response.data.message,
-                        position: 'top left'
-                    });
-                });
             }
         }
 
