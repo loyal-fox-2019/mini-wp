@@ -13,23 +13,23 @@
         <div id="article-list row">
             <form class="form-inline my-3 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" v-model="searchKey">
-                <button class="btn btn-outline-success my-2 my-sm-0 mb-3" type="submit" v-on:click.prevent='searchArticle'>Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0 mb-3" type="submit" @click.prevent="searchArticle">Search</button>
             </form>
             <div class="row mt-3">
-                <div class="col-sm-6 mt-2" v-for="article in articles" :key="article._id">
+                <div class="col-sm-6 mt-2" v-for="article in searchArticle" :key="article.id">
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src="#" class="card-img" alt="#">
+                                <img v-bind:src="article.featured_image" class="card-img" alt="#" width="300" height="200">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{data.name}}</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    <a href="#" class="btn btn-primary">Full Article</a>
-                                    <a href="#" class="btn btn-warning">Edit</a> 
-                                    <a href="#" class="btn btn-danger">Delete</a>
+                                    <h5 class="card-title">{{article.title}}</h5>
+                                    <p class="card-text">{{article.description}}</p>
+                                    <p class="card-text"><small class="text-muted">{{new Date(article.created_at).toLocaleString()}}</small></p>
+                                    <a href="#" class="btn btn-primary" @click.prevent="test">Full Article</a>
+                                    <a href="#" class="btn btn-warning" @click.prevent="$emit('viewEdit', article)">Edit</a> 
+                                    <a href="#" class="btn btn-danger" @click.prevent="$emit('deletePost', article._id)">Delete</a>
                                 </div>
                             </div>
                         </div>
@@ -41,14 +41,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+const BASE_URL = 'http://localhost:3000'
+
 export default {
     name: 'MainPage',
     data() {
         return {
-            articles: []
+            articles: [],
+            searchKey: ''
         }
     },
-    props: ['articleList']
+    props: ['articleList', 'isLogin'],
+    methods: {
+        
+    },
+    computed: {
+        searchArticle: function(){
+            if(this.searchKey == ''){
+                return this.articleList
+            }else{
+                return this.articleList.filter(data => data.title.toLowerCase().includes(this.searchKey.toLowerCase()))
+            }
+        }
+    },
+
 }
 </script>
 

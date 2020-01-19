@@ -13,18 +13,24 @@
                         <h1>Register</h1>
                         <div class="form-group">
                             <label for="register-name">Full Name or Initial Name</label>
-                            <input type="text" class="form-control text-center" id="register-namel">
+                            <input type="text" class="form-control text-center" id="register-namel" v-model="registerData.name">
                         </div>
                         <div class="form-group">
                             <label for="register-email">Email address</label>
-                            <input type="email" class="form-control text-center" id="register-email" aria-describedby="emailHelp">
+                            <input type="email" class="form-control text-center" id="register-email" aria-describedby="emailHelp" v-model="registerData.email">
                         </div>
                         <div class="form-group">
                             <label for="register-password">Password</label>
-                            <input type="password" class="form-control text-center" id="register-password">
+                            <input type="password" class="form-control text-center" id="register-password" v-model="registerData.password">
                         </div>
-                        <button type="submit" class="btn btn-primary mb-3" @click="$emit('userRegister', registerData)">Register</button><br>
+                        <button type="submit" class="btn btn-primary mb-3" @click.prevent="$emit('userRegister', registerData)">Register</button><br>
                         <h5>Already have an account? <span @click.prevent="changePage">Login Here</span></h5>
+                        <g-signin-button
+                            :params="googleSignInParams"
+                            @success="onSignInSuccess"
+                            @error="onSignInError">
+                            Sign in with Google
+                        </g-signin-button>
                     </form>
                 </div>
                 <!-- Login Form -->
@@ -33,14 +39,14 @@
                         <h1>Login</h1>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="loginData.email">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input type="password" class="form-control text-center" id="exampleInputPassword1">
+                            <input type="password" class="form-control text-center" id="exampleInputPassword1" v-model="loginData.password">
                         </div>
-                        <button type="submit" class="btn btn-primary mb-3" @click="$emit('userLogin', loginData)">Login</button>
+                        <button type="submit" class="btn btn-primary mb-3" @click.prevent="$emit('userLogin', loginData)">Login</button>
                         <h5>Dont have an account? <span @click.prevent="changePage">Register Here</span></h5>
                     </form>
                 </div>
@@ -51,6 +57,7 @@
 
 <script>
 import axios from 'axios'
+import GSignInButton from 'vue-google-signin-button'
 
 export default {
     data() {
@@ -65,15 +72,38 @@ export default {
                 name: '',
                 email: '',
                 password: ''
+            },
+            googleSignInParams: {
+                client_id: '724335900212-4180pkjn7o56k4jt4vr938asgrq9rf3b.apps.googleusercontent.com'
             }
         }
     },
+    props: ["params"],
     methods: {
         getStarted: function(){
             this.started = !this.started
         },
         changePage: function(){
             this.loginPage = !this.loginPage
+        },
+        onSignInSuccess (googleUser) {
+            // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+            // See https://developers.google.com/identity/sign-in/web/reference#users
+            const profile = googleUser.getBasicProfile() // etc etc
+            const id_token = googleUser.getAuthResponse().id_token;
+            axios.post('http://localhost:3000/user/google', {id_token: id_token})
+                .then(data => {
+                    console.log('Login berhasil', data)
+                    localStorage.setItem('token', data.data.token)
+                    return this.$emit('hasLoggedIn', true)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        onSignInError (error) {
+            // `error` contains any error occurred.
+            console.log('OH NOES', error)
         }
     },
 }

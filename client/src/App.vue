@@ -1,6 +1,6 @@
 <template>
     <div>
-        <LandingPage v-show="!isLogin" v-on:userLogin="login" v-on:userRegister="register"></LandingPage>
+        <LandingPage v-show="!isLogin" v-on:userLogin="login" v-on:userRegister="register" v-on:hasLoggedIn="googleSign"></LandingPage>
         <div id="main-page" v-show="isLogin">
             <Header v-show="isLogin" v-on:logout="logout"></Header>
              <!-- CONTENT! -->
@@ -10,8 +10,9 @@
                         <Sidebar v-on:writePage="write" v-on:blogPost="post"></Sidebar>
                     </div>
                     <div class="col-md-10 overflow-auto" id="right-content">
-                        <MainPage v-show="isArticle"></MainPage>
+                        <MainPage v-show="isArticle" :articleList="articleList" v-on:deletePost="deletePost" v-on:viewEdit="viewEdit" v-on:searchKey="getKey"></MainPage>
                         <WritePage v-show="isWrite" v-on:article="getArticle"></WritePage>
+                        <EditForm v-if="editArticle !== null" :editArticle="editArticle" v-on:doneEdit="doneEdit"></EditForm>
                     </div>
                 </div>
             </div>
@@ -26,6 +27,7 @@ import LandingPage from './components/LandingPage'
 import Sidebar from './components/Sidebar'
 import MainPage from './components/MainPage'
 import WritePage from './components/WritePage'
+import EditForm from './components/EditForm'
 
 const BASE_URL = 'http://localhost:3000'
 
@@ -33,11 +35,12 @@ export default {
     name: 'app',
     data() {
         return {
-            isLogin: true,
+            isLogin: false,
             errStatus: null,
-            isArticle: true,
+            isArticle: false,
             isWrite: false,
-            articleList: []
+            articleList: [],
+            editArticle: null
         }
     },
     components: {
@@ -45,22 +48,30 @@ export default {
         Header,
         Sidebar,
         MainPage,
-        WritePage
+        WritePage,
+        EditForm
     },
     methods: {
         login: function(data){
-            axios.post(`${BASE_URL}/user/login`, data)
+            console.log(data)
+            const login = {
+                email: data.email,
+                password: data.password
+            }
+            axios.post(`${BASE_URL}/user/login`, login)
                 .then(res => {
                     console.log('Login Berhasil', res)
                     localStorage.setItem('token', res.data.token)
                     this.isLogin = true
                     this.isArticle = true
+                    this.fetchArticle()
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response)
                 })
         },
         register: function(data){
+            console.log('Hello')
             let reg = {
                 name: data.name,
                 email: data.email,
@@ -69,7 +80,9 @@ export default {
             axios.post(`${BASE_URL}/user/register`, reg)
                 .then(res => {
                     console.log('Register Berhasil', res)
-                    this.login
+                    const loginData = res.data.data
+                    console.log(loginData)
+                    return this.login({email: reg.email, password: reg.password})
                 })
                 .catch(err => {
                     console.log(err)
@@ -78,49 +91,71 @@ export default {
         logout: function(){
             this.isLogin = false
             localStorage.removeItem('token')
+            location.reload()
         },
         write: function(){
             this.isArticle = false
             this.isWrite = true
         },
         getArticle: function(val){
-            this.articleList.push(val)
+            if(val){
+                this.isWrite = false
+                this.isArticle = true
+                return this.fetchArticle()
+            }
         },
         post: function(){
             this.isArticle = true
             this.isWrite = false
-        }
-    },
-    computed: {
-        getAll: function(){
+        },
+        fetchArticle: function(){
             let newData = this
             axios.get(`${BASE_URL}/article`, {headers: {token: localStorage.getItem('token')}})
                 .then(results => {
-                    console.log(results.data)
                     newData.articleList = results.data
                 })
                 .catch(err => {
                     console.log(err)
                 })
+        },
+        deletePost: function(id){
+            axios.delete(`${BASE_URL}/article/${id}`, {headers: {token: localStorage.getItem('token')}})
+                .then(res => {
+                    console.log('data deleted', res)
+                    this.fetchArticle()
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        },
+        viewEdit: function(val){
+            console.log(val)
+            if(val){
+                this.editArticle = val
+                this.isArticle = false
+            }else{
+                this.editArticle = null
+            }
+        },
+        doneEdit: function(){
+            this.fetchArticle()
+            this.isArticle = true
+            this.editArticle = null
+        },
+        googleSign: function(){
+            this.isLogin = true
+            this.isArticle = true
         }
     },
     created() {
         if(localStorage.getItem('token')){
             this.isLogin = true
-            let newData = this
-            axios.get(`${BASE_URL}/article`, {headers: {token: localStorage.getItem('token')}})
-                .then(results => {
-                    console.log(results.data)
-                    newData.articleList = results.data
-                    newData.archive = results.data
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            this.isArticle = true
+            this.fetchArticle()
         }else{
             this.isLogin = false
         }
-    },
+    }
 }
 </script>
 

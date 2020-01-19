@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-3">
         <div id="add-form">
-            <h3 class="text-center">Add New Post</h3>
+            <h3 class="text-center">Edit Post</h3>
             <form action="/upload-single" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="Title">Title</label>
@@ -26,7 +26,7 @@
                     <input type="file" ref="myFiles" name="file" id="file" @change="previewFiles">
                 </div>
             </form>
-            <button type="submit" class="btn btn-primary" @click.prevent="createArticle">Submit</button>
+            <button type="submit" class="btn btn-primary" @click.prevent="editPost(editArticle._id)">Submit</button>
         </div>
     </div>
 </template>
@@ -40,12 +40,13 @@ export default {
     name: 'WritePage',
     data() {
         return {
-            title: '',
-            description: '',
-            content: '',
-            image: null
+            title: this.editArticle.title,
+            description: this.editArticle.description,
+            content: this.editArticle.content,
+            image: this.editArticle.image
         }
     },
+    props: ['editArticle'],
     components: {
         LocalQuillEditor: VueQuillEditor.quillEditor
     },
@@ -63,7 +64,7 @@ export default {
             this.image = event.target.files[0]
             console.log(this.image)
         },
-        createArticle: function(){
+        editPost: function(id){
             let formData = new FormData()
             formData.append('title', this.title)
             formData.append('description', this.description)
@@ -71,18 +72,22 @@ export default {
             formData.append('featured_image', this.image)
 
             console.log('This is form data',formData)
-            axios.post(`${BASE_URL}/article`, formData, {headers: {'Content-Type': 'multipart/form-data', token: localStorage.getItem('token')}})
+            axios.put(`${BASE_URL}/article/${id}`, formData, {headers: {'Content-Type': 'multipart/form-data', token: localStorage.getItem('token')}})
                 .then(data => {
                     console.log('data created', data)
                     this.title = ''
                     this.description = ''
                     this.content = ''
                     this.image = null
-                    return this.$emit('article', true)
+                    return this.$emit('doneEdit', true)
                 })
                 .catch(err => {
                     console.log(err.response)
                 })
+        },
+        previewFiles: function(){
+            this.image = event.target.files[0]
+            console.log(this.image)
         }
     }
 }
