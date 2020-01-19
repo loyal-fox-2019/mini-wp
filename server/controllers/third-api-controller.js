@@ -96,7 +96,7 @@ class ThirdAPIController {
           return User.create({
             username: user_login,
             email: user_email,
-            password: randomPass(),
+            password: randomPassword(),
           })
         }
       })
