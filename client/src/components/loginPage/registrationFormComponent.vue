@@ -87,6 +87,7 @@
                             });
                             localStorage.token = data.token;
                             location.reload();
+                            dialog.close();
                         }).catch(err => {
                             console.log(err);
                             this.$toast.error({
@@ -94,6 +95,7 @@
                                 message: err.response.data.message,
                                 position: 'top left'
                             });
+                            dialog.close();
                         });
                     })
                     .catch(err => {
@@ -103,6 +105,7 @@
                             message: 'Sign up has been canceled :(',
                             position: 'top left'
                         });
+                        err.close();
                     });
             }
         }

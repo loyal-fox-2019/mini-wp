@@ -126,18 +126,21 @@
                             title: 'Success',
                             message: 'Data successfully saved'
                         });
+                        dialog.close();
                     }).catch(err => {
-                        console.log({err})
+                        console.log({err});
                         this.$toast.error({
                             title: 'Error',
                             message: err.response.data.message
                         });
+                        dialog.close();
                     });
                 }).catch(err => {
                     this.$toast.info({
                         title: 'Cancel',
                         message: 'You have cancel to save the data'
                     });
+                    err.close();
                 });
             },
             handleFileUpload: function () {

@@ -120,7 +120,7 @@
             updateArticle: function () {
                 this.$dialog
                 .confirm("Update the data ?")
-                .then(ok => {
+                .then(dialog => {
                     let formData = new FormData();
                     formData.set('title', this.title);
                     formData.set('tags', this.tags);
@@ -143,12 +143,14 @@
                             title: 'Success',
                             message: 'Data successfully updated'
                         });
+                        dialog.close()
                     }).catch(err => {
                         console.log({err});
                         this.$toast.error({
                             title: 'Error',
                             message: err.response.data.message
                         });
+                        dialog.close()
                     });
                 })
                 .catch(err => {
@@ -156,6 +158,7 @@
                         title: 'Cancel',
                         message: 'You have cancel to update the data'
                     });
+                    err.close()
                 });
             },
             handleFileUpload: function () {

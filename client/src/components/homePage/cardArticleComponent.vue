@@ -44,7 +44,7 @@
             remove: function () {
                 this.$dialog
                 .confirm('Delete this data ?')
-                .then(ok => {
+                .then(dialog => {
                     instance({
                         method: 'delete',
                         url: `/articles/${this.article._id}`,
@@ -58,12 +58,14 @@
                             title: 'Delete',
                             message: data.message
                         });
+                        dialog.close();
                     }).catch(err => {
                         console.log({err});
                         this.$toast.error({
                             title: 'Error',
                             message: err.response.data.message
                         });
+                        dialog.close();
                     })
                 })
                 .catch(err => {
@@ -71,6 +73,7 @@
                         title: 'Cancel',
                         message: err.response.data.message
                     });
+                    err.close();
                 })
             },
             showContent: function (isEdit) {

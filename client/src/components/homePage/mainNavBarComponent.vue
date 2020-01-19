@@ -22,7 +22,7 @@
         methods: {
             signOut: function () {
                 this.$dialog
-                    .confirm('Save this data and continue ?')
+                    .confirm('Logout from application ?')
                     .then(dialog => {
                         this.$gAuth.signOut()
                             .then(() => {
