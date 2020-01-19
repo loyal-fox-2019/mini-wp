@@ -2,7 +2,7 @@
   <div class="card mb-2 custom-card">
     <div class="row no-gutters">
       <div class="col-md-2" :style="styles"></div>
-      <div class="col-md-10 text-light border border-primary">
+      <div class="col-md-10 text-light">
         <div class="card-body pb-1">
           <b-row>
             <b-col>

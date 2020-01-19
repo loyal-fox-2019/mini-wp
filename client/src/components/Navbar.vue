@@ -7,6 +7,11 @@
       <img src="../assets/icon2.png" height="50" width="50" />
       GG-WP
     </b-navbar-brand>
+    <b-navbar-nav>
+      <b-nav-item :to="{ path: '/article' }" class="text-decoration-none">
+        <span class="custom-color">Explore</span>
+      </b-nav-item>
+    </b-navbar-nav>
 
     <b-navbar-nav class="ml-auto d-flex align-items-center" v-if="username">
       <b-nav-item :to="{ path: '/user/all-articles' }">

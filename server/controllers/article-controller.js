@@ -24,12 +24,17 @@ class ArticleController {
   }
 
   static getAllArticles(req, res, next) {
-    Article.find({})
+    Article.find({ status: 'published' })
       .populate('author', 'username -_id')
       .then(articles => {
         res.json({ articles })
       })
       .catch(next)
+  }
+
+  static getArticlesByQuery(req, res, next) {
+    console.log(req.query)
+    res.json({ articles: [{ dummy: 'dummy' }] })
   }
 
   static getAllArticlesByTags(req, res, next) {
