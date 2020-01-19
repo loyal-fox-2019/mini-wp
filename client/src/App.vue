@@ -91,9 +91,32 @@ export default {
             this.isWrite = false
         }
     },
+    computed: {
+        getAll: function(){
+            let newData = this
+            axios.get(`${BASE_URL}/article`, {headers: {token: localStorage.getItem('token')}})
+                .then(results => {
+                    console.log(results.data)
+                    newData.articleList = results.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    },
     created() {
         if(localStorage.getItem('token')){
             this.isLogin = true
+            let newData = this
+            axios.get(`${BASE_URL}/article`, {headers: {token: localStorage.getItem('token')}})
+                .then(results => {
+                    console.log(results.data)
+                    newData.articleList = results.data
+                    newData.archive = results.data
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }else{
             this.isLogin = false
         }

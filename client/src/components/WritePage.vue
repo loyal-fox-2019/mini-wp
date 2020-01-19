@@ -68,16 +68,17 @@ export default {
             formData.append('title', this.title)
             formData.append('description', this.description)
             formData.append('content', this.content)
-            formData.append('image', this.image)
+            formData.append('featured_image', this.image)
 
             console.log('This is form data',formData)
             axios.post(`${BASE_URL}/article`, formData, {headers: {'Content-Type': 'multipart/form-data', token: localStorage.getItem('token')}})
                 .then(data => {
-                    console.log('data created')
+                    console.log('data created', data)
                     let created = (data.data.result)
-                    this.articleTitle = ''
-                    this.articleContent = ''
-                    this.articleImage = null
+                    this.title = ''
+                    this.description = ''
+                    this.content = ''
+                    this.image = null
                     return this.$emit('article', created)
                 })
                 .catch(err => {
