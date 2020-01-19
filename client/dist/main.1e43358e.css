@@ -20,8 +20,26 @@
   margin-left: 3.82rem;
   margin-top: 2.5rem;
 }
+.article-card[data-v-ac443f] {
+  max-height: 612px !important;
+  overflow: hidden;
+}
+.card-bg-img[data-v-ac443f] {
+  min-height: 382px;
+}
+.content[data-v-ac443f] {
+  max-height: 10rem;
+  overflow: hidden;
+}
 .tag-input[data-v-d184cc] {
   width: 80% !important;
+}
+.tag-input[data-v-999aec] {
+  width: 80% !important;
+}
+.bg-image[data-v-9148dd] {
+  min-height: 382px;
+  max-height: 1080px;
 }
 .half[data-v-ab226b] {
   width: 50%;

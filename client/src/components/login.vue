@@ -32,7 +32,8 @@ export default {
             })
 
             localStorage.token = data.token
-            console.log(1, localStorage.token)
+            localStorage.authorId = data.authorId
+
             Swal.fire({
                position: 'center',
                icon: 'success',
@@ -40,7 +41,6 @@ export default {
                showConfirmButton: false,
                timer: 1000
             })
-            console.log(2, localStorage.token)
 
             this.$emit('loginLoggingIn', true)
             this.$router.push({name: 'articleList'})

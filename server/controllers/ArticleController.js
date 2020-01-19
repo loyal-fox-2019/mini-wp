@@ -36,7 +36,29 @@ class ArticleController {
          })
          .limit(limit)
          .skip(limit * (page - 1))
+         .sort({createdAt: 'desc'})
 
+         res.status(200).json({articles})
+      }
+      catch (error) {
+         next(error)
+      }
+   }
+
+   static async readByTag(req, res, next) {
+      try {
+         const articles = await Article.find({
+            $and: [
+               {tags: req.params.tag},
+
+               {
+                  $or: [
+                     {audience: 'public'},
+                     {author: req.authorId}
+                  ]
+               }
+            ]
+         })
          res.status(200).json({articles})
       }
       catch (error) {

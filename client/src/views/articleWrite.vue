@@ -2,7 +2,7 @@
    <div class="shadow bg-white rounded p-8 mb-8">
       <form class="flex flex-col w-full" @submit.prevent="submitArticle">
          <div class="px-6">
-            <input type="text" id="title" placeholder="Title" class="mt-3 mb-6 py-2 rounded px-3 w-full" :disabled="isUploading"/>
+            <input type="text" v-model="title" id="title" placeholder="Title" class="mt-3 mb-6 py-2 rounded px-3 w-full" :disabled="isUploading"/>
          </div>
 
          <div class="px-6 w-full mb-6">
@@ -72,16 +72,27 @@ export default {
 
          try {
             this.isUploading = true
+            console.log(this.title, this.content, this.tags, this.featured_image, this.audience)
 
             const {data} = await axios.post(`/article`, {
                title: this.title,
                content: this.myHTML,
-               tags: this.tags,
+               tags,
                featured_image: this.image,
                audience: this.audience
             })
 
             this.isUploading = false
+
+            Swal.fire({
+               position: 'center',
+               icon: 'success',
+               title: 'Posting article success',
+               showConfirmButton: false,
+               timer: 1000
+            })
+
+            this.$router.push({name: 'articleList'})
          }
          catch (error) {
             Swal.fire({

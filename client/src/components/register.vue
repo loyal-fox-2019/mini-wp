@@ -57,6 +57,7 @@ export default {
             })
             
             localStorage.token = data.token
+            localStorage.authorId = data.authorId
 
             Swal.fire({
                position: 'center',

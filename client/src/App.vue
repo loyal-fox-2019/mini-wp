@@ -25,38 +25,43 @@
                href="#">Log out</a>
         </div>
      </div>
+
      <div class="flex">
          <div id="left-nav" class="flex flex-col items-end px-4 mt-10" v-if="isLoggedIn">
             <router-link :to="{name: 'articleList'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Article list</router-link>
-            <router-link :to="{name: 'articleList'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Read article</router-link>
-            <router-link :to="{name: 'articleUpdate'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Update article</router-link>
-            <!-- <router-link :to=""></router-link>
-            <router-link :to=""></router-link>
-            <router-link :to=""></router-link> -->
+            <router-link v-if="idExist" :to="{name: 'articleUpdate'}" class="mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500">Update article</router-link>
          </div>
          <router-view :key="$route.fullPath" @loggingIn="setIsLoggedIn($event)" :class="{main: isLoggedIn}"></router-view>
          <div id="right-nav" class="flex flex-col px-4 ml-10 mt-10" v-if="isLoggedIn">
+            <h5 class="font-bold text-2xl text-gray-700 mb-4">Watch new tag</h5>
+            <form @submit.prevent="watchNewTag">
+               <input type="text" v-model="newTag">
+               <input type="submit" value="Watch">
+            </form>
             <h5 class="font-bold text-2xl text-gray-700 mb-4">Watched tags</h5>
-
-            <router-link :to="{name: 'articleListByTag', params: {tag: 'Adventure'}}" class="font-semibold text-xl text-gray-500 hover:text-teal-500">Adventure</router-link>
+            <div>
+               <router-link :to="{name: 'articleListByTag', params: {tag: 'Adventure'}}" class="font-semibold text-xl text-gray-500 hover:text-teal-500">Adventure</router-link>
+            </div>
          </div>
      </div>
   </div>
 </template>
 
 <script>
-import AddArticleButton from './components/addArticleButton'
+import axios from './services/server'
 
 export default {
    name: 'App',
    data() {
       return {
-         isLoggedIn: !!localStorage.token
+         isLoggedIn: !!localStorage.token,
+         idExist: !!this.$route.params.id,
+         newTag: ''
       }
    },
 
    components: {
-      AddArticleButton
+      
    },
 
    methods: {
@@ -65,13 +70,65 @@ export default {
       },
 
       test() {
-         console.log('hehe')
+         console.log(!!this.$route.params.id)
       },
 
       logOut() {
          localStorage.removeItem('token')
          this.isLoggedIn = false
          this.$router.push({name: 'login'})
+      },
+
+      watchNewTag: async function() {
+         try {
+            const {data} = await axios.patch(`/author/${localStorage.authorId}`, {
+               tag: this.newTag
+            })
+
+            Swal.fire({
+               position: 'center',
+               icon: 'success',
+               title: 'Adding new watched tag success',
+               showConfirmButton: false,
+               timer: 1000
+            })
+         }
+         catch (error) {
+            Swal.fire({
+               position: 'center',
+               icon: 'error',
+               title: 'Adding new watched tag has failed',
+               text: error.response.data.message,
+               showConfirmButton: true,
+               timer: 2300
+            })
+         }
+      },
+
+      fetchWatchedTags: async function() {
+         try {
+            const {data} = await axios.get()
+         }
+         catch (error) {
+            Swal.fire({
+               position: 'center',
+               icon: 'error',
+               title: 'Fetching author watched tags data has failed',
+               text: error.response.data.message,
+               showConfirmButton: true,
+               timer: 2300
+            })
+         }
+      }
+   },
+
+   created() {
+      this.test()
+   },
+
+   watch: {
+      $route: function(to, from) {
+         this.idExist = this.$route.params.id
       }
    }
 }

@@ -35,7 +35,7 @@ async function authorReadAuthorization(req, res, next) {
       }
 
       if(article.audience != 'public') {
-         if(article.author != req.authorId) throw {
+         if(JSON.stringify(article.author) != JSON.stringify(req.authorId)) throw {
             errorCode: 401,
             message: 'You are not authorized to read this article.'
          }
@@ -67,9 +67,28 @@ async function authorUpdateDeleteAuthorization(req, res, next) {
    }
 }
 
+async function authorUpdateTagAuthentication(req, res, next) {
+   try {
+      if(!req.params.id) throw {
+         errorCode: 400,
+         message: 'Please input author id in the parameter'
+      }
+
+      if(req.authorId == req.params.id) next()
+      else throw {
+         errorCode: 401,
+         message: 'You are not authorized to update watched-tags of this author'
+      }
+   }
+   catch (error) {
+      next(error)
+   }
+}
+
 
 module.exports = {
    authorAuthentication,
    authorReadAuthorization,
-   authorUpdateDeleteAuthorization
+   authorUpdateDeleteAuthorization,
+   authorUpdateTagAuthentication
 }

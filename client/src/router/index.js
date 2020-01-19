@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import ArticleList from '../views/articleList.vue'
 import ArticleWrite from '../views/articleWrite.vue'
 import ArticleUpdate from '../views/articleUpdate.vue'
+import ArticleRead from '../views/articleRead.vue'
 import Auth from '../views/auth.vue'
 import Swal from 'sweetalert2'
 
@@ -25,6 +26,11 @@ const routes = [
       component: ArticleWrite
    },
    {
+      path: '/read/:id',
+      name: 'articleRead',
+      component: ArticleRead
+   },
+   {
       path: '/update',
       name: 'articleUpdate',
       component: ArticleUpdate
@@ -35,7 +41,7 @@ const routes = [
       component: ArticleList
    },
    {
-      path: '/:tag',
+      path: '/tag/:tag',
       name: 'articleListByTag',
       component: ArticleList
    }

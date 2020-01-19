@@ -5,6 +5,7 @@ const {authorAuthentication, authorReadAuthorization, authorUpdateDeleteAuthoriz
 routes.use(authorAuthentication)
 routes.post('/', ArticleController.create)
 routes.get('/', ArticleController.read)
+routes.get('/tag/:tag', ArticleController.readByTag)
 routes.get('/:articleId', authorReadAuthorization, ArticleController.readDetail)
 routes.patch('/:articleId', authorUpdateDeleteAuthorization, ArticleController.updateOne)
 routes.delete('/:articleId', authorUpdateDeleteAuthorization, ArticleController.deleteOne)
