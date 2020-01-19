@@ -16,10 +16,12 @@
     </RegisterForm>
     <MyPosts
       v-if="isLogin && page === 'myposts'"
-      @singlePost="toSinglePost">
+      @singlePost="toSinglePost"
+      @toEditor="toEditor">
 
     </MyPosts>
     <EditorForm
+      :articleId="articleId"
       @changePage="changePage"
       v-if="isLogin && page === 'editor'">
     </EditorForm>
@@ -58,12 +60,19 @@ export default {
     changePage(page) {
       this.page = page
     },
+    setCurrentArticleId(id) {
+      this.articleId = id
+    },
     setIsLogin(value) {
       this.isLogin = value
       this.page = 'myposts'
     },
     toSinglePost(articleId) {
       this.page = 'post'
+      this.articleId = articleId
+    },
+    toEditor(articleId) {
+      this.page = 'editor'
       this.articleId = articleId
     }
   },
@@ -74,6 +83,7 @@ export default {
     } else {
       this.isLogin = true
       this.page = 'myposts'
+      this.articleId = null
     }
   }
 }

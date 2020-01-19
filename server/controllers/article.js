@@ -3,9 +3,10 @@ const { tagFormatter } = require('../helpers/tagFormatter')
 
 class ArticleController {
   static addPost(req, res, next) {
-    let author = req.decoded.id
-    let { title, content, tags, featured_image } = req.body
-    tags = tagFormatter(tags)
+    const author = req.decoded.id
+    const { title, content } = req.body
+    const featured_image = req.file.gcsUrl
+    let tags = tagFormatter(req.body.tags)
     Article.create({
       title,
       content,
@@ -42,7 +43,8 @@ class ArticleController {
   }
 
   static updateArticle(req, res, next) {
-    const { title, content, tags, featured_image } = req.body
+    const { title, content, tags } = req.body
+    const featured_image = req.file.gcsUrl
     const update = {}
     title && (update.title = title)
     content && (update.content = content)
@@ -52,7 +54,6 @@ class ArticleController {
       update,
       { new: true, omitUndefined: true })
       .then(article => {
-        console.log(article)
         res.status(200).json(article)
       })
       .catch(next)

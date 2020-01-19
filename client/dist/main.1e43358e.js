@@ -14290,13 +14290,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
 var _default = {
   name: 'EditorForm',
+  props: ['articleId'],
   component: {},
   data: function data() {
     return {
       title: '',
       content: '',
+      tags: '',
       file: null,
       url: null
     };
@@ -14313,26 +14320,92 @@ var _default = {
       var fd = new FormData();
       fd.append('title', this.title);
       fd.append('content', this.content);
-      fd.append('featured_image', this.file);
-      (0, _axios.default)({
-        method: 'post',
-        url: '/articles',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          access_token: localStorage.getItem('access_token')
-        },
-        data: fd
-      }).then(function (_ref) {
-        var data = _ref.data;
+      fd.append('tags', this.tags);
 
-        _sweetalert.default.fire({
-          icon: 'success',
-          text: 'Submitted!'
+      if (this.file) {
+        console.log('shitttt');
+        fd.append('featured_image', this.file);
+      }
+
+      if (!this.articleId) {
+        (0, _axios.default)({
+          method: 'post',
+          url: '/articles',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            access_token: localStorage.getItem('access_token')
+          },
+          data: fd
+        }).then(function (_ref) {
+          var data = _ref.data;
+
+          _sweetalert.default.fire({
+            icon: 'success',
+            text: 'Submitted!'
+          });
+
+          _this.$emit('changePage', 'myposts');
+        }).catch(function (_ref2) {
+          var response = _ref2.response;
+          var msg = (0, _errorHandler.default)(response);
+
+          _sweetalert.default.fire({
+            icon: 'error',
+            text: msg
+          });
         });
+      } else {
+        (0, _axios.default)({
+          method: 'patch',
+          url: "/articles/".concat(this.articleId),
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            access_token: localStorage.getItem('access_token')
+          },
+          data: fd
+        }).then(function (_ref3) {
+          var data = _ref3.data;
 
-        _this.$emit('changePage', 'myposts');
-      }).catch(function (_ref2) {
-        var response = _ref2.response;
+          _sweetalert.default.fire({
+            icon: 'success',
+            text: 'Submitted!'
+          });
+
+          _this.$emit('changePage', 'myposts');
+        }).catch(function (_ref4) {
+          var response = _ref4.response;
+          var msg = (0, _errorHandler.default)(response);
+
+          _sweetalert.default.fire({
+            icon: 'error',
+            text: msg
+          });
+        });
+      }
+    }
+  },
+  created: function created() {
+    var _this2 = this;
+
+    if (this.articleId) {
+      (0, _axios.default)({
+        method: 'get',
+        url: "/articles/".concat(this.articleId),
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      }).then(function (_ref5) {
+        var data = _ref5.data;
+        var title = data.title,
+            content = data.content,
+            tags = data.tags,
+            featured_image = data.featured_image;
+        _this2.title = title;
+        _this2.content = content;
+        _this2.tags = tags;
+        _this2.url = featured_image;
+      }).catch(function (_ref6) {
+        var response = _ref6.response;
         var msg = (0, _errorHandler.default)(response);
 
         _sweetalert.default.fire({
@@ -14428,11 +14501,46 @@ exports.default = _default;
           ),
           _vm._v(" "),
           _c("div", { staticClass: "mb-4" }, [
-            _c("span", [_vm._v("Set Featured Image: ")]),
+            _c("h4", { staticClass: "text-gray-700 mb-2" }, [
+              _vm._v("Set Featured Image: ")
+            ]),
             _vm._v(" "),
             _c("input", {
               attrs: { type: "file" },
               on: { change: _vm.onFileChange }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-4" }, [
+            _c("h4", { staticClass: "text-gray-700" }, [_vm._v("Add Tags:")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "text-sm text-gray-600" }, [
+              _vm._v(
+                "(Tags are separated by comma and all whitespace between will be omitted)"
+              )
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.tags,
+                  expression: "tags"
+                }
+              ],
+              staticClass:
+                "shadow-md border rounded-sm border-gray-200 w-full p-2",
+              attrs: { placeholder: "Eg. photography, life, travel" },
+              domProps: { value: _vm.tags },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.tags = $event.target.value
+                }
+              }
             })
           ]),
           _vm._v(" "),
@@ -15418,6 +15526,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
 var _default = {
   name: 'MyPosts',
   data: function data() {
@@ -15451,11 +15563,11 @@ var _default = {
         var index = this.openedToggles.indexOf(articleId);
 
         if (index > -1) {
-          this.openedToggles = this.openedToggles.splice(index, -1);
+          this.openedToggles.splice(index, index + 1);
         }
       }
 
-      console.log(this.openedToggles[0]);
+      console.log(this.openedToggles[0], this.openedToggles[1], this.openedToggles[2]);
     }
   },
   created: function created() {
@@ -15492,66 +15604,85 @@ exports.default = _default;
             _c("img", {
               staticClass: "w-full relative z-0",
               attrs: { src: article.featured_image }
-            }),
-            _vm._v(" "),
-            _c(
-              "svg",
-              {
-                staticClass:
-                  "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-white h-8 w-8",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 20 20"
-                },
-                on: {
-                  click: function($event) {
-                    return _vm.toggleMenu(article._id)
-                  }
-                }
-              },
-              [
-                _c("path", {
-                  attrs: {
-                    d:
-                      "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
-                  }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _vm.openedToggles.includes(article._id)
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-4 overflow-auto z-10"
-                  },
-                  [
-                    _vm._m(0, true),
-                    _vm._v(" "),
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _vm._m(2, true)
-                  ]
-                )
-              : _vm._e()
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "px-6 py-4" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "font-bold text-xl mb-2 cursor-pointer hover:underline",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.$emit("singlePost", article._id)
+            _c("div", { staticClass: "relative" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "font-bold text-xl mb-2 cursor-pointer hover:underline",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.$emit("singlePost", article._id)
+                    }
                   }
-                }
-              },
-              [_vm._v("\n        " + _vm._s(article.title) + "\n      ")]
-            ),
+                },
+                [_vm._v("\n          " + _vm._s(article.title) + "\n        ")]
+              ),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "svg",
+                  {
+                    staticClass:
+                      "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8",
+                    attrs: {
+                      xmlns: "http://www.w3.org/2000/svg",
+                      viewBox: "0 0 20 20"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.toggleMenu(article._id)
+                      }
+                    }
+                  },
+                  [
+                    _c("path", {
+                      attrs: {
+                        d:
+                          "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.openedToggles.includes(article._id)
+                  ? _c(
+                      "div",
+                      {
+                        staticClass:
+                          "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10"
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+                            attrs: { href: "" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.$emit("toEditor", article._id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }),
+                            _vm._v("Edit")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
             _vm._v(" "),
             _c("div", {
               staticClass: "text-gray-700 mb-2",
@@ -15591,34 +15722,6 @@ exports.default = _default;
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass:
-          "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
-        attrs: { href: "#" }
-      },
-      [_c("i", { staticClass: "mr-1 fa fa-user fa-fw" }), _vm._v("View")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass:
-          "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
-        attrs: { href: "#" }
-      },
-      [_c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }), _vm._v("Edit")]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -15887,6 +15990,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
 var _default = {
   name: 'app',
   components: {
@@ -15908,12 +16013,19 @@ var _default = {
     changePage: function changePage(page) {
       this.page = page;
     },
+    setCurrentArticleId: function setCurrentArticleId(id) {
+      this.articleId = id;
+    },
     setIsLogin: function setIsLogin(value) {
       this.isLogin = value;
       this.page = 'myposts';
     },
     toSinglePost: function toSinglePost(articleId) {
       this.page = 'post';
+      this.articleId = articleId;
+    },
+    toEditor: function toEditor(articleId) {
+      this.page = 'editor';
       this.articleId = articleId;
     }
   },
@@ -15925,6 +16037,7 @@ var _default = {
     } else {
       this.isLogin = true;
       this.page = 'myposts';
+      this.articleId = null;
     }
   }
 };
@@ -15960,11 +16073,16 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "myposts"
-        ? _c("MyPosts", { on: { singlePost: _vm.toSinglePost } })
+        ? _c("MyPosts", {
+            on: { singlePost: _vm.toSinglePost, toEditor: _vm.toEditor }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "editor"
-        ? _c("EditorForm", { on: { changePage: _vm.changePage } })
+        ? _c("EditorForm", {
+            attrs: { articleId: _vm.articleId },
+            on: { changePage: _vm.changePage }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "post"
@@ -19047,7 +19165,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33117" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35089" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -3,9 +3,7 @@ const { User, Article } = require('../models')
 
 module.exports = {
   authentication(req, res, next) {
-    console.log(req.headers.access_token)
     try {
-      console.log(req.headers)
       const access_token = req.headers.access_token.split(' ')[1]
       const payload = decodeToken(access_token)
       User.findById(payload.id)
