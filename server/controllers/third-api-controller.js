@@ -97,6 +97,7 @@ class ThirdAPIController {
             username: user_login,
             email: user_email,
             password: randomPassword(),
+            platform: 'github',
           })
         }
       })
