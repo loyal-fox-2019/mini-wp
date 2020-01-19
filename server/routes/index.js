@@ -1,11 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const errorHandler = require('../middlewares/errorHandler');
+const authentication = require('../middlewares/authentication');
 const user = require('./user');
+const article = require('./article');
 
-// middleware that is specific to this router
-router.use('/user', user)
-// define the about route
-router.use(errorHandler)
+router.use('/user', user);
 
-module.exports = router
+router.use('/articles', authentication);
+router.use('/articles', article);
+router.use(errorHandler);
+
+module.exports = router;

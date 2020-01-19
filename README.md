@@ -33,6 +33,14 @@ CLIENT_SECRET=YOUR-CLIENT-SECRET-FROM-GOOGLE-OAUTH-FOR-localhost:5500
 npm run dev
 ```
 
+## Client side
+
+Go to folder `client` and type command below :
+```
+parcel index.html
+```
+Wait until all loadings finishes and open `http://localhost:1234`
+
 # Documentation
 
 ## User
@@ -53,13 +61,13 @@ npm run dev
   - Status: **403**
   ```
       {
-          "msg": "User not registered"
+          "message": "User not registered"
       }
   ```
   - Status: **404**
   ```
       {
-          "msg": "Incorrect username or password"
+          "message": "Incorrect username or password"
       }
   ```
 
@@ -80,6 +88,414 @@ npm run dev
   - Status: **403**
   ```
       {
-          "msg": <"Email your@mail.com already exist" | "First_name required" | "Username required" | "Email required" | "Password required">
+          "message": <"Email your@mail.com already exist" | "First_name required" | "Username required" | "Email required" | "Password required">
       }
+  ```
+
+## Article
+
+### Get all articles
+
+- Route: `/articles/`
+- Method: `GET`
+- Headers: `token`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "articles": [
+      {
+        "tags": [
+          "panjang",
+          "article",
+          "sejarah",
+          "minivipi"
+        ],
+        "_id": "5e23d8dee54a84330ee565a9",
+        "title": "article selanjutnya",
+        "content": "ini adalah artikel kedua di website ini",
+        "author": "5e23b37520e39b09d0b4355e",
+        "featured_image": "https://images.unsplash.com/photo-1472577938094-84871b72ccac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80",
+        "status": "draft",
+        "slug": "article-selanjutnya",
+        "created_at": "2020-01-19T04:19:42.865Z",
+        "__v": 0
+      }
+    ]
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+
+### Post an article
+
+- Route: `/articles/`
+- Method: `POST`
+- Headers: `token`
+- Body:
+  ```
+  {
+    "tags": ["list", "of", "tags"],
+    "title": "title of article",
+    "content": "article content",
+    "featured_image": "http://imagelink.com/image.jpg",
+    "status": "publish" | "draft"
+  }
+  ```
+- Output:
+  - Status: **201**
+  ```
+  {
+    "newArticle": {
+        "tags": [
+            "panjang",
+            "article",
+            "sejarah",
+            "minivipi"
+        ],
+        "_id": "5e23dffffb553b3b2c9174c8",
+        "title": "article selanjutnya",
+        "content": "ini adalah artikel kedua di website ini",
+        "author": "5e23b37520e39b09d0b4355e",
+        "featured_image": "https://images.unsplash.com/photo-1472577938094-84871b72ccac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80",
+        "status": "publish",
+        "slug": "article-selanjutnya",
+        "created_at": "2020-01-19T04:50:07.174Z",
+        "__v": 0
+    }
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+### Get all articles by tag name
+
+- Route: `/tags/:tagsName`
+- Method: `GET`
+- Headers: `token`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "articles": [
+        {
+            "tags": [
+                "panjang",
+                "article",
+                "sejarah",
+                "minivipi"
+            ],
+            "_id": "5e23d8dee54a84330ee565a9",
+            "title": "article selanjutnya",
+            "content": "ini adalah artikel kedua di website ini",
+            "author": "5e23b37520e39b09d0b4355e",
+            "featured_image": "https://images.unsplash.com/photo-1472577938094-84871b72ccac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80",
+            "status": "draft",
+            "slug": "article-selanjutnya",
+            "created_at": "2020-01-19T04:19:42.865Z",
+            "__v": 0
+        },
+        {
+            "tags": [
+                "panjang",
+                "article",
+                "sejarah",
+                "minivipi"
+            ],
+            "_id": "5e23dffffb553b3b2c9174c8",
+            "title": "article selanjutnya",
+            "content": "ini adalah artikel kedua di website ini",
+            "author": "5e23b37520e39b09d0b4355e",
+            "featured_image": "https://images.unsplash.com/photo-1472577938094-84871b72ccac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80",
+            "status": "publish",
+            "slug": "article-selanjutnya",
+            "created_at": "2020-01-19T04:50:07.174Z",
+            "__v": 0
+        }
+    ]
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+  ### Get article by article id
+
+- Route: `/articles/:articleId`
+- Method: `GET`
+- Headers: `token`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "tags": [
+        "panjang",
+        "article",
+        "sejarah",
+        "minivipi"
+    ],
+    "_id": "5e23d8dee54a84330ee565a9",
+    "title": "article selanjutnya",
+    "content": "ini adalah artikel kedua di website ini",
+    "author": "5e23b37520e39b09d0b4355e",
+    "featured_image": "https://images.unsplash.com/photo-1472577938094-84871b72ccac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80",
+    "status": "draft",
+    "slug": "article-selanjutnya",
+    "created_at": "2020-01-19T04:19:42.865Z",
+    "__v": 0
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Update specific article data by article id
+
+- Route: `/articles/:articleId`
+- Method: `PUT`
+- Headers: `token`
+- Body: `one of options below`
+  ```
+  {
+    "tags": ["list", "of", "tags"],
+    "title": "title of article",
+    "content": "article content",
+    "featured_image": "http://imagelink.com/image.jpg",
+    "status": "publish" | "draft"
+  }
+  ```
+- Output:
+  - Status: **200**
+  ```
+  {
+    "article": {
+        "n": 1,
+        "nModified": 1,
+        "ok": 1
+    }
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Update entire article data by article id
+
+- Route: `/articles/:articleId`
+- Method: `PATCH`
+- Headers: `token`
+- Body:
+  ```
+  {
+    "tags": ["list", "of", "tags"],
+    "title": "title of article",
+    "content": "article content",
+    "featured_image": "http://imagelink.com/image.jpg",
+    "status": "publish" | "draft"
+  }
+  ```
+- Output:
+  - Status: **200**
+  ```
+  {
+    "article": {
+        "n": 1,
+        "nModified": 1,
+        "ok": 1
+    }
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Delete article by article id
+
+- Route: `/articles/:articleId`
+- Method: `DELETE`
+- Headers: `token`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "article": {
+        "n": 1,
+        "ok": 1,
+        "deletedCount": 1
+    }
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Add tag to an article by article id
+
+- Route: `/articles/:articleId/tag`
+- Method: `POST`
+- Headers: `token`
+- Body: `{tagName: 'new tag'}`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "n": 1,
+    "nModified": 1,
+    "ok": 1
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Delete tag from an article by article id
+
+- Route: `/articles/:articleId/tag`
+- Method: `DELETE`
+- Headers: `token`
+- Body: `{tagName: 'delete tag'}`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "n": 1,
+    "nModified": 1,
+    "ok": 1
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
   ```
