@@ -7,7 +7,7 @@ class ArticleController {
       content: req.body.content,
       author: req.payload.id,
       featuredImage: req.body.featuredImage,
-      tags: req.body.tags,
+      tags: req.body.tags.split(','),
     })
       .then(article => {
         res.status(201).json({ article })
