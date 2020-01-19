@@ -1,7 +1,7 @@
 <template>
     <div>
         <LoginRegPage v-if="!isTokenSet" @isLogin="checkToken"></LoginRegPage>
-        <Mainpage v-if="isTokenSet"></Mainpage>
+        <Mainpage v-if="isTokenSet" @isLogout="checkToken"></Mainpage>
     </div>
 </template>
 

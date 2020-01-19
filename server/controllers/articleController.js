@@ -6,7 +6,21 @@ class ArticleController
 {
     static showAllArticles(req,res,next)
     {
-        Article.find()
+        Article.find().populate('author')
+        .exec()
+        .then((articles) => {
+            res.status(200).json(articles);
+        })
+        .catch((err) => {
+            next(err);
+        })
+    }
+
+    static showMyArticles(req,res,next)
+    {
+        Article.find({
+            author: req.userInfo.id
+        }).populate('author')
         .exec()
         .then((articles) => {
             res.status(200).json(articles);
@@ -18,7 +32,7 @@ class ArticleController
 
     static showArticleById(req,res,next)
     {
-        Article.findById(req.params.id)
+        Article.findById(req.params.id).populate('author')
         .exec()
         .then((article) => {
             res.status(200).json(article);
@@ -30,8 +44,8 @@ class ArticleController
 
     static addArticle(req,res,next)
     {
-        const data = _.pick(req.body,'title','content');
-                
+        const data = _.pick(req.body,'title','content','slug');
+        data.author = req.userInfo.id;
         Article.create(data)
         .then((article) => {
             res.status(201).json(article);

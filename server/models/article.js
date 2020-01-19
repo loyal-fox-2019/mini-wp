@@ -24,7 +24,7 @@ const articleSchema = new Schema({
 }, {timestamps : true},{versionKey : false});   //timestamps add createdAt, updatedAt fields
 
 articleSchema.pre('save',function(next) {
-    //this.author = ObjectId(this.author);    
+    this.author = ObjectId(this.author);    
 
     next()
 })

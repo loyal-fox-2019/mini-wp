@@ -1,6 +1,7 @@
 const usersRouter = require("express").Router();
 
 const UserController = require("../controllers/userController");
+const ArticleController = require("../controllers/articleController");
 
 const authentication = require("../middlewares/authentication");
 const authorisation = require("../middlewares/authorisation").user_authorisation;
@@ -21,6 +22,11 @@ usersRouter.post('/gsignin',(req,res,next) => {
 })
 
 usersRouter.use('/',authentication);
+
+usersRouter.get('/myArticles',(req,res,next) => {
+    //res.send('Article list');
+    ArticleController.showMyArticles(req,res,next);
+});
 
 usersRouter.get('/',(req,res,next) => {
     res.send('User list');
