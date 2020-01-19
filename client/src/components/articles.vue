@@ -47,7 +47,6 @@
 
           <div class="row row-cols-4 mb-5 justify-content-center animated fadeIn">
             <b-card
-              href="#"
               v-for="article in articles"
               :key="article._id"
               :title="article.title"
@@ -57,7 +56,6 @@
               tag="article"
               style="max-width: 15rem; margin: 5px"
               class="mb-2"
-              @click.prevent="current(article)"
             >
               <b-card-text>
                 Published at: <strong>{{date(article.createdAt)}}</strong>

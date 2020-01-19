@@ -161,6 +161,7 @@ export default {
 
 #login-page {
   display: inline-flex;
+  margin-top: 60px;
 }
 #image {
   position: relative;

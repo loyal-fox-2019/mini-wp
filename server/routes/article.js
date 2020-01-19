@@ -20,7 +20,7 @@ router.get('/', articleController.getArticles);
 router.get('/search', articleController.searchArticles);
 // router.get('/searchall', articleController.allSearch);
 router.use(authentication);
-router.get('/:articleId', articleController.readArticle);
+// router.get('/:articleId', articleController.readArticle);
 router.post('/', articleController.postNewArticle)
 router.put('/:articleId', authorization, articleController.updateArticle);
 router.delete('/:articleId', authorization, articleController.removeArticle);
