@@ -15,6 +15,13 @@ const articleSchema = new Schema({
         type: String,
         required: [true, 'Content field cannot be empty']
     },
+    author: {
+        type: String
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'  
+    },
     created_at: {
         type: Date,
         default: Date.now

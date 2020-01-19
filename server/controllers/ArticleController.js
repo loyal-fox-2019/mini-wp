@@ -1,6 +1,8 @@
 'use strict';
 
 const Article = require('../models/article');
+const Jwt = require('../helper/jwt');
+const User = require('../models/user');
 
 class ArticleController {
     static read(req, res, next) {
@@ -17,12 +19,18 @@ class ArticleController {
     }
 
     static create(req, res, next) {
-        const newArticle = {
-            file: req.body.file,
-            title: req.body.title,
-            content: req.body.content,
-        }
-        Article.create(newArticle)
+        const userId = Jwt.verifyToken(req.headers.usertoken);
+        User.findOne({_id: userId.id})
+        .then(user => {
+            const newArticle = {
+                file: req.body.file,
+                title: req.body.title,
+                content: req.body.content,
+                author: user.name,
+                userId: user.id
+            }
+            return Article.create(newArticle)
+        })
         .then(article => {
             res.status(201).json({
                 message: "New article has been created",
@@ -35,7 +43,7 @@ class ArticleController {
     }
 
     static delete(req, res, next) {
-        Article.deleteOne({_id: req.body.article_id})
+        Article.deleteOne({_id: req.params.id})
         .then(result => {
             res.status(200).json({
                 message: "OK",
@@ -67,10 +75,13 @@ class ArticleController {
         }
         Article.updateOne({_id: req.params.id}, updateArticle)
         .then(update => {
-            console.log(update);
+            res.status(200).json({
+                message: "Article has been successfully updated",
+                data: update
+            })
         })
         .catch(error => {
-            console.log(error);
+            next(error);
         })
     }
 }
