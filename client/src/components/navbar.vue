@@ -24,7 +24,7 @@
             type="button"
             class="btn btn-light far fa-edit"
             data-toggle="modal"
-            data-target="#addArticleModal"
+            @click="addArticle"
             style="width:auto; height:30px;"
           >Write</button>
         </li>
@@ -61,7 +61,11 @@ export default {
   methods: {
     logout() {
       localStorage.clear();
+      this.$root.articles = [];
       this.$emit("checkLogin");
+    },
+    addArticle() {
+      this.$emit("submitArticle");
     }
   }
 };

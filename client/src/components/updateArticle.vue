@@ -3,12 +3,12 @@
     <div class="container-fluid">
       <form
         class="border border-light p-5"
-        @submit.prevent="createArticle"
+        @submit.prevent="updateArticle"
         action="/upload-single"
         method="post"
         enctype="multipart/form-data"
       >
-        <p class="h4 mb-4 text-center">Add Article</p>
+        <p class="h4 mb-4 text-center">Update Article</p>
         <label for="textInput">Title</label>
         <input
           v-model="title"
@@ -30,7 +30,7 @@
             />
           </div>
         </div>
-        <button class="btn btn-info btn-block my-4" type="submit">add Article</button>
+        <button class="btn btn-info btn-block my-4" type="submit">Update Article</button>
         <button class="btn btn-info btn-block my-4" @click="goback" type="button">Cancel</button>
       </form>
     </div>
@@ -41,35 +41,35 @@
 import axios from "axios";
 
 export default {
-  name: "addArticle",
+  name: "updateArticle",
   data() {
     return {
-      id: "",
+      idArticle: "",
       title: "",
       content: null,
       featured_image: null
     };
   },
   methods: {
-    createArticle() {
+    updateArticle() {
       let content = this.content.root.innerHTML;
       let formData = new FormData();
       formData.append("title", this.title);
       formData.append("content", content);
       formData.append("featured_image", this.featured_image);
+      this.idArticle = this.$root.articleId;
       axios({
-        url: "http://localhost:3000/articles",
-        method: "POST",
+        url: `http://localhost:3000/articles/${this.idArticle}`,
+        method: "PATCH",
         data: formData,
         headers: {
           token: localStorage.getItem("token")
         }
       })
         .then(({ data }) => {
-          this.$root.articles.push(data);
           this.$root.clearArtilce;
           this.$emit("submitArticle");
-          Swal.fire("Success Add Article", "success");
+          Swal.fire("Success Update Article", "success");
         })
         .catch(err => {
           Swal.fire({

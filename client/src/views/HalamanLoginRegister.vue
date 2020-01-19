@@ -26,19 +26,7 @@
             <p>Or you can Login with one of the following</p>
             <ul class="soc_icons2">
               <li class="pic">
-                <a href="#">
-                  <i class="icon_4"></i>
-                </a>
-              </li>
-              <li class="pic">
-                <a href="#">
-                  <i class="icon_5"></i>
-                </a>
-              </li>
-              <li class="pic">
-                <a href="#">
-                  <i class="icon_6"></i>
-                </a>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
               </li>
               <div class="clear"></div>
             </ul>
@@ -175,22 +163,24 @@ export default {
         method: "POST",
         data: { idToken }
       })
-        .then(result => {
-          console.log(result);
-          // localStorage.setItem("token", response.accessToken);
-          // localStorage.setItem("_id", response.user._id);
-          // localStorage.setItem("email", response.user.email);
-          // localStorage.setItem("login", "google");
-          // checkLogin();
-          // imageUser(response.user);
-          // Swal.fire(
-          //   "Welcome Back",
-          //   "Success Login " + response.user.fullname,
-          //   "success"
-          // );
+        .then(response => {
+          localStorage.setItem("token", response.accessToken);
+          localStorage.setItem("_id", response.user._id);
+          localStorage.setItem("email", response.user.email);
+          localStorage.setItem("login", "google");
+          this.$emit("checkLogin");
+          Swal.fire(
+            "Welcome Back",
+            "Success Login " + response.user.fullname,
+            "success"
+          );
         })
         .catch(err => {
-          console.log(err);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: err.message
+          });
         });
     }
   }

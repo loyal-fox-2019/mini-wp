@@ -47,7 +47,8 @@ class articleController {
             _id: req.params.id
         }, {
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            featured_image: req.body.featured_image
         })
             .then((article) => {
                 if (article.nModified !== 0) {

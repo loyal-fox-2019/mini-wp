@@ -10,7 +10,7 @@ router.use(authentication)
 router.get('/', articleControllers.findAll)
 router.get('/:id', articleControllers.findOne)
 router.post('/', authorize, upload.single('featured_image'), articleControllers.create)
-router.patch('/:id', authorize, articleControllers.update)
+router.patch('/:id', authorize, upload.single('featured_image'), articleControllers.update)
 router.delete('/:id', authorize, articleControllers.delete)
 
 module.exports = router
