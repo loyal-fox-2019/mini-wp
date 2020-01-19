@@ -5,6 +5,7 @@ if(process.env.NODE_ENV === 'development')
 }
 else
 {
+    require('dotenv').config()
     require('./config/mongoDbAtlas')
 }
 
