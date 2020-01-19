@@ -6,7 +6,7 @@ const upload = gcsUpload({
         fileSize: 1e6
     },
     gcsConfig:{
-        keyFilename: 'hack-tiv8-project-4bdb4ee78a06.json',
+        keyFilename: '/home/riko/Documents/phase 2/week2/day1/hack-tiv8-project-4bdb4ee78a06.json',
         bucketName: 'article-image-miniwp'
     }
 })

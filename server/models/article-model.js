@@ -7,10 +7,14 @@ const SchemaArticle = new Schema({
         type: String,
         required: true
     },
-    content: {type: String},
+    content: {
+        type: String,
+        required: true
+    },
     created_at: {type: Date},
     image:{type: String},
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    author: {type: Schema.Types.ObjectId, ref: 'User'},
+    tag: [String]
 })
 
 

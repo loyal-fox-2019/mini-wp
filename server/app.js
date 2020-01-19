@@ -9,7 +9,6 @@ const router = require('./router/index')
 const cors = require('cors')
 
 
-
 mongoose.connect(process.env.DATABASE,{
     useCreateIndex: true,
     useNewUrlParser: true,
@@ -17,6 +16,9 @@ mongoose.connect(process.env.DATABASE,{
 })
 .then((data)=>{
     console.log('connected to Database')
+})
+.catch((err)=>{
+    console.log(err)
 })
 
 
