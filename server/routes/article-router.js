@@ -15,6 +15,7 @@ const uploadImage = gcsUpload({
 
 router.get('/', ArticleController.getAllArticles)
 router.get('/by-tag', ArticleController.getAllArticlesByTags)
+router.get('/by-query', ArticleController.getArticlesByQuery)
 router.use(authenticate)
 router.post('/', uploadImage.single('featuredImage'), ArticleController.createArticle)
 router.use('/:articleId', authorize)

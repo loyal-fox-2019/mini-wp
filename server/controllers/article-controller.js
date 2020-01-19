@@ -33,8 +33,21 @@ class ArticleController {
   }
 
   static getArticlesByQuery(req, res, next) {
-    console.log(req.query)
-    res.json({ articles: [{ dummy: 'dummy' }] })
+    let query = {}
+    let regex = null
+
+    if (!req.query.query) query = {}
+    else {
+      regex = new RegExp(req.query.query)
+      query = { $or: [{ title: regex }, { content: regex }] }
+    }
+
+    Article.find(query)
+      .populate('author', 'username -_id')
+      .then(articles => {
+        res.json({ articles })
+      })
+      .catch(next)
   }
 
   static getAllArticlesByTags(req, res, next) {
