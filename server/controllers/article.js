@@ -21,7 +21,20 @@ class ArticleController {
   }
 
   static findAllArticles(req, res, next) {
-    Article.find()
+    let query = {}
+    if (req.query.tag) {
+      query = { tags: { $elemMatch: { $regex: req.query.tag, $options: 'i' }}}
+    } else {
+      let q = req.query.q || ''
+      query = {
+        $or: [
+          { title: { $regex: q, $options: 'i' }},
+          { tags: { $elemMatch: { $regex: q, $options: 'i' }}}
+        ]
+      }
+    }
+    Article.find(query)
+      .sort({ createdAt: -1 })
       .populate('author', ['username', 'email'])
       .then(articles => {
         res.status(200).json(articles)

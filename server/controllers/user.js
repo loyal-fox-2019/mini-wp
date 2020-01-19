@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Article } = require('../models')
 const { generateToken } = require('../helpers/jwt')
 const { verifyPassword } = require('../helpers/bcrypt')
 // const axios = require('axios')
@@ -45,6 +45,15 @@ class UserController {
 
   static profile(req, res, next) {
     res.status(200).json(req.decoded)
+  }
+
+  static findMyArticles(req, res, next) {
+    Article.find({ author: req.decoded.id })
+      .sort({ createdAt: -1 })
+      .then(articles => {
+        res.status(200).json(articles)
+      })
+      .catch(next)
   }
 
   static githubLogin(req, res, next) {

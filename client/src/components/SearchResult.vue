@@ -1,6 +1,6 @@
 <template>
   <div class="mt-32">
-    <div v-for="article in myArticles" :key="article._id" class="mb-4 mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white">
+    <div v-for="article in articles" :key="article._id" class="mb-4 mx-auto max-w-xl rounded overflow-hidden shadow-lg bg-white">
       <div class="relative z-0">
         <img class="w-full relative z-0" :src="article.featured_image">
         
@@ -33,13 +33,7 @@
       </div>
       <!-- Tags -->
       <div class="px-6 py-4">
-        <span
-          v-for="tag in article.tags" 
-          :key="tag"
-          @click.prevent="$emit('showSearch', 'tag', tag)"
-          class="inline-block cursor-pointer bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-          {{ tag }}
-        </span>
+        <span v-for="tag in article.tags" :key="tag" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">{{ tag }}</span>
       </div>
       <!-- End of Tags -->
     </div>
@@ -50,29 +44,15 @@
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
 export default {
-  name: 'MyPosts',
+  name: 'SearchResult',
   data () {
     return {
-      myArticles: [],
+      articles: [],
       openedToggles: []
     }
   },
+  props: ['search'],
   methods: {
-    fetchMyPosts() {
-      axios({
-        method: 'get',
-        url: '/user/myarticles',
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({ data }) => {
-          this.myArticles = data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     toggleMenu(articleId) {
       if (!this.openedToggles.includes(articleId)) {
         this.openedToggles.push(articleId)
@@ -82,15 +62,32 @@ export default {
           this.openedToggles.splice(index, index + 1)
         }
       }
+      console.log(this.openedToggles[0], this.openedToggles[1], this.openedToggles[2])
+    },
+    doSearch() {
+      let url = ''
+      if (this.search.kind === 'all') {
+        url = `/articles/?q=${this.search.keyword}`
+      } else if (this.search.kind === 'tag') {
+        url = `/articles/?tag=${this.search.keyword}`
+      }
+      axios({
+        methods: 'get',
+        url,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          this.articles = data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   created() {
-    this.fetchMyPosts()
-  },
-  watch: {
-    searchResult(n, o) {
-      this.myArticles = n
-    }
+    this.doSearch()
   }
 }
 </script>

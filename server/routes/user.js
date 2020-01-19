@@ -9,4 +9,5 @@ router.get('/githubLogin', UserController.githubLogin)
 
 router.use(authentication)
 router.get('/profile', UserController.profile)
+router.get('/myarticles', UserController.findMyArticles)
 module.exports = router

@@ -16,15 +16,16 @@
           <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium">
             Nano WP
           </div>
-          <div class="w-1/4 md:w-auto md:flex text-right">
+          <div class="w-1/4 md:w-auto md:flex text-right cursor-pointer">
             <div>
-              <img class="inline-block h-8 w-8 rounded-full" src="https://avatars0.githubusercontent.com/u/36827603?s=460&v=4" alt="">
+              <i class="text-white fas fa-sign-out-alt"></i>
+              <!-- <img class="inline-block h-8 w-8 rounded-full" src="https://avatars0.githubusercontent.com/u/36827603?s=460&v=4" alt=""> -->
             </div>
-            <div class="hidden md:block md:flex md:items-center ml-2">
-              <span class="text-white text-sm mr-1">User</span>
-              <div>
+            <div class="hidden md:block md:flex md:items-center ml-1">
+              <span class="text-white text-sm mr-1">Log Out</span>
+              <!-- <div>
                 <svg class="fill-current text-white h-4 w-4 block opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M4.516 7.548c.436-.446 1.043-.481 1.576 0L10 11.295l3.908-3.747c.533-.481 1.141-.446 1.574 0 .436.445.408 1.197 0 1.615-.406.418-4.695 4.502-4.695 4.502a1.095 1.095 0 0 1-1.576 0S4.924 9.581 4.516 9.163c-.409-.418-.436-1.17 0-1.615z"/></svg>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -52,28 +53,25 @@
               Feeds
             </a>
           </div>
-          <div class="flex">
-            <a href="#" class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
-              Settings
-            </a>
-          </div>
         </div>
         <div class="relative w-1/4 flex items-center text-blue-500">
-          <input type="search" name="search" placeholder="Search" class="h-10 px-5 w-full pr-10 rounded-full text-sm border border-blue-500 focus:outline-none">
+          <form @submit.prevent="$emit('showSearch', 'all', keyword)" class="w-full">
+            <input v-model="keyword" type="search" name="search" placeholder="Search" class="h-10 px-5 w-full pr-10 rounded-full text-sm border border-blue-500 focus:outline-none">
+          </form>
           <div class="flex absolute right-0 mr-4">
-            <button  @click.prevent="toggleSearchDropdown" class="">
+            <!-- <button  @click.prevent="toggleSearchDropdown" class="">
               <i class="fas fa-caret-down p-2" style='font-size:24px'></i>
-            </button>
+            </button> -->
             <button type="submit" class="">
               <svg class="h-4 w-4 fill-current " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
                 <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
               </svg>
             </button>
-            <div v-if="searchDropdown" class="absolute flex flex-col bg-blue-500 right-0 text-white mt-8 w-24 z-10">
+            <!-- <div v-if="searchDropdown" class="absolute flex flex-col bg-blue-500 right-0 text-white mt-8 w-24 z-10">
               <a href="#" class="p-2">All</a>
               <hr class="mx-2">
               <a href="#" class="p-2">by Tag</a>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -82,6 +80,7 @@
 </template>
 
 <script>
+import axios from '../../helpers/axios'
 export default {
   name: 'TheNavbar',
   props: {
@@ -90,7 +89,8 @@ export default {
   data () {
     return {
       myDropdown: false,
-      searchDropdown: false
+      searchDropdown: false,
+      keyword: ''
     }
   },
   methods: {

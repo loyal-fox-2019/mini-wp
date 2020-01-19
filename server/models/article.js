@@ -12,8 +12,7 @@ const articleSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: [true, 'Author must be filled out']
+    ref: 'User'
   },
   featured_image: {
     type: String,

@@ -13,6 +13,7 @@ const upload = multer({
 })
 
 router.get('/', ArticleController.findAllArticles)
+// router.get('/search', ArticleController.findAllArticles)
 router.get('/:articleId', ArticleController.findOneArticle)
 
 router.use(authentication)
