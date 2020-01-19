@@ -31,7 +31,9 @@ class articleController {
     static create(req, res, next) {
         Article.create({
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            featured_image: req.body.featured_image,
+            author: req.user._id
         })
             .then((article) => {
                 res.status(201).json(article)
