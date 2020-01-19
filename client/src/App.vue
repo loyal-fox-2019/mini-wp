@@ -1,7 +1,7 @@
 <template>
     <div>
-        <login-page-component v-if="!isLogin"></login-page-component>
-        <home-page-component v-if="isLogin" :token="token"></home-page-component>
+        <login-page-component v-if="!isLogin"/>
+        <home-page-component v-if="isLogin" :token="token"/>
     </div>
 </template>
 
@@ -11,7 +11,7 @@
 
     export default {
         name: "app",
-        data(){
+        data() {
             return {
                 isLogin: false,
                 token: null
@@ -22,7 +22,7 @@
             homePageComponent
         },
         created() {
-            if (localStorage.token){
+            if (localStorage.token) {
                 this.isLogin = true;
                 this.token = localStorage.token;
             }

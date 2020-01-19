@@ -50,9 +50,17 @@
                     }
                 }).then(({data}) => {
                     console.log(data.message);
-                    this.$emit('clicked')
+                    this.$emit('clicked');
+                    this.$toast.success({
+                        title: 'Delete data',
+                        message: data.message
+                    });
                 }).catch(err => {
-                    console.log(err);
+                    console.log({err});
+                    this.$toast.error({
+                        title: 'Error deleting Data',
+                        message: err.response.data.message
+                    });
                 })
             },
             showContent: function (isEdit) {

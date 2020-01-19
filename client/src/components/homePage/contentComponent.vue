@@ -77,9 +77,17 @@
         computed: {
             editIcon: function () {
                 if (this.editVisibility) {
-                    return "check icon"
+                    this.$toast.info({
+                        title: 'Edit Mode',
+                        message: 'This is article edit mode'
+                    });
+                    return "check icon";
                 }
-                return "pencil icon"
+                this.$toast.info({
+                    title: 'View Mode',
+                    message: 'This is article view mode'
+                });
+                return "pencil icon";
             }
         },
         components: {

@@ -136,13 +136,17 @@
                     this.$emit('updateData');
                     this.$emit('dismiss');
                     console.log(data);
+                    this.$toast.success({
+                        title: 'Success Updating Data',
+                        message: 'Data successfully updated'
+                    });
                 }).catch(err => {
-                    console.log(err)
+                    console.log({err});
+                    this.$toast.error({
+                        title: 'Error Saving Data',
+                        message: err.response.data.message
+                    });
                 });
-                this.visible = true;
-                setTimeout(() => {
-                    this.visible = false;
-                }, 2000);
             },
             handleFileUpload: function () {
                 this.featured_image = this.$refs.featured_image.files[0];

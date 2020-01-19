@@ -1,9 +1,5 @@
 <template>
     <form class="ui form login" @submit.prevent="login">
-        <p>
-            <message-component :header="header" :content="content" :visible="visible">
-            </message-component>
-        </p>
         <h1>Sign In</h1>
         <p></p>
         <div class="field">
@@ -42,14 +38,10 @@
 </template>
 
 <script>
-    import messageComponent from "../messageComponent";
     import {instance} from "../../config/axiosConfig";
 
     export default {
         name: "loginFormComponent",
-        components: {
-            messageComponent,
-        },
         data() {
             return {
                 email: null,
@@ -59,7 +51,6 @@
                 },
                 header: null,
                 content: null,
-                visible: false
             }
         },
         methods: {
@@ -72,15 +63,14 @@
                         password: this.password
                     }
                 }).then(({data}) => {
-                    this.header = "Sign In Success";
-                    this.content = data.message;
                     localStorage.token = data.token;
                     location.reload();
                 }).catch(err => {
-                    this.header = "Sign In Error";
-                    this.content = err.response.data.message;
+                    this.$toast.error({
+                        title:'Error Sign In',
+                        message:err.response.data.message
+                    });
                 });
-                this.visible = true
             },
             onSignInSuccess: function (googleUser) {
                 let googleToken = googleUser.getAuthResponse().id_token;
@@ -96,26 +86,18 @@
                         location.reload();
                     }
                 }).catch(err => {
-                    this.header = "Sign In Error";
-                    this.content = err.response.data.message;
+                    this.$toast.error({
+                        title:'Error Sign In',
+                        message:err.response.data.message
+                    });
                 });
-                this.visible = true;
-
-                // let profile = googleUser.getBasicProfile();
-                // let email = profile.getEmail();
-                // let userName = email.split("@")[0];
-                // let id_token = googleUser.getAuthResponse().id_token;
-                // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-                // console.log('Name: ' + profile.getName());
-                // console.log('Image URL: ' + profile.getImageUrl());
             },
             onSignInError(error) {
                 // `error` contains any error occurred.
-                this.header = "Google Sign In Error";
-                this.content = error.error;
-            },
-            dismissHandler() {
-                this.visible = false
+                this.$toast.error({
+                    title:'Error Sign In',
+                    message:err.response.data.message
+                });
             }
         }
     }

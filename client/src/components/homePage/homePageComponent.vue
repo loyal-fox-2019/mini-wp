@@ -34,7 +34,12 @@
                     }
                 }).then(({data}) => {
                     if (data) {
-                        this.name = data.name;
+                        console.log(data);
+                        this.name = data.details.name;
+                        this.$toast.success({
+                            title:'Success Sign In',
+                            message:'Welcome back ' + data.details.name + " :)"
+                        });
                     } else {
                         localStorage.clear();
                         location.reload();

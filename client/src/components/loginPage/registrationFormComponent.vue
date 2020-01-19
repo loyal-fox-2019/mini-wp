@@ -1,8 +1,5 @@
 <template>
     <sui-form @submit.prevent="registration">
-        <p>
-            <message-component :header="header" :content="content" :visible="visible"></message-component>
-        </p>
         <h1>Sign Up</h1>
         <p></p>
         <sui-form-field>
@@ -53,13 +50,12 @@
 </template>
 
 <script>
-    import messageComponent from "../messageComponent";
     import {instance} from "../../config/axiosConfig";
 
     export default {
         name: "registrationForm",
         data() {
-            return{
+            return {
                 header: null,
                 content: null,
                 name: null,
@@ -68,11 +64,8 @@
                 visible: false
             }
         },
-        components: {
-            messageComponent
-        },
         methods: {
-            registration: function(){
+            registration: function () {
                 instance({
                     method: 'post',
                     url: '/authors',
@@ -83,16 +76,21 @@
                     }
                 }).then(({data}) => {
                     console.log(data);
-                    this.header = "Sign Up Success";
-                    this.content = data.message;
+                    this.$toast.success({
+                        title: 'Success Sign Up',
+                        message: data.message,
+                        position: 'top left'
+                    });
                     localStorage.token = data.token;
                     location.reload();
                 }).catch(err => {
                     console.log(err);
-                    this.header = "Sign Up Error";
-                    this.content = err.response.data.message;
+                    this.$toast.error({
+                        title: 'Error Sign Up',
+                        message: err.response.data.message,
+                        position: 'top left'
+                    });
                 });
-                this.visible = true
             }
         }
 

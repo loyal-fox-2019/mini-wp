@@ -1,8 +1,5 @@
 <template>
     <div>
-        <message-component :header="header"
-                           :content="contentMsg"
-                           :visible="visible" />
         <form class="w-100" @submit.prevent="submitArticle" action="" enctype="multipart/form-data">
             <label for="article-title">Title : </label>
             <sui-label color="teal" basic>10 - 100 character</sui-label>
@@ -66,7 +63,6 @@
 
 <script>
     import {instance} from "../../config/axiosConfig";
-    import messageComponent from "../messageComponent";
 
     export default {
         name: "inputArticleComponent",
@@ -122,18 +118,18 @@
                     }
                 }).then(({data}) => {
                     this.$emit('clicked');
-                    this.header = "Success Saving Data";
-                    this.contentMsg = "Data successfully saved";
                     console.log(data);
+                    this.$toast.success({
+                        title: 'Success Saving Data',
+                        message: 'Data successfully saved'
+                    });
                 }).catch(err => {
-                    this.header = "Error Saving Data";
-                    this.contentMsg = "Data failed to save";
-                    console.log(err)
+                    console.log({err})
+                    this.$toast.error({
+                        title: 'Error Saving Data',
+                        message: err.response.data.message
+                    });
                 });
-                this.visible = true;
-                setTimeout(() => {
-                    this.visible = false;
-                }, 2000);
             },
             handleFileUpload: function () {
                 this.featured_image = this.$refs.featured_image.files[0];
@@ -141,7 +137,6 @@
         },
         components: {
             LocalQuillEditor: VueQuillEditor.quillEditor,
-            messageComponent
         }
     }
 </script>
