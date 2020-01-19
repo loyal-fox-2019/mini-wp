@@ -1,7 +1,9 @@
 export default {
     data() {
         return {
-            isLogin: false
+            isLogin: false,
+            allArticles: [],
+            myArticles: []
         }
     },
     mounted() {
@@ -17,7 +19,14 @@ export default {
             set: function (v) {
                 this.isLogin = v
             }
-
+        },
+        Articles: {
+            get: function () {
+                return allArticles
+            },
+            set: function (v) {
+                this.allArticles = v
+            }
         }
     }
 }

@@ -1,12 +1,12 @@
 <template>
   <div>
     <div>
-      <b-navbar toggleable="sm" type="dark" variant="light" style="border-bottom: 3px double black">
+      <b-navbar toggleable="sm" type="light" variant="dark" style="border-bottom: 3px double black">
         <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
         <b-navbar-brand>
           <b-link to="/" class="text-dark border-info">
-            <b-button variant="outline-dark" class="ml-3">Slim WP</b-button>
+            <b-button variant="outline-light" class="ml-3">Slim WP <i class="book icon"></i></b-button>
           </b-link>
         </b-navbar-brand>
 
@@ -19,7 +19,12 @@
             <b-navbar-nav v-show="!this.$root.nowLogin">
               <b-nav-text>
                 <b-link to="/login" class="text-dark border-info">
-                  <b-button variant="outline-dark">Login/Register</b-button>
+                  <sui-button animated inverted>
+                    <sui-button-content visible color="black" inverted>Sign in/up</sui-button-content>
+                    <sui-button-content hidden>
+                      <sui-icon name="right arrow" />
+                    </sui-button-content>
+                  </sui-button>
                 </b-link>
               </b-nav-text>
             </b-navbar-nav>
@@ -27,17 +32,21 @@
           <b-collapse id="nav-text-collapse" is-nav v-show="this.$root.nowLogin">
             <b-navbar-nav>
               <b-nav-text>
-                <b-link
-                  to="/user"
-                  v-if="this.$root.nowLogin"
-                  class="text-dark border-warning"
-                ><b-button variant="outline-primary">My Article</b-button></b-link>
+                <b-link to="/user" v-if="this.$root.nowLogin" class="text-dark border-warning">
+                  <b-button variant="outline-primary">
+                    My Article
+                    <b-icon-person variant="dark"></b-icon-person>
+                  </b-button>
+                </b-link>
                 <b-button
                   @click.prevent="logout"
                   v-if="this.$root.nowLogin"
                   class="border-info ml-4 mr-5"
                   variant="outline-danger"
-                >Logout</b-button>
+                >
+                  Logout
+                  <i class="sign-out icon"></i>
+                </b-button>
               </b-nav-text>
             </b-navbar-nav>
           </b-collapse>

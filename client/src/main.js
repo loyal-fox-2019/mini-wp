@@ -11,13 +11,14 @@ import router from './config/router'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import 'semantic-ui-css/semantic.min.css';
 
 
 Vue.use(VueSweetalert2);
+Vue.use(SuiVue)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueAxios, axios)
-Vue.use(SuiVue)
 
 new Vue({
     mixins: [mixin],
