@@ -30,6 +30,7 @@ class ThirdAPIController {
             username: payload.name,
             email: payload.email,
             password: randomPassword(),
+            platform: 'google',
           })
         }
       })

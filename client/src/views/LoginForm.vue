@@ -55,16 +55,11 @@
             <hr style="border: 0.1rem solid white;" />
           </div>
         </div>
-        <!-- <b-button squared block>Continue with google</b-button> -->
         <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" class="btn btn-light btn-block rounded-0"><span class="fab fa-google"></span> Continue with google</GoogleLogin>
         <b-button squared block variant="primary"><span class="fab fa-twitter"></span> Continue with Twitter</b-button>
         <b-button squared block variant="dark"><span class="fab fa-github"></span> Continue with Github</b-button>
-        <!-- <GoogleLogin
-          :params="params"
-          :renderParams="renderParams"
-          :onSuccess="onSuccess"
-          :onFailure="onFailure"
-        ></GoogleLogin> -->
+        <b-button squared block variant="info" @click="testSwal">Test Swal</b-button>
+        <b-button squared block variant="warning" @click="$emit('updateUserStatus', { username: 'testing' })">Testing emit</b-button>
       </div>
     </div>
   </div>
@@ -97,14 +92,46 @@ export default {
   },
   methods: {
     onSuccess(googleUser) {
-      console.log(googleUser)
-      console.log(googleUser.getBasicProfile())
+      this.$swal.fire({
+        title: 'Login...',
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
+
+      const googleToken = googleUser.getAuthResponse().id_token
+
+      api.post('/third-api/login-google', { googleToken })
+        .then(({ data }) => {
+          this.$swal.fire({
+            title: 'Login success',
+            timer: 1500,
+            icon: 'success',
+            showConfirmButton: false
+          })
+
+          this.$emit('updateUserStatus', {
+            token: data.token,
+            username: data.username,
+            type: 'login'
+          })
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
     },
     onFailure(err) {
-      console.log(err)
+      this.$bvToast.toast('Failed to continue with google account', {
+        title: 'Error happened',
+        autoHideDelay: 3000,
+        appendToast: true,
+        solid: true,
+        variant: 'danger'
+      })
     },
     login() {
-      console.log('ke panggil pak eko')
       api.get('/random-path')
         .then(({ data }) => {
           console.log(data)
@@ -113,6 +140,15 @@ export default {
           const self = this
           errorHandler(err, self)
         })
+    },
+    testSwal() {
+      this.$swal.fire({
+        title: 'Loading...',
+        timer: 5000,
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
     }
   },
 }

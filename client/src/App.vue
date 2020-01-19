@@ -1,9 +1,9 @@
 <template>
   <div class="background-home">
     <div class="dark-cover">
-      <Navbar></Navbar>
+      <Navbar :username="username" @updateUserStatus="updateUserSession"></Navbar>
       <transition name="fade" mode="out-in">
-        <router-view class="custom-router-view"></router-view>
+        <router-view class="custom-router-view" @updateUserStatus="updateUserSession"></router-view>
       </transition>
     </div>
   </div>
@@ -16,12 +16,29 @@ export default {
   name: 'App',
   data() {
     return {
-      message: 'Hello world',
+      username: '',
     }
   },
   components: {
     Navbar,
   },
+  methods: {
+    updateUserSession(payload) {
+      if (payload.type === 'login') {
+        localStorage.setItem('token', payload.token)
+        localStorage.setItem('username', payload.username)
+        this.username = payload.username
+      } else {
+        localStorage.clear()
+        this.username = ''
+      }
+    }
+  },
+  created() {
+    if (localStorage.getItem('token')) {
+      this.username = localStorage.getItem('username')
+    }
+  }
 }
 </script>
 
