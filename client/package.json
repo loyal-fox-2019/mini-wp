@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind-build": "npx tailwind build ./src/css/prebuild-tailwind.css -o ./src/css/tailwind.css"
+    "tailwind-build": "npx tailwind build ./src/css/prebuild-tailwind.css -o ./src/css/tailwind.css",
+    "dev": "parcel index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@johmun/vue-tags-input": "^2.1.0",
     "axios": "^0.19.1",
     "babel-polyfill": "^6.26.0",
     "s": "^1.0.0",

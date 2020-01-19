@@ -25,7 +25,6 @@ export default {
 
    methods: {
       submitFormLogin: async function() {
-         console.log(axios)
          try {
             const {data} = await axios.post('/author/login', {
                email: this.email,
@@ -52,7 +51,7 @@ export default {
                icon: 'error',
                title: 'Login has failed',
                text: error.response.data.message,
-               showConfirmButton: false,
+               showConfirmButton: true,
                timer: 2300
             })
          }

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ArticleList from '../views/articleList.vue'
+import ArticleWrite from '../views/articleWrite.vue'
+import ArticleUpdate from '../views/articleUpdate.vue'
 import Auth from '../views/auth.vue'
 import Swal from 'sweetalert2'
 
@@ -16,6 +18,16 @@ const routes = [
       path: '/register',
       name: 'register',
       component: Auth
+   },
+   {
+      path: '/write',
+      name: 'articleWrite',
+      component: ArticleWrite
+   },
+   {
+      path: '/update',
+      name: 'articleUpdate',
+      component: ArticleUpdate
    },
    {
       path: '/',
