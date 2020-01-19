@@ -1,7 +1,12 @@
 <template>
 
-    <div>
-            <div class="container" style="border: solid 1px black; width: 30vw; height: 80vh;border-radius: 10px;">
+    <div class="gradient">
+            <div class="container" style="border: solid 1px #C98BB9; width: 30vw; height: 80vh;border-radius: 10px;">
+                    <div class="row justify-content-center" style="margin-top: 20%;">
+                         <div class="col-md-4">
+                             <h3>Log In</h3>
+                         </div>
+                    </div>
                     <div class="row justify-content-center" id="email">
                         <div class="col-md-3" style="text-align: left;">Email</div>
                         <div class="col-md-6">
@@ -66,7 +71,7 @@ export default {
             // console.log('masuk login')
             axios({
                 method: 'post',
-                url: 'http://34.87.21.93:3000/users/login',
+                url: 'http://35.240.241.144:3000/users/login',
                 data:{
                 email: this.email,
                 password: this.password
@@ -90,7 +95,7 @@ export default {
             const profile = googleUser.getBasicProfile();
             const id_token = googleUser.getAuthResponse().id_token;
             // console.log(id_token)
-            axios.post('http://34.87.21.93:3000/gsignin',{
+            axios.post('http://35.240.241.144:3000/gsignin',{
                 data: {
                     id_token
                 }
@@ -108,11 +113,12 @@ export default {
 </script>
 
 <style>
-.container{
-    margin-top: 10vh
+.gradient {
+  height: 100vh;
+  padding-top: 10vh;
 }
 #email{
-    margin-top: 40%;
+    margin-top: 15%;
 }
 .row{
     margin-bottom: 15px;

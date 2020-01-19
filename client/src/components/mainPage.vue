@@ -14,7 +14,8 @@
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto justify-content-right ">
-                        <GoogleLogin :params="params" :logoutButton=true>Logout</GoogleLogin>
+                        <button type="button" class="btn btn-outline-secondary" v-on:click="signOut">Sign Out</button>
+                        <!-- <GoogleLogin :params="params" :logoutButton=true >Logout</GoogleLogin> -->
                         <a class="nav-link" href="#"><i class="fas fa-user-friends" style="color: white;"></i></a><a class="nav-link" href="#"><i class="far fa-comments" style="color: white;"></i></a>
                       </ul>
                   </div>
@@ -36,9 +37,9 @@
                         </div>
                     </div>
                     <div class="col-sm-9">
-                        <div class="container">
-                            <div class="row justify-content-between" id="publish">
-                                <div class="input-group mb-3">
+                        <div class="container" style="margin-top: 0;">
+                            <div class="row justify-content-center" id="publish" style="border-radius: 10px;">
+                                <div class="input-group mb-3" style="padding-top: 1%; height: 35px; width: 70vw">
                                     <input v-model="titleSearch" type="text" class="form-control" placeholder="Article's Title" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                     <div class="input-group-append">
                                       <button class="input-group-text" id="basic-addon2" v-on:click="searchArticle">search</button>
@@ -50,8 +51,9 @@
                                     <p>Title</p>
                                     <input type="text" v-model="articleTitle">
                                     <p>Content</p>
-                                    <froala :tag="'textarea'" :config="config" v-model="articleContent"></froala>
-                                    <input type="file" name="file" v-on:change="uploadPicture"/>
+                                    <wysiwyg v-model="articleContent" />
+                                    <!-- <froala :tag="'textarea'" :config="config" v-model="articleContent"></froala> -->
+                                    <input type="file" name="file" v-on:change="uploadPicture" style="margin-top: 100px;"/>
                                   </form>
                                 <p>
                                     <button type="button" class="btn btn-danger" v-on:click="publishArticle">Publish</button>
@@ -64,7 +66,8 @@
                                     <p>Content</p>
                                     <div>
                                         <div class="fr-view" >
-                                            <froala :tag="'textarea'" :config="config" v-model="articleContent"></froala>
+                                            <wysiwyg v-model="articleContent" />
+                                            <!-- <froala :tag="'textarea'" :config="config" v-model="articleContent"></froala> -->
                                         </div>
                                     </div>
                                     <input type="file" name="file" v-on:change="uploadPicture"/>
@@ -128,13 +131,14 @@ export default {
             contentPlace: '',
             articleId: '',
             picture: '',
-            listArticles: '',
+            listArticles: [],
             showArticles: false,
             searchedList: []
         }
     },
     methods:{
         signOut(){
+            console.log('logout')
             localStorage.removeItem('token')
             var auth2 = gapi.auth2.getAuthInstance();
             auth2.signOut().then(function () {
@@ -190,7 +194,7 @@ export default {
             this.formWrite = false
             axios({
                 method: 'post',
-                url: 'http://34.87.21.93:3000/articles',
+                url: 'http://35.240.241.144:3000/articles',
                 data: formData,
                 headers:{
                 token: localStorage.getItem('token')
@@ -199,7 +203,7 @@ export default {
             .then(({data})=>{
                 // console.log(data, 'result dari publish article')
                 list.push({
-                id: data._id,
+                _id: data._id,
                 title:data.title,
                 content:data.content,
                 created_at: data.created_at,
@@ -220,18 +224,18 @@ export default {
             formData.append('picture', this.picture)
             axios({
                 method: 'patch',
-                url: `http://34.87.21.93:3000/articles/${id}`,
+                url: `http://35.240.241.144:3000/articles/${id}`,
                 data: formData,
                 headers:{
                 token: localStorage.getItem('token')
                 }
             })
             .then(({data})=>{
-                // console.log(data,'di update()')
+                console.log(data,'di update()')
                 this.formUpdate=false
                 return axios({
                 method:'get',
-                url: 'http://34.87.21.93:3000/articles',
+                url: 'http://35.240.241.144:3000/articles',
                 headers:{
                     token: localStorage.getItem('token')
                 }
@@ -249,16 +253,16 @@ export default {
             console.log('delete article id', id)
             axios({
                 method: 'delete',
-                url: `http://34.87.21.93:3000/articles/${id}`,
+                url: `http://35.240.241.144:3000/articles/${id}`,
                 headers:{
                     token: localStorage.getItem('token')
                 }
             })
             .then(({data})=>{
-                // console.log(data)
+                console.log(data)
                 return axios({
                 method: 'get',
-                url: 'http://34.87.21.93:3000/articles',
+                url: 'http://35.240.241.144:3000/articles',
                 headers:{
                     token: localStorage.getItem('token')
                 }
@@ -279,13 +283,13 @@ export default {
             this.searchedList = []
             axios({
                 method: 'get',
-                url: `http://34.87.21.93:3000/articles/${id}`,
+                url: `http://35.240.241.144:3000/articles/${id}`,
                 headers:{
                 token: localStorage.getItem('token')
                 }
             })
             .then(({data})=>{
-                // console.log(data, 'data di updateArticle')
+                console.log(data, 'data di updateArticle')
                 this.titlePlace = data.result.title
                 this.contentPlace = data.result.content
                 this.created = data.result.created_at

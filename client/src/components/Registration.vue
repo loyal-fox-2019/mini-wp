@@ -1,7 +1,12 @@
 <template>
 
-    <div>
-            <div class="container" style="border: solid 1px black; width: 30vw; height: 80vh;border-radius: 10px;">
+    <div style="padding-top: 5%;">
+            <div class="container" style="border: solid 1px #C98BB9; width: 30vw; height: 80vh;border-radius: 10px;">
+                <div class="row justify-content-center" style="margin-top: 20%;">
+                         <div class="col-md-4">
+                             <h3>Register</h3>
+                         </div>
+                    </div>
                 <form method="post" enctype="multipart/form-data">
                     <div class="row justify-content-center" id="username">
                         <div class="col-md-3" style="text-align: left;" >Username</div>
@@ -89,7 +94,7 @@ export default {
             formData.append('picture', this.picture)
             axios({
                 method: 'post',
-                url: 'http://34.87.21.93:3000/users/register',
+                url: 'http://35.240.241.144:3000/users/register',
                 data: formData
             })
             .then(({data})=>{
@@ -109,7 +114,7 @@ export default {
         onSuccess(googleUser){
             const profile = googleUser.getBasicProfile();
             const id_token = googleUser.getAuthResponse().id_token;
-            axios.post('http://34.87.21.93:3000/gsignin',{
+            axios.post('http://35.240.241.144:3000/gsignin',{
                 data: {
                     id_token
                 }

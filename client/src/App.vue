@@ -45,13 +45,14 @@ export default {
         getArticles(token){
             axios({
                 method:'get',
-                url: 'http://localhost:3000/articles',
+                url: 'http://35.240.241.144:3000/articles',
                 headers:{
                     token: token
                 }
             })
             .then(({data})=>{
                 // console.log('masuk created', data.result)
+                this.loginform = false
                 this.allArticles = data.result
             })
             .catch(err=>{
