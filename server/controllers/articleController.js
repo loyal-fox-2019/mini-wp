@@ -80,7 +80,7 @@ class ArticleController{
             content: req.body.content,
             created_at: req.body.created_at,
             picture: req.body.picture
-        })
+        }).populate('author', '-password')
         .then(result=>{
             res.json({
                 result
