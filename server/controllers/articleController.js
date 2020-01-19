@@ -2,7 +2,8 @@ const Article = require('../models/article')
 
 class ArticleController {
     static getAll(req, res, next){
-        Article.find()
+        console.log('Masuk gan')
+        Article.find({user_id: req.loggedIn.id})
             .then(results => {
                 res.status(200).json(results)
             })
@@ -21,7 +22,7 @@ class ArticleController {
             author: req.loggedIn.name,
             description: req.body.description,
             content: req.body.content,
-            image: req.body.image,
+            featured_image: req.body.featured_image,
             user_id: req.loggedIn.id,
             created_at: new Date()
         }

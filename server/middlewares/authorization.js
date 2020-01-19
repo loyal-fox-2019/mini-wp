@@ -1,21 +1,22 @@
 const Article = require('../models/user')
 
 module.exports = (err, req, res, next) => {
-    let id = req.loggedIn._id
+    let id = req.loggedIn.id
+    console.log(id)
     try {
-        Article.findOne({user_id: id})
+        Article.findById(req.params.id)
             .then(result => {
-                if(result){
+                if(result.user_id == id){
                     next()
                 }else{
                     throw new Error('Not authorized')
                 }
             })
     }
-    catch(err) {
+    catch{
         res.status(403).json({
             message: 'Not authorized',
-            error: err
+            err
         })
     }
         

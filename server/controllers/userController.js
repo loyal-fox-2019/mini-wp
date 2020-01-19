@@ -9,11 +9,9 @@ class UserController {
             email: req.body.email,
             password: req.body.password
         }
-        console.log('Register', data)
 
         User.create(data)
             .then(result => {
-                console.log('masuk',result)
                 res.status(201).json({
                     message: 'User Created',
                     data: {
@@ -23,7 +21,6 @@ class UserController {
                 })
             })
             .catch(err => {
-                console.log('masuk',err)
                 res.status(400).json(err)
             })
     }
@@ -33,7 +30,6 @@ class UserController {
             email: req.body.email,
             password: req.body.password
         }
-
         User.findOne({email: data.email})
             .then(result => {
                 if(!result){

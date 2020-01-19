@@ -7,7 +7,7 @@ const articleSchema = new Schema({
         required: true
     },
     author: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User'
     },
     description: {
@@ -19,6 +19,9 @@ const articleSchema = new Schema({
     },
     featured_image:{
         type: String,
+    },
+    user_id:{
+        type: Schema.Types.ObjectId
     },
     tags: {
         type: [String]
