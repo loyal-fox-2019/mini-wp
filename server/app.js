@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000
 const app = express()
 
 mongoose
-    .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true })
+    .connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
         console.log('Mini WP Connected to MongoDB')
     })

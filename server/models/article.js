@@ -10,12 +10,9 @@ const articleSchema = new Schema({
         type: String,
         required: true
     },
-    featured_image: {
+    thumbnail: {
         type: String,
     },
-    tags: [{
-        type: String
-    }],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -27,3 +24,5 @@ const articleSchema = new Schema({
 })
 
 const Article = mongoose.model('Article', articleSchema)
+
+module.exports = Article

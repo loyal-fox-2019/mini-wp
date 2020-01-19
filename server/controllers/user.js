@@ -22,7 +22,7 @@ class User {
     static login(req, res, next) {
         const err = {
             name: 'login failed',
-            message: 'Wrong Username/Password'
+            message: 'Wrong Email/Password'
         }
         Model.findOne({ email: req.body.email })
             .then(user => {
