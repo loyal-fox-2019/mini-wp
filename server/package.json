@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devWindows": "set NODE_ENV=development&& nodemon bin/server",
-    "dev": "NODE_ENV=development nodemon bin/server"
+    "dev": "NODE_ENV=development nodemon bin/server",
+    "prod": "set NODE_ENV=production&& nodemon bin/server"
   },
   "keywords": [],
   "author": "",
