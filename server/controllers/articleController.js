@@ -59,7 +59,7 @@ class ArticleController {
         let data = {
             title: req.body.title,
             content: req.body.content,
-            image: req.body.image
+            featured_image: req.body.featured_image
         }
         console.log(data)
         Article.updateOne({_id: id}, data)
