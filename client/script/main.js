@@ -4,24 +4,33 @@ const app = new Vue({
         id: "",
         title: "",
         content: "",
-        createdAt: new Date().toLocaleDateString(),
+        featured_image: "",
+        createdAt: new Date(),
         dataArticles: [],
-        search: "",
-        oneArticle: []
+        search: ""
     },
     created() {
         this.getArticle()
     },
     computed: {
         filterArticle() {
-            return this.dataArticles.filter(article => {
-                return article.title.toLowerCase().includes(this.search.toLowerCase())
-            })
+            if (this.search.length > 0) {
+                const regex = new RegExp(this.search, 'i')
+                const filterArticles = this.dataArticles.filter(article => {
+                    return regex.test(article.title)
+                })
+                return filterArticles
+            } else {
+                return this.dataArticles;
+            }
         }
     },
     methods: {
-        getArticle: function () {
-            axios.get('http://localhost:3000/articles')
+        getArticle() {
+            axios({
+                url: 'http://localhost:3000/articles',
+                method: "GET"
+            })
                 .then(({ data }) => {
                     this.dataArticles = data
                     this.emptyFormEdit()
@@ -29,30 +38,39 @@ const app = new Vue({
                     console.log(err)
                 });
         },
-        addArticle: function () {
-            axios.post('http://localhost:3000/articles', {
-                title: this.title,
-                content: this.content,
-                createdAt: this.createdAt
+        addArticle() {
+            let formData = new FormData()
+            formData.append('title', this.title)
+            formData.append('content', this.content)
+            formData.append('featured_image', this.featured_image)
+            axios({
+                url: 'http://localhost:3000/articles',
+                method: "POST",
+                data: formData
             })
                 .then(({ data }) => {
-                    this.dataArticles.push({
-                        _id: data._id,
-                        title: data.title,
-                        content: data.content,
-                        createdAt: data.createdAt
-                    })
+                    this.dataArticles.push(data)
                     this.title = ""
                     this.content = ""
+                    this.featured_image = ""
                 }).catch((err) => {
                     console.log(err)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: err.message
+                    })
                 });
         },
-        updateArticle: function (id) {
-            console.log(id)
-            axios.patch(`http://localhost:3000/articles/${id}`, {
-                title: this.title,
-                content: this.content
+        updateArticle(id) {
+            axios({
+                url: `http://localhost:3000/articles/${id}`,
+                method: "PATCH",
+                data: {
+                    title: this.title,
+                    content: this.content,
+                    featured_image: this.featured_image
+                }
             })
                 .then(() => {
                     this.getArticle()
@@ -60,28 +78,42 @@ const app = new Vue({
                     console.log(err)
                 });
         },
-        deleteArticle: function (id) {
-            axios.delete(`http://localhost:3000/articles/${id}`)
+        deleteArticle(id) {
+            axios({
+                url: `http://localhost:3000/articles/${id}`,
+                method: "DELETE"
+            })
                 .then(() => {
                     this.getArticle()
                 }).catch((err) => {
                     console.log(err)
                 });
         },
-        findArticle: function (id) {
-            axios.get(`http://localhost:3000/articles/${id}`)
+        findArticle(id) {
+            axios({
+                url: `http://localhost:3000/articles/${id}`,
+                method: "GET"
+            })
                 .then(({ data }) => {
                     this.id = data._id
                     this.title = data.title
                     this.content = data.content
+                    this.featured_image = data.featured_image
                 }).catch((err) => {
                     console.log(err)
                 });
         },
-        emptyFormEdit: function () {
+        emptyFormEdit() {
             this.id = ""
             this.title = ""
             this.content = ""
+            this.featured_image = ""
+        },
+        formatDate(date) {
+            return moment(date).format('MMMM Do YYYY, h:mm:ss a')
+        },
+        handleFileUpload(event) {
+            this.featured_image = event.target.files[0]
         }
     }
 })
