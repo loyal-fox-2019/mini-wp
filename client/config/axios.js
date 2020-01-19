@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    baseURL: 'http://35.224.129.40:3000'
+    baseURL: 'http://miniwp-server.japhendywijaya.xyz:3000'
 })
 
 
