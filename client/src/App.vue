@@ -10,7 +10,7 @@
     <div class="nav-margin"></div>
     <main-page v-if="!login && !detailArticle && !addArticle" @show-detail="showDetail"></main-page>
     <login-page v-if="login && !detailArticle && !addArticle" @set-login="setLogin"></login-page>
-    <article-page v-if="!login && detailArticle && !addArticle" :detail="article"></article-page>
+    <article-page v-if="!login && detailArticle && !addArticle" :detail="article" @show-home="showHome"></article-page>
     <add-article v-if="!login && !detailArticle && addArticle" @show-home="showHome"></add-article>
   </div>
 </template>
