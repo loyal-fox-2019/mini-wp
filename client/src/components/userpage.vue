@@ -94,7 +94,7 @@ export default {
         register: true,
         param: {
           client_id:
-            "885358018440-gprtot1dl0975m0ertfs9q5g8ghgpe93.apps.googleusercontent.com"
+            "885358018440-0fj5gvljqvjmvp4qa5jrd5vs9niitmth.apps.googleusercontent.com"
         }
       },
       show: true,
