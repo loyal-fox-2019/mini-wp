@@ -60,6 +60,12 @@ function redirectToAllArticles(next) {
   } else next()
 }
 
+function redirectToLandingPage(next) {
+  if (!!!localStorage.getItem('token')) {
+    next('/')
+  } else next()
+}
+
 const router = new VueRouter({
   routes,
 })
@@ -76,6 +82,26 @@ router.beforeEach((to, from ,next) => {
 
     case '/register':
       redirectToAllArticles(next)
+      break
+
+    case '/user':
+      redirectToLandingPage(next)
+      break
+
+    case '/user/all-articles':
+      redirectToLandingPage(next)
+      break
+
+    case '/user/published-articles':
+      redirectToAllArticles(next)
+      break
+
+    case '/user/draft-articles':
+      redirectToLandingPage(next)
+      break
+
+    case '/user/add-article':
+      redirectToLandingPage(next)
       break
 
     default:
