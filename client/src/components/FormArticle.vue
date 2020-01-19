@@ -23,7 +23,9 @@
       drop-placeholder="Drop file here..."
     ></b-form-file>
     <b-form-tags v-model="value" class="mb-2"></b-form-tags>
-    <button @click.prevent="save" class="btn btn-success btn-lg btn-block mb-4"><i class="upload icon"></i> Create</button>
+    <button @click.prevent="save" class="btn btn-success btn-lg btn-block mb-4">
+      <i class="upload icon"></i> Create
+    </button>
   </div>
 </template>
 <script>
@@ -39,6 +41,14 @@ export default {
   },
   methods: {
     save() {
+      this.$swal.fire({
+        icon: "info",
+        title: "Your work on process..",
+        text: "In will take a little time, please wait...",
+        showConfirmButton: false,
+        timer: 5000
+      });
+
       let isi = this.quill.root.innerHTML;
       const formData = new FormData();
       formData.append("image", this.image);
@@ -58,17 +68,16 @@ export default {
           (this.title = ""), (this.image = null);
           this.quill.root.innerHTML = "";
           this.$swal.fire({
-            position: "top-end",
             icon: "success",
             title: "Your work has been saved",
             showConfirmButton: false,
             timer: 1500
           });
-          this.$root.myArticles.push(data)
+          this.$root.myArticles.push(data);
         })
         .catch(function(error) {
-          console.log(error);
-          this.$swal.fire(error);
+          console.log(error.response);
+          this.$swal.fire(error.response.data.message);
         });
     },
     quillInit() {
@@ -82,5 +91,5 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 </style>

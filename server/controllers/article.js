@@ -19,27 +19,48 @@ class Controller {
     }
 
     static createArticle(req, res, next) {
-        console.log(req.body);
+        let gambar;
+        (async () => {
+            gambar = await Controller.getRandomPicture()
+            req.body.image = gambar.data.urls.regular
+            console.log(req.body.image, 'ini dapat');
+        })()
 
         let createInput = {}
         createInput.creator = req.decoded.id
         for (const request in req.body) {
             if (req.body[request]) createInput[request] = req.body[request]
         }
-        if (createInput.tags) createInput.tags = createInput.tags.split(',')
-        console.log(createInput, 'sebelum');
-        if (createInput.image === null) createInput.image = this.getRandomPicture
-        console.log(createInput, 'sesudah');
 
-        Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId() }, createInput, {
-            upsert: true,
-            setDefaultsOnInsert: true,
-            new: true,
-            runValidators: true
-        }).populate('creator', 'name')
-            .then((article) => {
-                res.status(201).json(article)
-            }).catch(next);
+        if (createInput.tags) createInput.tags = createInput.tags.split(',') // split tag
+        setTimeout(function () {
+            if (createInput.image == 'null') createInput.image = gambar.data.urls.regular
+            console.log(createInput, 'ini hasil')
+            Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId() }, createInput, {
+                upsert: true,
+                setDefaultsOnInsert: true,
+                new: true,
+                runValidators: true
+            }).populate('creator', 'name')
+                .then((article) => {
+                    console.log(article);
+                    res.status(201).json(article)
+                }).catch(next);
+
+        }, 5000)
+    }
+
+    static async getRandomPicture() {
+        console.log('generate random picture here');
+        try {
+            return await axios.get('https://api.unsplash.com/photos/random', {
+                headers: {
+                    Authorization: 'Client-ID 49f8430fae1a40d4a0227e099c06a7b0228dabe4b7a88c0892ef1ef1ea104c97'
+                }
+            })
+        } catch (error) {
+            return error.message
+        }
     }
 
     static deleteArticle(req, res, next) {
@@ -68,15 +89,6 @@ class Controller {
             }).catch(next);
     }
 
-    static async getRandomPicture() {
-        console.log('generate random picture here');
-        let image_url = await axios.get('https://api.unsplash.com/photos/random', {
-            headers: {
-                Authorization: process.env.UNSPLASH_KEY
-            }
-        })
-        return image_url.urls.regular
-    }
 
 }
 
