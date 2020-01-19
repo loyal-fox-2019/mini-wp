@@ -46,6 +46,12 @@ class ArticleController
     {
         const data = _.pick(req.body,'title','content','slug');
         data.author = req.userInfo.id;
+        console.log(req.body)
+        if(req.body.file)
+        {
+            data.featured_image = req.body.file;
+        }
+        
         Article.create(data)
         .then((article) => {
             res.status(201).json(article);

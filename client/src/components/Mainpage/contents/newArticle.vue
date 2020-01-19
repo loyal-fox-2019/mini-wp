@@ -1,11 +1,14 @@
 <template>
     <div>
         <h1>New post</h1>
-            <input type="text" v-model="title" placeholder="Article title"><br>
-            <input type="text" v-model="slug" placeholder="Article slug">
-            <button id="save-btn" @click="saveArticle">Save article</button><br>
-            <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea><br>
-            <button id="save-btn" @click="saveArticle">Save article</button>
+            <form method="post" enctype="multipart/form-data" @submit.prevent="saveArticle">
+                <input type="text" v-model="title" placeholder="Article title"><br>
+                <input type="text" v-model="slug" placeholder="Article slug"><br>
+                Featured image: <input type="file" name="file" ref="file" @change="handleFile">
+                <button id="save-btn" type="submit">Save article</button><br>
+                <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea><br>
+                <button id="save-btn" type="submit">Save article</button>
+            </form>
 
             <!-- Quill editor -->
             <!-- <div class="editor"></div> -->
@@ -20,22 +23,26 @@
             return {
                 title: "",
                 slug: "",
-                content: ""
+                content: "",
+                file: ""
             }
         },
         methods: {
             saveArticle() {
+                let fd = new FormData();
+                fd.append('title',this.title);
+                fd.append('slug',this.slug);
+                fd.append('content',this.content);
+                fd.append('file',this.file);
+
                 axiosReq({
                     method: "POST",
                     url: "/api/articles",
                     headers: {
-                        token: this.$cookies.get('token')
+                        token: this.$cookies.get('token'),
+                        'content-type': 'multipart/form-data'
                     },
-                    data: {
-                        title: this.title,
-                        slug: this.slug,
-                        content: this.content
-                    }
+                    data: fd
                 })
                 .then(({data}) => {
                     console.log(data);
@@ -50,6 +57,10 @@
                     this.slug = "";
                     this.content = "";
                 })
+            },
+            handleFile() {
+                this.file = this.$refs.file.files[0];
+                console.log(this.file)
             }
         }
     }

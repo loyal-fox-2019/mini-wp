@@ -27,7 +27,19 @@
         watch: {
             id: {
                 handler(id) {
-                    this.getArticle(id);
+                    axiosReq({
+                        method: "GET",
+                        url: `/api/articles/${id}`
+                    })
+                    .then(({data}) => {
+                        this.title = data.title;
+                        this.slug = data.slug;
+                        this.content = data.content;
+                        this.author = data.author.username;
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
                 },
                 immediate: true
             }

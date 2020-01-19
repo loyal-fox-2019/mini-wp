@@ -7,11 +7,9 @@ const hashPassword = require("../helpers/bcrypt").hashPassword;
 const userSchema = new Schema({    
     username: {
         type: String,
-        required: [true,"Please enter a username"],
-        match: [ /\w+/ ,"Alphanumeric and underscore only"],
+        required: [true,"Please enter a username"],      
         validate: {
             validator: function(uname) {
-                let result = false;
                 User.findOne({
                     username: uname
                 })
@@ -19,21 +17,23 @@ const userSchema = new Schema({
                 .then((user) => {
                     if(user)
                     {
-                        result = false;
+                        return false;
                     }
-                    result = true;
+                    return true;
+                    
                 })
                 .catch((err) => {
-                    console.log(err);                    
+                    console.log(err);         
                 })
-                return result;
             },
             message: "Username not available"
         }
     },
     password: {
         type: String,
-        required: [true,"Please enter a password"]
+        required: function() {
+            return this.login_type == "standard";
+        }
     },
     login_type: {
         type: String
@@ -48,7 +48,11 @@ userSchema.pre('save',function(next) {
     {
         this.profile = `Hello, I am ${this.username}`;
     }
-    this.password = hashPassword(this.password);
+    if(this.login_type == "standard")
+    {
+        this.password = hashPassword(this.password);
+    }
+    
     next();
 })
 

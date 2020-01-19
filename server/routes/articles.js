@@ -5,6 +5,17 @@ const ArticleController = require("../controllers/articleController");
 const authorisation = require("../middlewares/authorisation").article_authorisation;
 const authentication = require("../middlewares/authentication");
 
+const gcsUpload = require("gcs-upload");
+const upload = gcsUpload({
+    limits: {
+      fileSize: 50e6 // in bytes
+    },
+    gcsConfig: {
+      keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+      bucketName: 'miniwp_k123'
+    }
+  })
+
 articlesRouter.get('/',(req,res,next) => {
     //res.send('Article list');
     ArticleController.showAllArticles(req,res,next);
@@ -17,7 +28,7 @@ articlesRouter.get('/:id',(req,res,next) => {
 
 articlesRouter.use('/',authentication)
 
-articlesRouter.post('/',(req,res,next) => {
+articlesRouter.post('/', upload.single('file'),(req,res,next) => {
     //res.send('add Article');
     ArticleController.addArticle(req,res,next);
 });

@@ -9,7 +9,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit" id="std-signin">Sign in</button>
         <div id="error-msg">{{error}}</div><br>
 
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+        <gsignin @isLogin="$emit('isLogin')"></gsignin><br>
 
         <a class="btn btn-block switch-signinup" @click="switchRegister">
             Sign up 
@@ -20,6 +20,7 @@
 
 <script>
     import axiosReq from "../../config/axiosReq";
+    import gsignin from "./gsignin";
     export default {
         name: "Login",
         data() {
@@ -55,6 +56,9 @@
                     this.error = "Wrong username/password";
                 })
             }
+        },
+        components: {
+            gsignin
         }
     }
 </script>
