@@ -37,6 +37,7 @@ export default {
   created() {
     if (localStorage.getItem('token')) {
       this.username = localStorage.getItem('username')
+      this.$router.push('/user/all-articles')
     }
   }
 }

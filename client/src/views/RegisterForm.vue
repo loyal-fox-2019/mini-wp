@@ -56,6 +56,7 @@
 <script>
 import api from '../api'
 import errorHandler from '../helpers/error-handler.js'
+import successLoginHandler from '../helpers/success-login-handler.js'
 
 export default {
   name: 'login-form',
@@ -81,21 +82,15 @@ export default {
         password: this.password
       })
         .then(({ data }) => {
-          this.$swal.fire({
-            title: 'Register success',
-            timer: 1500,
-            icon: 'success',
-            showConfirmButton: false
-          })
-
-          console.log(data)
+          const self = this
+          successLoginHandler(data, self)
         })
         .catch(err => {
           this.$swal.close()
           const self = this
           errorHandler(err, self)
         })
-    }
+    },
   }
 }
 </script>

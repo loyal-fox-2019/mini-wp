@@ -15,15 +15,11 @@
     </b-navbar-nav>
 
     <b-navbar-nav class="ml-auto" v-else>
-      <b-nav-item>
-        <b-link :to="{ path: '/login' }" class="text-decoration-none">
-          <span class="custom-color">Login</span>
-        </b-link>
+      <b-nav-item :to="{ path: '/login' }" class="text-decoration-none">
+        <span class="custom-color">Login</span>
       </b-nav-item>
-      <b-nav-item>
-        <b-link :to="{ path: '/register' }" class="text-decoration-none">
-          <span class="custom-color">Register</span>
-        </b-link>
+      <b-nav-item :to="{ path: '/register' }" class="text-decoration-none">
+        <span class="custom-color">Register</span>
       </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
@@ -42,6 +38,7 @@ export default {
         showConfirmButton: false
       })
       this.$emit('updateUserStatus', {})
+      this.$router.push('/')
     }
   }
 }

@@ -66,6 +66,7 @@
 <script>
 import api from '../api'
 import errorHandler from '../helpers/error-handler.js'
+import successLoginHandler from '../helpers/success-login-handler.js'
 import GoogleLogin from 'vue-google-login'
 
 export default {
@@ -101,18 +102,8 @@ export default {
 
       api.post('/third-api/login-google', { googleToken })
         .then(({ data }) => {
-          this.$swal.fire({
-            title: 'Login success',
-            timer: 1500,
-            icon: 'success',
-            showConfirmButton: false
-          })
-
-          this.$emit('updateUserStatus', {
-            token: data.token,
-            username: data.username,
-            type: 'login'
-          })
+          const self = this
+          successLoginHandler(data, self)
         })
         .catch(err => {
           this.$swal.close()
@@ -142,18 +133,8 @@ export default {
         password: this.password
       })
         .then(({ data }) => {
-          this.$swal.fire({
-            title: 'Login success',
-            timer: 1500,
-            icon: 'success',
-            showConfirmButton: false
-          })
-
-          this.$emit('updateUserStatus', {
-            token: data.token,
-            username: data.username,
-            type: 'login'
-          })
+          const self = this
+          successLoginHandler(data, self)
         })
         .catch(err => {
           this.$swal.close()
