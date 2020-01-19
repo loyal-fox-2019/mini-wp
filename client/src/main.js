@@ -4,8 +4,6 @@ import VueRouterMultiguard from 'vue-router-multiguard';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-
-import googleMixin from './mixins/googleMixin';
 import App from './App.vue';
 import LoginPage from './LoginPage.vue';
 import UserPage from './UserPage.vue';

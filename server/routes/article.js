@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router()
 const articleController = require('../controllers/article');
 const authorization = require('../middlewares/authorization');
-const gcsUpload = require('../helpers/gcs-upload');
+const gcsUpload = require('../middlewares/gcsUpload');
 
 router.get('/', articleController.getAllArticles);
 router.post('/', articleController.addArticle);
+router.post('/image', gcsUpload.single('file'), articleController.uploadImage);
 router.get('/tags/:tagName', articleController.getArticleByTagName);
 
 router.use('/:articleId', authorization);

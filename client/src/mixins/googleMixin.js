@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export default {
   onSuccess(googleUser) {
     // console.log('Logged in as: ' + googleUser.getBasicProfile().getName());

@@ -9,6 +9,11 @@ class Article {
       }).catch(next);
   }
 
+  static uploadImage(req, res, next) {
+    const filename = req.body.file;
+    res.status(200).json({filename});
+  }
+
   static addArticle(req, res, next) {
     const {title, content, featured_image, tags, status} = req.body;
 

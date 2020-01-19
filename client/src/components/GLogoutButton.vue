@@ -16,3 +16,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+span:hover {
+  background-color: black;
+}
+</style>
