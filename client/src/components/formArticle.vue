@@ -119,6 +119,11 @@ export default {
           })
           .catch(err => {
             this.isLoading = false
+            this.$swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: err.response.data.message
+            })
           })
       }
     },
