@@ -1,6 +1,6 @@
 <template>
   <b-navbar variant="faded" type="light" class="custom-navbar py-0 pl-0">
-    <b-navbar-brand :to="{ path: '/' }" class="d-flex align-items-center custom-color pr-2">
+    <b-navbar-brand :to="username ? { path: '/user/all-articles'} : { path: '/' }" class="d-flex align-items-center custom-color pr-2">
       <img src="../assets/icon2.png" height="50" width="50" />
       GG-WP
     </b-navbar-brand>

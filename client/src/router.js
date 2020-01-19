@@ -54,8 +54,34 @@ const routes = [
   }
 ]
 
+function redirectToAllArticles(next) {
+  if (localStorage.getItem('token')) {
+    next('/user/all-articles')
+  } else next()
+}
+
 const router = new VueRouter({
   routes,
+})
+
+router.beforeEach((to, from ,next) => {
+  switch (to.path) {
+    case '/':
+      redirectToAllArticles(next)
+      break
+
+    case '/login':
+      redirectToAllArticles(next)
+      break
+
+    case '/register':
+      redirectToAllArticles(next)
+      break
+
+    default:
+      next()
+      break
+  }
 })
 
 export default router
