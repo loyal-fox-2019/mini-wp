@@ -3,9 +3,11 @@ const User = require('../models/user')
 
 class ArticleController{
     static findAll(req,res,next){
-        Article.find().populate('author', '-password')
+        // console.log('masuk ga', req.payload._id)
+        Article.find({author: req.payload._id}).populate('author', '-password')
         .then(result=>{
             if(result){
+                // console.log(result,'find all ==========================')
                 res.json({
                     result
                 })
@@ -22,7 +24,7 @@ class ArticleController{
         })
     }
     static create(req,res,next){
-        console.log(req.payload, 'controller create')
+        // console.log(req.payload, 'controller create')
         User.findOne({
             email: req.payload.email
         })
@@ -36,7 +38,7 @@ class ArticleController{
                 })
         })
         .then(article=>{
-            // console.log(result)
+            // console.log(article)
             res.json({
                 title: article.title,
                 content: article.content,
@@ -47,7 +49,7 @@ class ArticleController{
         })
         .catch(err=>{
             res.json({
-                message: err
+                error: err.message
             })
         })
     }
@@ -72,8 +74,8 @@ class ArticleController{
         })
     }
     static update(req,res,next){
-        console.log(req.body,'di controller update')
-        Article.findByIdAndUpdate(req.params.id,{
+        // console.log(req.body,'di controller update')
+        Article.findByIdAndUpdate({_id: req.params.id},{
             title: req.body.title,
             content: req.body.content,
             created_at: req.body.created_at,
@@ -91,7 +93,7 @@ class ArticleController{
         })
     }
     static findOne(req,res,next){
-        Article.findById({_id:req.params.id}).populate('author', '-password')
+        Article.findById({_id: req.params.id}).populate('author', '-password')
         .then(result=>{
             if(result){
                 res.json({

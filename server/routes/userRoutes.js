@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const UserController = require('../controllers/usercontroller')
+const upload = require('../middlewares/gcsUpload')
 
-router.post('/register', UserController.register)
+router.post('/register', upload.single('picture'), UserController.register)
 router.post('/login', UserController.login)
-router.post('/gsignin', UserController.gsignin)
 
 module.exports = router

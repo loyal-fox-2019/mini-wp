@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-let mongoURI;
+// let mongoURI;
 
-if(process.env.NODE_ENV === 'development') mongoURI = process.env.MONGO_URI_DEV
-else mongoURI = process.env.MONGO_URI
+// if(process.env.NODE_ENV === 'development') mongoURI = process.env.MONGO_URI_DEV
+// else mongoURI = process.env.MONGO_URI
 
-mongoose.connect(mongoURI, {
+mongoose.connect('mongodb+srv://serafim:3apples4ever@cluster-sera-mg8t0.gcp.mongodb.net/mini-wp?retryWrites=true&w=majority', {
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,

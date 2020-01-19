@@ -6,7 +6,7 @@ function generateToken(payload){
 }
 
 function decodeToken(token){
-    console.log(token)
+    // console.log(token)
     const decoded = jwt.verify(token, process.env.JWT_KEY);
     return decoded
 }

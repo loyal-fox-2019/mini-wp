@@ -5,19 +5,26 @@ const verifyGoogle = require('../helpers/verifyGoogle')
 
 class UserController{
     static register(req,res,next){
+        // console.log(req.body)
         User.create({
             username: req.body.username,
             password: req.body.password,
-            email: req.body.email
+            email: req.body.email,
+            picture: req.body.picture
         })
         .then(result =>{
             const obj={
+                _id: result._id,
                 username: result.username,
-                email: result.email
+                email: result.email,
+                picture: req.body.picture
             }
             const token = generateToken(obj)
             res.status(201).json({
-                token
+                token,
+                username: result.username,
+                email: result.email,
+                picture: result.picture
             })
         })
         .catch(next)
@@ -33,12 +40,17 @@ class UserController{
                 if(compared){
                     //generate token
                     const obj={
+                        _id: result._id,
                         username: result.username,
-                        email: result.email
+                        email: result.email,
+                        picture: req.body.picture
                     }
                     const token = generateToken(obj)
                     res.json({
-                        token
+                        token,
+                        username: result.username,
+                        email: result.email,
+                        picture: result.picture
                     })
                 }else{
                     res.status(400).json({
@@ -54,8 +66,10 @@ class UserController{
         .catch(next)
     }
     static gsignin(req,res,next){
+        // console.log('masuk gsignin')
         let email=null
         let name=null
+        let picture = null
         const token = req.body.data.id_token
         const payload = verifyGoogle(token)
         payload.then(data=>{
@@ -69,17 +83,45 @@ class UserController{
         })
         .then(result=>{
             if(result){
-                return result
+                //generate token
+                // console.log(picture)
+                let obj={
+                    _id: result._id,
+                    username: result.username,
+                    email: result.email,
+                }
+                const token = generateToken(obj)
+                res.status(200).json({
+                    message: 'User Signed In',
+                    token,
+                    username: result.username,
+                    email: result.email,
+                    picture: result.picture
+                })
             }else{
                 return User.create({
                     username: name,
                     email,
-                    password: process.env.USER_PASSWORD
+                    password: process.env.USER_PASSWORD,
+                    picture: process.env.DEFAULT_PICTURE
                 })
             }
         })
         .then(user=>{
-            res.send(user)
+            // console.log(user)
+            let obj={
+                _id: user._id,
+                username: user.username,
+                email: user.email
+            }
+            const token = generateToken(obj)
+            res.status(200).json({
+                message: 'User Signed In',
+                token,
+                username: user.username,
+                email: user.email,
+                picture: user.picture
+            })
         })
         .catch(err=>{
             console.log(err)

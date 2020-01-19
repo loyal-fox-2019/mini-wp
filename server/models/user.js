@@ -10,7 +10,7 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'email tidak valid'],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'email is not valid'],
         validate: {
             validator: function (v) {
                 User.findOne({ email: v })
@@ -24,6 +24,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    picture:{
+        type: String
     }
 })
 
