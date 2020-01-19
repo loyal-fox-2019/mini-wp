@@ -1,10 +1,5 @@
-const Article = require('../model/Article')
-
 module.exports = function(mode){
     return (req,res,next)=>{
-    
-        console.log(mode);
-        
         console.log(`
             AUTHORIZATION IS RUNNING
             =========================
@@ -24,33 +19,36 @@ module.exports = function(mode){
                     message:"unAuthorized Access"
                 })
           }
-        else if (mode === 'article')
+        else
           {
-              Article.findOne({
-                  _id: req.params.articleId
+              let QueryModel = require(`../model/${mode}`)
+              const key = Object.keys(req.params)
+
+              QueryModel.findOne({
+                  _id: req.params[key]
               })
               .then(result=>{
                     if(!result)
-                      next({ 
+                      throw ({ 
                           name: 'INVALID RESOURCE ID',
                           status: 404, 
                           message:"resource not found"
                       })
                     else
                       {
-                          if(String(result.Author._id) === String(req.decodedUser._id))
-                            {   
+                          if( mode === 'Article' && String(result.Author._id) === String(req.decodedUser._id) ||
+                              mode === 'User' && String(result._id) === String(req.decodedUser._id) )
+                            {
                                 console.log(`AUTHORIZATION ${mode} passed`);
                                 next()
                             }
                           else
-                            {
-                                next({
-                                    name: "AUTHORIZATION REJECTED",
-                                    status:403,
-                                    message: 'unAuthorized Access'
-                                })
-                            }
+                            throw ({
+                                name: "AUTHORIZATION REJECTED",
+                                status:403,
+                                message: 'unAuthorized Access'
+                            }) 
+
                       }
               })
               .catch(err=>{

@@ -23,7 +23,7 @@ const articleSchema = new Schema({
     featuredImage:{
         type: String
     },
-    TagList:[{
+    tagList:[{
         type: String
     }]
 
