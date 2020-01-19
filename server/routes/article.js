@@ -8,6 +8,7 @@ router.get('/', articleController.getAllArticles);
 router.post('/', articleController.addArticle);
 router.post('/image', gcsUpload.single('file'), articleController.uploadImage);
 router.get('/tags/:tagName', articleController.getArticleByTagName);
+router.get('/title/:title', articleController.getArticleByTitle);
 
 router.use('/:articleId', authorization);
 router.get('/:articleId', articleController.getArticleById);

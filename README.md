@@ -197,7 +197,7 @@ Wait until all loadings finishes and open `http://localhost:1234`
   ```
 ### Get all articles by tag name
 
-- Route: `/tags/:tagsName`
+- Route: `articles/tags/:tagsName`
 - Method: `GET`
 - Headers: `token`
 - Output:
@@ -261,7 +261,56 @@ Wait until all loadings finishes and open `http://localhost:1234`
       "message": "Article not found"
     }
   ```
-  ### Get article by article id
+### Get article by title
+
+- Route: `/articles/title/:title`
+- Method: `GET`
+- Headers: `token`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "articles": [
+      {
+        "tags": [
+          "tag",
+          "pertama",
+          "tanpa gambar"
+        ],
+        "_id": "5e247252014cbb53a2bdfff4",
+        "title": "ini judul publish pertama",
+        "content": "<p>ini konten pertama tanpa gambar</p>",
+        "author": "5e23b39d20e39b09d0b4355f",
+        "featured_image": "",
+        "status": "publish",
+        "slug": "ini-judul-pertama",
+        "created_at": "2020-01-19T15:14:26.306Z",
+        "__v": 0
+      }
+    ]
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+
+### Get article by article id
 
 - Route: `/articles/:articleId`
 - Method: `GET`
@@ -478,6 +527,38 @@ Wait until all loadings finishes and open `http://localhost:1234`
     "n": 1,
     "nModified": 1,
     "ok": 1
+  }
+  ```
+- Error Handler:
+  - Status: **400**
+  ```
+    {
+      "message": "Invalid token"
+    }
+  ```
+  - Status: **401**
+  ```
+    {
+      "message": "You are not authorized accessing this data"
+    }
+  ```
+  - Status: **404**
+  ```
+    {
+      "message": "Article not found"
+    }
+  ```
+### Upload image for article
+
+- Route: `/articles/image`
+- Method: `POST`
+- Headers: `token`
+- Body: `{file: file path from form}`
+- Output:
+  - Status: **200**
+  ```
+  {
+    "filename": "https://storage.googleapis.com/minivipi-img.harfialfaraby.com/1579439253215-photo-1488747279002-c8523379faaa.jpeg"
   }
   ```
 - Error Handler:

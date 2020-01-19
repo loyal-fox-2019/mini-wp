@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.token;
     const userPayload = jwt.verify(token, process.env.CLIENT_SECRET);
 
-    const user = userModel.findOne({
+    userModel.findOne({
         _id: ObjectId(userPayload._id),
         email: userPayload.email
       })

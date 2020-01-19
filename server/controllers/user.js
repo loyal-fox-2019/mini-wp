@@ -113,7 +113,7 @@ class User {
         }
       }).then((registeredUser) => {
         const token = jwt.sign({
-            id: registeredUser._id,
+            _id: registeredUser._id,
             name: registeredUser.name,
             email: registeredUser.email,
             avatar: registeredUser.avatar

@@ -3,7 +3,9 @@ const ObjectId = require('mongoose').Types.ObjectId;
 
 class Article {
   static getAllArticles(req, res, next) {
-    articleModel.find()
+    articleModel.find({
+      author: ObjectId(req.userLogin.id)
+    })
       .then((articles) => {
         res.status(200).json({articles});
       }).catch(next);
@@ -33,8 +35,6 @@ class Article {
   }
 
   static getArticleById(req, res, next) {
-    console.log(req.params);
-    
     articleModel.findById(req.params.articleId)
       .then((article) => {
         res.status(200).json(article);
@@ -42,7 +42,7 @@ class Article {
   }
 
   static updateArticle(req, res, next) {
-    articleModel.update({
+    articleModel.updateOne({
       _id: ObjectId(req.params.articleId)
     }, req.body)
       .then((article) => {
@@ -63,6 +63,7 @@ class Article {
     const regex = new RegExp(req.params.tagName, 'g');
 
     articleModel.find({
+      author: ObjectId(req.userLogin.id),
       tags: {
         $in: [regex]
       }
@@ -72,8 +73,20 @@ class Article {
       }).catch(next);
   }
 
+  static getArticleByTitle(req, res, next) {
+    const regex = new RegExp(req.params.title, 'g');
+
+    articleModel.find({
+      author: ObjectId(req.userLogin.id),
+      title: regex
+    })
+      .then((articles) => {
+        res.status(200).json({articles});
+      }).catch(next);
+  }
+
   static addTagNameToArticle(req, res, next) {
-    articleModel.update({
+    articleModel.updateOne({
       _id: ObjectId(req.params.articleId)
     }, {
       $push: {
@@ -86,7 +99,7 @@ class Article {
   }
 
   static deleteTagNameFromArticle(req, res, next) {
-    articleModel.update({
+    articleModel.updateOne({
       _id: ObjectId(req.params.articleId)
     }, {
       $pullAll: {
