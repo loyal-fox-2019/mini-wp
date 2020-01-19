@@ -103,9 +103,41 @@ class UserController{
       }
 
 
-    static googleLogIn(req,res,next)
+    static googleSignIn(req,res,next)
       {
-        
+        User.findOne({
+          email:req.verifiedUser.email
+        })
+        .then(result=>{
+          if(result)
+            {
+              console.log(1, result)
+              const token = generateToken({ _id:result._id })
+              res.status(200).json({ access_token : token})
+            }
+          else
+            {
+              User.create({
+                username : req.verifiedUser.name,
+                email: req.verifiedUser.email,
+                password: passwordRandomizer()
+              })
+              .then(result=>{
+                console.log(2, result)
+                const token = generateToken({ _id:result._id})
+                res.status(200).json({ username:result.username, access_token : token})
+
+              })
+              .catch(err=>{
+                console.log(3, err)
+                next(err)
+              })
+            }
+          
+        })
+        .catch(err=>{
+          next()
+        })
       }
 
     

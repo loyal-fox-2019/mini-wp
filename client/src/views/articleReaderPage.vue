@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>article reader</h1>
+        <!-- <h1>article reader</h1> -->
 
         <goBackButton 
             @goBack="$emit('goBack', 'contentPage')">

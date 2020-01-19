@@ -3,6 +3,7 @@ const UserController = require('../controller/UserController')
 const authentication = require('../middleware/authentication')
 const authorization = require('../middleware/authorization')
 const upload = require('../helper/gcsUpload')
+const gVerify = require('../middleware/gSignIn')
 
 // testing
 // ============================================================
@@ -14,7 +15,7 @@ router.post('/bulkFind', UserController.bulkFind) //TEST DOANG //SUCCESS
 // ============================================================
 router.post('/registration', UserController.registration) //done
 router.post('/login', UserController.login) //done
-
+router.post('/gsignin', gVerify, UserController.googleSignIn)
 
 router.use(authentication)
 router.get('/one/:userId', UserController.findByUserId)
