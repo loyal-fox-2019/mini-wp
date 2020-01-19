@@ -1,7 +1,6 @@
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
-const randomPassword = require('../helpers/random-password')
 
 class UserController {
   static login(req, res, next) {

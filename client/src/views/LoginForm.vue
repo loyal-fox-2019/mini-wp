@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 m-2 d-flex justify-content-center">
     <div class="custom-form">
-      <b-form class="py-2 px-5">
+      <b-form class="py-2 px-5" @submit.prevent="login">
         <div class="text-center">
           <h1 class="text-light mb-0">Let's write a</h1>
           <h1
@@ -20,8 +20,10 @@
           <b-form-input
             id="input-1"
             type="email"
+            v-model="email"
             required
             placeholder="Enter email"
+            autocomplete="off"
           ></b-form-input>
         </b-form-group>
 
@@ -35,6 +37,7 @@
             id="input-2"
             type="password"
             placeholder="Password"
+            v-model="password"
             required
           ></b-form-input>
         </b-form-group>
@@ -68,6 +71,8 @@
 </template>
 
 <script>
+import api from '../api'
+import errorHandler from '../helpers/error-handler.js'
 import GoogleLogin from 'vue-google-login'
 
 export default {
@@ -83,6 +88,8 @@ export default {
         height: 50,
         longtitle: true,
       },
+      email: '',
+      password: '',
     }
   },
   components: {
@@ -96,6 +103,17 @@ export default {
     onFailure(err) {
       console.log(err)
     },
+    login() {
+      console.log('ke panggil pak eko')
+      api.get('/random-path')
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          const self = this
+          errorHandler(err, self)
+        })
+    }
   },
 }
 </script>
