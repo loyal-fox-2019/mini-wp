@@ -1,9 +1,18 @@
 <template>
   <div class="background-home">
     <div class="dark-cover">
-      <Navbar :username="username" @updateUserStatus="updateUserSession"></Navbar>
+      <Navbar
+        :username="username"
+        @updateUserStatus="updateUserSession"
+      ></Navbar>
       <transition name="fade" mode="out-in">
-        <router-view class="custom-router-view" @updateUserStatus="updateUserSession" @newArticle="pushNewArticle" @updateArticleList="fetchUserArticles" :userArticles="userArticles"></router-view>
+        <router-view
+          class="custom-router-view"
+          @updateUserStatus="updateUserSession"
+          @newArticle="pushNewArticle"
+          @updateArticleList="fetchUserArticles"
+          :userArticles="userArticles"
+        ></router-view>
       </transition>
     </div>
   </div>
@@ -43,14 +52,15 @@ export default {
         title: 'Fetching your article...',
         onBeforeOpen: () => {
           this.$swal.showLoading()
-        }
+        },
       })
 
-      api.get('/users/articles', {
-        headers: {
-          token: localStorage.getItem('token')
-        }
-      })
+      api
+        .get('/users/articles', {
+          headers: {
+            token: localStorage.getItem('token'),
+          },
+        })
         .then(({ data }) => {
           this.$swal.close()
           this.userArticles = data.articles
@@ -63,7 +73,7 @@ export default {
     },
     pushNewArticle(payload) {
       this.userArticles.unshift(payload)
-    }
+    },
   },
   created() {
     if (localStorage.getItem('token')) {
@@ -71,7 +81,15 @@ export default {
       this.$router.push('/user/all-articles')
       this.fetchUserArticles()
     }
-  }
+    if (window.location.search) {
+      console.log(window.location.search)
+      window.location.href = `http://localhost:8080/#/callback-github?code=${
+        window.location.search.split('=')[1]
+      }`
+    } else {
+      console.log(window.location)
+    }
+  },
 }
 </script>
 

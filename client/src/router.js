@@ -6,6 +6,9 @@ import RegisterForm from './views/RegisterForm.vue'
 import ArticlesContainer from './views/ArticleContainer.vue'
 import AddArticleForm from './views/AddArticleForm.vue'
 import UserPage from './views/UserPage.vue'
+import ArticlePage from './views/ArticlePage.vue'
+
+import callback from './views/callback.vue'
 
 Vue.use(VueRouter)
 
@@ -14,6 +17,16 @@ const routes = [
     path: '/',
     name: 'landingPage',
     component: LandingPage,
+  },
+  {
+    path: '/callback-github',
+    name: 'callbackGithub',
+    component: callback,
+  },
+  {
+    path: '/article',
+    name: 'articlePage',
+    component: ArticlePage,
   },
   {
     path: '/login',
@@ -33,7 +46,7 @@ const routes = [
       {
         path: 'all-articles',
         name: 'allArticles',
-        component: ArticlesContainer
+        component: ArticlesContainer,
       },
       {
         path: 'published-articles',
@@ -48,10 +61,10 @@ const routes = [
       {
         path: 'add-article',
         name: 'addArticle',
-        component: AddArticleForm
-      }
-    ]
-  }
+        component: AddArticleForm,
+      },
+    ],
+  },
 ]
 
 function redirectToAllArticles(next) {
@@ -70,7 +83,7 @@ const router = new VueRouter({
   routes,
 })
 
-router.beforeEach((to, from ,next) => {
+router.beforeEach((to, from, next) => {
   switch (to.path) {
     case '/':
       redirectToAllArticles(next)

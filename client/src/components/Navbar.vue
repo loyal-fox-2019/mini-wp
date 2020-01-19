@@ -1,6 +1,9 @@
 <template>
   <b-navbar variant="faded" type="light" class="custom-navbar py-0 pl-0">
-    <b-navbar-brand :to="username ? { path: '/user/all-articles'} : { path: '/' }" class="d-flex align-items-center custom-color pr-2">
+    <b-navbar-brand
+      :to="username ? { path: '/user/all-articles' } : { path: '/' }"
+      class="d-flex align-items-center custom-color pr-2"
+    >
       <img src="../assets/icon2.png" height="50" width="50" />
       GG-WP
     </b-navbar-brand>
@@ -10,7 +13,9 @@
         <b-nav-text class="custom-color">{{ username }}</b-nav-text>
       </b-nav-item>
       <b-nav-item>
-        <b-button size="sm" squared class="custom-btn-color" @click="logout">Logout</b-button>
+        <b-button size="sm" squared class="custom-btn-color" @click="logout"
+          >Logout</b-button
+        >
       </b-nav-item>
     </b-navbar-nav>
 
@@ -35,12 +40,12 @@ export default {
         icon: 'success',
         title: 'Logged out...',
         timer: 1250,
-        showConfirmButton: false
+        showConfirmButton: false,
       })
       this.$emit('updateUserStatus', {})
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>
 

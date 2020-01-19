@@ -1,5 +1,5 @@
 <template>
-    <LandingComponent></LandingComponent>
+  <LandingComponent></LandingComponent>
 </template>
 
 <script>
@@ -9,14 +9,13 @@ export default {
   name: 'landing-page',
   data: function() {
     return {
-      username: true
+      username: true,
     }
   },
   components: {
     LandingComponent,
-  }
+  },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

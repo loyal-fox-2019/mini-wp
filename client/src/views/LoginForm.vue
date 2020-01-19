@@ -55,9 +55,23 @@
             <hr style="border: 0.1rem solid white;" />
           </div>
         </div>
-        <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" class="btn btn-light btn-block rounded-0"><span class="fab fa-google"></span> Continue with google</GoogleLogin>
-        <b-button squared block variant="primary"><span class="fab fa-twitter"></span> Continue with Twitter</b-button>
-        <b-button squared block variant="dark"><span class="fab fa-github"></span> Continue with Github</b-button>
+        <GoogleLogin
+          :params="params"
+          :onSuccess="onSuccess"
+          :onFailure="onFailure"
+          class="btn btn-light btn-block rounded-0"
+          ><span class="fab fa-google"></span> Continue with google</GoogleLogin
+        >
+        <b-button squared block variant="primary"
+          ><span class="fab fa-twitter"></span> Continue with Twitter</b-button
+        >
+        <b-button
+          squared
+          block
+          variant="dark"
+          href="https://github.com/login/oauth/authorize?client_id=d43f972a93a4c71aeb5d&scope=read:user%20user:email"
+          ><span class="fab fa-github"></span> Continue with Github</b-button
+        >
       </div>
     </div>
   </div>
@@ -95,12 +109,13 @@ export default {
         title: 'Login...',
         onBeforeOpen: () => {
           this.$swal.showLoading()
-        }
+        },
       })
 
       const googleToken = googleUser.getAuthResponse().id_token
 
-      api.post('/third-api/login-google', { googleToken })
+      api
+        .post('/third-api/login-google', { googleToken })
         .then(({ data }) => {
           const self = this
           successLoginHandler(data, self)
@@ -117,7 +132,7 @@ export default {
         autoHideDelay: 3000,
         appendToast: true,
         solid: true,
-        variant: 'danger'
+        variant: 'danger',
       })
     },
     login() {
@@ -125,13 +140,14 @@ export default {
         title: 'Login...',
         onBeforeOpen: () => {
           this.$swal.showLoading()
-        }
+        },
       })
 
-      api.post('/login', {
-        email: this.email,
-        password: this.password
-      })
+      api
+        .post('/login', {
+          email: this.email,
+          password: this.password,
+        })
         .then(({ data }) => {
           const self = this
           successLoginHandler(data, self)

@@ -4,17 +4,37 @@
       <b-col cols="2" class="p-2">
         <b-container>
           <b-list-group>
-            <b-list-group-item :to="{ path: '/user/add-article' }" :active="$route.name === 'addArticle'">Add article</b-list-group-item>
-            <b-list-group-item :to="{ path: '/user/all-articles' }" :active="$route.name === 'allArticles'">All articles</b-list-group-item>
-            <b-list-group-item :to="{ path: '/user/published-articles'}" :active="$route.name === 'publishedArticles'">Published</b-list-group-item>
-            <b-list-group-item :to="{ path: '/user/draft-articles'}" :active="$route.name === 'draftArticles'">Draft</b-list-group-item>
+            <b-list-group-item
+              :to="{ path: '/user/add-article' }"
+              :active="$route.name === 'addArticle'"
+              >Add article</b-list-group-item
+            >
+            <b-list-group-item
+              :to="{ path: '/user/all-articles' }"
+              :active="$route.name === 'allArticles'"
+              >All articles</b-list-group-item
+            >
+            <b-list-group-item
+              :to="{ path: '/user/published-articles' }"
+              :active="$route.name === 'publishedArticles'"
+              >Published</b-list-group-item
+            >
+            <b-list-group-item
+              :to="{ path: '/user/draft-articles' }"
+              :active="$route.name === 'draftArticles'"
+              >Draft</b-list-group-item
+            >
           </b-list-group>
         </b-container>
       </b-col>
 
       <b-col>
         <transition name="fade" mode="out-in">
-          <router-view :userArticles="userArticles" @newArticle="$emit('newArticle', $event)" @updateArticleList="$emit('updateArticleList')"></router-view>
+          <router-view
+            :userArticles="userArticles"
+            @newArticle="$emit('newArticle', $event)"
+            @updateArticleList="$emit('updateArticleList')"
+          ></router-view>
         </transition>
       </b-col>
     </b-row>
@@ -24,7 +44,7 @@
 <script>
 export default {
   name: 'user-page',
-  props: ['userArticles']
+  props: ['userArticles'],
 }
 </script>
 

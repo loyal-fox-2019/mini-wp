@@ -38,7 +38,12 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="input-group-2" label="Password:" label-for="input-2" class="text-light">
+        <b-form-group
+          id="input-group-2"
+          label="Password:"
+          label-for="input-2"
+          class="text-light"
+        >
           <b-form-input
             id="input-2"
             type="password"
@@ -73,14 +78,15 @@ export default {
         title: 'Register...',
         onBeforeOpen: () => {
           this.$swal.showLoading()
-        }
+        },
       })
 
-      api.post('/register', {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      })
+      api
+        .post('/register', {
+          username: this.username,
+          email: this.email,
+          password: this.password,
+        })
         .then(({ data }) => {
           const self = this
           successLoginHandler(data, self)
@@ -91,7 +97,7 @@ export default {
           errorHandler(err, self)
         })
     },
-  }
+  },
 }
 </script>
 

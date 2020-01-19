@@ -78,8 +78,8 @@ export default {
   computed: {
     author: function() {
       return localStorage.getItem('username')
-    }
-  }
+    },
+  },
 }
 </script>
 

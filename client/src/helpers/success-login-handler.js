@@ -3,13 +3,13 @@ export default function(data, vm) {
     title: 'Login success',
     timer: 1500,
     icon: 'success',
-    showConfirmButton: false
+    showConfirmButton: false,
   })
 
   vm.$emit('updateUserStatus', {
     token: data.token,
     username: data.username,
-    type: 'login'
+    type: 'login',
   })
 
   vm.$router.push('/user/all-articles')
