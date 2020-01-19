@@ -29096,7 +29096,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
 var _default = {
   name: 'mainpage',
   props: ['data'],
@@ -29114,7 +29113,7 @@ var _default = {
       },
       model: 'Edit Your Content Here!',
       params: {
-        client_id: "1014814489310-p0qgrk4k8m0skfllva0q2nubat1aqgth.apps.googleusercontent.com"
+        client_id: "1014814489310-pj41bd2sv1mc51rmmrv7hlkekcpt1phl.apps.googleusercontent.com"
       },
       titleSearch: '',
       formWrite: false,
@@ -29548,25 +29547,21 @@ var editor = new _froalaEditor.default('#example');
                       _vm._v(" "),
                       _c("p", [_vm._v("Content")]),
                       _vm._v(" "),
-                      _c(
-                        "wysiwyg",
-                        {
-                          model: {
-                            value: _vm.articleContent,
-                            callback: function($$v) {
-                              _vm.articleContent = $$v
-                            },
-                            expression: "articleContent"
-                          }
-                        },
-                        [
-                          _c("input", {
-                            staticStyle: { "margin-top": "100px" },
-                            attrs: { type: "file", name: "file" },
-                            on: { change: _vm.uploadPicture }
-                          })
-                        ]
-                      )
+                      _c("wysiwyg", {
+                        model: {
+                          value: _vm.articleContent,
+                          callback: function($$v) {
+                            _vm.articleContent = $$v
+                          },
+                          expression: "articleContent"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticStyle: { "margin-top": "100px" },
+                        attrs: { type: "file", name: "file" },
+                        on: { change: _vm.uploadPicture }
+                      })
                     ],
                     1
                   ),
@@ -30000,7 +29995,7 @@ var _default = {
       email: '',
       password: '',
       params: {
-        client_id: "1014814489310-p0qgrk4k8m0skfllva0q2nubat1aqgth.apps.googleusercontent.com"
+        client_id: "1014814489310-pj41bd2sv1mc51rmmrv7hlkekcpt1phl.apps.googleusercontent.com"
       },
       renderParams: {
         width: 250,
@@ -30353,7 +30348,7 @@ var _default = {
       password: '',
       picture: '',
       params: {
-        client_id: "1014814489310-p0qgrk4k8m0skfllva0q2nubat1aqgth.apps.googleusercontent.com"
+        client_id: "1014814489310-pj41bd2sv1mc51rmmrv7hlkekcpt1phl.apps.googleusercontent.com"
       },
       renderParams: {
         width: 250,
@@ -74255,7 +74250,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36829" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44427" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

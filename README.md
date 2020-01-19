@@ -1,8 +1,7 @@
 ### <u>Shema</u>
 
 All API access is over HTTP, and accessed from `http://localhost:8080`.
-Client side error when deployed.
-Use deployed server.
+Deployed link `miniwp.serafimsng.top`.
 
 ### <u>Authentication</u>
 

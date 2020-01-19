@@ -69,7 +69,7 @@ export default {
             password: '',
             picture: '',
             params: {
-                    client_id: "1014814489310-p0qgrk4k8m0skfllva0q2nubat1aqgth.apps.googleusercontent.com"
+                    client_id: "1014814489310-pj41bd2sv1mc51rmmrv7hlkekcpt1phl.apps.googleusercontent.com"
                 },
             renderParams: {
                 width: 250,

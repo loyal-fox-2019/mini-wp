@@ -51,8 +51,7 @@
                                     <p>Title</p>
                                     <input type="text" v-model="articleTitle">
                                     <p>Content</p>
-                                    <wysiwyg v-model="articleContent" />
-                                    <!-- <froala :tag="'textarea'" :config="config" v-model="articleContent"></froala> -->
+                                    <wysiwyg v-model="articleContent"></wysiwyg>
                                     <input type="file" name="file" v-on:change="uploadPicture" style="margin-top: 100px;"/>
                                   </form>
                                 <p>
@@ -120,7 +119,7 @@ export default {
             },
             model: 'Edit Your Content Here!',
             params: {
-                client_id: "1014814489310-p0qgrk4k8m0skfllva0q2nubat1aqgth.apps.googleusercontent.com"
+                client_id: "1014814489310-pj41bd2sv1mc51rmmrv7hlkekcpt1phl.apps.googleusercontent.com"
             },
             titleSearch: '',
             formWrite: false,
