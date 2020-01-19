@@ -1,16 +1,16 @@
 'use strict'
 
 module.exports = (err, req, res, next) => {
-  console.log(err)
+  // console.log(err)
 
   let status, message, mongooseError
   switch (err.name) {
     case "MongoError":
       status = 400
       if(err.keyValue.email) {
-        message = "Email is already in use"
+        message = ["Email is already in use"]
       } else {
-        message = "Username is already in use"
+        message = ["Username is already in use"]
       }
       break;
     case "ValidationError":
