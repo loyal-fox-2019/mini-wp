@@ -24,6 +24,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'password is required'],
     minlength: [6, 'password not long enough']
+  },
+  picture: {
+    type: String
   }
 })
 

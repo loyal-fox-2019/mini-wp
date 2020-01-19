@@ -9,7 +9,7 @@
           {{error}}
         </div>
         <div class="form-group col-md-6">
-          <input type="text" name="title" id="title" placeholder="Title" class="form-control" v-model="title">
+          <input type="text" required name="title" id="title" placeholder="Title" class="form-control" v-model="title">
         </div>
         <div class="form-group col-md-6">
           <b-form-tags
@@ -27,6 +27,7 @@
               :state="Boolean(featured_image)"
               placeholder="Featured image"
               drop-placeholder="Drop file here..."
+              required
             ></b-form-file>
         </div>
         <div class="form-group col-md-12">

@@ -77,19 +77,22 @@ export default {
         });
     },
     signGoogle() {
-      console.log("TRIGGERED SIGN GOOGLE");
       this.$gAuth
         .signIn()
         .then(GoogleUser => {
-          // On success do something, refer to https://developers.google.com/api-client-library/javascript/reference/referencedocs#googleusergetid
-          console.log("user", GoogleUser);
-          // GoogleUser.getId() : Get the user's unique ID string.
-          // GoogleUser.getBasicProfile() : Get the user's basic profile information.
-          // GoogleUser.getAuthResponse() : Get the response object from the user's auth session. access_token and so on
+          return axios({
+            method: 'post',
+            url: '/google',
+            data: {idToken: GoogleUser.getAuthResponse().id_token}
+          })
           this.isSignIn = this.$gAuth.isAuthorized;
         })
+        .then(({ data }) => {
+          localStorage.setItem("token", data.token);
+          this.setLogin();
+        })
         .catch(error => {
-          //on fail do something
+          this.errors.push('Google OAuth Failed')
         });
     }
   }
