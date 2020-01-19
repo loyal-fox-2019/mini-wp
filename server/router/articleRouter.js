@@ -21,7 +21,7 @@ router.delete('/admin/masterDelete', ArticleController.masterDelete) //done
 
 
 
-router.use('/:articleId', authorization('article'))
+router.use('/:articleId', authorization('Article'))
 // =======================================================================
 router.patch('/:articleId', ArticleController.patchUpdateArticle)
 router.delete('/:articleId', ArticleController.deleteArticle)

@@ -55,7 +55,7 @@ class ArticleController{
     
     static findAllFitleredArticles(req,res,next)
       {
-          // bikin supaya bisa dynamic dicari by userId / tag
+          // bikin supaya bisa dynamic dicari by userId / tag / articleId
           const key = Object.keys(req.body)
 
           Article.find({
@@ -94,7 +94,8 @@ class ArticleController{
           
           Article.update(
               { _id: req.params.articleId},
-              updateQuery
+              updateQuery,
+              {runValidators: true}
           )
           .then(result=>{
               if(req.body.pull)
