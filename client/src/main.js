@@ -8,7 +8,7 @@ import GSignInButton from 'vue-google-signin-button'
 import GAuth from 'vue-google-oauth2'
 
 const gauthOption = {
-    clientId: '584514161670-583m62amson61v9ceoo4l3rph8egrk6c.apps.googleusercontent.com'
+    clientId: '584514161670-6ptkhqmvh598080ogso97mdgkbr4tmd7.apps.googleusercontent.com'
 }
 
 Vue.use(GAuth, gauthOption)

@@ -65,7 +65,7 @@ export default {
             formData.set('picture', this.picture)
             axios({
                 method: 'post',
-                url: `http://35.240.160.186:3000/articles`,
+                url: `http://miniwp-server.kennys.my.id:3000/articles`,
                 data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -94,7 +94,7 @@ export default {
             }         
             axios({
                 method: 'patch',
-                url: `http://35.240.160.186:3000/articles/${this.articleEdit.articleId}`,
+                url: `http://miniwp-server.kennys.my.id:3000/articles/${this.articleEdit.articleId}`,
                 data: formData,
                 headers: {
                     'Content-Type': 'multipart/form-data',

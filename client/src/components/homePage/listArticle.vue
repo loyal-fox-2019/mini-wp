@@ -53,7 +53,7 @@ export default {
         getArticles: function() {
             axios({
                 method: 'get',
-                url: 'http://35.240.160.186:3000/articles',
+                url: 'http://miniwp-server.kennys.my.id:3000/articles',
                 headers: {
                     token: localStorage.getItem('token')
                 }
@@ -102,7 +102,7 @@ export default {
                 if(confirmed.value) {
                     return axios({
                         method: 'delete',
-                        url: `http://35.240.160.186:3000/articles/${id}`,
+                        url: `http://miniwp-server.kennys.my.id:3000/articles/${id}`,
                         headers: {
                             token: localStorage.getItem('token')
                         }

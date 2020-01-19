@@ -67,7 +67,7 @@ export default {
         register: function(){
             axios({
                 method: 'post',
-                url: 'http://35.240.160.186:3000/user/register',
+                url: 'http://miniwp-server.kennys.my.id:3000/user/register',
                 data: {
                     name: this.name,
                     email: this.email,

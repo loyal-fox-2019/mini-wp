@@ -50,7 +50,7 @@ export default {
             email: '',
             password: '',
             googleSignInParams: {
-                client_id: '584514161670-583m62amson61v9ceoo4l3rph8egrk6c.apps.googleusercontent.com'
+                client_id: '584514161670-6ptkhqmvh598080ogso97mdgkbr4tmd7.apps.googleusercontent.com'
             }
         }
     },
@@ -58,7 +58,7 @@ export default {
         login: function(){
             axios({
                 method: 'post',
-                url: 'http://35.240.160.186:3000/user/login',
+                url: 'http://miniwp-server.kennys.my.id:3000/user/login',
                 data: {
                     email: this.email,
                     password: this.password
@@ -85,7 +85,7 @@ export default {
             let id_token = googleUser.getAuthResponse().id_token
             axios({
                 method: 'post',
-                url: `http://35.240.160.186:3000/user/glogin/${id_token}`,
+                url: `http://miniwp-server.kennys.my.id:3000/user/glogin/${id_token}`,
                 data: {}
             })
             .then(({data})=>{
