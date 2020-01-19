@@ -28,13 +28,12 @@ const userSchema = new Schema({
 })
 
 userSchema.pre('save', function(next){
-    bcrypt.hash(this.password, 6)
-        .then(hash => {
-            this.password = hash
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    var salt = bcrypt.genSaltSync(8)
+    var hash = bcrypt.hashSync(this.password, salt)
+
+    this.password = hash
+
+    next()
 })
 
 const User = mongoose.model('user', userSchema)

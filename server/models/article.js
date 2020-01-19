@@ -10,6 +10,9 @@ const articleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    description: {
+        type: String
+    },
     content: {
         type: String,
         required: true

@@ -15,10 +15,14 @@ class ArticleController {
     }
 
     static postArticle(req, res, next){
+        console.log('Masuk post article')
         let data = {
             title: req.body.title,
+            author: req.loggedIn.name,
+            description: req.body.description,
             content: req.body.content,
             image: req.body.image,
+            user_id: req.loggedIn.id,
             created_at: new Date()
         }
         Article.create(data)

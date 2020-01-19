@@ -9,20 +9,21 @@ class UserController {
             email: req.body.email,
             password: req.body.password
         }
+        console.log('Register', data)
 
         User.create(data)
             .then(result => {
-                let token = jwt.sign({id: result._id, name: result.name, email: result.email}, process.env.JWT_SECRET)
+                console.log('masuk',result)
                 res.status(201).json({
                     message: 'User Created',
                     data: {
-                        name: result.name,
                         email: result.email,
-                        token: token
+                        password: result.password
                     }
                 })
             })
             .catch(err => {
+                console.log('masuk',err)
                 res.status(400).json(err)
             })
     }
