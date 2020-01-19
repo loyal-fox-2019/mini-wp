@@ -56,11 +56,13 @@ export default {
         }
       })
 
-      api.post('/articles', {
-        title: this.title,
-        content: this.content,
-        tags: this.tags,
-      }, {
+      const payload = new FormData()
+      payload.append('featuredImage', this.featuredImage)
+      payload.append('title', this.title)
+      payload.append('content', this.content)
+      payload.append('tags', this.tags)
+
+      api.post('/articles', payload, {
         headers: {
           token: localStorage.getItem('token')
         }

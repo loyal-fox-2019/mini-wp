@@ -1,9 +1,9 @@
 <template>
   <div class="card mb-2 custom-card">
     <div class="row no-gutters">
-      <div class="col-md-3" :style="styles">
+      <div class="col-md-2" :style="styles">
       </div>
-      <div class="col-md-9 text-light border border-primary">
+      <div class="col-md-10 text-light border border-primary">
         <div class="card-body pb-1">
           <b-row>
             <b-col>
@@ -11,8 +11,14 @@
             </b-col>
 
             <b-col class="text-right">
-              <b-badge variant="info" v-if="status">Published</b-badge>
-              <b-badge variant="warning" v-else>Draft</b-badge>
+              <fragment v-if="status === 'published'">
+                <b-badge variant="info">Published</b-badge>
+                <b-button size="sm" variant="warning" @click="updateArticle('draft')"><span class="fas fa-archive"></span></b-button>
+              </fragment>
+              <fragment v-else>
+                <b-badge variant="warning">Draft</b-badge>
+                <b-button size="sm" variant="info" @click="updateArticle('published')"><span class="fas fa-file-upload"></span></b-button>
+              </fragment>
               <b-button size="sm" variant="danger" @click="deleteArticle"><span class="fas fa-trash"></span></b-button>
             </b-col>
           </b-row>
@@ -21,7 +27,7 @@
           </p>
           <p class="card-text">By {{ author }}</p>
           <p class="card-text text-truncate lead" v-html="content"></p>
-          <div>
+          <div class="mb-2">
             <b-badge href="#" variant="light" v-for="(tag, index) in tags" :key="index" class="mr-1">{{ tag }}</b-badge>
           </div>
         </div>
@@ -95,6 +101,35 @@ export default {
             })
         }
       })
+    },
+    updateArticle(status) {
+      this.$swal.fire({
+        title: 'Updating...',
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
+
+      api.patch(`/articles/${this.id}`, { status }, {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.$root.$bvToast.toast(`Article ${ status ? 'published' : 'drafted'}`, {
+            title: 'Success',
+            autoHideDelay: 3000,
+            appendToast: true,
+            solid: true,
+            variant: 'success'
+          })
+          this.$emit('updateArticleList')
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
     }
   }
 }

@@ -55,13 +55,13 @@ export default {
         switch (this.$route.name) {
           case 'publishedArticles':
             this.filteredArticles = this.userArticles.filter(article => {
-              return article.status
+              return article.status === 'published'
             })
             break
 
           case 'draftArticles':
             this.filteredArticles = this.userArticles.filter(article => {
-              return !article.status
+              return article.status === 'draft'
             })
             break
 
@@ -86,6 +86,7 @@ export default {
 <style scoped>
 .content {
   height: 90vh;
+  width: 80%;
 }
 
 .custom-content {
