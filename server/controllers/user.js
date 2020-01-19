@@ -53,7 +53,7 @@ class Controller {
 
         User.findOne({ email: ticket.getPayload().email })
             .then((user) => {
-                if (!user) {
+                if (!user.length || !user) {
                     User.create({
                         email: ticket.getPayload().email,
                         name: ticket.getPayload().name,
