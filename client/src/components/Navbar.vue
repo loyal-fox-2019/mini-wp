@@ -1,13 +1,21 @@
 <template>
   <b-navbar variant="faded" type="light" class="custom-navbar py-0 pl-0">
-    <b-navbar-brand href="#" class="d-flex align-items-center custom-color pr-2">
+    <b-navbar-brand :to="{ path: '/' }" class="d-flex align-items-center custom-color pr-2">
       <img src="../assets/icon2.png" height="50" width="50" />
       GG-WP
     </b-navbar-brand>
 
     <b-navbar-nav class="ml-auto">
-      <b-nav-item><span class="custom-color">Login</span></b-nav-item>
-      <b-nav-item><span class="custom-color">Register</span></b-nav-item>
+      <b-nav-item>
+        <b-link :to="{ path: '/login' }" class="text-decoration-none">
+          <span class="custom-color">Login</span>
+        </b-link>
+      </b-nav-item>
+      <b-nav-item>
+        <b-link :to="{ path: '/register' }" class="text-decoration-none">
+          <span class="custom-color">Register</span>
+        </b-link>
+      </b-nav-item>
     </b-navbar-nav>
   </b-navbar>
 </template>
