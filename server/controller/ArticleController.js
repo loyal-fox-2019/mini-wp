@@ -11,6 +11,7 @@ class ArticleController{
       {
           Article.find()
           .populate('Author', 'username email')
+          .sort({'createdAt': 'descending'})
           .then(result=>{
               res.status(200).json(result)
           })
@@ -34,14 +35,16 @@ class ArticleController{
 
     static createArticle(req,res,next)
       {
-          const { title, content, featuredImage } = req.body
+          const { title, content } = req.body
           console.log("TCL: ArticleController -> req.body", req.body)
-          const TagList = req.body.TagList || []
+          const featuredImage = req.body.file || ''
+          const tagList = req.body.tagList || []
+
           
           Article.create({
               title, content, featuredImage,
               Author: req.decodedUser._id,
-              TagList,
+              tagList,
               createdAt: new Date()
           })
           .then(result=>{
@@ -55,7 +58,7 @@ class ArticleController{
     
     static findAllFitleredArticles(req,res,next)
       {
-          // bikin supaya bisa dynamic dicari by userId / tag / articleId
+          // bikin supaya bisa dynamic dicari by userId / tag / articleId / username
           const key = Object.keys(req.body)
 
           Article.find({

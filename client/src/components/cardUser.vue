@@ -4,7 +4,15 @@
         <div class="card mb-3" style="max-width: 540px; border:none">
             <div class="row no-gutters">
                 <div class="col-md-4 image-cropper">
-                <img :src="loggedInUserDetail.profilePicture" class="card-img" alt="..." >
+                <!-- <div class="col-md-4"> -->
+                    <img 
+                        class="card-img" alt="..." 
+                        v-if="loggedInUserDetail.profilePicture"
+                        :src="loggedInUserDetail.profilePicture" >
+
+                    <img 
+                        class="card-img" alt="..." 
+                        v-else :src="blankProfilePicture">
                 </div>
                 <div class="col-md-8">
                 <div class="card-body">
@@ -24,7 +32,12 @@
 export default {
     props:[
         'loggedInUserDetail'
-    ]
+    ],
+    data(){
+        return{
+            blankProfilePicture: require('../assets/images/persons/blankProfilePicture.webp')
+        }
+    }
 
 
 
@@ -45,6 +58,15 @@ export default {
     
 }
 
+.card-img{
+    /* border:solid 2px red; */
+    /* width: auto; */
+    /* height: 100% */
+
+    /* margin-top: 20% */
+    
+    
+}
 
 
 </style>

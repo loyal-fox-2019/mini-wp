@@ -1,7 +1,7 @@
 <template>
     <div style="padding:1%">
         <div style="text-align:center">
-                <h1>Your New Article</h1>
+                <h1>{{ pageTitle }}</h1>
         </div>
         
         <goBackButton 
@@ -9,7 +9,10 @@
         </goBackButton>
 
         <div id="divArticleFormContainer">
-            <createEditArticle></createEditArticle>
+            <createEditArticle 
+                :articlePageMode="articlePageMode"
+                @goBack="$emit('goBack', 'contentPage')">
+                </createEditArticle>
         </div>
 
 
@@ -33,12 +36,17 @@ export default {
     },
     data(){
         return{
-            featuredImage:'',
-            setPictureTempUrl:''
+            pageTitle:''
         }
     },
     methods:{
 
+    },
+    mounted: function(){
+        if(this.articlePageMode === 'createMode')
+            this.pageTitle = 'Your New Article'
+        else if(this.articlePageMode === 'editMode')
+            this.pageTitle = 'Edit Article'
     }
 
 
@@ -51,8 +59,10 @@ export default {
 #divArticleFormContainer{
     /* border: solid red 2px; */
 
-    padding: 1%;
-    margin:auto;
+    /* padding: 1%; */
+    padding-left : 1%;
+    padding-right: 1%;
+    margin: auto;
     height: fit-content;
     width: 80%
 

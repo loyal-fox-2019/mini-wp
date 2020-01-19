@@ -12,6 +12,7 @@
             @userProfile="switchToUserProfilePage"
             @createArticle="switchToArticlePage('createMode')"
             @myArticles="switchToUserContentPage"
+            @switchToFilterResultPage="switchToFilterResultPage"
             @logOut="changeIsLogin"
             class="sticky-top">
         </navBar>
@@ -19,7 +20,10 @@
         <contentPage 
             v-if="isLogin && showPage ==='contentPage'" 
             :loggedInUserDetail="loggedInUserDetail"
-            @seeUserArticles="seeUserArticles">
+            :allArticlesArray="allArticlesArray"
+            @switchToArticlePage="switchToArticlePage"
+            @switchToUserContentPage="switchToUserContentPage"
+            @switchToFilterResultPage=switchToFilterResultPage>
         </contentPage>
 
         <articlePage
@@ -30,6 +34,7 @@
 
         <userContentPage
             v-if="showPage === 'userContentPage'"
+            :userContentPageUsername = "userContentPageUsername"
             @goBack="backFromChild1Page">
         </userContentPage>
 
@@ -38,6 +43,14 @@
             :loggedInUserDetail="loggedInUserDetail"
             @goBack="backFromChild1Page">
         </userProfilePage>
+
+        <filterResultPage
+            v-if="showPage === 'filterResultPage'"
+            :searchPayload="searchPayload"
+            @goBack="backFromChild1Page">
+        </filterResultPage>
+
+        
 
         
 
@@ -57,6 +70,7 @@ import contentPage from './contentPage'
 import articlePage from './articlePage'
 import userProfilePage from './userProfilePage'
 import userContentPage from './userContentPage'
+import filterResultPage from './filterResultPage'
 
 export default {
     name: 'mainPage',
@@ -66,14 +80,18 @@ export default {
         contentPage,
         articlePage,
         userProfilePage,
-        userContentPage
+        userContentPage,
+        filterResultPage
     },
     data(){
         return{
             isLogin: false,
             showPage: 'homePage',
             loggedInUserDetail: '',
-            articlePageMode: ''
+            allArticlesArray: [],
+            articlePageMode: '',
+            userContentPageUsername : '',
+            searchPayload:{}
         }
     },
     methods:{
@@ -87,20 +105,31 @@ export default {
         setIsLogin(status){
             this.isLogin = status
         },
+        setAllArticlesArray(articles){
+            this.allArticlesArray = articles
+            // console.log(' allArticlesArray @setAllArticlesArray -mainPage.vue \n======================\n', this.allArticlesArray)
+        },
         setArticlePageMode(mode){
             this.articlePageMode = mode
         },
+        setUserContentPageUsername(username){
+            this.userContentPageUsername = username
+        },
+        setSearchPayload(payload){
+            this.searchPayload = payload
+        },
         //other methods
         changeIsLogin(status){
+            this.setIsLogin(status)
+
             if(status)
               {
-                this.setIsLogin(status)
                 this.fetchUserDetail()
+                this.fetchAllArticles()
                 this.setShowPage('contentPage')
               }
             else
               {
-                this.setIsLogin(status)
                 this.setShowPage('homePage')
                 Swal.fire(
                     'Log Out successfull',
@@ -130,7 +159,24 @@ export default {
             })
         },
         fetchAllArticles(){
-            console.log(' \n======================\n FETCHING NEH, CERITANYA')
+            axios({
+                method: 'get',
+                url: '/articles/all',
+                headers:{
+                    token: localStorage.getItem('token')
+                }
+            })
+            .then( ({data})=>{
+                this.setAllArticlesArray(data)
+            })
+            .catch( ({response})=>{
+                console.log(`error @fetchAllArticle - mainPage.vue \n=========================================\n`, response.data.message)
+                Swal.fire(
+                    "Error",
+                    response.data.message,
+                    'error'
+                )
+            })
         },
         switchToUserProfilePage(userId){
             this.setShowPage('userProfilePage')
@@ -139,23 +185,28 @@ export default {
             this.setArticlePageMode(mode)
             this.setShowPage('articlePage')
         },
-        switchToUserContentPage(userId){
-            console.log(`TCL: switchToUserContentPage -> userId`, userId)
+        switchToUserContentPage(username){
+            this.setUserContentPageUsername(username)
             this.setShowPage('userContentPage')
+        },
+        switchToFilterResultPage(payload){
+            this.setSearchPayload(payload)
+            this.setShowPage('filterResultPage')
         },
         backFromChild1Page(page){
             this.fetchUserDetail()
             this.fetchAllArticles()
             this.setShowPage(page)
         },
-        seeUserArticles(payload){
-            console.log('TCL\n ======================\n @mainPage.vue \n', payload)
-            this.contentPage = 'userArticles'
-        },
+        
     },
     created: function(){
         if(localStorage.getItem('token'))
-            this.changeIsLogin(true) 
+          {
+              this.changeIsLogin(true) 
+            //   this.fetchUserDetail()
+            //   this.fetchAllArticles()
+          }
      
     }
 }

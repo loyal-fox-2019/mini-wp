@@ -10,15 +10,23 @@
                 <a class="navbar-brand" href="#" @click.prevent="$emit('backToHome', 'contentPage')">mini WP</a>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" @click.prevent="$emit('myArticles', loggedInUserDetail._id)">my articles<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#" @click.prevent="$emit('myArticles', loggedInUserDetail.username)">my articles<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" @click.prevent="changePage($emit('createArticle'))">+New</a>
+                        <a 
+                            class="nav-link" href="#" 
+                            @click.prevent="$emit('createArticle')">
+                            +New
+                        </a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search Title" aria-label="Search" v-model="titleSearch">
+                    <button 
+                        class="btn btn-outline-success my-2 my-sm-0" 
+                        type="submit"
+                         @click.prevent="searchTitle">Search
+                    </button>
                 </form>
                 <!-- <div style="margin-left:8px">
                     <button class="btn btn-secondary" >Log Out</button>
@@ -65,6 +73,11 @@ export default {
     props:[
         'loggedInUserDetail'
     ],
+    data(){
+        return{
+            titleSearch:''
+        }
+    },
     methods:{
         logOut(){
             Swal.fire({
@@ -80,7 +93,10 @@ export default {
                       this.$emit('logOut', false)
                   }
             })
-            
+        },
+        searchTitle(){
+            this.$emit('switchToFilterResultPage', {title : this.titleSearch})
+            this.titleSearch = ''
         }
     }
 

@@ -2,7 +2,6 @@
     <div class="divIdentifier divContentPage">
       <h3 class="elementIdentifier">views/contentPage.vue</h3>
       
-      
       <div id="divCardUser">
         <cardUser
           :loggedInUserDetail="loggedInUserDetail"
@@ -13,10 +12,16 @@
       <!-- start of div content small card -->
       <div class="divContentSmallCard">
         <div class="row row-cols-1 row-cols-md-4" >
-          
-          <div v-for="x in 33" :key="x">
-              <h5>{{x}}</h5>
-              <cardSmall :idNeh="x" @seeUserArticles="$emit('seeUserArticles', $event)"></cardSmall>
+          <!-- {{ allArticlesArray }} -->
+          <div v-for="article in allArticlesArray" :key="article._id">
+              <!-- <h5>{{article}}</h5> -->
+              <cardSmall 
+                :articleDetail="article" 
+                :author="loggedInUserDetail._id"
+                @switchToArticlePage="$emit('switchToArticlePage', $event)"
+                @switchToUserContentPage="$emit('switchToUserContentPage', $event)"
+                @switchToFilterResultPage="$emit('switchToFilterResultPage', $event)">
+              </cardSmall>
           </div>
           
 
@@ -41,12 +46,14 @@ import cardSmall from '../components/cardSmall'
 export default {
     name:'contentPage',
     props:[
-        'loggedInUserDetail'
+        'loggedInUserDetail',
+        'allArticlesArray'
     ],
     components:{
       cardUser,
       cardSmall
     }
+      
 
 
 
