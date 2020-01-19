@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 // import User from '../views/User.vue'
 import LoginRegister from "../views/LoginRegister.vue";
-import CreatePage from '../views/CreatePage.vue';
+import ArticlePage from '../views/ArticlePage.vue';
+import EditingPage from "../views/EditingPage.vue";
 
 
 Vue.use(VueRouter)
@@ -37,8 +38,13 @@ const routes = [
     },
     {
         path: '/create',
-        name: 'Create Page',
-        component: CreatePage
+        name: 'Article Page',
+        component: ArticlePage
+    },
+    {
+        path: '/edit/:id',
+        name: 'Edit Page',
+        component: EditingPage
     }
 ]
 

@@ -16,70 +16,51 @@
       </textarea>-->
       <div id="add_content" style="height: 350px;"></div>
     </div>
-    <b-form-file
-      v-model="image"
-      :state="Boolean(image)"
-      placeholder="Choose a picture or drop it here..."
-      drop-placeholder="Drop file here..."
-    ></b-form-file>
     <b-form-tags v-model="value" class="mb-2"></b-form-tags>
-    <button @click.prevent="save" class="btn btn-success btn-lg btn-block mb-4">
-      <i class="upload icon"></i> Create
+    <button @click.prevent="edit" class="btn btn-success btn-lg btn-block mb-4">
+      <i class="upload icon"></i> Edit
     </button>
   </div>
 </template>
 <script>
 export default {
-  name: "FormArticle",
+  name: "EditArticle",
+  props: ["Information"],
   data() {
     return {
       title: "",
-      image: null,
       quill: null,
       value: []
     };
   },
   methods: {
-    save() {
-      this.$swal.fire({
-        icon: "info",
-        title: "Your work on process..",
-        text: "In will take a little time, please wait...",
-        showConfirmButton: false,
-        timer: 5000
-      });
-
+    edit() {
       let isi = this.quill.root.innerHTML;
-      const formData = new FormData();
-      formData.append("image", this.image);
+      let formData = new FormData()
       formData.set("title", this.title);
       formData.set("description", isi);
       formData.set("tags", this.value);
       console.log(formData);
-      this.axios({
-        url: "/articles",
-        headers: {
-          token: localStorage.getItem("token")
-        },
-        method: "POST",
-        data: formData
-      })
+      this.axios
+        .post(this.url, formData, { // katanya ga bisa pake put
+          headers: {
+            token: localStorage.getItem("token")
+          }
+        })
         .then(({ data }) => {
           (this.title = ""), (this.image = null);
           this.quill.root.innerHTML = "";
-          this.value = []
           this.$swal.fire({
             icon: "success",
             title: "Your work has been saved",
             showConfirmButton: false,
             timer: 1500
           });
-          this.$root.myArticles.push(data);
-          this.$router.push('/user')
+          this.$router.push("/user");
         })
         .catch(function(error) {
-          console.log(error.response);
-          this.$swal.fire(error.response.data.message);
+          this.$swal.fire("got an error");
+          console.log(error.response.data);
         });
     },
     quillInit() {
@@ -89,7 +70,16 @@ export default {
     }
   },
   mounted() {
+    // console.log(this.Information);
     this.quillInit();
+    (this.title = this.Information.title),
+      (this.quill.root.innerHTML = this.Information.description);
+    this.value = this.Information.tags;
+  },
+  computed: {
+    url() {
+      return "/articles/edit/" + this.Information._id;
+    }
   }
 };
 </script>

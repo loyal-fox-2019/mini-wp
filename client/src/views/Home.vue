@@ -1,12 +1,22 @@
 <template>
   <div style="overflow-y: auto">
     <div id="kotak-article">
-      <ArticleCard
-        id="container"
-        v-for="(article, index) in this.$root.allArticles"
-        :key="index"
-        :articleData="article"
-      ></ArticleCard>
+      <div v-if="!$root.Search && !$root.tagSearch">
+        <ArticleCard
+          id="container"
+          v-for="(article, index) in this.$root.allArticles"
+          :key="index"
+          :articleData="article"
+        ></ArticleCard>
+      </div>
+      <div v-else>
+        <ArticleCard
+          id="container"
+          v-for="(article, index) in this.$root.filteredArticle"
+          :key="index"
+          :articleData="article"
+        ></ArticleCard>
+      </div>
     </div>
     <TagBox id="tagBoxy"></TagBox>
     <div></div>
@@ -40,7 +50,8 @@ export default {
     return {
       allArticle: []
     };
-  }
+  },
+  computed: {}
 };
 </script>
 

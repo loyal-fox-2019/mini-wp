@@ -4,9 +4,19 @@ export default {
             isLogin: false,
             tagList: [],
             inSearch: '',
+            tagSearch: '',
             filteredArticle: [],
             allArticles: [],
             myArticles: []
+        }
+    },
+    watch: {
+        Search: function () {
+            if (this.$route.path == '/home') this.filteredArticle = this.allArticles.filter(article => article.title.indexOf(this.Search) > -1)
+            else this.filteredArticle = this.allArticles.filter(article => article.title.indexOf(this.Search) > -1)
+        },
+        tagSearch: function () {
+            this.filteredArticle = this.allArticles.filter(article => article.tags.includes(this.tagSearch))
         }
     },
     mounted() {
@@ -65,6 +75,14 @@ export default {
             },
             set: function (v) {
                 this.inSearch = v
+            }
+        },
+        TagSearch: {
+            get: function () {
+                return this.tagSearch
+            },
+            set: function (v) {
+                this.tagSearch = v
             }
         }
     }

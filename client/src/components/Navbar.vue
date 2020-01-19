@@ -18,8 +18,18 @@
 
         <b-navbar-nav class="ml-auto">
           <b-nav-form class="mr-5">
-            <b-form-input class="mr-sm-2" placeholder="Search article"></b-form-input>
-            <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">Search</b-button>
+            <div class="ui search">
+              <div class="ui icon input">
+                <input
+                  class="prompt"
+                  type="text"
+                  placeholder="Search article..."
+                  v-model="$root.Search"
+                />
+                <i class="search icon"></i>
+              </div>
+              <div class="results"></div>
+            </div>
           </b-nav-form>
           <b-collapse id="nav-text-collapse" is-nav v-show="!this.$root.nowLogin">
             <b-navbar-nav v-show="!this.$root.nowLogin">
@@ -74,16 +84,22 @@ export default {
     logout() {
       this.$root.nowLogin = false;
       localStorage.removeItem("token");
-      this.$router.push({ path: "/" });
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function() {
+          console.log("User signed out.");
+        });
+      }
+      this.$router.push({ path: "/login" });
     },
     goCreate() {
       if (this.$root.nowLogin === false) {
         this.$swal.fire({
           icon: "error",
           title: "Sorry..",
-          text: "You need login first before create an article!",
-        })
-        this.$router.push('/login')
+          text: "You need login first before create an article!"
+        });
+        this.$router.push("/login");
       } else {
         this.$router.push("/create");
       }

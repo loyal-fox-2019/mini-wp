@@ -1,5 +1,5 @@
 <template>
-  <div class="ui labeled button" tabindex="0">
+  <div class="ui labeled button" tabindex="0" @click.prevent="changeTagSearch">
     <div class="ui button">{{objectData.name}}</div>
     <a class="ui basic label">{{objectData.count}}</a>
   </div>
@@ -8,7 +8,13 @@
 <script>
 export default {
   name: "TagButtonSearch",
-  props: ["objectData"]
+  props: ["objectData"],
+  methods: {
+    changeTagSearch() {
+      console.log(this.objectData.name);
+      this.$root.TagSearch = this.objectData.name;
+    }
+  }
 };
 </script>
 

@@ -71,12 +71,14 @@ class Controller {
     }
 
     static editArticle(req, res, next) {
+        console.log(req.body, 'ini body');
+        console.log('=====================');
         let updateInput = {}
         for (const request in req.body) {
             if (req.body[request]) updateInput[request] = req.body[request]
         }
 
-        Article.findByIdAndUpdate(req.params.id, updateInput, { new: true }).populate('creator', 'name')
+        Article.findOneAndUpdate({_id: req.params.id}, updateInput, { new: true }).populate('creator', 'name')
             .then((article) => {
                 res.status(200).json(article)
             }).catch(next);

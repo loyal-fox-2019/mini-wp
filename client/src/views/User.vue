@@ -1,12 +1,34 @@
 <template>
   <div>
     <div id="kotak-article">
-      <ArticleCard
-        id="container"
-        v-for="(article, index) in this.$root.myArticles"
-        :key="index"
-        :articleData="article"
-      ></ArticleCard>
+      <div v-if="!$root.Search">
+        <ArticleCard
+          id="container"
+          v-for="(article, index) in this.$root.myArticles"
+          :key="index"
+          :articleData="article"
+        ></ArticleCard>
+      </div>
+      <div v-else>
+        <ArticleCard
+          id="container"
+          v-for="(article, index) in this.$root.filteredArticle"
+          :key="index"
+          :articleData="article"
+        ></ArticleCard>
+      </div>
+    </div>
+    <div
+      style="position: fixed; 
+        right: 60px; 
+        top: 150px; 
+        background-color: rgba(211, 211, 211, 0.466);
+        text-align:center;
+        padding: 10px"
+    >
+      <h1>Hello {{authenticedArticle[0].creator.name}}</h1>
+      <h2>This is your article</h2>
+      <h3>you can edit or delete your own article from here</h3>
     </div>
   </div>
 </template>

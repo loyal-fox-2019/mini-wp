@@ -51,8 +51,11 @@
         </div>
 
         <div id="login" v-if="formNow === 'login'">
-          <h1>Welcome Back!</h1>
-
+          <h1 style="text-align: center;">
+            <button class="g-signin2" data-onsuccess="onSignIn"></button>
+            <i class="arrow alternate circle left outline icon"></i>
+            Welcome Back!
+          </h1>
           <form @submit.prevent="loginUser" method="post">
             <div class="field-wrap">
               <input type="email" autocomplete="off" v-model="email" placeholder="Email*" required />
@@ -133,7 +136,22 @@ export default {
           console.log(data);
           this.$root.nowLogin = true;
           localStorage.setItem("token", data.token);
-          this.$router.push({ path: "/home" })
+          this.$router.push({ path: "/home" });
+        })
+        .catch(({ response }) => {
+          this.$swal.fire(response.data.message);
+          console.log(response);
+        });
+    },
+    onSignIn(googleUser) {
+      let token = googleUser.getAuthResponse().id_token;
+      this.axios
+        .post("/users/google", token)
+        .then(({ data }) => {
+          this.$root.nowLogin = true;
+          localStorage.setItem("token", data.token);
+          this.$router.push({ path: "/home" });
+          console.log(data);
         })
         .catch(({ response }) => {
           this.$swal.fire(response.data.message);
