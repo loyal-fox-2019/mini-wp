@@ -51,6 +51,55 @@ class UserController {
         })
     }
 
+    static googleSign(req, res, next){
+        let googlePayload
+        let userPayload = {}
+        let token
+        // console.log('masuk controller')
+      const clientId = process.env.CLIENT_ID
+      const client = new OAuth2Client(clientId)
+      client.verifyIdToken({
+        idToken: req.body.googleToken,
+        audience: clientId
+    })
+      .then(ticket => {
+          googlePayload = ticket.getPayload()
+        //   console.log(googlePayload)
+           return user.findOne({email: googlePayload.email})
+      })
+      .then(userData=>{
+        // console.log('USER DATA=====>',userData)
+        if(userData){
+            userPayload.id = userData._id
+            userPayload.name = userData.name
+            userPayload.toDos = userData.toDos
+            token = jwt.sign(userPayload, process.env.JWT_SECRET)
+            return
+        }else{
+            return user.create({
+                name: googlePayload.name,
+                email: googlePayload.email,
+                password: process.env.DEFAULT_PASSWORD
+            })
+        }
+    })
+    .then(createdData=>{
+        console.log('INI CREATED==>',createdData)
+        if(createdData){
+            userPayload.id = createdData._id
+            userPayload.name = createdData.name
+            token = jwt.sign(userPayload, process.env.JWT_SECRET)
+        }
+        res.status(200).json(token)
+    })
+    
+    .catch(err=>{
+        next('Login Failed')
+        // console.log(err)
+    })
+
+    }
+
 }
 
 module.exports = UserController
