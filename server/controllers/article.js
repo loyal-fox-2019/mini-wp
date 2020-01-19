@@ -26,7 +26,10 @@ class Controller {
         for (const request in req.body) {
             if (req.body[request]) createInput[request] = req.body[request]
         }
-        if (createInput.image == '') createInput.image == this.getRandomPicture()
+        if (createInput.tags) createInput.tags = createInput.tags.split(',')
+        console.log(createInput, 'sebelum');
+        if (createInput.image === null) createInput.image = this.getRandomPicture
+        console.log(createInput, 'sesudah');
 
         Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId() }, createInput, {
             upsert: true,
@@ -66,6 +69,7 @@ class Controller {
     }
 
     static async getRandomPicture() {
+        console.log('generate random picture here');
         let image_url = await axios.get('https://api.unsplash.com/photos/random', {
             headers: {
                 Authorization: process.env.UNSPLASH_KEY

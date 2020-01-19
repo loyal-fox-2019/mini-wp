@@ -6,13 +6,19 @@
 
         <b-navbar-brand>
           <b-link to="/" class="text-dark border-info">
-            <b-button variant="outline-light" class="ml-3">Slim WP <i class="book icon"></i></b-button>
+            <b-button variant="outline-light" class="ml-3">
+              Slim WP
+              <i class="book icon"></i>
+            </b-button>
           </b-link>
+          <button class="positive ui button ml-5" @click.prevent="goCreate">
+            <i class="plus icon"></i>Create
+          </button>
         </b-navbar-brand>
 
         <b-navbar-nav class="ml-auto">
           <b-nav-form class="mr-5">
-            <b-form-input class="mr-sm-2" placeholder="Search"></b-form-input>
+            <b-form-input class="mr-sm-2" placeholder="Search article"></b-form-input>
             <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
           <b-collapse id="nav-text-collapse" is-nav v-show="!this.$root.nowLogin">
@@ -20,7 +26,7 @@
               <b-nav-text>
                 <b-link to="/login" class="text-dark border-info">
                   <sui-button animated inverted>
-                    <sui-button-content visible color="black" inverted>Sign in/up</sui-button-content>
+                    <sui-button-content visible color="black" inverted class="signsign">Sign in/up</sui-button-content>
                     <sui-button-content hidden>
                       <sui-icon name="right arrow" />
                     </sui-button-content>
@@ -35,7 +41,7 @@
                 <b-link to="/user" v-if="this.$root.nowLogin" class="text-dark border-warning">
                   <b-button variant="outline-primary">
                     My Article
-                    <b-icon-person variant="dark"></b-icon-person>
+                    <b-icon-person variant="light"></b-icon-person>
                   </b-button>
                 </b-link>
                 <b-button
@@ -69,10 +75,22 @@ export default {
       this.$root.nowLogin = false;
       localStorage.removeItem("token");
       this.$router.push({ path: "/" });
+    },
+    goCreate() {
+      if (this.$root.nowLogin === false) {
+        this.$swal.fire({
+          icon: "error",
+          title: "Sorry..",
+          text: "You need login first before create an article!",
+        })
+        this.$router.push('/login')
+      } else {
+        this.$router.push("/create");
+      }
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 </style>
