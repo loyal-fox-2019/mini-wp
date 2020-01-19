@@ -20,8 +20,9 @@ const articleSchema = new Schema(
     },
     tags: [String],
     status: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: 'draft',
+      enum: ['draft', 'published'],
     },
   },
   { timestamps: true },
