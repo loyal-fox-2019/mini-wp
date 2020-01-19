@@ -1,10 +1,10 @@
 <template>
     <div style="top:0">
-        <!-- {{ articlePageMode }} -->
-        <!-- {{ pictureTempUrl }} -->
-        <form @submit.prevent="createArticle">
+        
+        <form @submit.prevent="submitForm">
             <div class="form-group" style="margin-top:1%">
                 <button type="submit" class="btn btn-primary">Save</button>
+                <button v-if="articlePageMode==='editMode'" type="submit" class="btn btn-danger" @click.prevent="deleteArticle">Delete Article</button>
             </div>
 
             <div class="form-group">
@@ -24,7 +24,7 @@
                     <b-form-file
                         v-model="featuredImage"
                         @change="setPictureTempUrl"
-                        :state="Boolean(file)"
+                        :state="Boolean(featuredImage)"
                         action="/upload-single"
                         method="post"
                         enctype="multipart/form-data">
@@ -85,7 +85,8 @@ import swal from 'sweetalert2'
 
 export default {
     props:[
-        'articlePageMode'
+        'articlePageMode',
+        'articleDetail'
     ],
     data(){
         return{
@@ -105,6 +106,13 @@ export default {
             this.featuredImage = ''
             this.tagList = ''
         },
+        setOnEditMode(){
+            this.title = this.articleDetail.title
+            this.content = this.articleDetail.content
+            this.tagList = this.articleDetail.tagList.join(',')
+            this.pictureTempUrl = this.articleDetail.featuredImage
+            this.featuredImage = this.articleDetail.featuredImage
+        },
         setPictureTempUrl(e){
             const file = e.target.files[0]
             this.pictureTempUrl = URL.createObjectURL(file)
@@ -113,7 +121,12 @@ export default {
             this.pictureTempUrl = ''
         },
         // others
-        
+        submitForm(){
+            if(this.articlePageMode === 'createMode')
+                this.createArticle()
+            else if(this.articlePageMode === 'editMode')
+                this.editArticle()
+        },
         createArticle(){
             swal.fire({
                 title: "Post Your Article",
@@ -124,46 +137,92 @@ export default {
             .then(result=>{
                 if(result.value)
                   {
-                      const fd = new FormData()
-                      fd.append('title', this.title)
-                      fd.append('content', this.content)
-                      fd.append('file', this.featuredImage)
-                      this.tagListArrayForm.forEach(element => {
-                          fd.append('tagList', element)
-                      });
+                    const fd = new FormData()
+                    fd.append('title', this.title)
+                    fd.append('content', this.content)
+                    fd.append('file', this.featuredImage)
+                    this.tagListArrayForm.forEach(element => {
+                        fd.append('tagList', element)
+                    });
 
-                        axios({
-                            method: 'post',
-                            url: '/articles',
-                            headers:{
-                                token: localStorage.getItem('token')
-                            },
-                            data: fd
-                        })
-                        .then( ({data})=>{
-                            this.setAllVariableToDefault()
-                            swal.fire({
-                                title: "Your Article has been saved",
-                                icon: "success",
-                                confirmButtonText: 'Back to Home'
-                            })
-                            .then( ({value})=>{
-                                if(value)
-                                    this.$emit('goBack')
-                            })
-                            
-                        })
-                        .catch( ({ response })=>{
-                            console.log(`error @createArticle - createEditArticle.vue \n=========================================\n`, response.data.message)
-                            Swal.fire(
-                                "Error",
-                                response.data.message,
-                                'error'
-                            )
-                        })
+                    this.$emit('createArticle', fd)
                   }
             })
-            
+        },
+        editArticle(){
+            let queryKey = []
+            const updateKeys = ['title', 'content', 'featuredImage']
+            updateKeys.forEach(element => {
+                if(this[element] !== this.articleDetail[element])
+                    queryKey.push(element)
+            });
+
+
+            let push = []
+            this.tagListArrayForm.forEach(element => {
+                if(this.articleDetail.tagList.indexOf(element) === -1)
+                    push.push(element)
+            });
+            let pull = []
+            this.articleDetail.tagList.forEach(element => {
+                if(this.tagListArrayForm.indexOf(element) <= 0)
+                    pull.push(element)
+            })
+
+            if( queryKey.length>0 || push.length>0 || pull.length>0)
+              {
+                swal.fire({
+                    title: "Save Change to Article",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: "Post It",
+                })
+                .then(result=>{
+                    if(result.value)
+                    {
+                        let fd = new FormData()
+                        queryKey.forEach(element => {
+                            fd.append( element, this[element] )
+                        });
+                        fd.delete('featuredImage')
+
+                        if(this.featuredImage !== this.articleDetail.featuredImage)
+                            fd.append('file', this.featuredImage)
+
+                        if(push.length > 0)
+                          {
+                            console.log(' \n======================\n JALAN PUSH')
+                            push.forEach(element => {
+                            fd.append('push', element)
+                            });
+                          }
+                        
+                        if(pull.length > 0)
+                          {
+                            console.log(' \n======================\n JALAN PULL')
+                            pull.forEach(element => {
+                            fd.append('pull', element)
+                            });
+                          }
+                        
+                        this.$emit('editArticle', fd)
+                    }
+                })
+              }
+        },
+        deleteArticle(){
+            swal.fire({
+                title: 'Delete Article',
+                text: 'You can\'t undo this action',
+                showCancelButton: true,
+                confirmButtonText: 'Confirm'
+            })
+            .then(result=>{
+                if(result.value)
+                  {
+                      this.$emit('deleteArticle', this.articleDetail._id)
+                  }
+            })
         },
         removeDisplayedTag(tagRemoved){
             // manual 1 1
@@ -180,9 +239,10 @@ export default {
     },
     mounted: function(){
         if(this.articlePageMode === 'createMode')
-          {
-              this.setAllVariableToDefault()
-          }
+            this.setAllVariableToDefault()
+        else if(this.articlePageMode === 'editMode')
+            this.setOnEditMode()
+
 
     },
     computed:{

@@ -17,6 +17,7 @@ router.post('/login', UserController.login) //done
 
 
 router.use(authentication)
+router.get('/one/:userId', UserController.findByUserId)
 
 // admin tools
 router.use('/admin', authorization('admin'))
@@ -35,5 +36,4 @@ router.patch('/:userId', authorization('User'), upload.single('file'), UserContr
 // no authorization
 // ==================================================================
 router.get('/', UserController.findLoggedInUserDetail)
-
 module.exports = router

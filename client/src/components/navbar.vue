@@ -10,7 +10,7 @@
                 <a class="navbar-brand" href="#" @click.prevent="$emit('backToHome', 'contentPage')">mini WP</a>
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#" @click.prevent="$emit('myArticles', loggedInUserDetail.username)">my articles<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#" @click.prevent="$emit('myArticles', loggedInUserDetail._id)">my articles<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a 

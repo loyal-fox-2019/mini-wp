@@ -10,7 +10,7 @@
             :loggedInUserDetail="loggedInUserDetail"
             @backToHome="backFromChild1Page"
             @userProfile="switchToUserProfilePage"
-            @createArticle="switchToArticlePage('createMode')"
+            @createArticle="switchToArticleCreatePage('createMode')"
             @myArticles="switchToUserContentPage"
             @switchToFilterResultPage="switchToFilterResultPage"
             @logOut="changeIsLogin"
@@ -21,21 +21,39 @@
             v-if="isLogin && showPage ==='contentPage'" 
             :loggedInUserDetail="loggedInUserDetail"
             :allArticlesArray="allArticlesArray"
-            @switchToArticlePage="switchToArticlePage"
+            @switchToArticleReader="switchToArticleReader"
+            @switchToArticleEditPage="switchToArticleEditPage"
             @switchToUserContentPage="switchToUserContentPage"
             @switchToFilterResultPage=switchToFilterResultPage>
         </contentPage>
 
-        <articlePage
-            v-if="showPage === 'articlePage'"
+        <articleReaderPage
+            v-if="showPage === 'articleReaderPage'"
+            :articleReaderId="articleReaderId"
+            @goBack="backFromChild1Page"
+            @switchToFilterResultPage=switchToFilterResultPage>
+        </articleReaderPage>
+
+        <articleCreatePage
+            v-if="showPage === 'articleCreatePage'"
             :articlePageMode="articlePageMode"
             @goBack="backFromChild1Page">
-        </articlePage>
+        </articleCreatePage>
+
+        <articleEditPage
+            v-if="showPage === 'articleEditPage'"
+            :articleEditPayload="articleEditPayload"
+            @goBack="backFromChild1Page">
+        </articleEditPage>
 
         <userContentPage
             v-if="showPage === 'userContentPage'"
             :userContentPageUsername = "userContentPageUsername"
-            @goBack="backFromChild1Page">
+            @goBack="backFromChild1Page"
+            @switchToArticleReader="switchToArticleReader"
+            @switchToArticleEditPage="switchToArticleEditPage"
+            @switchToUserContentPage="switchToUserContentPage"
+            @switchToFilterResultPage="switchToFilterResultPage">
         </userContentPage>
 
         <userProfilePage
@@ -47,11 +65,17 @@
         <filterResultPage
             v-if="showPage === 'filterResultPage'"
             :searchPayload="searchPayload"
-            @goBack="backFromChild1Page">
+            :loggedInUserDetail="loggedInUserDetail"
+            @switchToArticleReader="switchToArticleReader"
+            @switchToArticleEditPage="switchToArticleEditPage"
+            @goBack="backFromChild1Page">``
         </filterResultPage>
 
         
-
+<!-- @switchToArticleReader="$emit('switchToArticleReader', $event)"
+@switchToArticleEditPage="$emit('switchToArticleEditPage', $event)"
+@switchToUserContentPage="$emit('switchToUserContentPage', $event)"
+@switchToFilterResultPage="$emit('switchToFilterResultPage', $event)"> -->
         
 
         
@@ -62,12 +86,14 @@
 
 <script>
 import axios from '../../config/axios'
-import Swal from 'sweetalert2'
+import swal from 'sweetalert2'
 
 import navBar from '../components/navbar'
 import homePage from './homePage'
 import contentPage from './contentPage'
-import articlePage from './articlePage'
+import articleReaderPage from './articleReaderPage'
+import articleCreatePage from './articleCreatePage'
+import articleEditPage from './articleEditPage'
 import userProfilePage from './userProfilePage'
 import userContentPage from './userContentPage'
 import filterResultPage from './filterResultPage'
@@ -78,7 +104,9 @@ export default {
         navBar,
         homePage,
         contentPage,
-        articlePage,
+        articleReaderPage,
+        articleCreatePage,
+        articleEditPage,
         userProfilePage,
         userContentPage,
         filterResultPage
@@ -91,7 +119,9 @@ export default {
             allArticlesArray: [],
             articlePageMode: '',
             userContentPageUsername : '',
-            searchPayload:{}
+            searchPayload:{},
+            articleEditPayload:{},
+            articleReaderId:''
         }
     },
     methods:{
@@ -118,6 +148,12 @@ export default {
         setSearchPayload(payload){
             this.searchPayload = payload
         },
+        setArticleEditPayload(payload){
+            this.articleEditPayload = payload
+        },
+        setArticleReaderId(articleId){
+            this.articleReaderId = articleId
+        },
         //other methods
         changeIsLogin(status){
             this.setIsLogin(status)
@@ -131,7 +167,7 @@ export default {
             else
               {
                 this.setShowPage('homePage')
-                Swal.fire(
+                swal.fire(
                     'Log Out successfull',
                     `See you again ${this.loggedInUserDetail.username}`
                 )
@@ -151,7 +187,7 @@ export default {
             })
             .catch( ({ response })=>{
                 console.log('error log @fetchUserDetail - mainPage.vue\n=========================================\n', response.data.message)
-                Swal.fire(
+                swal.fire(
                     "Error",
                     response.data.message,
                     'error'
@@ -171,7 +207,7 @@ export default {
             })
             .catch( ({response})=>{
                 console.log(`error @fetchAllArticle - mainPage.vue \n=========================================\n`, response.data.message)
-                Swal.fire(
+                swal.fire(
                     "Error",
                     response.data.message,
                     'error'
@@ -181,9 +217,19 @@ export default {
         switchToUserProfilePage(userId){
             this.setShowPage('userProfilePage')
         },
-        switchToArticlePage(mode){
+        switchToArticleReader(articleId){
+            console.log(`TCL: switchToArticleReader -> articleId`, articleId)
+            this.setShowPage('articleReaderPage')
+            this.setArticleReaderId(articleId)
+        },
+        switchToArticleCreatePage(mode){
             this.setArticlePageMode(mode)
-            this.setShowPage('articlePage')
+            this.setShowPage('articleCreatePage')
+        },
+        switchToArticleEditPage(payload){
+            this.setArticlePageMode(payload.mode)
+            this.setArticleEditPayload(payload)
+            this.setShowPage('articleEditPage')
         },
         switchToUserContentPage(username){
             this.setUserContentPageUsername(username)

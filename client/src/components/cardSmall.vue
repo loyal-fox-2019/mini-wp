@@ -1,7 +1,8 @@
 <template>
     <div class="divIdentifier">
         <h3 class="elementIdentifier"> component card small</h3>
-        <div class="col mb-4 div-hover">
+        
+        <div class="col mb-4 div-hover" @click.prevent="$emit('switchToArticleReader', articleDetail._id)">
             <div class="card ">
                 <div v-if="articleDetail.Author._id === author" style="width:8%; height:15%; position:absolute; top:5px; right:8px; ">
                     <div class="edit-hover">
@@ -9,7 +10,7 @@
                         type="button" 
                         class="close" 
                         data-dismiss="modal" aria-label="Close"
-                        @click.prevent="$emit('switchToArticlePage', 'editMode')">
+                        @click.prevent="$emit('switchToArticleEditPage', {mode:'editMode', articleDetail})">
                         <font-awesome-icon icon="edit" class="edit-hover" />
                     </button>
                     </div>
@@ -93,7 +94,7 @@
 
 
                 <div class="card-footer" style="text-align:center">
-                    <a href="#" @click.prevent="$emit('switchToUserContentPage', articleDetail.Author.username)">
+                    <a href="#" @click.prevent="$emit('switchToUserContentPage', articleDetail.Author._id)">
                         <small style="color:#c61bf5" >@{{articleDetail.Author.username}}</small>
                     </a>
                 </div>
@@ -150,6 +151,7 @@ export default {
                 }        
             });
             this.plainTextContent = text
+            // this.$set(this.data, 'plainTextContent', 2)
         },
         minimizedContent(){
             if(this.plainTextContent.length > this.maxContentLength)

@@ -2,7 +2,6 @@ const User = require('../model/User')
 const { verifyToken } = require('../helper/jwt')
 
 module.exports = (req,res,next)=>{
-    
     console.log(`
         AUTHENTICATION IS RUNNING
         =========================

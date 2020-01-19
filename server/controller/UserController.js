@@ -1,6 +1,7 @@
 const User = require('../model/User')
 const { verifyHash } = require('../helper/bcryptjs')
 const { generateToken } = require('../helper/jwt')
+
 class UserController{
     static test(req,res)
       {
@@ -111,6 +112,20 @@ class UserController{
     static findLoggedInUserDetail(req,res,next)
       {
           res.status(200).json(req.decodedUser)
+      }
+
+    
+    static findByUserId(req,res,next)
+      {
+          User.findOne({
+            _id:req.params.userId
+          })
+          .then(result=>{
+              res.status(200).json(result)
+          })
+          .catch(err=>{
+              next(err)
+          })
       }
 
       

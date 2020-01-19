@@ -1,6 +1,5 @@
 module.exports = function(mode){
     return (req,res,next)=>{
-        
         console.log(`
             AUTHORIZATION IS RUNNING
             =========================
