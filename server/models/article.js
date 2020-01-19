@@ -14,6 +14,10 @@ const articleSchema = new Schema({
     },
     picture: {
         type: String
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     }
 })
 

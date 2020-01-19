@@ -2,14 +2,25 @@ const ArticleModel = require('../models/article')
 
 class ArticleController {
     static findAll(req,res,next){
-        ArticleModel.find()
+        ArticleModel.find({
+            userId: req.user.userId
+        })
         .then(articles=>{
             res.status(200).json(articles)
         })
         .catch(next)
     }
 
+    static findOne(req,res,next){
+        ArticleModel.findById(req.params.id)
+        .then(article=>{
+            res.status(200).json(article)
+        })
+        .catch(next)
+    }
+
     static create(req,res,next){
+        req.body.userId = req.user.userId
         ArticleModel.create(req.body)
         .then(created=>{
             res.status(201).json(created)
