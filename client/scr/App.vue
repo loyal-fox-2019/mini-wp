@@ -95,7 +95,7 @@ export default {
         send: function(params){
             axios({
                 method: 'POST',
-                url: 'http://localhost:3000/articles',
+                url: 'http://35.240.217.140:3000/articles',
                 data: params,
                 headers:{token: localStorage.getItem('token')}
             })
@@ -107,7 +107,7 @@ export default {
         del: function(params){
             axios({
                 method: "DELETE",
-                url: 'http://localhost:3000/articles/'+params,
+                url: 'http://35.240.217.140:3000/articles/'+params,
                 headers:{token: localStorage.getItem('token')}
             })
             .then((data)=>{
@@ -117,7 +117,7 @@ export default {
         ggle: function(params){
             axios({
                 method:"POST",
-                url:"http://localhost:3000/users/googlesignin",
+                url:"http://35.240.217.140:3000/users/googlesignin",
                 data: params
             })
             .then((data)=>{
@@ -130,7 +130,7 @@ export default {
             })
         },
         signin: function(params){
-            axios.post('http://localhost:3000/users/signin', {    
+            axios.post('http://35.240.217.140:3000/users/signin', {    
                 password: params.password,
                 email: params.email})
             .then((data)=>{ 
@@ -151,7 +151,7 @@ export default {
             this.log = false
         },
         account: function(params){
-            axios.post('http://localhost:3000/users/signup', params)
+            axios.post('http://35.240.217.140:3000/users/signup', params)
             .then((data)=>{
                 this.signin({password: params.password, email: params.email})
             })
@@ -162,7 +162,7 @@ export default {
         getdat:function(){
             let arti = this
             axios({
-                url:'http://localhost:3000/articles',
+                url:'http://35.240.217.140:3000/articles',
                 headers:{token: localStorage.getItem('token')}
             })
             .then(function(data){
@@ -173,7 +173,7 @@ export default {
             let arcId = params.id
             delete params.id
             axios({
-                url:'http://localhost:3000/articles/'+arcId,
+                url:'http://35.240.217.140:3000/articles/'+arcId,
                 method: 'PUT',
                 headers:{token: localStorage.getItem('token')},
                 data: params
