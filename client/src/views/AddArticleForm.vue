@@ -6,10 +6,10 @@
       </div>
       <b-form-row>
         <b-col cols="6">
-          <b-input type="text" placeholder="Article Title"></b-input>
+          <b-input type="text" placeholder="Article Title" v-model="title"></b-input>
         </b-col>
         <b-col>
-          <b-form-file placeholder="Featured image"></b-form-file>
+          <b-form-file accept="image/jpeg, image/png, image/gif" enctype="multipart/form-data" placeholder="Featured image" v-model="featuredImage"></b-form-file>
         </b-col>
       </b-form-row>
       <vue-editor v-model="content" class="mt-2 bg-light"></vue-editor>
@@ -22,7 +22,7 @@
         remove-on-delete
         no-outer-focus
       ></b-form-tags>
-      <b-button class="super-unique-custom-button" type="submit"
+      <b-button class="super-unique-custom-button" @click="createArticle"
         >Create!</b-button
       >
     </b-form>
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import api from '../api'
+import errorHandler from '../helpers/error-handler.js'
 import { VueEditor } from 'vue2-editor'
 
 export default {
@@ -38,11 +40,48 @@ export default {
     return {
       tags: [],
       content: '',
+      title: '',
+      featuredImage: null,
     }
   },
   components: {
     VueEditor,
   },
+  methods: {
+    createArticle() {
+      this.$swal.fire({
+        title: 'Creating new articles...',
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
+
+      api.post('/articles', {
+        title: this.title,
+        content: this.content,
+        tags: this.tags,
+      }, {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.$emit('newArticle', data.article)
+          this.$swal.fire({
+            icon: 'success',
+            title: 'Article added',
+            timer: 1500,
+            showConfirmButton: false
+          })
+          this.$router.push('/user/all-articles')
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
+    }
+  }
 }
 </script>
 

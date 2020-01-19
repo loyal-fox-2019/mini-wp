@@ -3,13 +3,15 @@
     <div class="dark-cover">
       <Navbar :username="username" @updateUserStatus="updateUserSession"></Navbar>
       <transition name="fade" mode="out-in">
-        <router-view class="custom-router-view" @updateUserStatus="updateUserSession"></router-view>
+        <router-view class="custom-router-view" @updateUserStatus="updateUserSession" @newArticle="pushNewArticle" @updateArticleList="fetchUserArticles" :userArticles="userArticles"></router-view>
       </transition>
     </div>
   </div>
 </template>
 
 <script>
+import api from './api'
+import errorHandler from './helpers/error-handler.js'
 import Navbar from './components/Navbar.vue'
 
 export default {
@@ -17,6 +19,7 @@ export default {
   data() {
     return {
       username: '',
+      userArticles: [],
     }
   },
   components: {
@@ -28,16 +31,45 @@ export default {
         localStorage.setItem('token', payload.token)
         localStorage.setItem('username', payload.username)
         this.username = payload.username
+        this.fetchUserArticles()
       } else {
         localStorage.clear()
         this.username = ''
+        this.userArticles = []
       }
+    },
+    fetchUserArticles() {
+      this.$swal.fire({
+        title: 'Fetching your article...',
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
+
+      api.get('/users/articles', {
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.$swal.close()
+          this.userArticles = data.articles
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
+    },
+    pushNewArticle(payload) {
+      this.userArticles.unshift(payload)
     }
   },
   created() {
     if (localStorage.getItem('token')) {
       this.username = localStorage.getItem('username')
       this.$router.push('/user/all-articles')
+      this.fetchUserArticles()
     }
   }
 }

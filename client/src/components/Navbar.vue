@@ -6,7 +6,7 @@
     </b-navbar-brand>
 
     <b-navbar-nav class="ml-auto d-flex align-items-center" v-if="username">
-      <b-nav-item>
+      <b-nav-item :to="{ path: '/user/all-articles' }">
         <b-nav-text class="custom-color">{{ username }}</b-nav-text>
       </b-nav-item>
       <b-nav-item>

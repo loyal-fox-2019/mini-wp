@@ -14,7 +14,7 @@
 
       <b-col>
         <transition name="fade" mode="out-in">
-          <router-view></router-view>
+          <router-view :userArticles="userArticles" @newArticle="$emit('newArticle', $event)" @updateArticleList="$emit('updateArticleList')"></router-view>
         </transition>
       </b-col>
     </b-row>
@@ -24,6 +24,7 @@
 <script>
 export default {
   name: 'user-page',
+  props: ['userArticles']
 }
 </script>
 

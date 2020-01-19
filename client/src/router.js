@@ -93,7 +93,7 @@ router.beforeEach((to, from ,next) => {
       break
 
     case '/user/published-articles':
-      redirectToAllArticles(next)
+      redirectToLandingPage(next)
       break
 
     case '/user/draft-articles':
