@@ -57,7 +57,7 @@ class ArticleController {
     const _id = req.params.id,
       { title, content, featured_image } = req.body,
       tags = req.body.tags.split(',')
-    Article.updateOne({ _id }, { title, content, tags, featured_image })
+    Article.updateOne({ _id }, { title, content, tags, featured_image }, { runValidators: true })
       .then(result => {
         return Article.findById(_id)
       })

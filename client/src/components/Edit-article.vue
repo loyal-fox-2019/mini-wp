@@ -19,6 +19,7 @@
             separator=" "
             placeholder="Tags separated by space"
             class="mb-2"
+            required
           ></b-form-tags>
         </div>
         <div class="form-group col-md-12">

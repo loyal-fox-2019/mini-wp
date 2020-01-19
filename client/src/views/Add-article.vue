@@ -15,6 +15,7 @@
           <b-form-tags
             v-model="tags"
             tag-variant="secondary"
+            required
             tag-pills
             separator=" "
             placeholder="Tags separated by space"
