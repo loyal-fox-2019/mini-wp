@@ -1,5 +1,5 @@
 <template>
-  <nav class="mb-1 navbar navbar-expand-lg navbar-dark purple lighten-1">
+  <nav class="mb-1 navbar navbar-expand-lg navbar-dark blue lighten-1">
     <a class="navbar-brand fab fa-wordpress-simple" href="#">My Site</a>
     <button
       class="navbar-toggler"

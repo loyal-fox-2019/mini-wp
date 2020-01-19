@@ -115,7 +115,7 @@ export default {
           localStorage.setItem("id", data.user._id);
           localStorage.setItem("username", data.user.username);
           localStorage.setItem("email", data.user.email);
-          // this.$root("clearLoginRegister");
+          this.$root.clearLoginRegister;
           this.$emit("checkLogin");
           Swal.fire(
             "Welcome Back",
@@ -144,7 +144,7 @@ export default {
           localStorage.setItem("id", data._id);
           localStorage.setItem("username", data.username);
           localStorage.setItem("email", data.email);
-          // this.$root("clearLoginRegister");
+          this.$root.clearLoginRegister;
           this.$emit("checkLogin");
           Swal.fire(
             "Welcome Back",
@@ -165,6 +165,32 @@ export default {
             title: "Oops...",
             text: err.message
           });
+        });
+    },
+    googleLogin(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      const idToken = googleUser.getAuthResponse().id_token;
+      axios({
+        url: `http://localhost:3000/users/login/google`,
+        method: "POST",
+        data: { idToken }
+      })
+        .then(result => {
+          console.log(result);
+          // localStorage.setItem("token", response.accessToken);
+          // localStorage.setItem("_id", response.user._id);
+          // localStorage.setItem("email", response.user.email);
+          // localStorage.setItem("login", "google");
+          // checkLogin();
+          // imageUser(response.user);
+          // Swal.fire(
+          //   "Welcome Back",
+          //   "Success Login " + response.user.fullname,
+          //   "success"
+          // );
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   }
@@ -244,7 +270,7 @@ ul.soc_icons2 li.pic a i.icon_6 {
 }
 
 .two-login-head {
-  background: #702c91;
+  background: #087afc;
   padding: 1em 1em;
   text-align: center;
   position: relative;
@@ -332,13 +358,13 @@ form.two input[type="password"] {
   padding: 13px 10px;
   width: 100%;
   border: none;
-  background: #702c91;
+  background: #087afc;
 }
 .submit.two input[type="submit"]:hover {
   background: #ffc50c;
 }
 .p-container a {
-  color: #702c91;
+  color: #087afc;
   font-size: 15px;
 }
 .p-container a:hover {

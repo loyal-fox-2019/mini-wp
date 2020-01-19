@@ -1,7 +1,9 @@
 <template>
   <div>
     <navbar @checkLogin="setLogout" v-if="isLogin"></navbar>
-    <loginRegister @checkLogin="setLogin" v-if="!isLogin"><loginRegister/>
+    <loginRegister @checkLogin="setLogin" v-if="!isLogin"></loginRegister>
+    <!-- <mainPage></mainPage> -->
+    <addArticle></addArticle>
   </div>
 </template>
 
@@ -9,24 +11,29 @@
 <script>
 import HalamanLoginRegister from "./views/HalamanLoginRegister";
 import navbar from "./components/navbar";
+import mainPage from "./views/mainPage";
+import addArticle from "./components/addArticle";
 
 export default {
   name: "App.vue",
   data() {
     return {
-      isLogin: false
+      isLogin: false,
+      addArticle: false
     };
   },
   components: {
     loginRegister: HalamanLoginRegister,
-    navbar
+    navbar,
+    mainPage,
+    addArticle
   },
   methods: {
     setLogin() {
       this.isLogin = true;
     },
-    setLogout(){
-      this.isLogin = false
+    setLogout() {
+      this.isLogin = false;
     }
   },
   created() {
