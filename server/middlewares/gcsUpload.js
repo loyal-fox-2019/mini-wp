@@ -5,7 +5,7 @@ const upload = gcsUpload({
       fileSize: 1e6 // in bytes
     },
     gcsConfig: {
-      keyFilename: 'Hacktiv8-MiniWP-37e8584cb53f.json',
+      keyFilename: 'Hacktiv8-MiniWP-fe5a802e4d05.json',
       bucketName: 'hacktiv8-miniwp-storage'
     }
   })

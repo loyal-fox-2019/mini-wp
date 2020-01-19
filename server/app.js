@@ -5,6 +5,7 @@ const PORT = 3000
 const routes = require('./routes/index')
 const mongoose = require('mongoose')
 const cors = require('cors')
+require('dotenv').config()
 
 app.use(cors())
 
