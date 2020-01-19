@@ -1,6 +1,18 @@
 <template>
   <div class="container border border-primary">
     <SearchBar class="mt-2" @updateArticle="updateArticle"></SearchBar>
+    <div class="article-content border border-info overflow-auto pt-2">
+      <ArticleCard v-for="article in articles"
+        :key="article._id"
+        :imgSrc = "article.featuredImage ? article.featuredImage : 'https://placekitten.com/300/300'"
+        :id="article._id"
+        :title="article.title"
+        :content="article.content"
+        :createdAt="article.createdAt"
+        :author="article.author"
+        :tags="article.tag"
+        ></ArticleCard>
+    </div>
   </div>
 </template>
 
@@ -8,6 +20,7 @@
 import api from '../api'
 import errorHandler from '../helpers/error-handler.js'
 import SearchBar from '../components/SearchBar.vue'
+import ArticleCard from '../components/CustomArticleCard.vue'
 
 export default {
   name: 'article-page',
@@ -18,6 +31,7 @@ export default {
   },
   components: {
     SearchBar,
+    ArticleCard
   },
   methods: {
     updateArticle(payload) {
@@ -44,7 +58,14 @@ export default {
         })
     },
   },
+  created() {
+    this.fetchAllArticles()
+  },
 }
 </script>
 
-<style></style>
+<style scoped>
+.article-content {
+  height: 93%;
+}
+</style>
