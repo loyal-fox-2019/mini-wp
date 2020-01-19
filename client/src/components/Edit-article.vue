@@ -1,9 +1,9 @@
 <template>
   <div class="add-post container">
     <header class="text-center m-4">
-      <h3 class="h3">Add Article</h3>
+      <h3 class="h3">Edit Article</h3>
     </header>
-    <form action="#" class="commenting-form" @submit.prevent="addArticle" enctype="multipart/form-data">
+    <form action="#" class="commenting-form" @submit.prevent="editArticle" enctype="multipart/form-data">
       <div class="row">
         <div v-for="(error, i) in errors" :key="i" class="alert alert-danger text-center" role="alert">
           {{error}}
@@ -14,7 +14,7 @@
         <div class="form-group col-md-6">
           <b-form-tags
             v-model="tags"
-            tag-variant="secondary"
+            tag-variant="primary"
             tag-pills
             separator=" "
             placeholder="Tags separated by space"
@@ -50,7 +50,7 @@
 <script>
 import axios from '../config/api'
 export default {
-  name: 'AddArticle',
+  name: 'EditArticle',
   data: function () {
     return {
       content: '',
@@ -60,8 +60,16 @@ export default {
       errors: []
     }
   },
+  props: {
+    article: Object
+  },
+  beforeMount() {
+    this.content = this.article.content
+    this.title = this.article.title
+    this.tags = this.article.tags
+  },
   methods: {
-    addArticle() {
+    editArticle() {
       this.errors = []
       const formData = new FormData()
       formData.set('title', this.title)
@@ -69,8 +77,8 @@ export default {
       formData.set('tags', this.tags)
       formData.set('featured_image', this.featured_image)
       axios({
-        method: 'POST',
-        url: `/articles`,
+        method: 'put',
+        url: `/articles/${this.article._id}`,
         headers: {
           token: localStorage.getItem('token')
         },
@@ -79,9 +87,9 @@ export default {
         .then(({ data }) => {
           this.title = ''
           this.content = ''
-          this.featured_image = ''
+          // this.featured_image = ''
           this.tags = []
-          this.$emit('show-home')
+          this.$emit('back-to-detail', data)
         })
         .catch(err => {
           this.errors[0] = err.response.data.message

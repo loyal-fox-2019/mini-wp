@@ -5,9 +5,10 @@ const router = require('express').Router(),
 
 router.get('/', ArticleController.all)
 router.use(authenticate)
-router.post('/', upload.single('featured_image'),ArticleController.create)
+router.get('/user', ArticleController.userArticles)
+router.post('/', upload.single('featured_image'), ArticleController.create)
 router.delete('/:id', authorize, ArticleController.delete)
-router.put('/:id', authorize, ArticleController.update)
+router.put('/:id', authorize, upload.single('featured_image'), ArticleController.update)
 router.patch('/:id/addTags', authorize, ArticleController.addTags)
 router.patch('/:id/removeTag', authorize, ArticleController.removeTag)
 

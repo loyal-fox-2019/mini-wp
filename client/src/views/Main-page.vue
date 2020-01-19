@@ -7,11 +7,11 @@
             <div v-for="(error, i) in errors" :key="i" class="alert alert-danger text-center" role="alert">
               {{error}}
             </div>
-            <article-item @show-detail="showDetail" v-for="article in articles" :key="article._id" :article="article"></article-item>
+            <article-item @show-detail="showDetail" v-for="article in articles" :key="article._id" :article="article" @search-tag="fetchArticlesTag"></article-item>
           </div>
         </div>
       </main>
-      <side-bar></side-bar>
+      <side-bar @search="fetchArticlesSearch" @search-tag="fetchArticlesTag"></side-bar>
     </div>
   </div>
 </template>
@@ -33,21 +33,95 @@ export default {
     }
   },
   methods: {
-    showDetail() {
-      this.$emit('show-detail')
+    showDetail(payload) {
+      this.$emit('show-detail', payload)
     },
     fetchArticles() {
       this.errors = []
-      axios({
-        method: 'get',
-        url: `/articles`
-      })
-        .then(({ data }) => {
-          this.articles = data
+      if(localStorage.getItem('token')) {
+        axios({
+          method: 'get',
+          url: `/articles/user`,
+          headers: {
+            token: localStorage.getItem('token')
+          }
         })
-        .catch(err => {
-          this.errors.push(err.response.data.message)
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      } else {
+        axios({
+          method: 'get',
+          url: `/articles`
         })
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      }
+    },
+    fetchArticlesTag(payload) {
+      this.errors = []
+      // if(localStorage.getItem('token')) {
+        axios({
+          method: 'get',
+          url: `/articles/user?tag=${payload}`,
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      // } else {
+      //   axios({
+      //     method: 'get',
+      //     url: `/articles`
+      //   })
+      //     .then(({ data }) => {
+      //       this.articles = data
+      //     })
+      //     .catch(err => {
+      //       this.errors.push(err.response.data.message)
+      //     })
+      // }
+    },
+    fetchArticlesSearch(payload) {
+      this.errors = []
+      // if(localStorage.getItem('token')) {
+        axios({
+          method: 'get',
+          url: `/articles/user?search=${payload}`,
+          headers: {
+            token: localStorage.getItem('token')
+          }
+        })
+          .then(({ data }) => {
+            this.articles = data
+          })
+          .catch(err => {
+            this.errors.push(err.response.data.message)
+          })
+      // } else {
+      //   axios({
+      //     method: 'get',
+      //     url: `/articles`
+      //   })
+      //     .then(({ data }) => {
+      //       this.articles = data
+      //     })
+      //     .catch(err => {
+      //       this.errors.push(err.response.data.message)
+      //     })
+      // }
     }
   },
   created() {

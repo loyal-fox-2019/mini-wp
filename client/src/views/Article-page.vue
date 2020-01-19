@@ -1,28 +1,26 @@
 <template>
   <div class="container">
-    <div class="single-post">
-      <div class="post-thumbnail">
+    <edit-page v-show="editPage" :article="article" @back-to-detail="finishEdit"></edit-page>
+    <div class="single-post" v-show="!editPage">
+      <div class="post-thumbnail d-flex justify-content-center">
         <img
-          src="https://images.unsplash.com/photo-1569429379101-35f2598ece66"
+          :src="article.featured_image"
           alt="..."
-          class="img-fluid"
+          class="img-fluid d-flex"
         />
       </div>
       <div class="post-details">
-        <div class="post-meta d-flex justify-content-between">
-          <div class="category">
-            <a href="#">Business</a>
-            <a href="#">Financial</a>
-          </div>
-        </div>
-        <h1>
-          test altas db
-          <a href="#">
-            <i class="fa fa-bookmark-o"></i>
+        <h1 class="text-center my-5">
+          {{article.title}}
+          <a href="#" @click.prevent="editPage=true" v-if="editable">
+            <i class="fa fa-edit"></i>
+          </a>
+          <a href="#" v-if="editable">
+            <i class="fa fa-trash"></i>
           </a>
         </h1>
         <div class="post-body">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <span v-html="article.content"></span>
         </div>
       </div>
     </div>
@@ -30,8 +28,28 @@
 </template>
 
 <script>
+import EditPage from '../components/Edit-article'
 export default {
-  name: 'ArticlePage'
+  name: 'ArticlePage',
+  components: {
+    EditPage
+  },
+  props: {
+    detail: Object
+  },
+  data() {
+    return {
+      editPage: false,
+      editable: localStorage.getItem('token'),
+      article: this.detail,
+    }
+  },
+  methods: {
+    finishEdit(payload) {
+      this.editPage = false
+      this.article = payload
+    }
+  }
 }
 </script>
 

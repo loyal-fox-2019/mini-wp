@@ -12,8 +12,34 @@ class ArticleController {
       .catch(next)
   }
   static all (req, res, next) {
-    Article.find()
-    .populate('author', 'username -_id')
+    let query = {}
+    if(req.query.tag) {
+      query.tags = {$in: [req.query.tag]} 
+    }
+    if(req.query.search) {
+      query.title = new RegExp(req.query.search,'i')
+    }
+    Article.find(query)
+      .sort({createdAt: -1})
+      .populate('author', 'username -_id')
+      .then(articles => {
+        res.send(articles)
+      })
+      .catch(next)
+  }
+  static userArticles (req, res, next) {
+    let query = {
+      author: req.user._id
+    }
+    if(req.query.tag) {
+      query.tags = {$in: [req.query.tag]} 
+    }
+    if(req.query.search) {
+      query.title = new RegExp(req.query.search,'i')
+    }
+    Article.find(query)
+      .sort({createdAt: -1})
+      .populate('author', 'username -_id')
       .then(articles => {
         res.send(articles)
       })
@@ -29,10 +55,14 @@ class ArticleController {
   }
   static update (req, res, next) {
     const _id = req.params.id,
-      { title, content, tags, featured_image } = req.body
+      { title, content, featured_image } = req.body,
+      tags = req.body.tags.split(',')
     Article.updateOne({ _id }, { title, content, tags, featured_image })
       .then(result => {
-        res.send(result)
+        return Article.findById(_id)
+      })
+      .then(article => {
+        res.send(article)
       })
       .catch(next)
   }

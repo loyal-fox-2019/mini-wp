@@ -27,13 +27,13 @@
           <!-- Navbar Menu -->
           <div id="navbarcollapse" class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a href="#" class="nav-link" @click="hideDetail">Home</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click.prevent="hideDetail">Home</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link" @click="showAdd" v-show="logedIn">Add Post</a>
+              <li class="nav-item"><a href="addpost" class="nav-link" @click.prevent="showAdd" v-show="logedIn">Add Post</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link" @click="logout" v-show="logedIn">Log Out</a>
+              <li class="nav-item"><a href="#" class="nav-link" @click.prevent="logout" v-show="logedIn">Log Out</a>
               </li>
-              <li class="nav-item"><a href="#" class="nav-link" @click="showLogin" v-show="!logedIn">Log in</a>
+              <li class="nav-item"><a href="login" class="nav-link" @click.prevent="showLogin" v-show="!logedIn">Log in</a>
               </li>
             </ul>
             <div class="navbar-text"><a href="#" class="search-btn"><i class="fa fa-search"></i></a></div>
