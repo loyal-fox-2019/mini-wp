@@ -52,15 +52,16 @@
             <hr style="border: 0.1rem solid white;" />
           </div>
         </div>
-        <b-button squared block>Continue with google</b-button>
-        <b-button squared block>Continue with Github</b-button>
-        <b-button squared block>Continue with Twitter</b-button>
-        <GoogleLogin
+        <!-- <b-button squared block>Continue with google</b-button> -->
+        <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" class="btn btn-light btn-block rounded-0"><span class="fab fa-google"></span> Continue with google</GoogleLogin>
+        <b-button squared block variant="primary"><span class="fab fa-twitter"></span> Continue with Twitter</b-button>
+        <b-button squared block variant="dark"><span class="fab fa-github"></span> Continue with Github</b-button>
+        <!-- <GoogleLogin
           :params="params"
           :renderParams="renderParams"
           :onSuccess="onSuccess"
           :onFailure="onFailure"
-        ></GoogleLogin>
+        ></GoogleLogin> -->
       </div>
     </div>
   </div>
@@ -115,6 +116,6 @@ export default {
 .custom-form {
   background-color: rgb(0, 0, 0, 0.1) !important;
   width: 40%;
-  height: 72%;
+  height: 62%;
 }
 </style>

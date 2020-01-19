@@ -3,7 +3,7 @@
     <div class="custom-form">
       <b-form class="py-2 px-5">
         <div class="text-center">
-          <h1 class="text-light">Register for free</h1>
+          <h1 class="text-light">Register For Free</h1>
           <h1 class="text-light">Forever</h1>
         </div>
         <b-form-group
@@ -70,6 +70,6 @@ export default {
 .custom-form {
   background-color: rgb(0, 0, 0, 0.1) !important;
   width: 40%;
-  height: 60%;
+  height: 50%;
 }
 </style>

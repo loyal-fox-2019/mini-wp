@@ -1,11 +1,12 @@
 <template>
   <div class="content overflow-auto mt-2">
-    <h1 class="text-light">Dummy card</h1>
+    <ArticleCard v-for="number in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]" :key="number" :imgSrc="'https://placekitten.com/300/300'"></ArticleCard>
   </div>
 </template>
 
 <script>
-import AddArticleForm from './AddArticleForm.vue'
+import ArticleCard from '../components/ArticleCard.vue'
+
 export default {
   name: 'article-container',
   data: function() {
@@ -15,7 +16,7 @@ export default {
     }
   },
   components: {
-    AddArticleForm,
+    ArticleCard,
   },
   watch: {
     $route: {
@@ -42,6 +43,6 @@ export default {
 
 <style scoped>
 .content {
-  height: 100%;
+  height: 90vh;
 }
 </style>
