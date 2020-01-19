@@ -3,12 +3,12 @@
     <div class="custom-form">
       <b-form class="py-2 px-5" @submit.prevent="login">
         <div class="text-center">
-          <h1 class="text-light mb-0">Let's write a</h1>
+          <h1 class="text-light mb-0">Let's Write A</h1>
           <h1
             class="text-light"
             style="font-family: 'Times New Roman', Times, serif;"
           >
-            masterpiece
+            Masterpiece
           </h1>
         </div>
         <b-form-group
@@ -58,8 +58,6 @@
         <GoogleLogin :params="params" :onSuccess="onSuccess" :onFailure="onFailure" class="btn btn-light btn-block rounded-0"><span class="fab fa-google"></span> Continue with google</GoogleLogin>
         <b-button squared block variant="primary"><span class="fab fa-twitter"></span> Continue with Twitter</b-button>
         <b-button squared block variant="dark"><span class="fab fa-github"></span> Continue with Github</b-button>
-        <b-button squared block variant="info" @click="testSwal">Test Swal</b-button>
-        <b-button squared block variant="warning" @click="$emit('updateUserStatus', { username: 'testing' })">Testing emit</b-button>
       </div>
     </div>
   </div>
@@ -132,24 +130,37 @@ export default {
       })
     },
     login() {
-      api.get('/random-path')
-        .then(({ data }) => {
-          console.log(data)
-        })
-        .catch(err => {
-          const self = this
-          errorHandler(err, self)
-        })
-    },
-    testSwal() {
       this.$swal.fire({
-        title: 'Loading...',
-        timer: 5000,
+        title: 'Login...',
         onBeforeOpen: () => {
           this.$swal.showLoading()
         }
       })
-    }
+
+      api.post('/login', {
+        email: this.email,
+        password: this.password
+      })
+        .then(({ data }) => {
+          this.$swal.fire({
+            title: 'Login success',
+            timer: 1500,
+            icon: 'success',
+            showConfirmButton: false
+          })
+
+          this.$emit('updateUserStatus', {
+            token: data.token,
+            username: data.username,
+            type: 'login'
+          })
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
+    },
   },
 }
 </script>

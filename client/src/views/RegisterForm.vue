@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 m-2 d-flex justify-content-center">
     <div class="custom-form">
-      <b-form class="py-2 px-5">
+      <b-form class="py-2 px-5" @submit.prevent="register">
         <div class="text-center">
           <h1 class="text-light">Register For Free</h1>
           <h1 class="text-light">Forever</h1>
@@ -17,6 +17,8 @@
             type="text"
             required
             placeholder="Enter username"
+            v-model="username"
+            autocomplete="off"
           ></b-form-input>
         </b-form-group>
 
@@ -31,6 +33,8 @@
             type="email"
             required
             placeholder="Enter email"
+            v-model="email"
+            autocomplete="off"
           ></b-form-input>
         </b-form-group>
 
@@ -39,6 +43,7 @@
             id="input-2"
             type="password"
             placeholder="Password"
+            v-model="password"
             required
           ></b-form-input>
         </b-form-group>
@@ -49,8 +54,49 @@
 </template>
 
 <script>
+import api from '../api'
+import errorHandler from '../helpers/error-handler.js'
+
 export default {
   name: 'login-form',
+  data: function() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+    }
+  },
+  methods: {
+    register() {
+      this.$swal.fire({
+        title: 'Register...',
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+        }
+      })
+
+      api.post('/register', {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      })
+        .then(({ data }) => {
+          this.$swal.fire({
+            title: 'Register success',
+            timer: 1500,
+            icon: 'success',
+            showConfirmButton: false
+          })
+
+          console.log(data)
+        })
+        .catch(err => {
+          this.$swal.close()
+          const self = this
+          errorHandler(err, self)
+        })
+    }
+  }
 }
 </script>
 
