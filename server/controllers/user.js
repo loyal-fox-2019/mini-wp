@@ -1,6 +1,8 @@
 const userModel = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 class User {
   static register(req, res, next) {
@@ -25,22 +27,21 @@ class User {
           _id,
           first_name,
           last_name,
-          username,
           email,
           created_at
         } = user;
 
+        return jwt.sign({
+          _id,
+          name: `${first_name} ${last_name}`,
+          email,
+          join: created_at
+        }, process.env.CLIENT_SECRET)
+      }).then((token) => {
         res.status(201).json({
-          user: {
-            _id,
-            firstName: first_name,
-            lastName: last_name,
-            username,
-            email,
-            join: created_at
-          },
-          message: 'Registration Success'
-        });
+          token,
+          name: `${firstName} ${lastName}`
+        })
       }).catch(next);
   }
 
@@ -49,6 +50,7 @@ class User {
       username,
       password
     } = req.body;
+    let name;
 
     userModel.findOne({
         $or: [{
@@ -67,16 +69,59 @@ class User {
           err.statusCode = 403;
           throw err;
         } else {
+          name = `${user.first_name} ${user.last_name}`;
           return jwt.sign({
             _id: user._id,
-            name: `${user.first_name} ${user.last_name}`,
+            name,
             email: user.email,
             join: user.created_at
           }, process.env.CLIENT_SECRET)
         }
       }).then((token) => {
         res.status(200).json({
-          token
+          token, name
+        });
+      }).catch(next);
+  }
+
+  static googleOauth(req, res, next) {
+    const {idToken} = req.body;
+    let oauthPayload;
+
+    client.verifyIdToken({
+      idToken,
+      audience: process.env.CLIENT_ID
+    })
+      .then((ticket) => {
+        oauthPayload = ticket.getPayload();
+
+        return userModel.findOne({
+            username: oauthPayload.sub
+        })
+      }).then((user) => {
+        if (user) {
+          return user;
+        } else {
+          return userModel.create({
+            first_name: oauthPayload.given_name,
+            last_name: oauthPayload.family_name,
+            password: 'notsafeforpassword',
+            username: oauthPayload.sub,
+            email: oauthPayload.email,
+            avatar: oauthPayload.picture
+          });
+        }
+      }).then((registeredUser) => {
+        const token = jwt.sign({
+            id: registeredUser._id,
+            name: registeredUser.name,
+            email: registeredUser.email,
+            avatar: registeredUser.avatar
+        }, process.env.CLIENT_SECRET);
+
+        res.status(200).json({
+          token, 
+          name: oauthPayload.name
         });
       }).catch(next);
   }

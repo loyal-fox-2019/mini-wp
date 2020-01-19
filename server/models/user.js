@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const hashPassword = require('../helpers/hashPassword');
 
 const userSchema = new Schema({
+  avatar: {
+    type: String
+  },
   first_name: {
     type: String,
     required: [true, "First name required"]
