@@ -190,7 +190,7 @@ export default {
             this.formWrite = false
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/articles',
+                url: 'http://34.87.21.93:3000/articles',
                 data: formData,
                 headers:{
                 token: localStorage.getItem('token')
@@ -220,7 +220,7 @@ export default {
             formData.append('picture', this.picture)
             axios({
                 method: 'patch',
-                url: `http://localhost:3000/articles/${id}`,
+                url: `http://34.87.21.93:3000/articles/${id}`,
                 data: formData,
                 headers:{
                 token: localStorage.getItem('token')
@@ -231,7 +231,7 @@ export default {
                 this.formUpdate=false
                 return axios({
                 method:'get',
-                url: 'http://localhost:3000/articles',
+                url: 'http://34.87.21.93:3000/articles',
                 headers:{
                     token: localStorage.getItem('token')
                 }
@@ -249,7 +249,7 @@ export default {
             console.log('delete article id', id)
             axios({
                 method: 'delete',
-                url: `http://localhost:3000/articles/${id}`,
+                url: `http://34.87.21.93:3000/articles/${id}`,
                 headers:{
                     token: localStorage.getItem('token')
                 }
@@ -258,7 +258,7 @@ export default {
                 // console.log(data)
                 return axios({
                 method: 'get',
-                url: 'http://localhost:3000/articles',
+                url: 'http://34.87.21.93:3000/articles',
                 headers:{
                     token: localStorage.getItem('token')
                 }
@@ -279,7 +279,7 @@ export default {
             this.searchedList = []
             axios({
                 method: 'get',
-                url: `http://localhost:3000/articles/${id}`,
+                url: `http://34.87.21.93:3000/articles/${id}`,
                 headers:{
                 token: localStorage.getItem('token')
                 }

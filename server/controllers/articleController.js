@@ -79,7 +79,7 @@ class ArticleController{
         Article.findByIdAndUpdate({_id: req.params.id},{
             title: req.body.title,
             content: req.body.content,
-            created_at: req.body.created_at,
+            created_at: new Date(),
             picture: req.body.picture
         }).populate('author', '-password')
         .then(result=>{

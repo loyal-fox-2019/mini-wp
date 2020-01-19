@@ -66,7 +66,7 @@ export default {
             // console.log('masuk login')
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/users/login',
+                url: 'http://34.87.21.93:3000/users/login',
                 data:{
                 email: this.email,
                 password: this.password
@@ -90,7 +90,7 @@ export default {
             const profile = googleUser.getBasicProfile();
             const id_token = googleUser.getAuthResponse().id_token;
             // console.log(id_token)
-            axios.post('http://localhost:3000/gsignin',{
+            axios.post('http://34.87.21.93:3000/gsignin',{
                 data: {
                     id_token
                 }

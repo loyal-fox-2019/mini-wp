@@ -89,7 +89,7 @@ export default {
             formData.append('picture', this.picture)
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/users/register',
+                url: 'http://34.87.21.93:3000/users/register',
                 data: formData
             })
             .then(({data})=>{
@@ -109,7 +109,7 @@ export default {
         onSuccess(googleUser){
             const profile = googleUser.getBasicProfile();
             const id_token = googleUser.getAuthResponse().id_token;
-            axios.post('http://localhost:3000/gsignin',{
+            axios.post('http://34.87.21.93:3000/gsignin',{
                 data: {
                     id_token
                 }

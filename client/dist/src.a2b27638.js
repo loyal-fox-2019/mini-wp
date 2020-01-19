@@ -29207,7 +29207,7 @@ var _default = {
       this.formWrite = false;
       (0, _axios.default)({
         method: 'post',
-        url: 'http://localhost:3000/articles',
+        url: 'http://34.87.21.93:3000/articles',
         data: formData,
         headers: {
           token: localStorage.getItem('token')
@@ -29240,7 +29240,7 @@ var _default = {
       formData.append('picture', this.picture);
       (0, _axios.default)({
         method: 'patch',
-        url: "http://localhost:3000/articles/".concat(id),
+        url: "http://34.87.21.93:3000/articles/".concat(id),
         data: formData,
         headers: {
           token: localStorage.getItem('token')
@@ -29251,7 +29251,7 @@ var _default = {
         _this2.formUpdate = false;
         return (0, _axios.default)({
           method: 'get',
-          url: 'http://localhost:3000/articles',
+          url: 'http://34.87.21.93:3000/articles',
           headers: {
             token: localStorage.getItem('token')
           }
@@ -29270,7 +29270,7 @@ var _default = {
       console.log('delete article id', id);
       (0, _axios.default)({
         method: 'delete',
-        url: "http://localhost:3000/articles/".concat(id),
+        url: "http://34.87.21.93:3000/articles/".concat(id),
         headers: {
           token: localStorage.getItem('token')
         }
@@ -29279,7 +29279,7 @@ var _default = {
         // console.log(data)
         return (0, _axios.default)({
           method: 'get',
-          url: 'http://localhost:3000/articles',
+          url: 'http://34.87.21.93:3000/articles',
           headers: {
             token: localStorage.getItem('token')
           }
@@ -29301,7 +29301,7 @@ var _default = {
       this.searchedList = [];
       (0, _axios.default)({
         method: 'get',
-        url: "http://localhost:3000/articles/".concat(id),
+        url: "http://34.87.21.93:3000/articles/".concat(id),
         headers: {
           token: localStorage.getItem('token')
         }
@@ -29992,7 +29992,7 @@ var _default = {
       // console.log('masuk login')
       (0, _axios.default)({
         method: 'post',
-        url: 'http://localhost:3000/users/login',
+        url: 'http://34.87.21.93:3000/users/login',
         data: {
           email: this.email,
           password: this.password
@@ -30018,7 +30018,7 @@ var _default = {
       var profile = googleUser.getBasicProfile();
       var id_token = googleUser.getAuthResponse().id_token; // console.log(id_token)
 
-      _axios.default.post('http://localhost:3000/gsignin', {
+      _axios.default.post('http://34.87.21.93:3000/gsignin', {
         data: {
           id_token: id_token
         }
@@ -30331,7 +30331,7 @@ var _default = {
       formData.append('picture', this.picture);
       (0, _axios.default)({
         method: 'post',
-        url: 'http://localhost:3000/users/register',
+        url: 'http://34.87.21.93:3000/users/register',
         data: formData
       }).then(function (_ref) {
         var data = _ref.data;
@@ -30354,7 +30354,7 @@ var _default = {
       var profile = googleUser.getBasicProfile();
       var id_token = googleUser.getAuthResponse().id_token;
 
-      _axios.default.post('http://localhost:3000/gsignin', {
+      _axios.default.post('http://34.87.21.93:3000/gsignin', {
         data: {
           id_token: id_token
         }
@@ -71192,7 +71192,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36001" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46703" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

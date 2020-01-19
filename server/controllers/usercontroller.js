@@ -94,6 +94,7 @@ class UserController{
                 res.status(200).json({
                     message: 'User Signed In',
                     token,
+                    _id: result._id,
                     username: result.username,
                     email: result.email,
                     picture: result.picture
@@ -118,13 +119,13 @@ class UserController{
             res.status(200).json({
                 message: 'User Signed In',
                 token,
+                _id: user._id,
                 username: user.username,
                 email: user.email,
                 picture: user.picture
             })
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
