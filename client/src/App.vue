@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar></navbar>
+    <navbar @checkLogin="setLogout" v-if="isLogin"></navbar>
     <loginRegister @checkLogin="setLogin" v-if="!isLogin"><loginRegister/>
   </div>
 </template>
@@ -24,6 +24,9 @@ export default {
   methods: {
     setLogin() {
       this.isLogin = true;
+    },
+    setLogout(){
+      this.isLogin = false
     }
   },
   created() {

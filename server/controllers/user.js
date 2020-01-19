@@ -3,6 +3,8 @@
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const { checkPassword } = require('../helpers/bcrypt')
+const { OAuth2Client } = require('google-auth-library')
+const client = new OAuth2Client(process.env.CLIENT_ID_GOOGLE)
 
 class userController {
     static register(req, res, next) {
@@ -51,7 +53,47 @@ class userController {
             }).catch((err) => {
                 next(err)
             });
+    }
 
+    static loginGoogle(req, res, next) {
+        let payload = null
+        client.verifyIdToken({
+            idToken: req.body.idToken,
+            audience: process.env.CLIENT_ID_GOOGLE
+        })
+            .then((data) => {
+                payload = data.getPayload()
+                return User.findOne({
+                    email: payload.email,
+                    id: payload.id
+                })
+            })
+            .then((user) => {
+                if (user) {
+                    console.log(payload)
+                    // let accessToken = jwt.sign({
+                    //     _id: payload._id
+                    // }, process.env.JWT_SECRET)
+                    // res.status(200).json({ accessToken, user })
+                } else {
+                    // return User.create({
+                    //     email: payload.email,
+                    //     password: ~~(Math.random() * 99999) + 1,
+                    //     fullname: payload.name,
+                    //     picture: payload.picture
+                    // })
+                }
+            })
+            .then((user) => {
+                // let accessToken = jwt.sign({
+                //     email: payload.email
+                // }, process.env.JWT_SECRET)
+                // mailer(payload.email)
+                // res.status(200).json({ accessToken, user })
+            })
+            .catch((err) => {
+                next(err)
+            });
     }
 }
 

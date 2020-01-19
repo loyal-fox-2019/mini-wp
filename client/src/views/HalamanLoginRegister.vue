@@ -10,11 +10,11 @@
         <form @submit.prevent="signin">
           <li>
             <input v-model="email" type="text" class="text" placeholder="Email" />
-            <a href="#" class="icon mail"></a>
+            <a href="#" class="icon2 mail"></a>
           </li>
           <li>
             <input v-model="password" type="password" placeholder="Password" />
-            <a href="#" class="icon lock2"></a>
+            <a href="#" class="icon2 lock2"></a>
           </li>
           <div class="p-container">
             <div class="clear"></div>
@@ -181,13 +181,6 @@ form li {
   margin-bottom: 25px;
   width: 100%;
   background: #dfdfdf;
-}
-.icon {
-  height: 45px;
-  width: 46px;
-  display: block;
-  float: left;
-  margin: 1px -13px 0px 0px;
 }
 input[type="text"],
 input[type="password"] {
