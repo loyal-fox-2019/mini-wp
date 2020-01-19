@@ -40,6 +40,7 @@ class ArticleController{
         .then(article=>{
             // console.log(article)
             res.json({
+                _id: article._id,
                 title: article.title,
                 content: article.content,
                 created_at: article.created_at,
