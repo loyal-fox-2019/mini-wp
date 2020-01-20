@@ -19,7 +19,7 @@
             }
         },
         methods: {
-            search: function () {
+            search: function (data) {
                 instance({
                     method: "get",
                     url: `/articles/${this.searchValue}`,

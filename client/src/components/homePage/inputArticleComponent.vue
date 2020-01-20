@@ -38,6 +38,10 @@
             <label>Feature Image : </label>
             <sui-label color="teal" basic>max size 5 Mb</sui-label>
             <div class="field">
+                <div id="input-image-container" v-if="imgFile">
+                    <i class="remove icon" id="remove-img" @click="removeImg"></i>
+                    <sui-image :src="imgFile"/>
+                </div>
                 <div class="ui input">
                     <input type="file"
                            ref="featured_image"
@@ -68,6 +72,7 @@
         name: "inputArticleComponent",
         data() {
             return {
+                imgFile: null,
                 title: "",
                 featured_image: "",
                 content: "",
@@ -104,38 +109,38 @@
             submitArticle: function () {
                 this.$dialog
                     .confirm("Save this data ?")
-                .then(dialog => {
-                    let formData = new FormData();
-                    formData.set('title', this.title);
-                    formData.set('tags', this.tags);
-                    formData.set('content', this.content);
-                    formData.set('featured_image', this.featured_image);
+                    .then(dialog => {
+                        let formData = new FormData();
+                        formData.set('title', this.title);
+                        formData.set('tags', this.tags);
+                        formData.set('content', this.content);
+                        formData.set('featured_image', this.featured_image);
 
-                    instance({
-                        method: "post",
-                        url: "/articles",
-                        data: formData,
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                            Authorization: "token " + localStorage.token
-                        }
-                    }).then(({data}) => {
-                        this.$emit('clicked');
-                        console.log(data);
-                        this.$toast.success({
-                            title: 'Success',
-                            message: 'Data successfully saved'
+                        instance({
+                            method: "post",
+                            url: "/articles",
+                            data: formData,
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                Authorization: "token " + localStorage.token
+                            }
+                        }).then(({data}) => {
+                            this.$emit('clicked');
+                            console.log(data);
+                            this.$toast.success({
+                                title: 'Success',
+                                message: 'Data successfully saved'
+                            });
+                            dialog.close();
+                        }).catch(err => {
+                            console.log({err});
+                            this.$toast.error({
+                                title: 'Error',
+                                message: err.response.data.message
+                            });
+                            dialog.close();
                         });
-                        dialog.close();
                     }).catch(err => {
-                        console.log({err});
-                        this.$toast.error({
-                            title: 'Error',
-                            message: err.response.data.message
-                        });
-                        dialog.close();
-                    });
-                }).catch(err => {
                     this.$toast.info({
                         title: 'Cancel',
                         message: 'You have cancel to save the data'
@@ -143,8 +148,16 @@
                     err.close();
                 });
             },
-            handleFileUpload: function () {
+            handleFileUpload: function (e) {
                 this.featured_image = this.$refs.featured_image.files[0];
+                const file = e.target.files[0];
+                this.imgFile = URL.createObjectURL(file);
+            },
+            removeImg: function(){
+                this.imgFile = null;
+                this.featured_image = null;
+                this.$refs.featured_image.type = 'text';
+                this.$refs.featured_image.type = 'file';
             }
         },
         components: {
@@ -156,5 +169,16 @@
 <style scoped>
     .field {
         margin: 10px;
+    }
+
+    #input-image-container {
+        width: 250px;
+        margin: 10px;
+    }
+
+    #remove-img {
+        color: red;
+        font-size: 16px;
+        cursor: pointer;
     }
 </style>

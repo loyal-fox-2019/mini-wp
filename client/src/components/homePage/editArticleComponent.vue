@@ -39,14 +39,16 @@
         <label>Feature Image : </label>
         <sui-label color="teal" basic>max size 5 Mb</sui-label>
         <div class="field input">
-            <div id="edit-image-container">
-                <sui-image :src="data.featured_image"/>
+            <div id="edit-image-container" v-if="imgFile">
+                <i class="remove icon" id="remove-img" @click="removeImg" />
+                <sui-image :src="imgFile"/>
             </div>
             <div class="ui input">
                 <input type="file"
                        ref="featured_image"
                        name="featured_image"
                        @change="handleFileUpload"/>
+                <i class="undo icon" id="undoImg" @click="undoImg"/>
             </div>
         </div>
         <br>
@@ -76,6 +78,7 @@
         name: "editArticleComponent",
         data() {
             return {
+                imgFile: null,
                 title: "",
                 featured_image: "",
                 content: "",
@@ -114,7 +117,8 @@
         mounted() {
             this.title = this.data.title;
             this.tags = this.data.tags;
-            this.content = this.data.content
+            this.content = this.data.content;
+            this.imgFile = this.data.featured_image;
         },
         methods: {
             updateArticle: function () {
@@ -161,23 +165,49 @@
                     err.close()
                 });
             },
-            handleFileUpload: function () {
+            handleFileUpload: function (e) {
                 this.featured_image = this.$refs.featured_image.files[0];
+                const file = e.target.files[0];
+                this.imgFile = URL.createObjectURL(file);
+            },
+            removeImg: function(){
+                this.imgFile = null;
+                this.featured_image = null;
+                this.$refs.featured_image.type = 'text';
+                this.$refs.featured_image.type = 'file';
+            },
+            undoImg: function(){
+                this.removeImg();
+                this.imgFile = this.data.featured_image;
             },
             cancelEdit: function () {
                 this.$emit('cancelEdit')
             },
-
         }
     }
 </script>
 
 <style scoped>
     #edit-image-container{
-        width: 200px;
+        width: 250px;
+        margin: 10px;
     }
 
     .input{
         padding-top: 10px;
+    }
+
+    #remove-img {
+        color: red;
+    }
+
+    i {
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    #undoImg {
+        color: blue;
+        margin: 10px 5px;
     }
 </style>
