@@ -34,12 +34,7 @@ class Controller {
         if (createInput.tags) createInput.tags = createInput.tags.split(',') // split tag
         setTimeout(function () {
             if (createInput.image == 'null') createInput.image = gambar.data.urls.regular
-            Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId() }, createInput, {
-                upsert: true,
-                setDefaultsOnInsert: true,
-                new: true,
-                runValidators: true
-            }).populate('creator', 'name')
+            Article.create(createInput)
                 .then((article) => {
                     console.log(article);
                     res.status(201).json(article)

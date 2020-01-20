@@ -43,7 +43,7 @@ export default {
       this.axios({
         url: this.url,
         data: formData,
-        method: "POST",
+        method: "PATCH",
         // katanya ga bisa pake put
         headers: {
           token: localStorage.getItem("token")
@@ -76,8 +76,8 @@ export default {
   mounted() {
     // console.log(this.Information);
     this.quillInit();
-    (this.title = this.Information.title),
-      (this.quill.root.innerHTML = this.Information.description);
+    this.title = this.Information.title,
+    this.quill.root.innerHTML = this.Information.description;
     this.value = this.Information.tags;
   },
   computed: {

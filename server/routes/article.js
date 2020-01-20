@@ -12,7 +12,7 @@ router.get('/:id', ArticleController.showOneArticle)
 
 router.post('/', authentication, upload.single('image'), ArticleController.createArticle)
 
-router.post('/:id', authentication, authorization, ArticleController.editArticle)
+router.patch('/:id', authentication, authorization, ArticleController.editArticle)
 
 router.delete('/:id', authentication, authorization, ArticleController.deleteArticle)
 
