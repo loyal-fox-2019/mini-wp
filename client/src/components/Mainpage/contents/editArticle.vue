@@ -5,11 +5,15 @@
             <input type="text" v-model="title" placeholder="Article title"><br>
             <input type="text" v-model="slug" placeholder="Article slug">
             <button id="save-btn" @click="updateArticle">Save article</button><br>
-            <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea><br>
+
+            <!-- <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea> -->
+            <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption">
+            </quill-editor>
+            <br>
+
             <button id="save-btn" @click="updateArticle">Save article</button>
 
-            <!-- Quill editor -->
-            <!-- <div class="editor"></div> -->
+            
     </div>
 </template>
 

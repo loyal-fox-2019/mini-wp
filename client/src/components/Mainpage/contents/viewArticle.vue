@@ -4,7 +4,7 @@
         <h1>{{ title }}</h1>        
         By {{ author }}<br>
         <img class="featured" :src="featured_image" alt="Featured image">
-        <p>{{ content }}</p>
+        <p v-html="content"></p>
     </div>
 </template>
 

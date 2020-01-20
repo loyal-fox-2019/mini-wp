@@ -6,17 +6,23 @@
                 <input type="text" v-model="slug" placeholder="Article slug"><br>
                 Featured image: <input type="file" name="file" ref="file" @change="handleFile">
                 <button id="save-btn" type="submit">Save article</button><br>
-                <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea><br>
+
+                <!-- <textarea v-model="content" cols="90" rows="20" placeholder="Article body"></textarea> -->
+                <quill-editor v-model="content" ref="myQuillEditor" :options="editorOption">
+                </quill-editor>
+                <br>
+
                 <button id="save-btn" type="submit">Save article</button>
             </form>
 
-            <!-- Quill editor -->
-            <!-- <div class="editor"></div> -->
+            
+
     </div>
 </template>
 
 <script>
     import axiosReq from "../../../config/axiosReq"
+    
     export default {
         name: "newArticle",
         data() {
@@ -24,7 +30,27 @@
                 title: "",
                 slug: "",
                 content: "",
-                file: ""
+                file: "",
+
+                editorOption: {
+                    modules: {
+                        toolbar: [
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['blockquote', 'code-block'],
+                            [{ 'header': 1 }, { 'header': 2 }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ 'direction': 'rtl' }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }],
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            [{ 'font': [] }],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'align': [] }],
+                            ['clean']
+                        ]
+                    }
+                }
             }
         },
         methods: {
@@ -63,11 +89,17 @@
             handleFile() {
                 this.file = this.$refs.file.files[0];
                 console.log(this.file)
-            }
-        }
+            },            
+            onEditorChange({ quill, html, text }) {
+                console.log('editor change!', quill, html, text)
+                this.content = html
+            }            
+        },
     }
 </script>
 
 <style scoped>
-
+quill-editor {
+    height: 50vw;
+}
 </style>
