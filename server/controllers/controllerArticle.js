@@ -84,6 +84,7 @@ class controllerArticle {
     }
 
     static updateArticle(req, res, next) {
+        let path = "";
         let tags = [];
         let data = {};
 
@@ -95,19 +96,30 @@ class controllerArticle {
         }
 
         if (req.file) {
+            path = req.file.path;
             data = {
                 title: req.body.title,
                 tags: tags,
                 author: req.token.userId,
                 content: req.body.content,
-                featured_image: req.file.path,
+                featured_image: path
             }
         } else {
-            data = {
-                title: req.body.title,
-                tags: tags,
-                author: req.token.userId,
-                content: req.body.content,
+            if (req.body.imgFile === 'null') {
+                data = {
+                    title: req.body.title,
+                    tags: tags,
+                    author: req.token.userId,
+                    content: req.body.content,
+                    featured_image: null
+                }
+            } else {
+                data = {
+                    title: req.body.title,
+                    tags: tags,
+                    author: req.token.userId,
+                    content: req.body.content,
+                }
             }
         }
 
