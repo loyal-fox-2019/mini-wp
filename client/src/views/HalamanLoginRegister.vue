@@ -22,20 +22,15 @@
           <div class="submit two">
             <input type="submit" value="SIGN IN" />
           </div>
-          <div class="social-icons">
-            <p>Or you can Login with one of the following</p>
-            <ul class="soc_icons2">
-              <li class="pic">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-              </li>
-              <div class="clear"></div>
-            </ul>
-          </div>
           <h5>
             Don't have an account ?
             <a @click="whatToShow = 'register'">Sign Up</a>
           </h5>
         </form>
+        <div class="social-icons">
+          <p>Or you can Login with one of the following</p>
+          <button class="g-signin2" data-onsuccess="onSignIn"></button>
+        </div>
       </div>
     </div>
 
@@ -84,7 +79,8 @@ export default {
       whatToShow: "login",
       email: "",
       password: "",
-      username: ""
+      username: "",
+      idToken: ""
     };
   },
   methods: {
@@ -99,6 +95,7 @@ export default {
         }
       })
         .then(({ data, token }) => {
+          this.$root.articles = [];
           localStorage.setItem("token", data.token);
           localStorage.setItem("id", data.user._id);
           localStorage.setItem("username", data.user.username);
@@ -128,6 +125,7 @@ export default {
         }
       })
         .then(({ data }) => {
+          this.$root.articles = [];
           localStorage.setItem("token", data.token);
           localStorage.setItem("id", data._id);
           localStorage.setItem("username", data.username);
@@ -151,19 +149,28 @@ export default {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: err.message
+            text: err
           });
         });
     },
-    googleLogin(googleUser) {
+    onSignIn(googleUser) {
+      console.log("masuk");
       var profile = googleUser.getBasicProfile();
+      console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log("Name: " + profile.getName());
+      console.log("Image URL: " + profile.getImageUrl());
+      console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
+      console.log("cek masuk ga");
       const idToken = googleUser.getAuthResponse().id_token;
+      console.log(idToken);
       axios({
-        url: `http://localhost:3000/users/login/google`,
+        url: "http://localhost:3000/users/login/google",
         method: "POST",
         data: { idToken }
       })
         .then(response => {
+          console.log(masuk);
+          console.log(response);
           localStorage.setItem("token", response.accessToken);
           localStorage.setItem("_id", response.user._id);
           localStorage.setItem("email", response.user.email);
@@ -176,6 +183,7 @@ export default {
           );
         })
         .catch(err => {
+          console.log(err);
           Swal.fire({
             icon: "error",
             title: "Oops...",

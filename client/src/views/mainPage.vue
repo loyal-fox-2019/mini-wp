@@ -180,6 +180,7 @@ export default {
         }
       })
         .then(({ data }) => {
+          console.log(data);
           this.$root.articles = data;
         })
         .catch(err => {

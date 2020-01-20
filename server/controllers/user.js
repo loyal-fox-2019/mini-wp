@@ -18,7 +18,6 @@ class userController {
                 const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
                 res.status(201).json({ user, token })
             }).catch((err) => {
-                console.log(err)
                 next(err)
             });
     }
@@ -56,6 +55,7 @@ class userController {
     }
 
     static loginGoogle(req, res, next) {
+        console.log('===================================masuk')
         let payload = null
         client.verifyIdToken({
             idToken: req.body.idToken,
@@ -63,33 +63,34 @@ class userController {
         })
             .then((data) => {
                 payload = data.getPayload()
+                console.log(payload, '=================masuk')
                 return User.findOne({
                     email: payload.email,
                     id: payload.id
                 })
             })
             .then((user) => {
+                console.log('masuk')
                 if (user) {
-                    console.log(payload)
-                    // let accessToken = jwt.sign({
-                    //     _id: payload._id
-                    // }, process.env.JWT_SECRET)
-                    // res.status(200).json({ accessToken, user })
+                    let accessToken = jwt.sign({
+                        _id: payload._id
+                    }, process.env.JWT_SECRET)
+                    console.log(accessToken)
+                    res.status(200).json({ accessToken, user })
                 } else {
-                    // return User.create({
-                    //     email: payload.email,
-                    //     password: ~~(Math.random() * 99999) + 1,
-                    //     fullname: payload.name,
-                    //     picture: payload.picture
-                    // })
+                    return User.create({
+                        email: payload.email,
+                        password: ~~(Math.random() * 99999) + 1,
+                        username: payload.name,
+                        picture: payload.picture
+                    })
                 }
             })
             .then((user) => {
-                // let accessToken = jwt.sign({
-                //     email: payload.email
-                // }, process.env.JWT_SECRET)
-                // mailer(payload.email)
-                // res.status(200).json({ accessToken, user })
+                let accessToken = jwt.sign({
+                    _id: payload._id
+                }, process.env.JWT_SECRET)
+                res.status(200).json({ accessToken, user })
             })
             .catch((err) => {
                 next(err)
