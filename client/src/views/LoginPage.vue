@@ -91,7 +91,7 @@ export default {
     login() {
       axios({
         method: "post",
-        url: "http://localhost:3000/users/login",
+        url: "http://35.197.157.157:3000/users/login",
         data: {
           email: this.email,
           password: this.password
@@ -117,7 +117,7 @@ export default {
     register() {
       axios({
         method: "post",
-        url: "http://localhost:3000/users/register",
+        url: "http://35.197.157.157:3000/users/register",
         data: {
           name: this.name,
           email: this.email,
@@ -153,6 +153,9 @@ export default {
     },
     onSuccess(googleUser) {
       console.log(googleUser);
+    },
+    onFailure(googleUser){
+      consoe.log(googleUser)
     }
   }
 };

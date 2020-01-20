@@ -64,7 +64,7 @@ export default {
         headers: {
           token: localStorage.getItem("token")
         },
-        url: "http://localhost:3000/articles",
+        url: "http://35.197.157.157:3000/articles",
         data: form,
         validateStatus: function(status) {
           return status < 404;
