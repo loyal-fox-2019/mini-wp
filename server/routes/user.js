@@ -5,7 +5,7 @@ const { authentication } = require('../middlewares/auth')
 
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
-router.get('/githubLogin', UserController.githubLogin)
+router.post('/login/google', UserController.gSign)
 
 router.use(authentication)
 router.get('/profile', UserController.profile)
