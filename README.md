@@ -8,6 +8,25 @@ http://18.219.119.178:55555
 
 <hr>
 
+## image upload
+
+### url
+POST /imgUpload
+
+### body
+FormData:
+fieldName: image, datatype: file
+required
+
+### success response
+```
+{
+    "image": "https://zoezachary.s3.ap-southeast-1.amazonaws.com/bravely_default_2.jpg"
+}
+```
+
+<hr>
+
 ## author
 Author module has 4 endpoints.
 
