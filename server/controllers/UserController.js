@@ -77,7 +77,7 @@ module.exports = class {
             })
     }
 
-    static findOne(){
+    static findOne(req, res, next){
         User
             .findById(req.userLogin._id)
             .exec()

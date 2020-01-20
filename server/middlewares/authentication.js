@@ -3,7 +3,7 @@ const userModel = require('../models/User');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = (req, res, next) => {
-  try {
+  try {    
     const token = req.headers.token;
     const userPayload = jwt.verify(token, process.env.JWT_KEY);
     // console.log(token);
