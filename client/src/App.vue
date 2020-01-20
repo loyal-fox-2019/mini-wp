@@ -10,9 +10,10 @@
                         <Sidebar v-on:writePage="write" v-on:blogPost="post"></Sidebar>
                     </div>
                     <div class="col-md-10 overflow-auto" id="right-content">
-                        <MainPage v-show="isArticle" :articleList="articleList" v-on:deletePost="deletePost" v-on:viewEdit="viewEdit" v-on:searchKey="getKey"></MainPage>
+                        <MainPage v-show="isArticle" :articleList="articleList" v-on:deletePost="deletePost" v-on:viewEdit="viewEdit" v-on:fullArticle="getFullArticle"></MainPage>
                         <WritePage v-show="isWrite" v-on:article="getArticle"></WritePage>
                         <EditForm v-if="editArticle !== null" :editArticle="editArticle" v-on:doneEdit="doneEdit"></EditForm>
+                        <FullArticle v-show="fullArticle" :fullArticle="fullArticle"></FullArticle>
                     </div>
                 </div>
             </div>
@@ -28,6 +29,7 @@ import Sidebar from './components/Sidebar'
 import MainPage from './components/MainPage'
 import WritePage from './components/WritePage'
 import EditForm from './components/EditForm'
+import FullArticle from './components/FullArticle'
 
 const BASE_URL = 'http://localhost:3000'
 
@@ -40,7 +42,8 @@ export default {
             isArticle: false,
             isWrite: false,
             articleList: [],
-            editArticle: null
+            editArticle: null,
+            fullArticle: false
         }
     },
     components: {
@@ -49,7 +52,8 @@ export default {
         Sidebar,
         MainPage,
         WritePage,
-        EditForm
+        EditForm,
+        FullArticle
     },
     methods: {
         login: function(data){
@@ -104,9 +108,14 @@ export default {
                 return this.fetchArticle()
             }
         },
+        getFullArticle: function(val){
+            this.fullArticle = val
+            this.isArticle = false
+        },
         post: function(){
             this.isArticle = true
             this.isWrite = false
+            this.fullArticle = false
         },
         fetchArticle: function(){
             let newData = this
@@ -145,6 +154,7 @@ export default {
         googleSign: function(){
             this.isLogin = true
             this.isArticle = true
+            this.fetchArticle()
         }
     },
     created() {

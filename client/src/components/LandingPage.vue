@@ -26,6 +26,8 @@
                         <button type="submit" class="btn btn-primary mb-3" @click.prevent="$emit('userRegister', registerData)">Register</button><br>
                         <h5>Already have an account? <span @click.prevent="changePage">Login Here</span></h5>
                         <g-signin-button
+                            class="btn btn-primary mt-2"
+                            id="googleSign"
                             :params="googleSignInParams"
                             @success="onSignInSuccess"
                             @error="onSignInError">

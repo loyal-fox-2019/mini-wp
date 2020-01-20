@@ -27,7 +27,7 @@
                                     <h5 class="card-title">{{article.title}}</h5>
                                     <p class="card-text">{{article.description}}</p>
                                     <p class="card-text"><small class="text-muted">{{new Date(article.created_at).toLocaleString()}}</small></p>
-                                    <a href="#" class="btn btn-primary" @click.prevent="test">Full Article</a>
+                                    <a href="#" class="btn btn-primary" @click.prevent="$emit('fullArticle', article)">Full Article</a>
                                     <a href="#" class="btn btn-warning" @click.prevent="$emit('viewEdit', article)">Edit</a> 
                                     <a href="#" class="btn btn-danger" @click.prevent="$emit('deletePost', article._id)">Delete</a>
                                 </div>
