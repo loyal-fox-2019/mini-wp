@@ -67,8 +67,11 @@ class ArticleController {
     static updateArticle(req, res, next){
         article.updateOne({_id:req.params.id}, {
             title: req.body.title,
-            content: req.body.content,
-            image_url: req.body.image_url
+           content: req.body.content,
+           image_url: req.body.image_url,
+           tags: tagList ,
+           authorID: req.loggedUser.id,
+           status: req.body.status,
         })
         .then(success=>{
             res.status(200).json(success)
@@ -82,9 +85,6 @@ class ArticleController {
         // console.log('myarticles');
         article.find({authorID:req.loggedUser.id}).populate('authorID', 'name').sort({created_at: 'desc'})
         .then(myArticles=>{
-            if(myArticles.length < 1){
-                next('Please create an Article first')
-            }
             res.status(200).json(myArticles)
         })
         .catch(err=>{
