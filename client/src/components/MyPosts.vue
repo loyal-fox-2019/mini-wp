@@ -29,7 +29,7 @@
         <div v-html="article.content" class="text-gray-700 mb-2">
           
         </div>
-        <span class="text-gray-600 text-sm">by {{ article.author.username }} </span>
+        <!-- <span class="text-gray-600 text-sm">by {{ article.author.username }} </span> -->
       </div>
       <!-- Tags -->
       <div class="px-6 py-4">

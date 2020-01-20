@@ -58,7 +58,6 @@ export default {
       fd.append('content', this.content)
       fd.append('tags', this.tags)
       if (this.file) {
-        console.log('shitttt')
         fd.append('featured_image', this.file)
       }
       if (!this.articleId) {

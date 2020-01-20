@@ -12,7 +12,7 @@
             class="font-bold text-xl mb-2 cursor-pointer hover:underline">
             {{ article.title }}
           </div>
-          <div>
+          <div v-if="email === article.author.email">
             <svg
               @click="toggleMenu(article._id)"
               class="cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8" 
@@ -62,7 +62,6 @@ export default {
           this.openedToggles.splice(index, index + 1)
         }
       }
-      console.log(this.openedToggles[0], this.openedToggles[1], this.openedToggles[2])
     },
     doSearch() {
       let url = ''
@@ -88,6 +87,20 @@ export default {
   },
   created() {
     this.doSearch()
+  },
+  computed: {
+    email() {
+      return localStorage.getItem('email')
+    }
+  },
+  watch: {
+    search: {
+      immediate: true,
+      deep: true,
+      handler(n, o) {
+        this.doSearch()
+      }
+    }
   }
 }
 </script>

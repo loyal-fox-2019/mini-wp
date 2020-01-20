@@ -103,6 +103,7 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
+          localStorage.setItem('email', data.email)
           this.$emit('setIsLogin', true)
         })
         .catch(({ response }) => {
@@ -120,6 +121,7 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem("access_token", data.access_token)
+          localStorage.setItem('email', data.email)
           this.$emit('login')
           Swal.fire({
             icon: 'success',

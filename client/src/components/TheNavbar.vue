@@ -118,6 +118,7 @@ export default {
       .then((result) => {
         if (result.value) {
           localStorage.removeItem('access_token')
+          localStorage.removeItem('email')
           this.$emit('logout')
         }
       })

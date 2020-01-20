@@ -116,6 +116,7 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token)
+          localStorage.setItem('email', data.email)
           this.$emit('registered')
           Swal.fire({
             icon: 'success',

@@ -26,10 +26,12 @@
     <FeedsPosts
       v-if="isLogin && page === 'feeds'"
       @showSearch="showSearch"
+      @toEditor="toEditor"
     >
     </FeedsPosts>
     <SearchResult
       v-if="isLogin && page === 'search'"
+      @toEditor="toEditor"
       :search="search"
     >
     </SearchResult>
@@ -40,6 +42,7 @@
     </EditorForm>
     <SinglePost
       :articleId="articleId"
+      @toEditor="toEditor"
       v-if="isLogin && page === 'post'">
     </SinglePost>
   </div>

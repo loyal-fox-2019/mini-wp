@@ -10336,7 +10336,7 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ax = _axios.default.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://34.67.109.244"
 });
 
 var _default = ax;
@@ -13826,6 +13826,7 @@ var _default = {
       }).then(function (result) {
         if (result.value) {
           localStorage.removeItem('access_token');
+          localStorage.removeItem('email');
 
           _this.$emit('logout');
         }
@@ -14311,7 +14312,6 @@ var _default = {
       fd.append('tags', this.tags);
 
       if (this.file) {
-        console.log('shitttt');
         fd.append('featured_image', this.file);
       }
 
@@ -14839,6 +14839,7 @@ var _default = {
       }).then(function (_ref) {
         var data = _ref.data;
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('email', data.email);
 
         _this.$emit('registered');
 
@@ -15275,7 +15276,9 @@ var _default = {
         }
       }).then(function (_ref) {
         var data = _ref.data;
+        console.log(data, '!!!');
         localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('email', data.email);
 
         _this.$emit('setIsLogin', true);
       }).catch(function (_ref2) {
@@ -15296,6 +15299,7 @@ var _default = {
       }).then(function (_ref3) {
         var data = _ref3.data;
         localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem('email', data.email);
 
         _this2.$emit('login');
 
@@ -15818,11 +15822,7 @@ exports.default = _default;
             _c("div", {
               staticClass: "text-gray-700 mb-2",
               domProps: { innerHTML: _vm._s(article.content) }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "text-gray-600 text-sm" }, [
-              _vm._v("by " + _vm._s(article.author.username) + " ")
-            ])
+            })
           ]),
           _vm._v(" "),
           _c(
@@ -15896,8 +15896,25 @@ exports.default = void 0;
 
 var _axios = _interopRequireDefault(require("../../helpers/axios"));
 
+var _sweetalert = _interopRequireDefault(require("sweetalert2"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15930,16 +15947,20 @@ var _default = {
       date: '',
       author: '',
       featuredImage: '',
-      tags: ''
+      tags: '',
+      openedToggle: false
     };
   },
   methods: {
-    fetchPost: function fetchPost(articleId) {
+    toggleMenu: function toggleMenu() {
+      this.openedToggle = !this.openedToggle;
+    },
+    fetchPost: function fetchPost() {
       var _this = this;
 
       (0, _axios.default)({
         method: 'get',
-        url: "/articles/".concat(articleId),
+        url: "/articles/".concat(this.articleId),
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -15955,10 +15976,36 @@ var _default = {
         var response = _ref2.response;
         console.log(response);
       });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      _sweetalert.default.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then(function (result) {
+        if (result.value) {
+          (0, _axios.default)({
+            method: 'delete',
+            url: "/articles/".concat(_this2.articleId),
+            headers: {
+              access_token: localStorage.getItem('access_token')
+            }
+          }).then(function (_ref3) {
+            var data = _ref3.data;
+
+            _this2.fetchPost();
+          });
+        }
+      });
     }
   },
   created: function created() {
-    this.fetchPost(this.articleId);
+    this.fetchPost();
   },
   computed: {}
 };
@@ -15985,20 +16032,88 @@ exports.default = _default;
       _c("img", { staticClass: "w-full", attrs: { src: _vm.featuredImage } }),
       _vm._v(" "),
       _c("div", { staticClass: "px-6 py-4" }, [
-        _c("div", { staticClass: "font-bold text-xl mb-2" }, [
-          _vm._v(_vm._s(_vm.title))
+        _c("div", { staticClass: "relative" }, [
+          _c("div", { staticClass: "font-bold text-xl mb-2" }, [
+            _vm._v(_vm._s(_vm.title))
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "svg",
+              {
+                staticClass:
+                  "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8",
+                attrs: {
+                  xmlns: "http://www.w3.org/2000/svg",
+                  viewBox: "0 0 20 20"
+                },
+                on: { click: _vm.toggleMenu }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d:
+                      "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm.openedToggle
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10"
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.$emit("toEditor", _vm.articleId)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }),
+                        _vm._v("Edit")
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.destroy()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }),
+                        _vm._v("Delete")
+                      ]
+                    )
+                  ]
+                )
+              : _vm._e()
+          ])
         ]),
         _vm._v(" "),
         _c("div", {
           staticClass: "text-gray-700 text-base mb-2",
           domProps: { innerHTML: _vm._s(_vm.content) }
-        }),
-        _vm._v(" "),
-        _c(
-          "a",
-          { staticClass: "text-gray-700 hover:text-gray-900 underline" },
-          [_vm._v("Read more")]
-        )
+        })
       ]),
       _vm._v(" "),
       _c(
@@ -16053,7 +16168,7 @@ render._withStripped = true
       
       }
     })();
-},{"../../helpers/axios":"helpers/axios.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/SearchResult.vue":[function(require,module,exports) {
+},{"../../helpers/axios":"helpers/axios.js","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","_css_loader":"../../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"node_modules/vue-hot-reload-api/dist/index.js","vue":"node_modules/vue/dist/vue.runtime.esm.js"}],"src/components/SearchResult.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16129,8 +16244,6 @@ var _default = {
           this.openedToggles.splice(index, index + 1);
         }
       }
-
-      console.log(this.openedToggles[0], this.openedToggles[1], this.openedToggles[2]);
     },
     doSearch: function doSearch() {
       var _this = this;
@@ -16159,6 +16272,20 @@ var _default = {
   },
   created: function created() {
     this.doSearch();
+  },
+  computed: {
+    email: function email() {
+      return localStorage.getItem('email');
+    }
+  },
+  watch: {
+    search: {
+      immediate: true,
+      deep: true,
+      handler: function handler(n, o) {
+        this.doSearch();
+      }
+    }
   }
 };
 exports.default = _default;
@@ -16210,64 +16337,68 @@ exports.default = _default;
                 [_vm._v("\n          " + _vm._s(article.title) + "\n        ")]
               ),
               _vm._v(" "),
-              _c("div", [
-                _c(
-                  "svg",
-                  {
-                    staticClass:
-                      "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 20 20"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.toggleMenu(article._id)
-                      }
-                    }
-                  },
-                  [
-                    _c("path", {
-                      attrs: {
-                        d:
-                          "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.openedToggles.includes(article._id)
-                  ? _c(
-                      "div",
+              _vm.email === article.author.email
+                ? _c("div", [
+                    _c(
+                      "svg",
                       {
                         staticClass:
-                          "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10"
+                          "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleMenu(article._id)
+                          }
+                        }
                       },
                       [
-                        _c(
-                          "a",
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.openedToggles.includes(article._id)
+                      ? _c(
+                          "div",
                           {
                             staticClass:
-                              "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
-                            attrs: { href: "" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.$emit("toEditor", article._id)
-                              }
-                            }
+                              "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10"
                           },
                           [
-                            _c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }),
-                            _vm._v("Edit")
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+                                attrs: { href: "" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.$emit("toEditor", article._id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "mr-1 fa fa-cog fa-fw"
+                                }),
+                                _vm._v("Edit")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(0, true)
                           ]
-                        ),
-                        _vm._v(" "),
-                        _vm._m(0, true)
-                      ]
-                    )
-                  : _vm._e()
-              ])
+                        )
+                      : _vm._e()
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", {
@@ -16400,6 +16531,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'FeedsPosts',
   data: function data() {
@@ -16409,6 +16553,17 @@ var _default = {
     };
   },
   methods: {
+    toggleMenu: function toggleMenu(articleId) {
+      if (!this.openedToggles.includes(articleId)) {
+        this.openedToggles.push(articleId);
+      } else {
+        var index = this.openedToggles.indexOf(articleId);
+
+        if (index > -1) {
+          this.openedToggles.splice(index, index + 1);
+        }
+      }
+    },
     fetchFeedsPosts: function fetchFeedsPosts() {
       var _this = this;
 
@@ -16428,6 +16583,11 @@ var _default = {
   },
   created: function created() {
     this.fetchFeedsPosts();
+  },
+  computed: {
+    email: function email() {
+      return localStorage.getItem('email');
+    }
   }
 };
 exports.default = _default;
@@ -16477,7 +16637,70 @@ exports.default = _default;
                   }
                 },
                 [_vm._v("\n          " + _vm._s(article.title) + "\n        ")]
-              )
+              ),
+              _vm._v(" "),
+              _vm.email === article.author.email
+                ? _c("div", [
+                    _c(
+                      "svg",
+                      {
+                        staticClass:
+                          "cursor-pointer fill-current absolute top-0 right-0 mx-1 text-black h-8 w-8",
+                        attrs: {
+                          xmlns: "http://www.w3.org/2000/svg",
+                          viewBox: "0 0 20 20"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.toggleMenu(article._id)
+                          }
+                        }
+                      },
+                      [
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M16.4 9H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zm0 4H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1zM3.6 7h12.8c.552 0 .6-.447.6-1 0-.553-.048-1-.6-1H3.6c-.552 0-.6.447-.6 1 0 .553.048 1 .6 1z"
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.openedToggles.includes(article._id)
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10"
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+                                attrs: { href: "" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.$emit("toEditor", article._id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "mr-1 fa fa-cog fa-fw"
+                                }),
+                                _vm._v("Edit")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._m(0, true)
+                          ]
+                        )
+                      : _vm._e()
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", {
@@ -16518,7 +16741,22 @@ exports.default = _default;
     0
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass:
+          "flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block",
+        attrs: { href: "#" }
+      },
+      [_c("i", { staticClass: "mr-1 fa fa-cog fa-fw" }), _vm._v("Delete")]
+    )
+  }
+]
 render._withStripped = true
 
           return {
@@ -16577,6 +16815,9 @@ var _FeedsPosts = _interopRequireDefault(require("./components/FeedsPosts"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
 //
 //
 //
@@ -16741,11 +16982,16 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "feeds"
-        ? _c("FeedsPosts", { on: { showSearch: _vm.showSearch } })
+        ? _c("FeedsPosts", {
+            on: { showSearch: _vm.showSearch, toEditor: _vm.toEditor }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "search"
-        ? _c("SearchResult", { attrs: { search: _vm.search } })
+        ? _c("SearchResult", {
+            attrs: { search: _vm.search },
+            on: { toEditor: _vm.toEditor }
+          })
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "editor"
@@ -16756,7 +17002,10 @@ exports.default = _default;
         : _vm._e(),
       _vm._v(" "),
       _vm.isLogin && _vm.page === "post"
-        ? _c("SinglePost", { attrs: { articleId: _vm.articleId } })
+        ? _c("SinglePost", {
+            attrs: { articleId: _vm.articleId },
+            on: { toEditor: _vm.toEditor }
+          })
         : _vm._e()
     ],
     1
@@ -19835,7 +20084,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39047" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33993" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
