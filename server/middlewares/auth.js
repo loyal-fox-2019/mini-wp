@@ -58,7 +58,7 @@ async function authorUpdateDeleteAuthorization(req, res, next) {
       }
 
       // console.log(req.params.articleId, '---------', article.author, '----------', req.authorId)
-      console.log(JSON.stringify(article.author) != JSON.stringify(req.authorId))
+      // console.log(JSON.stringify(article.author) != JSON.stringify(req.authorId))
       
       if(JSON.stringify(article.author) != JSON.stringify(req.authorId)) throw {
          errorCode: 401,

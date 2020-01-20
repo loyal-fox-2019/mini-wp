@@ -10336,9 +10336,10 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var developmentURL = "http://localhost:3000";
+var productionURL = "http://18.219.119.178:55555";
 
 var axiosInstance = _axios.default.create({
-  baseURL: "http://localhost:3000",
+  baseURL: productionURL,
   headers: {
     token: localStorage.token
   }
@@ -31331,7 +31332,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43853" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45633" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

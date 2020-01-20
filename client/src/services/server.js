@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 const developmentURL = `http://localhost:3000`
+const productionURL = `http://18.219.119.178:55555`
 
 const axiosInstance = axios.create({
-   baseURL: `http://localhost:3000`,
+   baseURL: productionURL,
    headers: {
       token: localStorage.token
    }

@@ -12,7 +12,7 @@ class AuthorController {
          if(email) inputs.email = email
          if(password) inputs.password = password
 
-         console.log(username, email, 'this is inputs\n-----------\n')
+         // console.log(username, email, 'this is inputs\n-----------\n')
    
          const author = await Author.create(inputs)
          const token = jwt.sign({authorId: author._id}, process.env.JWT_SECRET)

@@ -34,8 +34,8 @@ class ArticleController {
                {author: req.authorId}
             ]
          })
-         .limit(limit)
-         .skip(limit * (page - 1))
+         // .limit(limit)
+         // .skip(limit * (page - 1))
          .sort({createdAt: 'desc'})
 
          res.status(200).json({articles})
@@ -88,7 +88,7 @@ class ArticleController {
          if(tags) inputs.tags = tags
          if(audience) inputs.audience = audience
 
-         console.log('this is inputs', inputs)
+         // console.log('this is inputs', inputs)
 
          const results = await Article.updateOne(
             {_id: req.params.articleId},
