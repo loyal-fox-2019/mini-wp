@@ -24,9 +24,9 @@ async function detectUnsafe(url) {
       `gs://${bucketName}/${fileName}`
     );
     const detections = result.safeSearchAnnotation;
-    // console.log(`${url} Adult: ${detections.adult}`);
-    // console.log(`${url} Medical: ${detections.medical}`);
-    // console.log(`${url} Violence: ${detections.violence}`);
+    console.log(`${url} Adult: ${detections.adult}`);
+    console.log(`${url} Medical: ${detections.medical}`);
+    console.log(`${url} Violence: ${detections.violence}`);
 
     return detections.adult == "VERY_LIKELY" || detections.racy == "VERY_LIKELY" || detections.violence == "VERY_LIKELY" || detections.medical == "VERY_LIKELY" 
     // [END vision_safe_search_detection_gcs]
