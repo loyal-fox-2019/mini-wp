@@ -17,7 +17,7 @@
         </b-navbar-brand>
 
         <b-navbar-nav class="ml-auto">
-          <b-nav-form class="mr-5">
+          <div class="mt-2 mr-5">
             <div class="ui search">
               <div class="ui icon input">
                 <input
@@ -30,7 +30,7 @@
               </div>
               <div class="results"></div>
             </div>
-          </b-nav-form>
+          </div>
           <b-collapse id="nav-text-collapse" is-nav v-show="!this.$root.nowLogin">
             <b-navbar-nav v-show="!this.$root.nowLogin">
               <b-nav-text>
