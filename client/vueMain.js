@@ -4,7 +4,11 @@ const htmlPort = 'http://localhost:3000'
 new Vue ({
     el: '#app',
     created() {
-        this.findArticle();
+        if(!localStorage.token) {
+            this.showLogin();
+        } else {
+            this.findArticle();
+        }
     },
     computed: {
         filterArticle() {
@@ -21,7 +25,11 @@ new Vue ({
         search: '',
         page: 'main',
         articleOne: [],
-        file: ''
+        file: '',
+        UserId: '',
+        name: '',
+        email: '',
+        password: '',
     },
     methods: {
         addArticle: function() {
@@ -32,13 +40,16 @@ new Vue ({
             axios({
                 url: `${htmlPort}/article`,
                 method: 'post',
-                data: obj
+                data: obj,
+                headers: {
+                    token: localStorage.getItem('token')
+                }
             })
             .then(article => {
                 this.articles.push(article.data);
                 this.title = '';
                 this.content = '';
-                this.page='article';
+                this.page = 'article';
             })
             .catch(err => {
                 console.log(err.message);
@@ -48,6 +59,9 @@ new Vue ({
             axios({
                 url: `${htmlPort}/article`,
                 method: 'get',
+                headers: {
+                    token: localStorage.getItem('token')
+                }
             })
             .then(articlesDB => {
                 articlesDB.data.forEach(element => {
@@ -61,7 +75,10 @@ new Vue ({
         deleteArticle: function(id) {
             axios({
                 url: `${htmlPort}/article/${id}`,
-                method: 'delete'
+                method: 'delete',
+                headers: {
+                    token: localStorage.getItem('token')
+                }
             })
             .then(deletedArticle => {
                 console.log('Success delete article: ', deletedArticle.data);
@@ -75,7 +92,10 @@ new Vue ({
         findOneArticle: function(id) {
             axios({
                 url: `${htmlPort}/article/${id}`,
-                method: 'get'
+                method: 'get',
+                headers: {
+                    token: localStorage.getItem('token')
+                }
             })
             .then(articleDB => {
                 this.articleOne.push(articleDB.data);
@@ -88,19 +108,22 @@ new Vue ({
                 console.log(err.message);
             });
         },
-        updateOne: function(id) {
+        updateOne: function() {
             axios({
-                url: `${htmlPort}/article/${id}`,
+                url: `${htmlPort}/article/${this.id}`,
                 method: 'put',
                 data: {
                     title: this.title,
                     content: this.content
+                },
+                headers: {
+                    token: localStorage.getItem('token')
                 }
             })
             .then(article => {
                 this.articles = [];
                 this.findArticle();
-                this.page='article';
+                this.page = 'article';
             })
             .catch(err => {
                 console.log(err.message);
@@ -108,6 +131,68 @@ new Vue ({
         },
         upload() {
             this.file = event.target.files[0];
+        },
+        showLogin() {
+            this.page = 'signIn';
+        },
+        onSignIn: function(googleUser) {
+            const id_token = googleUser.getAuthResponse().id_token;
+            axios({
+                url: `${htmlPort}/gsignin`,
+                method: 'post',
+                data: {
+                    id_token
+                }
+            })
+            .then(response => {
+                localStorage.setItem('token', response.token);
+                this.page = 'main';
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        },
+        login: function() {
+            axios({
+                url: `${htmlPort}/login`,
+                method: 'post',
+                data: {
+                    email: this.email,
+                    password: this.password
+                },
+            })
+            .then(({data}) => {
+                localStorage.setItem('token', data.token);
+                this.page = 'main';
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        },
+        register: function() {
+            axios({
+                url: `${htmlPort}/register`,
+                method: 'post',
+                data: {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password
+                },
+            })
+            .then(({data}) => {
+                localStorage.setItem('token', data.token);
+                this.page = 'main';
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        },
+        signOut: function() {
+            localStorage.removeItem('token');
+            this.page = 'signIn';
+            const auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            });
         }
     }
 });

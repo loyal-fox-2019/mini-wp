@@ -10,5 +10,5 @@ const upload = gcsUpload ({
         bucketName: 'mini-wp-kirwanm'
     }
 });
-console.log()
+
 module.exports = upload;

@@ -1,5 +1,91 @@
 # mini-wp
 
+**User: Register**
+----
+  Register new user to app.
+
+* **URL**
+
+  /register
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   None
+
+* **Data Params**
+
+   name: [String],
+   email: [String],
+   password: [String]
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** <br />`{
+        "_id": "5e243323b1155a4fa129cb8c",
+        "name": "Peter",
+        "email": "peter@gmail.com",
+        "__v": 0
+    }`
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** <br />`{
+        "error": [
+            "Please fill a valid email address"
+        ]
+    }`
+    **Content:** <br />`{
+        "error": [
+            "Email already exist"
+        ]
+    }`
+
+**User: Login**
+----
+  Login user to app.
+
+* **URL**
+
+  /login
+
+* **Method:**
+
+  `POST`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   None
+
+* **Data Params**
+
+   email: [String],
+   password: [String]
+
+* **Success Response:**
+
+  * **Code:** 201 <br />
+    **Content:** <br />`{
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMjQzMzIzYjExNTVhNGZhMTI5Y2I4YyIsImlhdCI6MTU3OTQzMTUxMn0.KF1JfoIdvLoy4RACrKpnLs8PgUWeLN8xowAALyPP8wA",
+        "name": "Peter"
+    }`
+ 
+* **Error Response:**
+
+  * **Code:** 400 <br />
+    **Content:** <br />`{
+        "error": "Incorrect email/password"
+    }`
+
 **Article: Create**
 ----
   Create article in mini-wp app.
@@ -91,7 +177,7 @@
 
 * **URL**
 
-  /article
+  /article/:id
 
 * **Method:**
 

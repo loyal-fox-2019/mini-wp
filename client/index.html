@@ -5,6 +5,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="18224113996-i5ngf4f6dhfkus9itfnlbsmk30nc0o2e.apps.googleusercontent.com">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -38,7 +40,8 @@
     </nav>
 
     <div class="container-fluid" id="containerFluid">
-        <div class="row" id="rowMenuInfo">
+        <div class="row" id="rowMenuInfo" v-if="page === 'main' || page === 'article' || page === 'about' || page === 'addPage' || page === 'editPage'">
+
             <div class="col-3 sticky-top" id="colMenu">
                 <span class="h3">Menu Navigation</span>
                 <ul class="nav flex-column font-weight-bold">
@@ -51,7 +54,10 @@
                     <li class="nav-item">
                     <a class="nav-link" href="#" @click.prevent="page='about'">About</a>
                     </li>
-                </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="" @click.prevent="signOut">Sign Out</a>
+                    </li>
+                    </ul>
             </div>
             
             <div v-if="page === 'main'">
@@ -92,7 +98,7 @@
                     </div>
                     <div class="d-flex justify-content-around">
                         <div>
-                            <button type="submit" id="btnSaveArticle" class="btn btn-primary mb-2" v-on:click.prevent="updateOne(id)">Save Article</button>
+                            <button type="submit" id="btnSaveArticle" class="btn btn-primary mb-2" v-on:click.prevent="updateOne">Save Article</button>
                         </div>
                         <div>
                             <button type="submit" id="btnCancelAdd" class="btn btn-warning mb-2" v-on:click.prevent="page='article'">Cancel</button>
@@ -135,7 +141,24 @@
             </div>
 
         </div>
-        
+    
+        <div class="row d-flex justify-content-center" id="signIn" v-if="page === 'signIn'">
+            <div class="col-3" id="signInCol">
+                <input type="text" placeholder="Name" name="name" id="name" v-model="name">
+                <small id="emailHelp" class="form-text text-muted">Required when register</small>
+                <input type="text" placeholder="Email" name="email" id="email" v-model="email">
+                <input type="password" placeholder="Password" name="password" id="password" v-model="password">
+                <form action="" method="POST">
+                  <a href="" id="aLogin" v-on:click.prevent="login()">Login</a>
+                </form>
+                <form action="" method="POST">
+                  <a href="" id="aRegister" v-on:click.prevent="register">Register</a>
+                </form>
+                <hr>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            </div>
+        </div>
+
     </div>
 
     </div>
@@ -147,6 +170,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="vueMain.js"></script>
     <footer>
         <i class="fa fa-copyright" aria-hidden="true">copyright Kirwan Molek 2020</i>

@@ -7,31 +7,28 @@ class ArticleController {
         const title = req.body.title;
         const content = req.body.content;
         const file = req.body.file;
+        const UserId = req.userLoggedIn.id;
         Article.create({
             title,
             content,
-            file
+            file,
+            UserId
         })
         .then(article => {
             res.status(201).json(article);
         })
-        .catch(err => {
-            res.status(500).json({
-                message: err.message
-            });
-        });
+        .catch(next);
     }
 
     static find(req, res, next) {
-        Article.find()
+        const UserId = req.userLoggedIn.id;
+        Article.find({
+            UserId
+        })
         .then(articles => {
             res.status(200).json(articles);
         })
-        .catch(err => {
-            res.status(500).json({
-                message: err.message
-            });
-        });
+        .catch(next);
     }
 
     static findOne(req, res, next) {
@@ -41,17 +38,14 @@ class ArticleController {
         .then(article => {
             res.status(200).json(article);
         })
-        .catch(err => {
-            res.status(500).json({
-                message: err.message
-            });
-        });
+        .catch(next);
     }
 
     static updateOne(req, res, next) {
+        let id = req.params.id;
         Article.updateOne(
             {
-                _id: req.params.id
+                _id: id
             },
             {
                 title: req.body.title,
@@ -61,11 +55,7 @@ class ArticleController {
         .then(article => {
             res.status(200).json(article);
         })
-        .catch(err => {
-            res.status(500).json({
-                message: err.message
-            });
-        });
+        .catch(next);
     }
 
     static deleteOne(req, res, next) {
@@ -75,11 +65,7 @@ class ArticleController {
         .then(deletedArticle => {
             res.status(200).json(deletedArticle);
         })
-        .catch(err => {
-            res.status(500).json({
-                message: err.message
-            });
-        });
+        .catch(next);
     }
 }
 

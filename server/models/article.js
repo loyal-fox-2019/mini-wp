@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const ArticleSchema = new Schema ({
     title: {
         type: String,
-        required: true
+        required: [true, 'Title is required']
     },
     content: {
         type: String
@@ -17,6 +17,11 @@ const ArticleSchema = new Schema ({
     },
     file: {
         type: String
+    },
+    UserId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'User is required']
     }
 });
 
