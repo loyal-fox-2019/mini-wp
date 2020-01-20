@@ -1,6 +1,6 @@
 <template>
     <div>
-        <LandingPage v-show="!isLogin" v-on:userLogin="login" v-on:userRegister="register" v-on:hasLoggedIn="googleSign"></LandingPage>
+        <LandingPage v-show="!isLogin" v-on:userLogin="login" v-on:userRegister="register" v-on:hasLoggedIn="googleSign" :errStatus="errStatus" :errCode="errCode"></LandingPage>
         <div id="main-page" v-show="isLogin">
             <Header v-show="isLogin" v-on:logout="logout"></Header>
              <!-- CONTENT! -->
@@ -14,6 +14,7 @@
                         <WritePage v-show="isWrite" v-on:article="getArticle"></WritePage>
                         <EditForm v-if="editArticle !== null" :editArticle="editArticle" v-on:doneEdit="doneEdit"></EditForm>
                         <FullArticle v-show="fullArticle" :fullArticle="fullArticle"></FullArticle>
+                        <ToastLogin v-show="isLogin"></ToastLogin>
                     </div>
                 </div>
             </div>
@@ -30,6 +31,8 @@ import MainPage from './components/MainPage'
 import WritePage from './components/WritePage'
 import EditForm from './components/EditForm'
 import FullArticle from './components/FullArticle'
+import ToastLogin from './components/ToastLogin'
+import ErrorAlert from './components/ErrorAlert'
 
 const BASE_URL = 'http://localhost:3000'
 
@@ -43,7 +46,9 @@ export default {
             isWrite: false,
             articleList: [],
             editArticle: null,
-            fullArticle: false
+            fullArticle: false,
+            errStatus: [],
+            errCode: null
         }
     },
     components: {
@@ -53,7 +58,9 @@ export default {
         MainPage,
         WritePage,
         EditForm,
-        FullArticle
+        FullArticle,
+        ToastLogin,
+        ErrorAlert
     },
     methods: {
         login: function(data){
@@ -71,6 +78,10 @@ export default {
                     this.fetchArticle()
                 })
                 .catch(err => {
+                    this.errStatus.push(err.response.status)
+                    this.errStatus.push(err.response.data.message)
+                    this.errCode = true
+                    console.log(this.errStatus)
                     console.log(err.response)
                 })
         },
@@ -116,6 +127,7 @@ export default {
             this.isArticle = true
             this.isWrite = false
             this.fullArticle = false
+            this.editArticle = null
         },
         fetchArticle: function(){
             let newData = this

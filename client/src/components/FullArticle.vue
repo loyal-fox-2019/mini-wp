@@ -15,6 +15,7 @@
 
 <script>
 export default {
+    name: 'FullArticle',
     data() {
         return {
             article: []

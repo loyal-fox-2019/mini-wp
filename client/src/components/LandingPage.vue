@@ -40,6 +40,7 @@
                     <form>
                         <h1>Login</h1>
                         <div class="form-group">
+                            <ErrorAlert :errStatus="errStatus" v-show="errCode"></ErrorAlert>
                             <label for="exampleInputEmail1">Email address</label>
                             <input type="email" class="form-control text-center" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="loginData.email">
                             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -60,6 +61,7 @@
 <script>
 import axios from 'axios'
 import GSignInButton from 'vue-google-signin-button'
+import ErrorAlert from './ErrorAlert'
 
 export default {
     data() {
@@ -80,7 +82,10 @@ export default {
             }
         }
     },
-    props: ["params"],
+    components:{
+        ErrorAlert
+    },
+    props: ["params", 'errStatus', 'errCode'],
     methods: {
         getStarted: function(){
             this.started = !this.started

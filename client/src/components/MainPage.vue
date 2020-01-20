@@ -61,7 +61,7 @@ export default {
             if(this.searchKey == ''){
                 return this.articleList
             }else{
-                return this.articleList.filter(data => data.title.toLowerCase().includes(this.searchKey.toLowerCase()))
+                return this.articleList.filter(data => data.title.toLowerCase().includes(this.searchKey.toLowerCase()) || data.description.toLowerCase().includes(this.searchKey.toLowerCase()))
             }
         }
     },

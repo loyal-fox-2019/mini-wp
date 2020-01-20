@@ -37,7 +37,7 @@ import axios from 'axios'
 const BASE_URL = 'http://localhost:3000'
 
 export default {
-    name: 'WritePage',
+    name: 'EditForm',
     data() {
         return {
             title: this.editArticle.title,
