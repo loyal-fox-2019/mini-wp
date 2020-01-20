@@ -22,14 +22,14 @@
             </svg>
             <div v-if="openedToggles.includes(article._id)" class="absolute bg-blue-500 top-0 right-0 text-white mt-8 p-2 overflow-auto z-10">
               <a href="" @click.prevent="$emit('toEditor', article._id)" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>Edit</a>
-              <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>Delete</a>
+              <a href="" @click.prevent="destroy(article._id)" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>Delete</a>
             </div>
           </div>
         </div>
         <div v-html="article.content" class="text-gray-700 mb-2">
           
         </div>
-        <a class="cursor-pointer text-gray-700 hover:text-gray-900 underline">Read more</a>
+        <span class="text-gray-600 text-sm">by {{ article.author.username }} </span>
       </div>
       <!-- Tags -->
       <div class="px-6 py-4">
@@ -82,6 +82,30 @@ export default {
           this.openedToggles.splice(index, index + 1)
         }
       }
+    },
+    destroy(articleId) {
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      })
+      .then((result) => {
+        if (result.value) {
+          axios({
+            method: 'delete',
+            url: `/articles/${articleId}`,
+            headers: {
+              access_token: localStorage.getItem('access_token')
+            }
+          })
+            .then(({ data }) => {
+              this.fetchMyPosts()
+            })
+        }
+      })
     }
   },
   created() {

@@ -10,13 +10,16 @@
               <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>My Posts</a>
               <a href="#" class="flex items-center p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="mr-1 fa fa-cog fa-fw"></i>Feeds</a>
               <div class="border border-white"></div>
-              <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a>
+              <a href="#" class="p-2 hover:bg-gray-800 text-white text-sm no-underline hover:no-underline block">
+                <i class="fas fa-sign-out-alt fa-fw"></i> 
+                Log Out
+              </a>
             </div>
           </div>
           <div class="w-1/2 md:w-auto text-center text-white text-2xl font-medium">
             Nano WP
           </div>
-          <div class="w-1/4 md:w-auto md:flex text-right cursor-pointer">
+          <div v-if="isLogin" @click.prevent="logout" class="w-1/4 md:w-auto md:flex text-right cursor-pointer">
             <div>
               <i class="text-white fas fa-sign-out-alt"></i>
               <!-- <img class="inline-block h-8 w-8 rounded-full" src="https://avatars0.githubusercontent.com/u/36827603?s=460&v=4" alt=""> -->
@@ -49,7 +52,9 @@
             </a>
           </div>
           <div class="flex mr-8">
-            <a href="#" class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
+            <a href="#" 
+              @click.prevent="$emit('changePage', 'feeds')" 
+              class="no-underline text-white opacity-50 md:text-gray-600 md:opacity-100 flex items-center py-4 border-b border-transparent md:hover:text-gray-900">
               Feeds
             </a>
           </div>
@@ -81,6 +86,7 @@
 
 <script>
 import axios from '../../helpers/axios'
+import Swal from 'sweetalert2'
 export default {
   name: 'TheNavbar',
   props: {
@@ -99,6 +105,22 @@ export default {
     },
     toggleSearchDropdown() {
       this.searchDropdown = !this.searchDropdown
+    },
+    logout() {
+      Swal.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log me out'
+      })
+      .then((result) => {
+        if (result.value) {
+          localStorage.removeItem('access_token')
+          this.$emit('logout')
+        }
+      })
     }
   },
   created () {

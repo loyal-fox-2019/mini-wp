@@ -29,7 +29,7 @@
         <div v-html="article.content" class="text-gray-700 mb-2">
           
         </div>
-        <a class="cursor-pointer text-gray-700 hover:text-gray-900 underline">Read more</a>
+        <span class="text-gray-600 text-sm">by {{ article.author.username }} </span>
       </div>
       <!-- Tags -->
       <div class="px-6 py-4">

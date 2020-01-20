@@ -45,10 +45,10 @@
           </button>
           <hr>
           <button
-            class="w-full bg-transparent hover:bg-blue-700 hover:text-white border border-blue-500 text-blue-500 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            @click.prevent="githubLogin">
-            Continue with Github
+            v-google-signin-button="clientId"
+            class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+            type="button">
+            Continue with Google
           </button>
         </div>
         <div class="flex items-center mt-4">
@@ -68,6 +68,7 @@
 <script>
 import axios from '../../helpers/axios'
 import Swal from 'sweetalert2'
+import GoogleSignInButton from 'vue-google-signin-button-directive'
 import WarningCard from './WarningCard'
 import errorHandler from '../../helpers/errorHandler'
 export default {
@@ -80,7 +81,8 @@ export default {
       email: '',
       password: '',
       warning: false,
-      errorMsg: ''
+      errorMsg: '',
+      clientId: '762236887318-k7scpbh8384at05t8cvhjk5vbs4evra2.apps.googleusercontent.com'
     }
   },
   methods: {
@@ -104,11 +106,43 @@ export default {
           this.$emit('setIsLogin', true)
         })
         .catch(({ response }) => {
-          console.log(response)
           this.errorMsg = errorHandler(response)
           this.warning = true
         })
-    }
+    },
+    OnGoogleAuthSuccess (id_token) {
+      axios({
+        method: 'post',
+        url: '/user/login/google',
+        data: {
+          id_token
+        }
+      })
+        .then(({ data }) => {
+          localStorage.setItem("access_token", data.access_token)
+          this.$emit('login')
+          Swal.fire({
+            icon: 'success',
+            text: "Successfully signed in!"
+          })
+        })
+        .catch(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: err
+          })
+        })
+    },
+    OnGoogleAuthFail (err) {
+      console.log(err)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err
+      })    
+    },
+
   }
 }
 </script>

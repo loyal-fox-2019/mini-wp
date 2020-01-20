@@ -4,16 +4,18 @@
       :isLogin="isLogin"
       @changePage="changePage"
       @showSearch="showSearch"
+      @logout="logout"
     >
     </TheNavbar>
     <LoginForm
       v-if="!isLogin && page === 'login'"
+      @login="login"
       @changePage="changePage"
       @setIsLogin="setIsLogin">
     </LoginForm>
     <RegisterForm
       v-if="!isLogin && page === 'register'"
-      @changePage="changePage">
+      @registered="login">
     </RegisterForm>
     <MyPosts
       v-if="isLogin && page === 'myposts'"
@@ -21,6 +23,11 @@
       @showSearch="showSearch"
       @toEditor="toEditor">
     </MyPosts>
+    <FeedsPosts
+      v-if="isLogin && page === 'feeds'"
+      @showSearch="showSearch"
+    >
+    </FeedsPosts>
     <SearchResult
       v-if="isLogin && page === 'search'"
       :search="search"
@@ -46,6 +53,7 @@ import LoginForm from './components/LoginForm'
 import MyPosts from './components/MyPosts'
 import SinglePost from './components/SinglePost'
 import SearchResult from './components/SearchResult'
+import FeedsPosts from './components/FeedsPosts'
 export default {
   name: 'app',
   components: {
@@ -55,7 +63,8 @@ export default {
     EditorForm,
     MyPosts,
     SinglePost,
-    SearchResult
+    SearchResult,
+    FeedsPosts
   },
   data () {
     return {
@@ -91,6 +100,14 @@ export default {
       this.search.kind = kind
       this.search.keyword = keyword,
       this.page = 'search'
+    },
+    logout() {
+      this.isLogin = false
+      this.page = 'login'
+    },
+    login() {
+      this.isLogin = true,
+      this.page = 'myposts'
     }
   },
   created () {
