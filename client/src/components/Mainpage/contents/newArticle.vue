@@ -49,6 +49,8 @@
                     this.title = "";
                     this.slug = "";
                     this.content = "";
+
+                    this.$emit('viewArticle',data._id);
                 })
                 .catch((err) => {
                     console.log(err);

@@ -2,7 +2,7 @@
     <div>
         <ArticleList v-show="!isEdit" @editArticle="showEditForm" :trackEdit="trackEdit" @viewArticle="viewArticle"></ArticleList>
         
-        <EditArticle v-show="isEdit" :id="editId" @showMyList="showList"></EditArticle>
+        <EditArticle v-show="isEdit" :id="editId" @showMyList="showList" @viewArticle="viewArticle"></EditArticle>
     </div>
 </template>
 

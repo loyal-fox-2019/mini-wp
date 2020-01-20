@@ -1,9 +1,9 @@
 <template>
     <div>
         Article
-        <h1>{{ title }}</h1>
-        <a href="#">{{ author==username ? "Edit" : "" }}</a> 
-        <a href="#">{{ author==username ? "Delete" : "" }}</a>
+        <h1>{{ title }}</h1>        
+        By {{ author }}<br>
+        <img class="featured" :src="featured_image" alt="Featured image">
         <p>{{ content }}</p>
     </div>
 </template>
@@ -18,7 +18,8 @@
                 slug: "",
                 content: "",
                 author: "",
-                username: this.$cookies.get('username')
+                username: this.$cookies.get('username'),
+                featured_image: ""
             }
         },
         props: {
@@ -36,6 +37,7 @@
                         this.slug = data.slug;
                         this.content = data.content;
                         this.author = data.author.username;
+                        this.featured_image = data.featured_image;
                     })
                     .catch((err) => {
                         console.log(err);
@@ -65,5 +67,7 @@
 </script>
 
 <style scoped>
-
+.featured {
+    border: 1px solid black;
+}
 </style>

@@ -1,40 +1,36 @@
 <template>
     <div>
-        <h1>My Articles</h1>
-        <div v-if="myArticles.length > 0">
+        <h1>All Articles</h1>
+        <div v-if="allArticles.length > 0">
             <!-- <table class="table">
                 <tr>
                     <th>No.</th>
                     <th>Creation date</th>
+                    <th>Author</th>
                     <th>Title</th>
                     <th>Preview</th>
                     <th colspan="3">Actions</th>
                 </tr>
-                <tr v-for="({_id, createdAt,title,content} , index) in myArticles">
+                <tr v-for="({_id, createdAt,title,author,content} , index) in allArticles">
                     <td>{{ index + 1 }}</td>
                     <td>{{ (Date(createdAt)).toLocaleString('en-CA') }}</td>
+                    <td>{{ author.username }}</td>
                     <td>{{ title }}</td>
-                    <td>{{ content.substr(0,400) }}{{ content.length > 400 ? "..." : "" }}</td>
-                    <td><a href="#" v-on:click="showEditForm(_id)">Edit</a></td>
-                    <td><a href="#" v-on:click="deleteArticle(_id)">Delete</a></td>
+                    <td>{{ content.substr(0,400) }}{{ content.length > 400 ? "..." : "" }}</td>                    
                     <td><a href="#" @click="viewArticle(_id)">View Article</a></td>
                 </tr>
             </table> -->
 
             <div class="card-columns">
                 
-                <div class="card" v-for="({_id, createdAt,updatedAt,featured_image,title,author,content} , index) in myArticles">
+                <div class="card" v-for="({_id, createdAt,updatedAt,featured_image,title,author,content} , index) in allArticles">
                     <img class="card-img-top" :src="featured_image" alt="Featured image">
                     <div class="card-body">
                         <h5 class="card-title">{{ title }}</h5>
                         <p class="card-text">{{ content.substr(0,200) }}{{ content.length > 200 ? "..." : "" }}</p>                        
                     </div>
                     <div class="card-footer">
-                        <div class="links">
-                            <a href="#" @click="viewArticle(_id)">View</a>
-                            <a href="#" v-on:click="showEditForm(_id)">Edit</a>
-                            <a href="#" v-on:click="deleteArticle(_id)">Delete</a>
-                        </div>
+                        <a href="#" @click="viewArticle(_id)">View Article</a><br>
                         <small class="text-muted">Last updated {{ (Date(updatedAt)).toLocaleString('en-CA') }}</small>
                     </div>                    
                 </div>
@@ -51,67 +47,37 @@
 <script>
     import axiosReq from "../../../config/axiosReq"
     export default {
-        name: "articleList",
+        name: "allArticles",
         data() {
             return {
-                myArticles: []
+                allArticles: []
             }
             
         },
-        props: {
-            trackEdit: Number
-        },
         created() {
-            this.getMyArticles();
+            this.getAllArticles();
         },
-        watch: {
-            trackEdit: {
-                handler(val) {
-                    if(val)
-                    {
-                        this.getMyArticles();
-                    }                    
-                },
-                immediate: true
-            }
+        mounted() {
+            this.getAllArticles();
         },
         methods: {
-            getMyArticles() {
+            getAllArticles() {
                 axiosReq({
                     method: "GET",
-                    url: `/api/users/myArticles`,
+                    url: `/api/articles`,
                     headers: {
                         token: this.$cookies.get('token')
                     }
                 })
                 .then(({data}) => {
                     console.log(data);
-                    this.myArticles = data;
+                    this.allArticles = data;
                 })
                 .catch((err) => {
                     console.log(err);
                     
                 })
 
-            },
-            deleteArticle(id) {
-                axiosReq({
-                    method: "DELETE",
-                    url: `/api/articles/${id}`,
-                    headers: {
-                        token: this.$cookies.get('token')
-                    }
-                })
-                .then(() => {
-                    this.getMyArticles();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    
-                })
-            },
-            showEditForm(id) {
-                this.$emit('editArticle',id);
             },
             viewArticle(id) {
                 this.$emit('viewArticle',id);
@@ -132,10 +98,5 @@
 .card-footer {
     bottom: 0;
     position: absolute;
-}
-.links {
-    display: flex;
-    justify-content: space-evenly;
-    text-align: center;
 }
 </style>

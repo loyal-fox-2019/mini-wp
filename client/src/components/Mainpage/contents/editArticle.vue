@@ -64,7 +64,8 @@
                     }
                 })
                 .then(() => {
-                    this.backToList();
+                    this.$emit('viewArticle',this.id);
+                    // this.backToList();
                 })
                 .catch((err) => {
                     this.backToList();

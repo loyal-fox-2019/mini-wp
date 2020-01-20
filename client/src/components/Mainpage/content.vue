@@ -1,15 +1,17 @@
 <template>
     <div class="col-10 content">
-        <NewArticle v-if="visibility.newArticle"></NewArticle>
+        <NewArticle v-if="visibility.newArticle" @viewArticle="viewArticle"></NewArticle >
         <ArticleListAndEdit  v-if="visibility.articleList" @viewArticle="viewArticle"></ArticleListAndEdit>
-        <AllArticlesAndView v-if="visibility.viewArticle" :id="viewId"></AllArticlesAndView>
+        <viewArticle v-if="visibility.viewArticle" :id="viewId"></viewArticle>
+        <allArticles v-if="visibility.allArticles" @viewArticle="viewArticle"></allArticles>
     </div>
 </template>
 
 <script>
     import NewArticle from "./contents/newArticle"
     import ArticleListAndEdit from "./contents/articleListAndEdit"
-    import AllArticlesAndView from "./contents/viewArticle";
+    import viewArticle from "./contents/viewArticle";
+    import allArticles from "./contents/allArticles";
     export default {
         name: "Content",
         data() {
@@ -17,7 +19,8 @@
                 visibility: {
                     newArticle: false,
                     articleList: false,
-                    viewArticle: false
+                    viewArticle: false,
+                    allArticles: false
                 },
                 viewId: ""
             }
@@ -33,9 +36,8 @@
                 this.visibility[el] = true;
             },
             viewArticle(id) {
-                this.hideAll();
                 this.viewId = id;
-                this.showOne('viewArticle');
+                this.$emit('switchTab','viewArticle');
             }
         },
         props: {
@@ -54,7 +56,8 @@
         components: {
             NewArticle,
             ArticleListAndEdit,
-            AllArticlesAndView
+            viewArticle,
+            allArticles
         }
     }
 </script>

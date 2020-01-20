@@ -3,7 +3,7 @@
         <Navbar @isLogout="logoutUser"></Navbar>
         <div class="row mainbody">
             <Sidebar @switchTab="switchTab"></Sidebar>
-            <Content :tabToShow="newTab"></Content>
+            <Content :tabToShow="newTab" @switchTab="switchTab"></Content>
         </div>
     </div>
 </template>

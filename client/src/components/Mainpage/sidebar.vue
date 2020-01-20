@@ -4,7 +4,7 @@
             <ul>
                 <li class="list-heading">General</li>
                 <li>
-                    <a href="#" id="view-site" class="sidebar-link" @click="switchTab('viewArticle')">
+                    <a href="#" id="view-site" class="sidebar-link" @click="switchTab('allArticles')">
                         <span class="fa fa-desktop"></span> Read articles
                     </a>
                 </li>
