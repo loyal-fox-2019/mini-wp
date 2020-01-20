@@ -6,7 +6,7 @@ const app = express()
 const port = 3000
 const { errorHandler } = require('./middlewares/errorHandler')
 const router = require('./routes/index')
-mongoose.connect('mongodb://localhost/mini-wordpress', {useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true});
+mongoose.connect('mongodb+srv://richard:richard123@fancy-todo-nrxsk.gcp.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true,useUnifiedTopology:true,useCreateIndex:true});
 
 app.use(cors())
 app.use(express.json())
