@@ -24,7 +24,7 @@
                     <a class="cust-color" href="#" id="userLogo"><i class="fas fa-user-circle nav-fas"></i></a>
                 </template>
                 <b-dropdown-item href="#">Profile</b-dropdown-item>
-                <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                <b-dropdown-item href="#" @click='userLogOut'>Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
                     
                 </li>
@@ -57,7 +57,12 @@ export default {
             this.$emit('sideBarToggle', bar)
         },
         writeToggle(){
+            // console.log(this.navSub)
             this.$emit('subMenuToggle', this.navSub)
+        },
+        userLogOut(){
+            localStorage.clear()
+            this.$emit('loggedOut', true)
         }
     }
 }

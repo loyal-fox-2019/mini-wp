@@ -1,17 +1,17 @@
 <template>
     <div>
-        <NavBar @sideBarToggle="sideBarToggler($event)" @subMenuToggle="writeToggler" :logStat="isLogin"></NavBar>
+        <NavBar @sideBarToggle="sideBarToggler($event)" @subMenuToggle="writeToggler" :logStat="isLogin" @loggedOut="userLoggedOut"></NavBar>
         <!-- Main Part -->
         <b-container fluid class="custom-main-content" id="mainContainer">
             <div class="row">
-                <SideBar :sideStat="sideBar" @subMenuToggle="subMenuToggler($event)" v-if="isLogin"></SideBar>
+                <SideBar :sideStat="sideBar" @subMenuToggle="subMenuToggler($event, articles)" v-if="isLogin"></SideBar>
 
                 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 custom-main" v-if="isLogin">
-                    <MainContent :selectedSub="contentSub"></MainContent>
+                    <MainContent :selectedSub="webContent"></MainContent>
                 </main>
             </div>
 
-            <logForm v-if="!isLogin"></logForm>
+            <logForm v-if="!isLogin" @logged='userLogged'></logForm>
 
         </b-container>
         <!-- Main Part -->
@@ -31,7 +31,10 @@ export default {
     data(){
         return {
             sideBar: 'articles',
-            contentSub: '',
+            webContent: {
+                contentSub: '',
+                articles: null
+            },
             isLogin: false
         }
     },
@@ -42,15 +45,29 @@ export default {
         MainContent,
         logForm
     },
+    created(){
+        if(localStorage.getItem('token')){
+            this.isLogin = true
+        }else{
+            this.isLogin = false
+        }
+    },
     methods:{  
         sideBarToggler(side){
             this.sideBar = side
         },
         subMenuToggler(sub){
-            this.contentSub = sub
+            this.webContent.contentSub = sub.sub
+            this.webContent.articles = sub.articleDatas
         },
         writeToggler(write){
-            this.contentSub = write
+            this.webContent.contentSub = write
+        },
+        userLogged(){
+            this.isLogin = true
+        },
+        userLoggedOut(){
+            this.isLogin = false
         }
     }
 }
@@ -59,9 +76,13 @@ export default {
 <style>
     .custom-main-content {
             padding: 0% !important;
-            height: 90vh;
         }
     #mainContainer {
-        background-color: #ddf7fa
+        background-color: #ddf7fa;
+        height: 90vh;
     }
+    .custom-main {
+            height: 90vh;
+            overflow-y: scroll;
+        }
 </style>

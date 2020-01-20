@@ -46,11 +46,12 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
     name: 'SideBar',
     data(){
         return {
-            subMenu : 'myArticles'
+            subMenu : ''
         }
     },
     props: ['sideStat'],
@@ -58,8 +59,33 @@ export default {
         subMenuButton(subName){
             this.subMenu = subName
             let content = this.subMenu
-            // console.log(bar)
-            this.$emit('subMenuToggle', content)
+            let target
+            if(content!='myArticles'){
+                target = ''
+            }else{
+                target = 'myArticles/'
+            }
+            Axios({
+                method: 'get',
+                url: 'http://35.247.164.26:3000/articles/'+target,
+                headers:{
+                    token: localStorage.getItem('token')
+                }
+            })
+            .then(({ data })=>{
+                data.forEach(element => {
+                    if(element.status==true){
+                        element.status = 'Public'
+                    }else if(element.status==false){
+                        element.status = 'Private'
+                    }
+                });
+                this.$emit('subMenuToggle', {sub:content, articleDatas:data})
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+            
         }
     }
 }
