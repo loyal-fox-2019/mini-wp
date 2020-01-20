@@ -36,20 +36,23 @@ export default {
   methods: {
     edit() {
       let isi = this.quill.root.innerHTML;
-      let formData = new FormData()
-      formData.set("title", this.title);
-      formData.set("description", isi);
-      formData.set("tags", this.value);
-      console.log(formData);
-      this.axios
-        .post(this.url, formData, { // katanya ga bisa pake put
-          headers: {
-            token: localStorage.getItem("token")
-          },
-          _method: "PUT"
-        })
+      let formData = {}
+      formData.title =  this.title
+      formData.description = isi
+      formData.tag =  this.value
+      this.axios({
+        url: this.url,
+        data: formData,
+        method: "POST",
+        // katanya ga bisa pake put
+        headers: {
+          token: localStorage.getItem("token")
+        },
+        // _method: "PUT"
+      })
         .then(({ data }) => {
-          (this.title = ""), (this.image = null);
+          this.title = "";
+          this.image = null;
           this.quill.root.innerHTML = "";
           this.$swal.fire({
             icon: "success",

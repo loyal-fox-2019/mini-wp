@@ -78,7 +78,7 @@ export default {
           this.$router.push('/user')
         })
         .catch(function(error) {
-          console.log(error.response);
+          console.log(error);
           this.$swal.fire(error.response.data.message);
         });
     },

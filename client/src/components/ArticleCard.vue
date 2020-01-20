@@ -14,7 +14,7 @@
         <div class="meta">
           <a class="text-secondary">By: {{articleData.creator.name}}, {{tanggal}}</a>
         </div>
-        <div class="description" style="margin: 15px 0">{{articleData.description}}</div>
+        <div class="description" style="margin: 15px 0" v-html="articleData.description"></div>
       </div>
       <div class="extra content">
         <span>

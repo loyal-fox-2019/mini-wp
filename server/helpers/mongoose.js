@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-let mongoURI;
-if(process.env.NODE_ENV === 'development') mongoURI = process.env.MONGO_URI_DEV
-else mongoURI = process.env.MONGO_URI
+let mongoURI = process.env.MONGO_URI;
+// if(process.env.NODE_ENV === 'development') mongoURI = process.env.MONGO_URI_DEV
+// else mongoURI = process.env.MONGO_URI
 
 mongoose.connect(mongoURI, {
     useCreateIndex: true,

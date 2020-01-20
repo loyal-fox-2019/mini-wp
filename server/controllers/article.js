@@ -23,7 +23,6 @@ class Controller {
         (async () => {
             gambar = await Controller.getRandomPicture()
             req.body.image = gambar.data.urls.regular
-            console.log(req.body.image, 'ini dapat');
         })()
 
         let createInput = {}
@@ -35,7 +34,6 @@ class Controller {
         if (createInput.tags) createInput.tags = createInput.tags.split(',') // split tag
         setTimeout(function () {
             if (createInput.image == 'null') createInput.image = gambar.data.urls.regular
-            console.log(createInput, 'ini hasil')
             Article.findOneAndUpdate({ _id: mongoose.Types.ObjectId() }, createInput, {
                 upsert: true,
                 setDefaultsOnInsert: true,
@@ -51,7 +49,6 @@ class Controller {
     }
 
     static async getRandomPicture() {
-        console.log('generate random picture here');
         try {
             return await axios.get('https://api.unsplash.com/photos/random', {
                 headers: {
@@ -78,7 +75,7 @@ class Controller {
             if (req.body[request]) updateInput[request] = req.body[request]
         }
 
-        Article.findOneAndUpdate({_id: req.params.id}, updateInput, { new: true }).populate('creator', 'name')
+        Article.findOneAndUpdate({ _id: req.params.id }, updateInput, { new: true }).populate('creator', 'name')
             .then((article) => {
                 res.status(200).json(article)
             }).catch(next);
