@@ -45,7 +45,8 @@ export default {
         .post(this.url, formData, { // katanya ga bisa pake put
           headers: {
             token: localStorage.getItem("token")
-          }
+          },
+          _method: "PUT"
         })
         .then(({ data }) => {
           (this.title = ""), (this.image = null);
@@ -78,7 +79,7 @@ export default {
   },
   computed: {
     url() {
-      return "/articles/edit/" + this.Information._id;
+      return "/articles/" + this.Information._id;
     }
   }
 };
