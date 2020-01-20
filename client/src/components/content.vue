@@ -94,6 +94,82 @@
       </div>    
     </div>
     <!-- End of Cards -->
+    <!-- Discover -->
+    <div class="row row-cols-2 justify-content-around" v-if="selectedSub.contentSub=='discoverArticles'" >
+      <!-- insert card Articles Here -->
+      <div  class="card bg-dark text-white articleContent col-5"  v-for="(value, index) in discoverArticles" :key="index">
+        <img v-bind:src="value.image_url" class="card-img cust-cardImg" alt="..." />
+        <div class="card-img-overlay">
+          <h5 class="card-title">{{value.title}}</h5>
+          <p v-if="selectedSub.contentSub!='myArticles'"
+            class="card-text"
+          >Author: {{value.authorID.name}}
+          </p>
+          <p v-else
+            class="card-text"
+          >Status: {{value.status}}
+          </p>
+          <p class="card-text">{{value.created_at}}</p>
+          <button href="#" class="readFull btn btn-primary" @click="readFullArticle(value)">Read Full Article</button>
+          <div v-if="selectedSub.contentSub=='myArticles'">
+          <button href="#" class="cardButton btn btn-warning" @click="toggleEdit(value)"><i class="far fa-edit"></i></button>
+          <button href="#" class="cardButton btn btn-danger" @click="deleteArticle(value._id)"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+      </div>    
+    </div>
+    <!-- Discover -->
+
+    <!-- tag Articles -->
+    <div class="row row-cols-2 justify-content-around" v-if="selectedSub.contentSub=='findTags'" >
+      <!-- insert card Articles Here -->
+      <div  class="card bg-dark text-white articleContent col-5"  v-for="(value, index) in articleTagSearch" :key="index">
+        <img v-bind:src="value.image_url" class="card-img cust-cardImg" alt="..." />
+        <div class="card-img-overlay">
+          <h5 class="card-title">{{value.title}}</h5>
+          <p v-if="selectedSub.contentSub!='myArticles'"
+            class="card-text"
+          >Author: {{value.authorID.name}}
+          </p>
+          <p v-else
+            class="card-text"
+          >Status: {{value.status}}
+          </p>
+          <p class="card-text">{{value.created_at}}</p>
+          <button href="#" class="readFull btn btn-primary" @click="readFullArticle(value)">Read Full Article</button>
+          <div v-if="selectedSub.contentSub=='myArticles'">
+          <button href="#" class="cardButton btn btn-warning" @click="toggleEdit(value)"><i class="far fa-edit"></i></button>
+          <button href="#" class="cardButton btn btn-danger" @click="deleteArticle(value._id)"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+      </div>    
+    </div>
+    <!-- Tag Articles -->
+    <!-- Author Search -->
+    <div class="row row-cols-2 justify-content-around" v-if="selectedSub.contentSub=='findAuthors'" >
+      <!-- insert card Articles Here -->
+      <div  class="card bg-dark text-white articleContent col-5"  v-for="(value, index) in articleAuthorSearch" :key="index">
+        <img v-bind:src="value.image_url" class="card-img cust-cardImg" alt="..." />
+        <div class="card-img-overlay">
+          <h5 class="card-title">{{value.title}}</h5>
+          <p v-if="selectedSub.contentSub!='myArticles'"
+            class="card-text"
+          >Author: {{value.authorID.name}}
+          </p>
+          <p v-else
+            class="card-text"
+          >Status: {{value.status}}
+          </p>
+          <p class="card-text">{{value.created_at}}</p>
+          <button href="#" class="readFull btn btn-primary" @click="readFullArticle(value)">Read Full Article</button>
+          <div v-if="selectedSub.contentSub=='myArticles'">
+          <button href="#" class="cardButton btn btn-warning" @click="toggleEdit(value)"><i class="far fa-edit"></i></button>
+          <button href="#" class="cardButton btn btn-danger" @click="deleteArticle(value._id)"><i class="fas fa-trash-alt"></i></button>
+          </div>
+        </div>
+      </div>    
+    </div>
+    <!-- Author Search -->
     <!-- End of Main Content-Articles -->
 
     <!-- Start of add an Article -->
@@ -221,7 +297,11 @@ export default {
       if(this.searchTags==''||this.searchTags==null){
         return this.selectedSub.articles
         }
-      return this.selectedSub.articles.filter(element=> element.tags.includes(this.searchTags))
+      return this.selectedSub.articles.filter(element =>
+            element.tags.some(tags=>{
+              tags.includes(this.searchTags)
+            })
+      )
     },
     articleAuthorSearch(){
       if(this.searchAuthor==''||this.searchAuthor==null){

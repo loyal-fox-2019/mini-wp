@@ -83,7 +83,11 @@ export default {
                 this.$emit('subMenuToggle', {sub:content, articleDatas:data})
             })
             .catch(err=>{
-                console.log(err)
+                Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Failed to retrieve data'
+          })
             })
             
         }
