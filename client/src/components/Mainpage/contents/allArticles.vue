@@ -23,7 +23,7 @@
 
             <div class="card-columns">
                 
-                <div class="card" v-for="({_id, createdAt,updatedAt,featured_image,title,author,content} , index) in allArticles">
+                <div class="card" v-for="({_id, createdAt,updatedAt,featured_image,title,author,content} , index) in allArticles" :key="index">
                     <img class="card-img-top" :src="featured_image" alt="Featured image">
                     <div class="card-body">
                         <h5 class="card-title">{{ title }}</h5>
