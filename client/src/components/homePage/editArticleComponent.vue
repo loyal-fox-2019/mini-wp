@@ -130,6 +130,7 @@
                     formData.set('tags', this.tags);
                     formData.set('content', this.content);
                     formData.set('featured_image', this.featured_image);
+                    formData.set('imgFile', this.imgFile);
 
                     instance({
                         method: "put",
