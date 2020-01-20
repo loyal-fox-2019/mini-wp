@@ -13,9 +13,22 @@ class Article {
             })
             .catch(next)
     }
+    static articleByAuthorId(req, res, next) {
+        Model.find({ author: req.loginData.id }).populate('author', 'name')
+            .then(articles => {
+                if (!articles) {
+                    err.name = 'No Article'
+                    err.message = 'Article Not Found'
+                    throw err
+                } else {
+                    res.status(200).json(articles)
+                }
+            })
+            .catch(next)
+    }
     static allArticle(req, res, next) {
         let err = {}
-        Model.find({ author: req.loginData.id }).populate('author', 'name')
+        Model.find().populate('author', 'name')
             .then(articles => {
                 if (!articles) {
                     err.name = 'No Article'

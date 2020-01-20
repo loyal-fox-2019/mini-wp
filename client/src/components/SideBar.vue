@@ -8,7 +8,7 @@
       <i class="plus square icon"></i>
       Add New Article
     </a>
-    <a class="item">
+    <a class="item" @click="$emit('menuClick','SearchArticle')">
       <i class="search icon"></i>
       Search Article
     </a>
