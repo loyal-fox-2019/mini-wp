@@ -17,12 +17,12 @@ const userSchema = new Schema({
         regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         validate: {
             validator: function (value) {
-                return Users.findOne({
+                return User.findOne({
                     email: value
                 })
-                    .then((user) => !!user)
+                    .then((user) => !user)
             },
-            message: props => `${props.value} already registred, please try another email address!`
+            message: props => `email ${props.value} already registred, please try another email address!`
         }
     },
     password: {
@@ -30,13 +30,13 @@ const userSchema = new Schema({
         required: true,
         minlength: 6
     }
-})
+}, { versionKey: false, timestamps: { createdAt: `createdAt`, updatedAt: `updateAt` } })
 
 userSchema.pre('save', function (next) {
     this.password = bcyript.hashSync(this.password)
     next()
 })
 
-const Users = mongoose.model(`Users`, userSchema)
+const User = mongoose.model(`User`, userSchema)
 
-module.exports = Users
+module.exports = User
