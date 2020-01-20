@@ -84,8 +84,8 @@ class controllerArticle {
     }
 
     static updateArticle(req, res, next) {
-        let path = "";
         let tags = [];
+        let data = {};
 
         if (req.body.tags) {
             let tagsSplit = req.body.tags.split(",");
@@ -95,17 +95,25 @@ class controllerArticle {
         }
 
         if (req.file) {
-            path = req.file.path;
+            data = {
+                title: req.body.title,
+                tags: tags,
+                author: req.token.userId,
+                content: req.body.content,
+                featured_image: req.file.path,
+            }
+        } else {
+            data = {
+                title: req.body.title,
+                tags: tags,
+                author: req.token.userId,
+                content: req.body.content,
+            }
         }
+
         Article.updateOne({
             _id: req.params.id
-        }, {
-            title: req.body.title,
-            tags: tags,
-            author: req.token.userId,
-            content: req.body.content,
-            featured_image: path,
-        }).then(data => {
+        }, data).then(data => {
             res.status(201).json({
                 message: "data successfully updated",
                 details: data
