@@ -52,7 +52,7 @@ export default {
               headers: {
                 token: localStorage.getItem("token")
               },
-              url: "http://localhost:3000/articles/" + this.id
+              url: "http://35.197.157.157:3000/articles/" + this.id
             });
           } else {
             next();

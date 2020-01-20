@@ -51,7 +51,11 @@ export default {
         headers: {
           token: localStorage.getItem("token")
         },
+<<<<<<< HEAD
         url: "http://localhost:3000/articles/all"
+=======
+        url: "http://35.197.157.157:3000/articles/all"
+>>>>>>> 42ef47347d1edd14c0ce025033ce434973c7abbc
       })
         .then(({ data }) => {
           for (let i = 0; i < data.length; i++) {
