@@ -8,10 +8,12 @@ const { ownArticle } = require('../middleware/authorization')
 
 const upload = require('../helpers/gcsupload')
 
+
 router.use(authentication)
 router.post('/', upload.single('featured_image'), ArticleController.createArticle)
-router.patch('/:articleID', ownArticle)
-router.patch('/:articleID', ArticleController.editActicle)
-router.delete('/:articleID', ArticleController.deleteArticle)
+router.get('/:articleID', ownArticle, ArticleController.getDetail)
+router.get('/tag/:keywordTag', )
+router.patch('/:articleID', ownArticle, ArticleController.editActicle)
+router.delete('/:articleID', ownArticle, ArticleController.deleteArticle)
 
 module.exports = router

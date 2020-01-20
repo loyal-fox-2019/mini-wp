@@ -4,8 +4,7 @@ const modelArticle = require('../model/article')
 
 class ArticleController {
     static createArticle(req, res, next) {
-        console.log(req.body)
-        const { title, content, featured_image } = req.body
+        const { title, content, featured_image, tags } = req.body
         const { userID } = req.userSignedIn
 
         console.log(featured_image)
@@ -13,7 +12,8 @@ class ArticleController {
         const newArticleData = {
             author: userID,
             title: title,
-            content: content
+            content: content,
+            tags: tags
         }
         if (featured_image != undefined) {
             newArticleData.featured_image = featured_image
@@ -31,15 +31,78 @@ class ArticleController {
             .catch(next)
     }
 
+    static getAllArticle(req, res, next) {
+        modelArticle.find({
+            author: req.userSignedIn.userID
+        })
+            .then(articles => {
+                res.status(200).json({
+                    message: 'success',
+                    articles
+                })
+            })
+            .catch(next)
+    }
+
+    static getDetail(req, res, next) {
+        const { articleID } = req.params
+
+        modelArticle.findById(articleID)
+            .then(article => {
+                res.status(200).json({
+                    message: `success`,
+                    article
+                })
+            })
+            .catch(next)
+    }
+
+    static filterByTags(req, res, next) {
+        const { keywordTag } = req.body
+
+        modelArticle.find({
+            $and: [
+                { tags: keywordTag },
+                { author: req.userSignedIn.userID }
+            ]
+        })
+            .then(articles => {
+                res.status(200).json({
+                    message: `success`,
+                    articles
+                })
+            })
+            .catch(next)
+    }
+
+    static searchArticle(req, res, next) {
+        const { keyword } = req.body
+
+        modelArticle.find({
+            $or: [
+                { title: keyword },
+                { content: keyword },
+                { tags: keyword }
+            ]
+        })
+            .then(articles => {
+                res.status(200).json({
+                    message: `success`,
+                    articles
+                })
+            })
+    }
+
     static editActicle(req, res, next) {
         console.log(req.body)
         const { articleID } = req.params
-        const { title, content, featured_image } = req.body
+        const { title, content, featured_image, tags } = req.body
         const { userID } = req.userSignedIn
 
         const editArticleData = {
             title: title,
-            content: content
+            content: content,
+            tags: tags
         }
 
         if (featured_image != undefined) {
