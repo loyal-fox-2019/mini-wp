@@ -13,7 +13,7 @@ function authentication(req, res, next) {
             })
 
     } catch (error) {
-        next()
+        next(error)
     }
 }
 

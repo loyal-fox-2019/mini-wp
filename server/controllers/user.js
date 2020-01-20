@@ -46,31 +46,35 @@ class Controller {
     }
 
     static async googleSignIn(req, res, next) {
-        const ticket = await client.verifyIdToken({
-            idToken: req.body.token,
-            audience: process.env.GOOGLE_CLIENT_ID
-        })
-
-        User.findOne({ email: ticket.getPayload().email })
-            .then((user) => {
-                if (!user.length || !user) {
-                    User.create({
-                        email: ticket.getPayload().email,
-                        name: ticket.getPayload().name,
-                        password: ticket.getPayload().email
-                    })
-                        .then((result) => {
-                            let tokenData = { id: result._id, name: result.name }
-                            let token = genToken(tokenData)
-                            res.status(201).json({ token, name: result.name, invitation: result.invitation })
-                        }).catch(next);
-                } else {
-                    let tokenData = { id: user._id, name: user.name }
-                    let token = genToken(tokenData)
-                    res.status(200).json({ token, name: user.name, invitation: user.invitation })
-                }
+        try {
+            const ticket = await client.verifyIdToken({
+                idToken: req.body.token,
+                audience: process.env.GOOGLE_CLIENT_ID
             })
-            .catch(next);
+
+            User.findOne({ email: ticket.getPayload().email })
+                .then((user) => {
+                    if (!user) {
+                        User.create({
+                            email: ticket.getPayload().email,
+                            name: ticket.getPayload().name,
+                            password: ticket.getPayload().email
+                        })
+                            .then((result) => {
+                                let tokenData = { id: result._id, name: result.name }
+                                let token = genToken(tokenData)
+                                res.status(201).json({ token, name: result.name, invitation: result.invitation })
+                            }).catch(next);
+                    } else {
+                        let tokenData = { id: user._id, name: user.name }
+                        let token = genToken(tokenData)
+                        res.status(200).json({ token, name: user.name, invitation: user.invitation })
+                    }
+                })
+                .catch(next);
+        } catch (error) {
+            next(error)
+        }
     }
 
     static async allUser(req, res, next) {
