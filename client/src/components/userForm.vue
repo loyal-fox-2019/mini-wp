@@ -18,13 +18,21 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Login</button>
                         <!-- <button type="submit" class="btn btn-primary">gSignIn</button> -->
-                        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
                     </div>
                 </form>
 
             <div class="dropdown-divider"></div>
             <h6 class="card-title text-center" >New User?  <a id="showRegistrationForm" href="" @click.prevent="changeForm('registrationForm')">register</a>  now with us</h6>
-
+            <div style="text-align:center">
+                <g-signin-button
+                :params="googleSignInParams"
+                @success="onSignInSuccess"
+                @error="onSignInError"
+                >
+                Sign in with Google
+            </g-signin-button>
+            </div>
             </div>
         </div>
         <!-- end of Login Form -->
@@ -91,7 +99,10 @@ export default {
             registrationEmail:'',
             registrationPassword:'',
 
-            showForm: 'loginForm'
+            showForm: 'loginForm',
+            googleSignInParams: {
+                client_id: '681306908139-ujg2f44e6n0bf252bd2qsskl7o86cn10.apps.googleusercontent.com'
+            }
         }
     },
     methods:{
@@ -132,11 +143,17 @@ export default {
                 this.$emit('login', true)
             })
             .catch( ({ response })=>{
-                console.log(`error @register - userForm.vue \n=========================================\n`, response)
+                console.log(`error @register - userForm.vue \n=========================================\n`, response.data.message)
                 let errorMessage = ''
-                response.data.message.forEach(element => {
-                    errorMessage += `${element}; `
-                });
+                if(typeof(response.data.message === 'string'))
+                    errorMessage = response.data.message
+                else
+                  {
+                    response.data.message.forEach(element => {
+                        errorMessage += `${element}; `
+                    });
+                  }
+                
 
                 Swal.fire(
                     'Error',
@@ -171,7 +188,54 @@ export default {
                     'error'
                 )
             })
+        },
+        onSignInSuccess (googleUser) {
+            const id_token = googleUser.getAuthResponse().id_token;
+            // console.log("TCL: onSignIn -> id_token", id_token)
+            
+            var profile = googleUser.getBasicProfile();
+            // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            // console.log('Name: ' + profile.getName());
+            // console.log('Image URL: ' + profile.getImageUrl());
+            // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/users/gsignin',
+                data:{
+                    id_token
+                }
+            })
+            .then( ({data})=>{
+                console.log(' \n======================\n', data)
+                Swal.fire(
+                    'Login Successful',
+                    `Welcome back ${data.username}`
+                )
+                localStorage.setItem('token', data.token)
+                this.setAllInputToDefault()
+                this.$emit('login', true)
+            })
+            .catch( ({response})=>{   
+                console.log(`error @onSignInSuccess - userForm.vue \n=========================================\n`, response.data.message)
+                Swal.fire(
+                    "Error",
+                    response.data.message,
+                    'error'
+                )
+            })
+            
+        },
+        onSignInError (error) {
+            console.log('onSignInError', error)
+            Swal.fire(
+                'error',
+                error,
+                'error'
+            )
         }
+  
+        
     
 
 
@@ -183,8 +247,16 @@ export default {
 
 
 
-<style>
-
+<style scoped>
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
 
 
 </style>

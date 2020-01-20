@@ -30,7 +30,9 @@
         <articleReaderPage
             v-if="showPage === 'articleReaderPage'"
             :articleReaderId="articleReaderId"
+            :loggedInUserDetail="loggedInUserDetail"
             @goBack="backFromChild1Page"
+            @switchToArticleEditPage="switchToArticleEditPage"
             @switchToFilterResultPage=switchToFilterResultPage>
         </articleReaderPage>
 
@@ -49,6 +51,7 @@
         <userContentPage
             v-if="showPage === 'userContentPage'"
             :userContentPageUsername = "userContentPageUsername"
+            :loggedInUserDetail="loggedInUserDetail"
             @goBack="backFromChild1Page"
             @switchToArticleReader="switchToArticleReader"
             @switchToArticleEditPage="switchToArticleEditPage"
@@ -68,6 +71,8 @@
             :loggedInUserDetail="loggedInUserDetail"
             @switchToArticleReader="switchToArticleReader"
             @switchToArticleEditPage="switchToArticleEditPage"
+            @switchToUserContentPage="switchToUserContentPage"
+            @switchToFilterResultPage="switchToFilterResultPage"
             @goBack="backFromChild1Page">``
         </filterResultPage>
 

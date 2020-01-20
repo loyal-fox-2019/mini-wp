@@ -1,6 +1,7 @@
 const User = require('../model/User')
 const { verifyHash } = require('../helper/bcryptjs')
 const { generateToken } = require('../helper/jwt')
+const generatePassword = require('../helper/generatePassword')
 
 class UserController{
     static test(req,res)
@@ -89,7 +90,7 @@ class UserController{
                     if(verifyHash( objLogin.password, result.password ))
                       {
                         res.status(202).json({ 
-                          token : generateToken({ _id:result }),
+                          token : generateToken({ _id:result._id }),
                           username : result.username
                         })
                       }
@@ -105,38 +106,41 @@ class UserController{
 
     static googleSignIn(req,res,next)
       {
+        console.log(' \n======================\n', req.verifiedUser)
         User.findOne({
           email:req.verifiedUser.email
         })
         .then(result=>{
           if(result)
             {
-              console.log(1, result)
-              const token = generateToken({ _id:result._id })
-              res.status(200).json({ access_token : token})
+              res.status(200).json({ 
+                  username: result.username,
+                  token : generateToken({ _id:result._id }) 
+              })
             }
           else
             {
               User.create({
                 username : req.verifiedUser.name,
+                firstName : req.verifiedUser.given_name || ' ',
+                lastName: req.verifiedUser.family_name || ' ',
                 email: req.verifiedUser.email,
-                password: passwordRandomizer()
+                password: generatePassword(),
+                role: 'user'
               })
               .then(result=>{
-                console.log(2, result)
-                const token = generateToken({ _id:result._id})
-                res.status(200).json({ username:result.username, access_token : token})
-
+                res.status(200).json({ 
+                    username : result.username,
+                    token : generateToken({ _id:result._id}) 
+                })
               })
               .catch(err=>{
-                console.log(3, err)
                 next(err)
               })
             }
-          
         })
         .catch(err=>{
-          next()
+          next(err)
         })
       }
 

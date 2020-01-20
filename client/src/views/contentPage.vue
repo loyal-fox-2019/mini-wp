@@ -18,6 +18,7 @@
               <cardSmall 
                 :articleDetail="article" 
                 :author="loggedInUserDetail._id"
+                :loggedInUserDetail="loggedInUserDetail"
                 @switchToArticleReader="$emit('switchToArticleReader', $event)"
                 @switchToArticleEditPage="$emit('switchToArticleEditPage', $event)"
                 @switchToUserContentPage="$emit('switchToUserContentPage', $event)"
@@ -50,6 +51,8 @@ import cardSmall from '../components/cardSmall'
 export default {
     name:'contentPage',
     props:[
+      'allArticlesArray',
+      'loggedInUserDetail'
     ],
     components:{
       cardUser,
@@ -58,7 +61,7 @@ export default {
     data(){
       return {
         loggedInUserDetail : {},
-        allArticlesArray : []
+        // allArticlesArray : []
       }
     },
     methods:{
@@ -90,31 +93,31 @@ export default {
                 )
             })
         },
-        fetchAllArticles(){
-            axios({
-                method: 'get',
-                url: '/articles/all',
-                headers:{
-                    token: localStorage.getItem('token')
-                }
-            })
-            .then( ({data})=>{
-            console.log(`TCL: fetchAllArticles -> data`, data)
-                this.setAllArticlesArray(data)
-            })
-            .catch( ({response})=>{
-                console.log(`error @fetchAllArticle - contentPage.vue \n=========================================\n`, response.data.message)
-                swal.fire(
-                    "Error",
-                    response.data.message,
-                    'error'
-                )
-            })
-        },
+        // fetchAllArticles(){
+        //     axios({
+        //         method: 'get',
+        //         url: '/articles/all',
+        //         headers:{
+        //             token: localStorage.getItem('token')
+        //         }
+        //     })
+        //     .then( ({data})=>{
+        //     console.log(`TCL: fetchAllArticles -> data`, data)
+        //         this.setAllArticlesArray(data)
+        //     })
+        //     .catch( ({response})=>{
+        //         console.log(`error @fetchAllArticle - contentPage.vue \n=========================================\n`, response.data.message)
+        //         swal.fire(
+        //             "Error",
+        //             response.data.message,
+        //             'error'
+        //         )
+        //     })
+        // },
     },
     created(){
       this.fetchUserDetail()
-      this.fetchAllArticles()
+      // this.fetchAllArticles()
     }
 
 

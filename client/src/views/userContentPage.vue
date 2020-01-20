@@ -24,7 +24,8 @@
               <div v-for="article in allUserArticles" :key="article._id">
                   <cardSmall 
                     :articleDetail="article" 
-                    :author="userDetail.username"
+                    :author="userDetail._id"
+                    :loggedInUserDetail="loggedInUserDetail"
                     @switchToArticleReader="$emit('switchToArticleReader', $event)"
                     @switchToArticleEditPage="$emit('switchToArticleEditPage', $event)"
                     @switchToUserContentPage="$emit('switchToUserContentPage', $event)"
@@ -66,7 +67,8 @@ import cardSmall from '../components/cardSmall'
 export default {
     name: 'userContentPage',
     props:[
-      'userContentPageUsername'
+      'userContentPageUsername',
+      'loggedInUserDetail'
     ],
     components:{
         goBackButton,
