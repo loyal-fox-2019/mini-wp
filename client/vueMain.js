@@ -5,8 +5,10 @@ new Vue ({
     el: '#app',
     created() {
         if(!localStorage.token) {
+            this.articles = [];
             this.showLogin();
         } else {
+            this.articles = [];
             this.findArticle();
         }
     },
@@ -64,6 +66,7 @@ new Vue ({
                 }
             })
             .then(articlesDB => {
+                this.articles = [];
                 articlesDB.data.forEach(element => {
                     this.articles.push(element);
                 });
@@ -163,6 +166,8 @@ new Vue ({
             })
             .then(({data}) => {
                 localStorage.setItem('token', data.token);
+                this.email = '';
+                this.password = '';
                 this.page = 'main';
             })
             .catch(err => {
@@ -181,6 +186,9 @@ new Vue ({
             })
             .then(({data}) => {
                 localStorage.setItem('token', data.token);
+                this.name = '';
+                this.email = '';
+                this.password = '';
                 this.page = 'main';
             })
             .catch(err => {

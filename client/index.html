@@ -46,13 +46,13 @@
                 <span class="h3">Menu Navigation</span>
                 <ul class="nav flex-column font-weight-bold">
                     <li class="nav-item">
-                    <a class="nav-link" href="#" @click.prevent="page='main'">Main</a>
+                    <a class="nav-link" href="" @click.prevent="page='main'">Main</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#" @click.prevent="page='article'">Articles</a>
+                    <a class="nav-link" href="" @click.prevent="page='article'">Articles</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="#" @click.prevent="page='about'">About</a>
+                    <a class="nav-link" href="" @click.prevent="page='about'">About</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="" @click.prevent="signOut">Sign Out</a>
@@ -73,7 +73,7 @@
                 <form id="formInputArticle" enctype="multipart/form-data">
                     <div class="form-row mb-2" style="width: 800px;">
                         <input type="text" class="form-control mb-2" placeholder="Title" v-model="title">
-                        <textarea class="form-control" rows="10" cols="30" aria-label="With textarea" placeholder="Content" v-model="content"></textarea>
+                        <textarea id="idContentTextArea" class="form-control" rows="10" cols="30" aria-label="With textarea" placeholder="Content" v-model="content"></textarea>
                     </div>
                     <p class="h6">Choose file to upload :</p>
                     <input type="file" name="file" v-on:change="upload()">

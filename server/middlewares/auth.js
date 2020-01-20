@@ -8,6 +8,7 @@ function authentication(req, res, next) {
     if (req.headers.hasOwnProperty('token')) {
         try {
           req.userLoggedIn = verifyToken(req.headers.token);
+          // console.log(req.userLoggedIn);
           User.findById(req.userLoggedIn.id)
             .then(user => {
               if (user) {
