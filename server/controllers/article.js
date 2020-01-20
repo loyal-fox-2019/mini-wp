@@ -13,7 +13,8 @@ class Article {
             })
             .catch(next)
     }
-    static articleByAuthorId(req, res, next) {
+    static ArticleByAuthor(req, res, next) {
+        let err = {}
         Model.find({ author: req.loginData.id }).populate('author', 'name')
             .then(articles => {
                 if (!articles) {

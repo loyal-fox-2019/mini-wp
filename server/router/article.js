@@ -4,7 +4,7 @@ const auth = require('../middlewares/authorization')
 const upload = require('../middlewares/upload-gcs')
 
 router.post('/', upload.single('thumbnail'), Controller.addArticle)
-router.get('/', Controller.articleByAuthorId)
+router.get('/', Controller.ArticleByAuthor)
 router.get('/all', Controller.allArticle)
 router.get('/:id', auth, Controller.findArticleById)
 router.put('/:id', auth, Controller.updateArticle)

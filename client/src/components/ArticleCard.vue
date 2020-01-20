@@ -8,10 +8,11 @@
         <a class="header">{{title}} ....</a>
         <div class="meta">
           <span class="date">{{date}}</span>
+          <div class="description mb-3">Author : {{user}}</div>
         </div>
-        <div class="description">{{content}} ....</div>
+        <!-- <div class="description">{{content}} ....</div> -->
       </div>
-      <div class="extra content">
+      <div class="extra content" v-if="button">
         <div class="row">
           <div class="col-md-6"></div>
           <div class="col-md-6">
@@ -28,7 +29,12 @@
 <script>
 import Swal from "sweetalert2";
 export default {
-  props: ["thumbnail", "title", "content", "date", "id"],
+  props: ["thumbnail", "title", "content", "user", "date", "id", "button"],
+  data() {
+    return {
+      selfArticle: true
+    };
+  },
   methods: {
     deleteArticle() {
       Swal.fire({

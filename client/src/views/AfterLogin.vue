@@ -6,6 +6,7 @@
     <b-col>
       <ListArticle v-if="activePage === 'ListArticle'"></ListArticle>
       <FormArticle v-else-if="activePage === 'FormArticle'"></FormArticle>
+      <SearchArticle v-else-if="activePage === 'SearchArticle'"></SearchArticle>
     </b-col>
   </b-row>
 </template>
@@ -14,11 +15,13 @@
 import SideBar from "../components/SideBar";
 import ListArticle from "./ListArticle";
 import FormArticle from "./FormArticle";
+import SearchArticle from "./SearchArticle";
 export default {
   components: {
     SideBar,
     ListArticle,
-    FormArticle
+    FormArticle,
+    SearchArticle
   },
   data() {
     return {

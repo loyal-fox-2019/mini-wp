@@ -10,7 +10,7 @@
     </a>
     <a class="item" @click="$emit('menuClick','SearchArticle')">
       <i class="search icon"></i>
-      Search Article
+      All Author Article
     </a>
   </div>
 </template>

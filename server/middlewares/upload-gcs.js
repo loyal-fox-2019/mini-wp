@@ -6,7 +6,7 @@ const upload = gcsUpload({
         fileSize: 2e6 // in bytes
     },
     gcsConfig: {
-        keyFilename: '/home/bayuoktari/Documents/Phase 2/Week2/Weekend Portofolio/mini-wp/server/json-gcs-service.json',
+        keyFilename: '/Users/dimaswicaksono/Documents/majestic-phase01/week02/bayu/mini-wp/server/json-gcs-service.json',
         bucketName: 'miniwp-upload'
     }
 })
