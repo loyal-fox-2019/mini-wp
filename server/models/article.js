@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = require('mongoose');
 
 const articleSchema = new Schema(
   {
@@ -11,9 +12,16 @@ const articleSchema = new Schema(
       type: String,
       default: ''
     },
-    image: {
-      type: String,
-      default: ''
+    authorId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    tag: {
+      type: [String]
+    },
+    featuredImage: {
+      type: String
     }
   },
   { timestamps: true }

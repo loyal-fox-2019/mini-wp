@@ -1,32 +1,39 @@
 const express = require('express');
 const gcsUpload = require('gcs-upload');
 const { ArticleController } = require('../controllers');
+const auth = require('../middlewares/auth');
 
 const router = express.Router();
 
 const upload = gcsUpload({
   limits: {
-    fileSize: 1e6
+    fileSize: 1e6 // in bytes
   },
   gcsConfig: {
     keyFilename: './keyfile.json',
-    bucketName: 'mini-wp-msuwignyo'
+    bucketName: 'mini-wp-markus'
   }
-})
+});
+
+router.use(auth);
 
 // create
-router.post('/', upload.single("file"), ArticleController.create);
+router.post('/', upload.single('featuredImage'), ArticleController.create);
 
 // read all
 router.get('/', ArticleController.readAll);
 
 // read one
-router.get('/:id', ArticleController.readOne);
+router.get('/:articleId', ArticleController.readOne);
 
 // update
-router.put('/:id', upload.single('file'), ArticleController.update);
+router.put(
+  '/:articleId',
+  upload.single('featuredImage'),
+  ArticleController.update
+);
 
-// destroy
-router.delete('/:id', ArticleController.destroy);
+// delete
+router.delete('/:articleId', ArticleController.delete);
 
 module.exports = router;

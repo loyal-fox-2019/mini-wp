@@ -1,41 +1,67 @@
 const { Article } = require('../models');
 
 class ArticleController {
+  // create
   static create(req, res, next) {
-    const { title, content, file } = req.body;
+    const {
+      userData: { userId: authorId }
+    } = req;
+    const { title, content, tag, featuredImage } = req.body;
 
-    // console.log(JSON.stringify(req.body, null, 2), "ini body");
-    Article.create({ title, content, image: file })
-      .then(article => res.status(200).json(article))
+    // res.json({ authorId, ...req.body });
+    Article.create({
+      title,
+      content,
+      authorId,
+      tag,
+      featuredImage
+    })
+      .then(() =>
+        res
+          .status(201)
+          .json({ message: `Article has successfully been created!` })
+      )
       .catch(err => next(err));
   }
 
+  // read all
   static readAll(req, res, next) {
-    console.log(`OK`);
-    Article.find()
+    const {
+      userData: { userId: authorId }
+    } = req;
+
+    const keys = Object.keys(req.query);
+
+    keys.forEach(key => {
+      req.query[key] = new RegExp(`${req.query[key]}`, 'i');
+    });
+
+    Article.find({ authorId, ...req.query })
+      .populate('authorId')
       .then(articles => {
         if (articles.length === 0) {
-          const err = new Error('Empty!');
-          err.httpStatus = 404;
-          throw err;
+          res.status(404);
+          throw new Error(`User has no article!`);
         } else {
           res.status(200).json(articles);
         }
       })
-      .catch(err => {
-        console.log(err);
-        next(err);
-      });
+      .catch(err => next(err));
   }
 
+  // read one
   static readOne(req, res, next) {
-    const { id } = req.params;
-    Article.findById(id)
+    const {
+      userData: { userId: authorId }
+    } = req;
+
+    const { articleId: _id } = req.params;
+
+    Article.findOne({ _id, authorId })
       .then(article => {
         if (!article) {
-          const err = new Error('Article not found!');
-          err.httpStatus = 404;
-          throw err;
+          res.status(404);
+          throw new Error(`Article not found!`);
         } else {
           res.status(200).json(article);
         }
@@ -43,18 +69,21 @@ class ArticleController {
       .catch(err => next(err));
   }
 
+  // update
   static update(req, res, next) {
-    const { id } = req.params;
-    const { title, content, file } = req.body
+    const {
+      userData: { userId: authorId }
+    } = req;
 
-    console.log(req.body);
+    const { articleId: _id } = req.params;
 
-    Article.findByIdAndUpdate(id, { title, content, image: file })
+    Article.findOneAndUpdate({ _id, authorId }, req.body, {
+      useFindAndModify: false
+    })
       .then(article => {
         if (!article) {
-          const err = new Error(`Article not found!`);
-          err.httpStatus = 404;
-          throw err;
+          res.status(404);
+          throw new Error(`Article not found!`);
         } else {
           res.status(200).json(article);
         }
@@ -62,10 +91,23 @@ class ArticleController {
       .catch(err => next(err));
   }
 
-  static destroy(req, res, next) {
-    const { id } = req.params;
-    Article.findByIdAndDelete(id)
-      .then(article => res.status(200).json(article))
+  // delete
+  static delete(req, res, next) {
+    const {
+      userData: { userId: authorId }
+    } = req;
+
+    const { articleId: _id } = req.params;
+
+    Article.findOneAndDelete({ _id, authorId })
+      .then(article => {
+        if (!article) {
+          res.status(404);
+          throw new Error(`Article not found!`);
+        } else {
+          res.status(200).json(article);
+        }
+      })
       .catch(err => next(err));
   }
 }
