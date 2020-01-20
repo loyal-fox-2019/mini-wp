@@ -9559,7 +9559,7 @@ var _default = {
       title: '',
       content: '',
       tags: '',
-      featured_image: [],
+      featured_image: null,
       update: false
     };
   },
@@ -9576,7 +9576,8 @@ var _default = {
   },
   methods: {
     image: function image(event) {
-      this.featured_image = event.target.files;
+      console.log(event.target.files[0]);
+      this.featured_image = event.target.files[0];
     },
     addArticle: function addArticle() {
       var _this = this;
@@ -9790,8 +9791,12 @@ exports.default = _default;
         _c("input", {
           staticClass:
             "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-          attrs: { type: "file", name: "file", enctype: "multipart/form-data" },
-          on: { change: _vm.image }
+          attrs: { type: "file", name: "file" },
+          on: {
+            change: function($event) {
+              return _vm.image($event)
+            }
+          }
         })
       ]),
       _vm._v(" "),
@@ -14490,7 +14495,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40407" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44667" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

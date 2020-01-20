@@ -9,6 +9,6 @@ router.get('/tags/:tag',articleController.getTag)
 router.get('/user',articleController.getUser)
 router.put('/:id',articleController.update)
 router.delete('/:id',articleController.delete)
-router.post('/',upload.single('file'),articleController.create)
+router.post('/',upload.single('featured_image'),articleController.create)
 
 module.exports = router

@@ -23,7 +23,7 @@
                 <label class="ml-3 block uppercase tracking-wide text-gray-700 text-md font-bold mb-2 sm:w-8/12 " for="grid-title">
                     upload image
                 </label>
-                <input @change="image" class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="file" enctype="multipart/form-data">
+                <input @change="image($event)" class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" name="file">
             </div>
             <div class="flex justify-center">
                 <button v-if="update" class="bg bg-gray-900 text-white px-3 rounded-lg py-2 uppercase mt-2 border-2 hover:border-gray-700" @click.prevent="updateArticle">update</button>
@@ -43,7 +43,7 @@ export default {
             title: '',
             content: '',
             tags: '',
-            featured_image: [],
+            featured_image: null,
             update: false
         }
     },
@@ -63,7 +63,8 @@ export default {
     methods: {
 
         image(event) {
-            this.featured_image = event.target.files
+            console.log(event.target.files[0])
+            this.featured_image = event.target.files[0]
         },
         addArticle() {
             let fd = new FormData()
