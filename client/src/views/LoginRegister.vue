@@ -52,9 +52,15 @@
 
         <div id="login" v-if="formNow === 'login'">
           <h1 style="text-align: center;">
-            <button class="g-signin2" data-onsuccess="onSignIn"></button>
-            <i class="arrow alternate circle left outline icon"></i>
             Welcome Back!
+            <i class="arrow alternate circle right outline icon"></i>
+            <sui-button
+              social="google"
+              content="Google"
+              icon="google"
+              color="teal"
+              @click.prevent="onSignIn"
+            />
           </h1>
           <form @submit.prevent="loginUser" method="post">
             <div class="field-wrap">
@@ -143,19 +149,28 @@ export default {
           console.log(response);
         });
     },
-    onSignIn(googleUser) {
-      let token = googleUser.getAuthResponse().id_token;
-      this.axios
-        .post("/users/google", token)
-        .then(({ data }) => {
-          this.$root.nowLogin = true;
-          localStorage.setItem("token", data.token);
-          this.$router.push({ path: "/home" });
-          console.log(data);
+    onSignIn() {
+      this.$gAuth
+        .signIn()
+        .then(GoogleUser => {
+          return this.axios({
+            method: "post",
+            url: "/users/google",
+            data: { token: GoogleUser.getAuthResponse().id_token }
+          });
+          console.log(this.$gAuth.isAuthorized);
+          // this.$root.nowLogin = this.$gAuth.isAuthorized;
         })
-        .catch(({ response }) => {
-          this.$swal.fire(response.data.message);
-          console.log(response);
+        .then(({ data }) => {
+          localStorage.setItem("token", data.token);
+          this.$root.nowLogin = true
+          this.$router.push('/home')
+        })
+        .catch(error => {
+          console.log("Google OAuth Failed");
+          console.log(error);
+          console.log(error.response.data);
+          this.$swal.fire('Google OAuth Failed')
         });
     }
   },
