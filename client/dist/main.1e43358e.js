@@ -9208,7 +9208,7 @@ var _default = {
 
       axios({
         method: 'put',
-        url: 'http://localhost:3000/user',
+        url: "".concat(baseUrl, "/user"),
         data: {
           tag: tag
         },
@@ -9576,7 +9576,6 @@ var _default = {
   },
   methods: {
     image: function image(event) {
-      console.log(event.target.files[0]);
       this.featured_image = event.target.files;
     },
     addArticle: function addArticle() {
@@ -9791,7 +9790,7 @@ exports.default = _default;
         _c("input", {
           staticClass:
             "appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-          attrs: { type: "file", name: "file" },
+          attrs: { type: "file", name: "file", enctype: "multipart/form-data" },
           on: { change: _vm.image }
         })
       ]),
@@ -10449,7 +10448,7 @@ var _default = {
       var id_token = googleUser.getAuthResponse().id_token;
       axios({
         method: "post",
-        url: "http://localhost:3000/user/googleSignIn",
+        url: "".concat(baseUrl, "/user/googleSignIn"),
         data: {
           token: id_token
         }
@@ -14491,7 +14490,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44291" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40407" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

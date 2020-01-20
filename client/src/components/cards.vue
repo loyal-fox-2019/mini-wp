@@ -50,7 +50,7 @@ export default {
     addTag(tag) {
       axios({
         method: 'put',
-        url: 'http://localhost:3000/user',
+        url: `${baseUrl}/user`,
         data: {
           tag
         },

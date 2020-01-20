@@ -146,7 +146,7 @@ export default {
             var id_token = googleUser.getAuthResponse().id_token;
             axios({
                 method: "post",
-                url: "http://localhost:3000/user/googleSignIn",
+                url: `${baseUrl}/user/googleSignIn`,
                 data: { token: id_token }
             })
                 .then(({data}) => {
