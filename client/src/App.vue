@@ -3,7 +3,11 @@
     <loginRegister @checkLogin="setLogin" v-if="!isLogin"></loginRegister>
     <navbar @checkLogin="setLogout" @submitArticle="createArticle" v-if="isLogin"></navbar>
     <leftNav v-if="isLogin" @showPost="showingPost"></leftNav>
-    <mainPage v-if="isLogin && !addArticle && !editArticle" @updateArticle="editedArticle"></mainPage>
+    <mainPage
+      v-if="isLogin && !addArticle && !editArticle"
+      @updateArticle="editedArticle"
+      @submitArticle="createArticle"
+    ></mainPage>
     <addArticle @getBack="showingPost" @submitArticle="setArticle" v-if="addArticle && isLogin"></addArticle>
     <updateArticle @getBack="showingPost" @submitArticle="setArticle" v-if="editArticle && isLogin"></updateArticle>
   </div>

@@ -74,7 +74,11 @@
                       <span>Posts</span>
                     </div>
                     <div class="button sectionHeaderAction">
-                      <button class="btn btn-danger" data-toggle="modal">add new article</button>
+                      <button
+                        class="btn btn-danger"
+                        @click="addArticle"
+                        data-toggle="modal"
+                      >add new article</button>
                     </div>
                   </div>
                   <div
@@ -180,7 +184,6 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data);
           this.$root.articles = data;
         })
         .catch(err => {
@@ -190,6 +193,9 @@ export default {
             text: err.message
           });
         });
+    },
+    addArticle() {
+      this.$emit("submitArticle");
     },
     deleteArticle(id) {
       Swal.fire({

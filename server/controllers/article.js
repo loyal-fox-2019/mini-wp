@@ -70,8 +70,10 @@ class articleController {
     }
 
     static delete(req, res, next) {
-        Article.deleteOne({
+        Article.findOneAndDelete({
             _id: req.params.id
+        }, {
+            author: req.user._id
         })
             .then((data) => {
                 if (data.deletedCount !== 0) {
