@@ -12,7 +12,7 @@ const upload = gcsUpload({
     },
     gcsConfig: {
       keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-      bucketName: 'miniwp_k123'
+      bucketName: process.env.BUCKETNAME
     }
   })
 
