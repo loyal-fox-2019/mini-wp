@@ -1,6 +1,10 @@
 <template>
     <div id="mainNavBar" class="ui inverted segment">
         <div class="ui inverted main menu">
+            <sui-menu-item id="home" @click="home">
+                <i class="home icon"></i>
+                MiniWP
+            </sui-menu-item>
             <sui-menu-item name="username">
                 <i class="user icon"></i>
                 {{ name }}
@@ -48,6 +52,9 @@
                         message: 'Nice, thank for choosing to stay in the application :)'
                     });
                 })
+            },
+            home: function(){
+                location.reload();
             }
         }
     }
@@ -60,5 +67,9 @@
 
     #signOut {
         float: right;
+    }
+
+    #home {
+        cursor: pointer;
     }
 </style>

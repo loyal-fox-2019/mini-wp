@@ -4,7 +4,7 @@
             <sui-tab-pane
                     title="List Article"
                     id="list-article">
-                <search-component @search="searchArticle"></search-component>
+                <search-component @search="listOfArticle"></search-component>
                 <message-component
                         :header="header"
                         :content="contentMsg"
@@ -17,7 +17,8 @@
                             :article="article"
                             @clicked="listOfArticle"
                             @showContent="showContent"
-                            @data="selectedArticle"/>
+                            @data="selectedArticle"
+                            @searchTag="listOfArticle"/>
                 </sui-card-group>
             </sui-tab-pane>
             <sui-tab-pane
@@ -55,14 +56,23 @@
                 visible: false,
                 contentVisible: false,
                 article: null,
-                tabActive: 0
+                tabActive: 0,
+                tagKey: null
             }
         },
         methods: {
-            listOfArticle: function () {
+            listOfArticle: function (data) {
+                let url = "";
+
+                if (!data){
+                    url = '/articles';
+                } else {
+                    url = `/articles/${data}`;
+                }
+
                 instance({
                     method: 'get',
-                    url: '/articles',
+                    url: url,
                     headers: {
                         Authorization: "token " + localStorage.token
                     }
@@ -72,12 +82,12 @@
                     } else {
                         this.articles = [];
                     }
+                    this.searchArticle(data);
                 }).catch(err => {
                     console.log(err.response.data.message)
                 })
             },
             searchArticle: function (data) {
-                this.articles = data;
                 this.contentMsg = `found ${data.length} items`;
                 this.visible = true;
                 setTimeout(() => {
