@@ -8,7 +8,7 @@ An app for posting and sharing articles with the world
 - NodeJS
 - NPM
 - Parcel-bundler for client side
-- Google credential json file, rediret the path to your credential.json in articleCon.js
+- Google credential json file, redirect the path to your credential.json in articleCon.js
 - run `npm run dev` on server and `parcel index.html` on client to start both localhost servers
 
 #### Endpoints : 
