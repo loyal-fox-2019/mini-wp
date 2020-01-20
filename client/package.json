@@ -4,12 +4,32 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel index.html",
+    "watch": "parcel watch index.html",
+    "production": "parcel build index.html --public-url='./'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "tailwindcss": "^1.1.4"
+    "axios": "^0.19.1",
+    "chart.js": "^2.9.3",
+    "jspdf": "^1.5.3",
+    "sweetalert2": "^9.5.4",
+    "tailwindcss": "^1.1.4",
+    "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.0",
+    "vue-google-signin-button": "^1.0.4",
+    "vue-hot-reload-api": "^2.3.4",
+    "vue-quill-editor": "^3.0.6"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^3.1.1",
+    "cssnano": "^4.1.10",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "posthtml": {
+    "recognizeSelfClosing": true
   }
 }

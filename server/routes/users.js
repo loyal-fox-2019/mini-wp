@@ -3,10 +3,17 @@
 const router = require('express').Router()
 const usersController = require('../controllers/usersController')
 const { authentication } = require('../middlewares/auth')
+const { multer, sendUploadToGCS } = require("../middlewares/gcs");
 
-router.get('/:id', authentication, usersController.findOne)
 router.post('/register', usersController.register)
 router.post('/signin', usersController.signIn)
-router.post('/googlesiginin', usersController.googleSignIn)
+router.post('/googleSignIn', usersController.googleSignIn)
+router.put('/edit',
+  authentication,
+  multer.single("image"),
+  sendUploadToGCS,
+  usersController.edit
+)
+router.get('/:id', authentication, usersController.findOne)
 
 module.exports = router;

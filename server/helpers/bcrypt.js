@@ -7,7 +7,7 @@ module.exports = {
     return bcrypt.hashSync(password, 8);
   },
 
-  verifyPass(password, hash) {
+  validatePass(password, hash) {
     return bcrypt.compareSync(password, hash)
   }
 }

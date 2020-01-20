@@ -30,7 +30,7 @@ module.exports = {
     Article.findById(req.params.id)
       .then(article => {
         if (article) {
-          if (String(article.user) === req.decoded.id) {
+          if (String(article.author) === req.decoded.id) {
             next()
           } else {
             next({ status: 403, message: 'Unauthorized process!' })

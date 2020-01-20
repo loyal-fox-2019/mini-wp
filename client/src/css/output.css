@@ -54507,7 +54507,3 @@ video {
 }
 
 /* start */
-
-.dropdown:hover .dropdown-menu {
-  display: block;
-}

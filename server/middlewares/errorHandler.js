@@ -2,13 +2,13 @@
 
 function errorHandler(err, req, res, next) {
   console.log(err)
-  let status;
-  let message;
+  let status = null;
+  let message = null;
 
   if(err.name === 'JsonWebTokenError') {
     status = 403;
     message = "Please login first, you are not logged in yet!";
-  } else if (err.name = 'TokenExpiredError') {
+  } else if (err.name === 'TokenExpiredError') {
     status = 403;
     message = "Your session is already expired! Please sign in again";
   } else if (err.name === "ValidationError") {
@@ -22,6 +22,7 @@ function errorHandler(err, req, res, next) {
     status = err.status || 500;
     message = err.message || "Internal Server Error";
   }
+  console.log(message)
   res.status(status).json({error: message});
 }
 
