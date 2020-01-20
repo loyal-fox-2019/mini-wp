@@ -13,8 +13,9 @@ const errorHandler = require('./middlewares/errorHandler')
 
 const dbName = 'zoe-loyal-wp-dev00'
 const mongooseConnectionString = `mongodb://localhost:27017/${dbName}`
+const mongooseDeployedConnectionString = `mongodb+srv://zoeminiwp2:loyalfoxzoe>@hikari02-aouil.mongodb.net/test?retryWrites=true&w=majority`
 
-mongoose.connect(mongooseConnectionString, {
+mongoose.connect(mongooseDeployedConnectionString, {
    useCreateIndex: true,
    useNewUrlParser: true,
    useUnifiedTopology: true

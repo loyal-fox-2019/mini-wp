@@ -16,7 +16,8 @@
 }
 
 .main {
-  min-width: 70vw;
+  min-width: 50vw;
+  max-width: 61.8vw;
   margin-left: 3.82rem;
   margin-top: 2.5rem;
 }

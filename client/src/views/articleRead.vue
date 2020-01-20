@@ -34,11 +34,12 @@ export default {
 
    methods: {
       fetchArticle: async function() {
-         console.log(typeof this.$route.params, this.$route.params)
          try {
             const {data} = await axios.get(`/article/${this.$route.params.id}`)
             this.article = data.article
             this.backgroundImage = `background: url(\'${data.article.featured_image}\') no-repeat center center/contain;`
+
+            this.$emit('sendArticleId', this.$route.params.id)
          }
          catch (error) {
             Swal.fire({

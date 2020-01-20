@@ -31,7 +31,7 @@ const routes = [
       component: ArticleRead
    },
    {
-      path: '/update',
+      path: '/update/:id',
       name: 'articleUpdate',
       component: ArticleUpdate
    },

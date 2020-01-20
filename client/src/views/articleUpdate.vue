@@ -68,9 +68,10 @@ export default {
 
    methods: {
      fetchArticle: async function() {
-         console.log(typeof this.$route.params, this.$route.params)
+         // console.log(typeof this.$route.params, this.$route.params)
          try {
             const {data} = await axios.get(`/article/${this.$route.params.id}`)
+            console.log(data.article)
             this.title = data.article.title
             this.myHTML = data.article.content
             this.tags = data.article.tags
@@ -89,16 +90,16 @@ export default {
       },
 
       submitArticle: async function() {
-         const tags = this.tags.map(tag => tag.text)
-
+         const updatedTags = this.tags.map(tag => tag.text)
+         console.log(updatedTags)
          try {
             this.isUploading = true
             console.log(this.title, this.content, this.tags, this.featured_image, this.audience)
 
-            const {data} = await axios.post(`/article`, {
+            const {data} = await axios.patch(`/article/${this.$route.params.id}`, {
                title: this.title,
                content: this.myHTML,
-               tags,
+               tags: updatedTags,
                featured_image: this.image,
                audience: this.audience
             })
@@ -113,7 +114,7 @@ export default {
                timer: 1000
             })
 
-            this.$router.push({name: 'articleList'})
+            this.$router.push({name: 'articleRead', params: {id: this.$route.params.id}})
          }
          catch (error) {
             Swal.fire({
@@ -154,6 +155,10 @@ export default {
             })
          }
       }
+   },
+
+   created() {
+      this.fetchArticle()
    }
 }
 </script>

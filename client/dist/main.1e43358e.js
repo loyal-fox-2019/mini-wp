@@ -10335,6 +10335,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var developmentURL = "http://localhost:3000";
+
 var axiosInstance = _axios.default.create({
   baseURL: "http://localhost:3000",
   headers: {
@@ -10751,22 +10753,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'App',
   data: function data() {
     return {
       isLoggedIn: !!localStorage.token,
       idExist: !!this.$route.params.id,
-      newTag: ''
+      newTag: '',
+      watchedTags: [],
+      isOwner: null,
+      articleId: null
     };
   },
   components: {},
   methods: {
     setIsLoggedIn: function setIsLoggedIn(value) {
       this.isLoggedIn = value;
-    },
-    test: function test() {
-      console.log(!!this.$route.params.id);
     },
     logOut: function logOut() {
       localStorage.removeItem('token');
@@ -10798,11 +10811,12 @@ var _default = {
                 showConfirmButton: false,
                 timer: 1000
               });
-              _context.next = 11;
+              this.fetchWatchedTags();
+              _context.next = 12;
               break;
 
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
               Swal.fire({
                 position: 'center',
@@ -10813,12 +10827,12 @@ var _default = {
                 timer: 2300
               });
 
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
         }
-      }, null, this, [[0, 8]]);
+      }, null, this, [[0, 9]]);
     },
     fetchWatchedTags: function fetchWatchedTags() {
       var _ref2, data;
@@ -10829,16 +10843,17 @@ var _default = {
             case 0:
               _context2.prev = 0;
               _context2.next = 3;
-              return regeneratorRuntime.awrap(_server.default.get());
+              return regeneratorRuntime.awrap(_server.default.get("/author/".concat(localStorage.authorId)));
 
             case 3:
               _ref2 = _context2.sent;
               data = _ref2.data;
-              _context2.next = 10;
+              this.watchedTags = data.tags;
+              _context2.next = 11;
               break;
 
-            case 7:
-              _context2.prev = 7;
+            case 8:
+              _context2.prev = 8;
               _context2.t0 = _context2["catch"](0);
               Swal.fire({
                 position: 'center',
@@ -10849,16 +10864,62 @@ var _default = {
                 timer: 2300
               });
 
-            case 10:
+            case 11:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, null, [[0, 7]]);
+      }, null, this, [[0, 8]]);
+    },
+    deleteArticle: function deleteArticle() {
+      var _ref3, data;
+
+      return regeneratorRuntime.async(function deleteArticle$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return regeneratorRuntime.awrap(_server.default.delete("/article/".concat(this.$route.params.id)));
+
+            case 3:
+              _ref3 = _context3.sent;
+              data = _ref3.data;
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Delete article success',
+                showConfirmButton: false,
+                timer: 1000
+              });
+              this.$router.push({
+                name: 'articleList'
+              });
+              _context3.next = 12;
+              break;
+
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Deleting article has failed',
+                text: _context3.t0.response.data.message,
+                showConfirmButton: true,
+                timer: 2300
+              });
+
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, null, this, [[0, 9]]);
     }
   },
   created: function created() {
-    this.test();
+    this.fetchWatchedTags();
   },
   watch: {
     $route: function $route(to, from) {
@@ -10992,9 +11053,32 @@ exports.default = _default;
                       {
                         staticClass:
                           "mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500",
-                        attrs: { to: { name: "articleUpdate" } }
+                        attrs: {
+                          to: {
+                            name: "articleUpdate",
+                            params: { id: _vm.articleId }
+                          }
+                        }
                       },
                       [_vm._v("Update article")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.idExist
+                  ? _c(
+                      "a",
+                      {
+                        staticClass:
+                          "mb-6 font-semibold text-xl text-gray-500 hover:text-teal-500",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.deleteArticle($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete article")]
                     )
                   : _vm._e()
               ],
@@ -11008,6 +11092,9 @@ exports.default = _default;
           on: {
             loggingIn: function($event) {
               return _vm.setIsLoggedIn($event)
+            },
+            sendArticleId: function($event) {
+              _vm.articleId = $event
             }
           }
         }),
@@ -11021,44 +11108,60 @@ exports.default = _default;
               },
               [
                 _c(
-                  "h5",
-                  { staticClass: "font-bold text-2xl text-gray-700 mb-4" },
-                  [_vm._v("Watch new tag")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "form",
+                  "div",
                   {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.watchNewTag($event)
-                      }
-                    }
+                    staticClass:
+                      "bg-white rounded shadow border border-gray-300 py-3 px-4 mb-4"
                   },
                   [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.newTag,
-                          expression: "newTag"
-                        }
-                      ],
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.newTag },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.newTag = $event.target.value
-                        }
-                      }
-                    }),
+                    _c(
+                      "h5",
+                      { staticClass: "font-bold text-2xl text-gray-700 mb-4" },
+                      [_vm._v("Watch new tag")]
+                    ),
                     _vm._v(" "),
-                    _c("input", { attrs: { type: "submit", value: "Watch" } })
+                    _c(
+                      "form",
+                      {
+                        staticClass: "flex flex-col",
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.watchNewTag($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newTag,
+                              expression: "newTag"
+                            }
+                          ],
+                          staticClass:
+                            "border-b border-gray-700 py-1 px-2 mb-3",
+                          attrs: { type: "text", placeholder: "e.g. history" },
+                          domProps: { value: _vm.newTag },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.newTag = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass:
+                            "font-semibold rounded py-1 bg-gray-300 hover:bg-teal-500 hover:text-white cursor-pointer",
+                          attrs: { type: "submit", value: "Watch" }
+                        })
+                      ]
+                    )
                   ]
                 ),
                 _vm._v(" "),
@@ -11068,27 +11171,31 @@ exports.default = _default;
                   [_vm._v("Watched tags")]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass:
-                          "font-semibold text-xl text-gray-500 hover:text-teal-500",
-                        attrs: {
-                          to: {
-                            name: "articleListByTag",
-                            params: { tag: "Adventure" }
+                _vm._l(_vm.watchedTags, function(tag) {
+                  return _c(
+                    "div",
+                    { key: tag },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "font-semibold text-xl text-gray-500 hover:text-teal-500",
+                          attrs: {
+                            to: {
+                              name: "articleListByTag",
+                              params: { tag: tag }
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Adventure")]
-                    )
-                  ],
-                  1
-                )
-              ]
+                        },
+                        [_vm._v(_vm._s(tag))]
+                      )
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
             )
           : _vm._e()
       ],
@@ -14154,10 +14261,47 @@ var _default = {
           }
         }
       }, null, this, [[0, 8]]);
+    },
+    fetchArticlesByTag: function fetchArticlesByTag() {
+      var _ref2, data;
+
+      return regeneratorRuntime.async(function fetchArticlesByTag$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return regeneratorRuntime.awrap(_server.default.get("/article/tag/".concat(this.$route.params.tag)));
+
+            case 3:
+              _ref2 = _context2.sent;
+              data = _ref2.data;
+              this.articles = data.articles;
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Fetching-articles has failed',
+                text: _context2.t0.response.data.message,
+                showConfirmButton: false,
+                timer: 2300
+              });
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, this, [[0, 8]]);
     }
   },
   created: function created() {
-    this.fetchArticles();
+    if (this.$route.params.tag) this.fetchArticlesByTag();else this.fetchArticles();
   },
   computed: {
     privateArticles: function privateArticles() {
@@ -15785,8 +15929,50 @@ var _server = _interopRequireDefault(require("../services/server"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'ArticleUpdate',
   components: {
@@ -15812,14 +15998,14 @@ var _default = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(_typeof(this.$route.params), this.$route.params);
-              _context.prev = 1;
-              _context.next = 4;
+              _context.prev = 0;
+              _context.next = 3;
               return regeneratorRuntime.awrap(_server.default.get("/article/".concat(this.$route.params.id)));
 
-            case 4:
+            case 3:
               _ref = _context.sent;
               data = _ref.data;
+              console.log(data.article);
               this.title = data.article.title;
               this.myHTML = data.article.content;
               this.tags = data.article.tags;
@@ -15829,7 +16015,7 @@ var _default = {
 
             case 12:
               _context.prev = 12;
-              _context.t0 = _context["catch"](1);
+              _context.t0 = _context["catch"](0);
               Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -15844,31 +16030,32 @@ var _default = {
               return _context.stop();
           }
         }
-      }, null, this, [[1, 12]]);
+      }, null, this, [[0, 12]]);
     },
     submitArticle: function submitArticle() {
-      var tags, _ref2, data;
+      var updatedTags, _ref2, data;
 
       return regeneratorRuntime.async(function submitArticle$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              tags = this.tags.map(function (tag) {
+              updatedTags = this.tags.map(function (tag) {
                 return tag.text;
               });
-              _context2.prev = 1;
+              console.log(updatedTags);
+              _context2.prev = 2;
               this.isUploading = true;
               console.log(this.title, this.content, this.tags, this.featured_image, this.audience);
-              _context2.next = 6;
-              return regeneratorRuntime.awrap(_server.default.post("/article", {
+              _context2.next = 7;
+              return regeneratorRuntime.awrap(_server.default.patch("/article/".concat(this.$route.params.id), {
                 title: this.title,
                 content: this.myHTML,
-                tags: tags,
+                tags: updatedTags,
                 featured_image: this.image,
                 audience: this.audience
               }));
 
-            case 6:
+            case 7:
               _ref2 = _context2.sent;
               data = _ref2.data;
               this.isUploading = false;
@@ -15880,14 +16067,17 @@ var _default = {
                 timer: 1000
               });
               this.$router.push({
-                name: 'articleList'
+                name: 'articleRead',
+                params: {
+                  id: this.$route.params.id
+                }
               });
-              _context2.next = 16;
+              _context2.next = 17;
               break;
 
-            case 13:
-              _context2.prev = 13;
-              _context2.t0 = _context2["catch"](1);
+            case 14:
+              _context2.prev = 14;
+              _context2.t0 = _context2["catch"](2);
               Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -15897,12 +16087,12 @@ var _default = {
                 timer: 2300
               });
 
-            case 16:
+            case 17:
             case "end":
               return _context2.stop();
           }
         }
-      }, null, this, [[1, 13]]);
+      }, null, this, [[2, 14]]);
     },
     uploadImage: function uploadImage() {
       var formData, _ref3, data;
@@ -15950,6 +16140,9 @@ var _default = {
         }
       }, null, this, [[0, 13]]);
     }
+  },
+  created: function created() {
+    this.fetchArticle();
   }
 };
 exports.default = _default;
@@ -16170,8 +16363,24 @@ var _server = _interopRequireDefault(require("../services/server"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   name: 'ArticleRead',
   data: function data() {
@@ -16189,22 +16398,22 @@ var _default = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log(_typeof(this.$route.params), this.$route.params);
-              _context.prev = 1;
-              _context.next = 4;
+              _context.prev = 0;
+              _context.next = 3;
               return regeneratorRuntime.awrap(_server.default.get("/article/".concat(this.$route.params.id)));
 
-            case 4:
+            case 3:
               _ref = _context.sent;
               data = _ref.data;
               this.article = data.article;
               this.backgroundImage = "background: url('".concat(data.article.featured_image, "') no-repeat center center/contain;");
+              this.$emit('sendArticleId', this.$route.params.id);
               _context.next = 13;
               break;
 
             case 10:
               _context.prev = 10;
-              _context.t0 = _context["catch"](1);
+              _context.t0 = _context["catch"](0);
               Swal.fire({
                 position: 'center',
                 icon: 'error',
@@ -16219,7 +16428,7 @@ var _default = {
               return _context.stop();
           }
         }
-      }, null, this, [[1, 10]]);
+      }, null, this, [[0, 10]]);
     }
   },
   created: function created() {
@@ -20023,7 +20232,7 @@ var routes = [{
   name: 'articleRead',
   component: _articleRead.default
 }, {
-  path: '/update',
+  path: '/update/:id',
   name: 'articleUpdate',
   component: _articleUpdate.default
 }, {
@@ -31122,7 +31331,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44115" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43853" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

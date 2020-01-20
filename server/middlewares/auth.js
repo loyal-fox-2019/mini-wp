@@ -50,24 +50,29 @@ async function authorReadAuthorization(req, res, next) {
 
 async function authorUpdateDeleteAuthorization(req, res, next) {
    try {
-      const article = await Article({_id: req.params.articleId})
+      const article = await Article.findOne({_id: req.params.articleId})
 
       if(!article) throw {
          errorCode: 400,
          message: 'The article does not exist in our server.'
       }
+
+      // console.log(req.params.articleId, '---------', article.author, '----------', req.authorId)
+      console.log(JSON.stringify(article.author) != JSON.stringify(req.authorId))
       
-      if(article.author != req.authorId) throw {
+      if(JSON.stringify(article.author) != JSON.stringify(req.authorId)) throw {
          errorCode: 401,
          message: 'You are not authorized to perform action to this article.'
       }
+
+      next()
    }
    catch (error) {
       next(error)
    }
 }
 
-async function authorUpdateTagAuthentication(req, res, next) {
+async function authorTagAuthorization(req, res, next) {
    try {
       if(!req.params.id) throw {
          errorCode: 400,
@@ -90,5 +95,5 @@ module.exports = {
    authorAuthentication,
    authorReadAuthorization,
    authorUpdateDeleteAuthorization,
-   authorUpdateTagAuthentication
+   authorTagAuthorization
 }

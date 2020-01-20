@@ -84,16 +84,19 @@ class ArticleController {
 
          if(title) inputs.title = title
          if(content) inputs.content = content
-         if(featured_image) inputs.featured_image = featured_image
+         if(featured_image !== '') inputs.featured_image = featured_image
          if(tags) inputs.tags = tags
          if(audience) inputs.audience = audience
 
+         console.log('this is inputs', inputs)
+
          const results = await Article.updateOne(
             {_id: req.params.articleId},
-            inputs
+            {$set: inputs}
          )
 
          res.status(200).json({results})
+         // res.status(200).json({message: 'test'})
       }
       catch (error) {
          next(error)

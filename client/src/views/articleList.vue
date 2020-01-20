@@ -58,11 +58,29 @@ export default {
                timer: 2300
             })
          }
+      },
+
+      fetchArticlesByTag: async function() {
+         try {
+            const {data} = await axios.get(`/article/tag/${this.$route.params.tag}`)
+
+            this.articles = data.articles
+         } catch (error) {
+            Swal.fire({
+               position: 'center',
+               icon: 'error',
+               title: 'Fetching-articles has failed',
+               text: error.response.data.message,
+               showConfirmButton: false,
+               timer: 2300
+            })
+         }
       }
    },
 
    created() {
-      this.fetchArticles()
+      if(this.$route.params.tag) this.fetchArticlesByTag()
+      else this.fetchArticles()
    },
 
    computed: {
