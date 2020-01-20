@@ -3,7 +3,7 @@
 const Article = require('../models/article')
 
 function authorize(req, res, next) {
-    Article.find({ author: req.user.id })
+    Article.find({ author: req.user._id })
         .then((article) => {
             if (!article) {
                 next({

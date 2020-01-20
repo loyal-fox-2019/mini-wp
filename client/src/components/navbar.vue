@@ -60,12 +60,12 @@ export default {
   name: "navbar",
   methods: {
     logout() {
-      var auth2 = gapi.auth2.getAuthInstance();
+      // var auth2 = gapi.auth2.getAuthInstance();
       this.$root.articles = [];
-      auth2.signOut().then(function() {
-        console.log("User signed out.");
-        localStorage.clear();
-      });
+      // auth2.signOut().then(function() {
+      // console.log("User signed out.");
+      localStorage.clear();
+      // });
       this.$emit("checkLogin");
     },
     addArticle() {

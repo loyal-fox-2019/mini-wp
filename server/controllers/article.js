@@ -4,7 +4,7 @@ const Article = require('../models/article')
 
 class articleController {
     static findAll(req, res, next) {
-        Article.find()
+        Article.find({ author: req.user._id })
             .then((articles) => {
                 res.status(200).json(articles)
             }).catch((err) => {
@@ -43,7 +43,7 @@ class articleController {
     }
 
     static update(req, res, next) {
-        Article.updateOne({
+        Article.findByIdAndUpdate({
             _id: req.params.id
         }, {
             title: req.body.title,
