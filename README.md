@@ -12,7 +12,7 @@ _user/register_ | **POST** | none | email, password | Create new user
 _user/privateAuth_ | **POST** | none | email, password | Login with private Authentication to dashboard page
 _user/openAuth_ | **POST"** | none | id_token | Login with open(google) Authentication to dashboard page
  
-List of todo routes: 
+List of article routes: 
 
 Route | HTTP | Header(s) | Body | Description
 ------|------|-----------|------|-------------
