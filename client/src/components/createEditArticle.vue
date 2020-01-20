@@ -164,10 +164,20 @@ export default {
                     push.push(element)
             });
             let pull = []
-            this.articleDetail.tagList.forEach(element => {
-                if(this.tagListArrayForm.indexOf(element) <= 0)
-                    pull.push(element)
-            })
+            if(this.tagList.length === 0){
+                  pull = this.articleDetail.tagList
+              }
+            else{
+                this.articleDetail.tagList.forEach(element => {
+                    if(this.tagListArrayForm.indexOf(element) < 0)
+                      {
+                        console.log(' \n======================\n element',element)
+                        pull.push(element)
+                      }
+                })
+              }
+            
+            
 
             if( queryKey.length>0 || push.length>0 || pull.length>0)
               {
@@ -208,6 +218,10 @@ export default {
                         this.$emit('editArticle', fd)
                     }
                 })
+              }
+            else
+              {
+                  swal.fire( 'Nothing been changed' )
               }
         },
         deleteArticle(){

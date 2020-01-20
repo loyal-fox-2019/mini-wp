@@ -1,13 +1,19 @@
 <template>
     <div>
         <!-- <h1>article reader</h1> -->
-
         <goBackButton 
             @goBack="$emit('goBack', 'contentPage')">
         </goBackButton>
 
 
         <div id="articleReaderDiv">
+            <button 
+                v-if=" articleDetail.Author._id === loggedInUserDetail._id " 
+                type="button" class="btn btn-outline-secondary" 
+                style="border:dashed 1px; vertical-align: top; border-radius:10px; float:right"
+                @click.prevent="$emit('switchToArticleEditPage', {mode:'editMode', articleDetail})">
+                <small>edit</small>
+            </button>
             <div >
                 <img :src="articleDetail.featuredImage" alt="" id="featuredImage">
             </div>
@@ -43,7 +49,8 @@ import goBackButton from '../components/goBackButton'
 export default {
     name: 'articleReaderPage',
     props:[
-        'articleReaderId'
+        'articleReaderId',
+        'loggedInUserDetail'
     ],
     components:{
         goBackButton

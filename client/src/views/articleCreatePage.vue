@@ -66,9 +66,16 @@ export default {
             })
             .catch( ({ response })=>{
                 console.log(`error @createArticle - articleCreatePage.vue \n=========================================\n`, response.data.message)
+                let strMessage = ''
+
+                if(typeof(response.data.message) === 'string')
+                    strMessage = response.data.message
+                else
+                    strMessage = response.data.message[0]
+
                 swal.fire(
                     "Error",
-                    response.data.message[0],
+                    strMessage,
                     'error'
                 )
             })

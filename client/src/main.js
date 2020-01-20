@@ -7,8 +7,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faEdit } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import GSignInButton from 'vue-google-signin-button'
+// import dotenv from 'dotenv'
 
-
+// dotenv.config()
 
 library.add(faUserSecret)
 library.add(faEdit)
@@ -17,7 +19,7 @@ Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 Vue.use(wysiwyg, {maxHeight: "200px"})
-
+Vue.use(GSignInButton)
 
 
 new Vue({

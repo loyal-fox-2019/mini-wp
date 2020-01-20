@@ -1,10 +1,16 @@
 <template>
     <div class="divIdentifier">
         <h3 class="elementIdentifier"> component card small</h3>
-        
-        <div class="col mb-4 div-hover" @click.prevent="$emit('switchToArticleReader', articleDetail._id)">
+
+        <div class="col mb-4 div-hover" >
+            <!-- author id <br>
+            {{articleDetail.Author._id}}<br>
+            username<br>
+            {{articleDetail.Author.username}}<br>
+            loggedInUserDetail<br>
+            {{ loggedInUserDetail._id}} -->
             <div class="card ">
-                <div v-if="articleDetail.Author._id === author" style="width:8%; height:15%; position:absolute; top:5px; right:8px; ">
+                <div v-if="articleDetail.Author._id === loggedInUserDetail._id" style="width:8%; height:15%; position:absolute; top:5px; right:8px; ">
                     <div class="edit-hover">
                     <button 
                         type="button" 
@@ -16,22 +22,24 @@
                     </div>
                 </div>
 
+            <div id="clickArea" @click.prevent="$emit('switchToArticleReader', contentHTMLStrip._id)">
                 <!-- <img src="../assets/images/6901412-photography-wallpaper.jpg" class="card-img-top" alt="..."> -->
                 <img 
-                    v-if="articleDetail.featuredImage !== 'null' 
-                            && articleDetail.featuredImage.length !== 0" 
-                    :src="articleDetail.featuredImage" 
+                    v-if="contentHTMLStrip.featuredImage !== 'null' 
+                            && contentHTMLStrip.featuredImage.length !== 0" 
+                    :src="contentHTMLStrip.featuredImage" 
                     class="card-img-top" alt="...">
 
                 <div class="card-body p-2">
-                    <h5 class="card-title">{{ articleDetail.title }}</h5>
-                    <p class="card-text" v-html="plainTextContent"></p>
+                    <h5 class="card-title">{{ contentHTMLStrip.title }}</h5>
+                    <p class="card-text" v-html="contentHTMLStrip.content"></p>
                     <small> 
                         <a 
-                            v-if="plainTextContent.length > maxContentLength" 
+                            v-if="contentHTMLStrip.content.length > maxContentLength" 
                             href="">read more</a> 
                     </small>
                 </div>
+            </div>
 
                 <div class="dropdown-divider"></div>
 
@@ -113,23 +121,20 @@
 export default {
     props:[
         'author',
-        'articleDetail'
+        'articleDetail',
+        'loggedInUserDetail'
     ],
     data(){
         return{
             plainTextContent: '',
             maxContentLength: 200,
-            toggleId: `#${this.articleDetail.Author.username}${this.articleDetail._id}`,
-            targetId: `${this.articleDetail.Author.username}${this.articleDetail._id}`,
             maxTeaserLength: 3,
-            teaserTagList: this.articleDetail.tagList.slice(0,3),
-            remainsTagList : this.articleDetail.tagList.slice(3)
+            toggleId: `#${this.articleDetail.Author.username}${this.articleDetail._id}`,
+            targetId: `${this.articleDetail.Author.username}${this.articleDetail._id}`
         }
     },
-    methods:{
-        stripHtmlTag(){
-            // this.plainTextContent = this.articleDetail.content.replace(/(<([^>]+)>)/ig, '')
-
+    computed:{
+        contentHTMLStrip(){
             var parser = new DOMParser();
             var dom = parser.parseFromString(this.articleDetail.content, "text/html");
             var text = "";
@@ -150,17 +155,25 @@ export default {
                     text += node.nodeValue;
                 }        
             });
-            this.plainTextContent = text
-            // this.$set(this.data, 'plainTextContent', 2)
+
+            // function minimized content
+            if(text.length > this.maxContentLength)
+                text = text.slice(0,this.maxContentLength) + ' ...'
+
+            return {
+                ...this.articleDetail,
+                content: text
+            }
         },
-        minimizedContent(){
-            if(this.plainTextContent.length > this.maxContentLength)
-                this.plainTextContent = this.plainTextContent.slice(0,this.maxContentLength) + ' ...'
+        teaserTagList(){
+            // teaserTagList: this.articleDetail.tagList.slice(0,3),
+            return this.articleDetail.tagList.slice(0,3)
         },
-    },
-    created(){
-        this.stripHtmlTag()
-        this.minimizedContent()
+        remainsTagList(){
+            // remainsTagList : this.articleDetail.tagList.slice(3)
+            return this.articleDetail.tagList.slice(3)
+        }
+
     }
 
     

@@ -13,7 +13,9 @@ function googleVerify(req,res,next)
         req.verifiedUser = result.getPayload()
         next()
       })
-      .catch(next)
+      .catch(err=>{
+        next(err)
+      })
   }
 
 module.exports = googleVerify

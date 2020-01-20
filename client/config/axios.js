@@ -1,8 +1,19 @@
 import axios from 'axios'
+console.log(' \n======================\n', process.env.NODE_ENV)
 
-const instance = axios.create({
-    baseURL: 'http://miniwp-server.japhendywijaya.xyz:3000'
-})
+let instance
+if(process.env.NODE_ENV === 'development')
+{
+    instance = axios.create({
+        baseURL: 'http://localhost:3000'
+    })
+}
+else if(process.env.NODE_ENV === 'production')
+{
+    instance = axios.create({
+        baseURL: 'http://miniwp-server.japhendywijaya.xyz:3000'
+    })
+}
 
 
 export default instance
