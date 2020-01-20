@@ -1,5 +1,5 @@
-const htmlPort = 'http://localhost:3000'
-// const htmlPort = 'http://34.87.102.199:3000'
+// const htmlPort = 'http://localhost:3000'
+const htmlPort = 'http://34.87.102.199:3000'
 
 new Vue ({
     el: '#app',
