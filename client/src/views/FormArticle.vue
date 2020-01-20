@@ -15,13 +15,12 @@
       </div>
       <div class="form-group">
         <label for="content">Content</label>
-        <textarea
-          class="form-control form-width-textarea"
-          id="content"
-          rows="8"
+        <quill-editor
+          class="form-width-textarea"
+          ref="myTextEditor"
           v-model="content"
-          autocomplete="off"
-        ></textarea>
+          :config="editorOption"
+        ></quill-editor>
       </div>
       <div class="form-group">
         <label for="thumbnail">Thumbnail</label>
@@ -33,13 +32,22 @@
 </template>
 
 <script>
+import { quillEditor } from "vue-quill-editor";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
+import "quill/dist/quill.bubble.css";
 import Swal from "sweetalert2";
 export default {
+  components: {
+    quillEditor
+  },
   data() {
     return {
       thumbnail: "",
       title: "",
-      content: ""
+      content: "",
+      content: "",
+      editorOption: {}
     };
   },
   methods: {

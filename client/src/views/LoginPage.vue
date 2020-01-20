@@ -44,20 +44,39 @@
         <p class="divider line one-line" v-if="page === 'Login'">
           <small class="text-muted">Or</small>
         </p>
+        <GoogleLogin
+          :params="params"
+          :renderParams="renderParams"
+          :onSuccess="onSuccess"
+          :onFailure="onFailure"
+        ></GoogleLogin>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import GoogleLogin from "vue-google-login";
 import Swal from "sweetalert2";
 export default {
+  components: {
+    GoogleLogin
+  },
   data() {
     return {
       page: "Login",
       name: "",
       email: "",
-      password: ""
+      password: "",
+      params: {
+        client_id:
+          "352850345511-emdgqsv82iaovmk99t0ueppu1gbi0uoa.apps.googleusercontent.com"
+      },
+      renderParams: {
+        width: 250,
+        height: 50,
+        longtitle: true
+      }
     };
   },
   methods: {
@@ -131,6 +150,9 @@ export default {
             text: err
           });
         });
+    },
+    onSuccess(googleUser) {
+      console.log(googleUser);
     }
   }
 };
