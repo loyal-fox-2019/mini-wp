@@ -4,7 +4,7 @@ module.exports =  gcsUpload({
       fileSize: 1e6 // in bytes
     },
     gcsConfig: {
-      keyFilename: 'mini-wp-8721a4584ab2.json',
+      keyFilename: 'mini-wp-968a33ae9b3e.json',
       bucketName: 'assets-image'
     }
 })
