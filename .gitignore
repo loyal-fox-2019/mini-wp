@@ -1,0 +1,6 @@
+node_modules
+server_zoey
+.env
+jsonserver
+.cache
+dist
