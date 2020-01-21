@@ -58,6 +58,7 @@ class ArticleController {
         let id = req.params.id
         let data = {
             title: req.body.title,
+            description: req.body.description,
             content: req.body.content,
             featured_image: req.body.featured_image
         }

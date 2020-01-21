@@ -1,10 +1,10 @@
-const Article = require('../models/user')
+const Article = require('../models/article')
 
-module.exports = (err, req, res, next) => {
+module.exports = (req, res, next) => {
     let id = req.loggedIn.id
     console.log(id)
     try {
-        Article.findById(req.params.id)
+        Article.findOne({_id: req.params.id})
             .then(result => {
                 if(result.user_id == id){
                     next()
@@ -13,7 +13,7 @@ module.exports = (err, req, res, next) => {
                 }
             })
     }
-    catch{
+    catch(err){
         res.status(403).json({
             message: 'Not authorized',
             err
