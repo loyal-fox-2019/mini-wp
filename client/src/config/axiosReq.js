@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosReq = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'http://35.247.134.77:3000'
 });
 
 module.exports = axiosReq;

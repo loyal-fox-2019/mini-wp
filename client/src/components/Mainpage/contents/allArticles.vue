@@ -97,7 +97,7 @@
     object-fit: cover;
 }
 .card {
-    height: 30vw;
+    height: 35vw;
 }
 .card-footer {
     bottom: 0;

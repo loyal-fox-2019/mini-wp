@@ -36,7 +36,7 @@ export default {
       console.log("ID Token: " + id_token);
       
       axiosReq({
-        url: "http://localhost:3000/api/gsignin",
+        url: "/api/gsignin",
         method: "POST",
         data: {
             username: email,
