@@ -78,7 +78,7 @@ export default {
                 password: ''
             },
             googleSignInParams: {
-                client_id: '724335900212-4180pkjn7o56k4jt4vr938asgrq9rf3b.apps.googleusercontent.com'
+                client_id: '724335900212-jqbam4hsmdker41lpdu0d3tl03v1376k.apps.googleusercontent.com'
             }
         }
     },
@@ -98,7 +98,7 @@ export default {
             // See https://developers.google.com/identity/sign-in/web/reference#users
             const profile = googleUser.getBasicProfile() // etc etc
             const id_token = googleUser.getAuthResponse().id_token;
-            axios.post('http://localhost:3000/user/google', {id_token: id_token})
+            axios.post('http://34.87.122.217:3000/user/google', {id_token: id_token})
                 .then(data => {
                     console.log('Login berhasil', data)
                     localStorage.setItem('token', data.data.token)

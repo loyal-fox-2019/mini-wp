@@ -34,7 +34,7 @@
 <script>
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://34.87.122.217:3000'
 
 export default {
     name: 'EditForm',

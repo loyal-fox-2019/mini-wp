@@ -34,7 +34,7 @@ import FullArticle from './components/FullArticle'
 import ToastLogin from './components/ToastLogin'
 import ErrorAlert from './components/ErrorAlert'
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://34.87.122.217:3000'
 
 export default {
     name: 'app',
