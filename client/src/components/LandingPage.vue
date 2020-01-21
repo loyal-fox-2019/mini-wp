@@ -78,7 +78,7 @@ export default {
                 password: ''
             },
             googleSignInParams: {
-                client_id: '724335900212-jqbam4hsmdker41lpdu0d3tl03v1376k.apps.googleusercontent.com'
+                client_id: '1064419566437-m5l8eoif88oskpptvemb8j49sm3be7ql.apps.googleusercontent.com'
             }
         }
     },
