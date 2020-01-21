@@ -1,14 +1,13 @@
-// const htmlPort = 'http://localhost:3000'
-const htmlPort = 'http://34.87.102.199:3000'
+const htmlPort = 'http://localhost:3000'
+// const htmlPort = 'https://34.87.102.199:3000'
 
 new Vue ({
     el: '#app',
     created() {
-        if(!localStorage.token) {
+        if(!localStorage.getItem('token')) {
             this.articles = [];
             this.showLogin();
         } else {
-            this.articles = [];
             this.findArticle();
         }
     },
@@ -25,7 +24,7 @@ new Vue ({
         title: '',
         content: '',
         search: '',
-        page: 'main',
+        page: '',
         articleOne: [],
         file: '',
         UserId: '',
@@ -149,7 +148,7 @@ new Vue ({
             })
             .then(response => {
                 localStorage.setItem('token', response.token);
-                this.page = 'main';
+                this.page = 'article';
             })
             .catch(err => {
                 console.log(err);
@@ -168,7 +167,7 @@ new Vue ({
                 localStorage.setItem('token', data.token);
                 this.email = '';
                 this.password = '';
-                this.page = 'main';
+                this.page = 'article';
             })
             .catch(err => {
                 console.log(err);
@@ -189,7 +188,7 @@ new Vue ({
                 this.name = '';
                 this.email = '';
                 this.password = '';
-                this.page = 'main';
+                this.page = 'article';
             })
             .catch(err => {
                 console.log(err);
