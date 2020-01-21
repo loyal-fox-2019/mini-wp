@@ -1,0 +1,12 @@
+footer {
+    color: white;
+    background-color: tomato;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    position: fixed;
+    z-index: 1;
+}
+#imgCard {
+    width: 30px;
+}
