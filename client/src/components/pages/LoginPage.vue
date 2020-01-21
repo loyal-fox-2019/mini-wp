@@ -24,9 +24,14 @@
       />
       <input class="btn btn-sm btn-primary btn-block" type="submit" value="Login" />
       <span class="mt-3">
-        Don't have account ? <br /> let's
+        Don't have account ?
+        <br />let's
         <a href="#" @click.prevent="toggleForm">register</a>
+        <br />
+        <hr />
+        <!-- <Google-Signin-Button @click.prevent="googleSignin"></Google-Signin-Button> -->
       </span>
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
       <p class="mt-5 mb-3 text-muted">MINI-WP &copy; 2019</p>
     </form>
     <form class="form-signin" @submit.prevent="register" v-show="currentForm=='registerForm'">
@@ -62,7 +67,8 @@
       />
       <input class="btn btn-sm btn-primary btn-block" type="submit" value="Login" />
       <span class="my-3">
-        Already have account ? <br /> let's
+        Already have account ?
+        <br />let's
         <a href="#" @click.prevent="toggleForm">login</a>
       </span>
       <p class="mt-5 mb-3 text-muted">MINI-WP &copy; 2019</p>
@@ -72,9 +78,13 @@
 
 <script>
 import axios from "../../axios-config";
+import GoogleSigninButton from "../GoogleSigninButton";
 
 export default {
   name: "loginPage",
+  components: {
+    GoogleSigninButton
+  },
   data: function() {
     return {
       registerName: "",
@@ -83,7 +93,10 @@ export default {
       loginEmail: "",
       loginPassword: "",
       errorMessage: "",
-      currentForm: "loginForm"
+      currentForm: "loginForm",
+      googleSignInParams: {
+        client_id: this.$googleId
+      }
     };
   },
   props: {
@@ -134,6 +147,35 @@ export default {
       } else if (this.currentForm == "registerForm") {
         this.currentForm = "loginForm";
       }
+    },
+
+    onSignInSuccess: function(googleUser) {
+      let googleToken = googleUser.getAuthResponse().id_token;
+      axios({
+        method: "post",
+        url: `authors/login/oauth/${googleToken}`
+      })
+        .then(({ data }) => {
+          if (data) {
+            this.header = "Sign In Success";
+            this.content = data.message;
+            localStorage.token = data.token;
+            location.reload();
+          }
+        })
+        .catch(err => {
+          this.$toast.error({
+            title: "Error Sign In",
+            message: err.response.data.message
+          });
+        });
+    },
+    onSignInError(error) {
+      // `error` contains any error occurred.
+      this.$toast.error({
+        title: "Error Sign In",
+        message: err.response.data.message
+      });
     }
   }
 };
@@ -145,5 +187,6 @@ export default {
   -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
   box-shadow: 3px 3px 5px 6px #ccc;
   padding: 50px;
+  border-radius: 25px;
 }
 </style>
