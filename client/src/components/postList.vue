@@ -1,8 +1,14 @@
 <template>
   <div>
-    <h3 v-if='tag && postList.length != 0'>Post(s) with {{tag}} tag</h3>
-    <h3 v-if='!tag'>All Post</h3>
-    <h1 v-if='postList.length == 0'>No post to be shown</h1>
+    <div class="row justify-content-center mt-3">
+      <b-nav-form>
+        <b-form-input size="sm" class="mr-sm-2" placeholder="Tag" v-model='searchTag' type='text'></b-form-input>
+        <b-button size="sm" class="my-2 mx-1 my-sm-0" type="submit" @click.prevent='search(searchTag)'>Search by Tag</b-button>
+      </b-nav-form>
+    </div>
+    <h3 class='mt-3 mb-3' v-if='filtered'>Post(s) with {{tags}} tag</h3>
+    <h3 class='mt-3 mb-3' v-if='!filtered'>All Post</h3>
+    <h1 class='mt-3 mb-3' v-if='postList.length == 0'>No post to be shown</h1>
     <div class='row'>
       <b-card-group class='col-md-8 offset-md-2'>
         <b-card class='border border-primary m-1' :title=post.title v-for='post in postList'>
@@ -15,6 +21,7 @@
         </b-card>
       </b-card-group>
     </div>
+
   </div>
 </template>
 <script>
@@ -27,7 +34,9 @@ export default {
   data () {
     return {
       postList: [],
-      tag: ''
+      searchTag: '',
+      tags: '',
+      filtered: false
     }
   },
   props: ['refresh'],
@@ -53,6 +62,7 @@ export default {
         .catch((err) => {
           Swal.fire('Error', err.response.data.message, 'error')
         })
+      this.filtered = false
     },
     deletePost(id){
       Swal.fire({
@@ -92,20 +102,26 @@ export default {
       this.$emit('editForm', id)
     },
     search(tag){
-      this.tag = tag
-      axios({
-        method:'get',
-        url: `/article/tags/${tag}`,
-        headers: {
-          access_token: localStorage.getItem('access_token')
-        }
-      })
-        .then(({data}) => {
-          this.postList = data
+      if (tag){
+        axios({
+          method:'get',
+          url: `/article/tags/${tag}`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
         })
-        .catch((err) => {
-          Swal.fire('Error', err.response.data.message, 'error')
-        })
+          .then(({data}) => {
+            this.postList = data
+          })
+          .catch((err) => {
+            Swal.fire('Error', err.response.data.message, 'error')
+          })
+        this.filtered = true
+        this.tags = this.searchTag
+      }
+      else {
+        this.fetchData()
+      }
     }
   },
   created(){

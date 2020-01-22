@@ -19,7 +19,7 @@ class ArticleController{
   }
 
   static create(req, res, next){
-    let { title, content, tags} = req.body
+    let { title, content, tags } = req.body
     tags = JSON.parse(tags)
     let featured_image = req.body.file || ''
     let author = req.userId
@@ -31,7 +31,8 @@ class ArticleController{
   }
 
   static edit(req, res, next){
-    const { title, content, tags } = req.body
+    let { title, content, tags } = req.body
+    tags = JSON.parse(tags)
     let featured_image = req.body.file
     const updateObj = { title, content, $set: {tags}, featured_image}
     const condition = { _id: req.params.id}

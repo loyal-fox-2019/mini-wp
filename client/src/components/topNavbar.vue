@@ -105,7 +105,7 @@ export default {
           this.password = ''
         })
         .catch((err) => {
-          Swal.fire('Error', err.response, 'error')
+          Swal.fire('Error', err.response.data.message, 'error')
         })
     },
     logout(){

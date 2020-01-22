@@ -28,6 +28,9 @@
           class="mb-2"
         ></b-form-tags>
       </b-form-group>
+      <b-form-group id="input-group-4" label="Featured image" label-for="input-4" class='mt-5'>
+        <b-form-file v-model="file" plain></b-form-file>
+      </b-form-group>
       <div class="d-flex mt-5">
         <b-button type="submit" variant="primary" @click.prevent='submitPost'>Submit Edit</b-button>
         <b-spinner class='ml-3' v-if='isLoading'></b-spinner>
@@ -76,14 +79,15 @@ export default {
     submitPost(){
       this.isLoading = true
       this.content = this.editor.root.innerHTML
+      const fd = new FormData()
+      fd.append('title',this.title)
+      fd.append('content',this.content)
+      fd.append('tags',JSON.stringify(this.tags))
+      fd.append('file',this.file)
       axios({
         method: 'patch',
         url: `/article/${this.postId}`,
-        data: {
-          title: this.title,
-          content: this.content,
-          tags: this.tags
-        },
+        data: fd,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
