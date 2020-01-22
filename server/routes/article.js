@@ -10,7 +10,7 @@ router.post('/', upload.single('file'), ArticleController.create)
 
 router.use('/:id', authorize)
 router.get('/:id', ArticleController.showOne)
-router.patch('/:id', ArticleController.edit)
+router.patch('/:id', upload.single('file'), ArticleController.edit)
 router.delete('/:id', ArticleController.remove)
 
 

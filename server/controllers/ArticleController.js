@@ -32,9 +32,10 @@ class ArticleController{
 
   static edit(req, res, next){
     const { title, content, tags } = req.body
-    const updateObj = { title, content, $set: {tags}}
+    let featured_image = req.body.file
+    const updateObj = { title, content, $set: {tags}, featured_image}
     const condition = { _id: req.params.id}
-    Article.findOneAndUpdate(condition, updateObj, {new: true})
+    Article.findOneAndUpdate(condition, updateObj, {new: true, omitUndefined: true})
       .then((article) => {
         res.status(200).json(article)
       })
@@ -47,10 +48,10 @@ class ArticleController{
     })
       .then((data) => {
         if (data.deletedCount == 0){
-          throw new Error(`Article not found`)
+          throw ({message: `Article not found`})
         }
         else{
-          res.status(200).json()
+          res.status(200).json({message: 'Delete Success'})
         }
       })
       .catch(next)
@@ -58,7 +59,8 @@ class ArticleController{
 
   static searchTag(req, res, next){
     Article.find({
-      tags: req.params.tags
+      tags: req.params.tags,
+      author: req.userId
     })
     .populate('author', 'email -_id')
     .then((data) => {
