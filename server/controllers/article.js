@@ -4,9 +4,10 @@ const { Article } = require('../models')
 class articleController {
   static createArticle (req, res, next) {
     const { title, content, image, tags } = req.body
+
     Article
       .create({
-        title, content, featured_image: image, tags, author: req.decoded.id
+        title, content, featured_image: image, tags: tags.split(','), author: req.decoded.id
       })
       .then(article => {
         res.status(201).json({
@@ -37,7 +38,6 @@ class articleController {
         res.status(200).json(articles)
       })
       .catch(next)
-      console.log('read all')
     }
     
     static readAllArticle (req, res, next) {
@@ -49,13 +49,12 @@ class articleController {
         res.status(200).json(articles)
       })
       .catch(next)
-    console.log('read all')
   }
 
   static updateArticle (req, res, next) {
     const _id = req.params.id
     const { title, content, image, tags } = req.body
-    const value = { title, content, featured_image: image, tags }
+    const value = { title, content, featured_image: image, tags: tags.split(',') }
 
     Article
       .findByIdAndUpdate(_id, value, { new: true, omitUndefined: true })
@@ -75,7 +74,7 @@ class articleController {
           message: "Success to delete article"
         })
       })
-    console.log('delete')
+      .catch(next)
   }
 
   static searchArticle (req, res, next) {
@@ -94,8 +93,14 @@ class articleController {
             }
           }
         }
-        
-        res.status(200).json(articleSearch)
+        if (articleSearch.length > 0) {
+          res.status(200).json(articleSearch)
+        } else {
+          throw ({
+            status: 400,
+            message: 'Data not found'
+          })
+        }
       })
       .catch(next)
   }
