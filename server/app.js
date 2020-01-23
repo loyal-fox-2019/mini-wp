@@ -9,14 +9,21 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const routes = require('./routes/index')
 
-mongoose.connect('mongodb://localhost:27017/miniwp', {
+mongoose
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-})
+  })
+  .then(() => {
+    console.log('connected to db')
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
 app.use(morgan('dev'))
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 app.use('/', routes)
@@ -39,4 +46,6 @@ app.use(errHandler)
 //     })
 // })
 
-app.listen(PORT, ()=> {console.log(`you are now in PORT ${PORT}`)})
+app.listen(PORT, () => {
+  console.log(`you are now in PORT ${PORT}`)
+})

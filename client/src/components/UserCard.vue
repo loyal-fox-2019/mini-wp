@@ -7,11 +7,16 @@
       style="height: 300px; object-fit: cover;"
     />
     <div class="card-body">
-      <h5 class="card-title">{{article.title}}</h5>
+      <h5 class="card-title">{{ article.title }}</h5>
       <div v-html="article.content"></div>
       <p class="card-text">
         <a class="btn btn-secondary cursorNya" role="button">Update</a>
-        <a class="btn btn-danger cursorNya" role="button">Delete</a>
+        <a
+          class="btn btn-danger cursorNya"
+          role="button"
+          @click.prevent="deleteArticle"
+          >Delete</a
+        >
         <small class="text-muted">By</small>
         <small class="text-muted">~Last updated 3 mins ago</small>
       </p>
@@ -21,13 +26,30 @@
 
 <script>
 export default {
-  name: "MainCard",
-  props: ["article"]
-};
+  name: 'MainCard',
+  props: ['article'],
+  methods: {
+    deleteArticle() {
+      axios({
+        method: 'get',
+        url: `http://localhost:3000/deleteArticle/${this.article._id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>
-.cursorNya{
+.cursorNya {
   cursor: pointer;
 }
 </style>

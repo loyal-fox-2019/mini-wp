@@ -9,10 +9,20 @@
             <h2 class="title text-center">Join Us Today</h2>
             <form method="POST">
               <div class="input-group">
-                <input class="input--style-3" type="text" placeholder="First Name" v-model="registerData.firstName" />
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="First Name"
+                  v-model="registerData.firstName"
+                />
               </div>
               <div class="input-group">
-                <input class="input--style-3" type="text" placeholder="Last Name" v-model="registerData.lastName" />
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="Last Name"
+                  v-model="registerData.lastName"
+                />
               </div>
               <!-- <div class="input-group">
                             <input class="input--style-3 js-datepicker" type="text" placeholder="Birthdate" name="birthday">
@@ -20,13 +30,28 @@
               </div>-->
 
               <div class="input-group">
-                <input class="input--style-3" type="email" placeholder="Email" v-model="registerData.email" />
+                <input
+                  class="input--style-3"
+                  type="email"
+                  placeholder="Email"
+                  v-model="registerData.email"
+                />
               </div>
               <div class="input-group">
-                <input class="input--style-3" type="password" placeholder="Password" v-model="registerData.password" />
+                <input
+                  class="input--style-3"
+                  type="password"
+                  placeholder="Password"
+                  v-model="registerData.password"
+                />
               </div>
               <div class="input-group">
-                <input class="input--style-3" type="text" placeholder="Phone" v-model="registerData.phone" />
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="Phone"
+                  v-model="registerData.phone"
+                />
               </div>
               <!-- <div class="input-group">
               <div class="rs-select2 js-select-simple select--no-search">
@@ -40,11 +65,19 @@
               </div>
               </div>-->
               <div class="p-t-10 text-center">
-                <button class="btn btn--pill btn--green" type="submit" @click.prevent="registerMethods">Register</button>
+                <button
+                  class="btn btn--pill btn--green"
+                  type="submit"
+                  @click.prevent="registerMethods"
+                >
+                  Register
+                </button>
                 <h5
                   class="mt-4 text-center text-tambahan"
                   @click="showLoginForm"
-                >I already have an account</h5>
+                >
+                  I already have an account
+                </h5>
               </div>
             </form>
           </div>
@@ -59,10 +92,20 @@
               </div>-->
 
               <div class="input-group">
-                <input class="input--style-3" type="email" placeholder="Email" v-model="loginData.email" />
+                <input
+                  class="input--style-3"
+                  type="email"
+                  placeholder="Email"
+                  v-model="loginData.email"
+                />
               </div>
               <div class="input-group">
-                <input class="input--style-3" type="password" placeholder="Password" v-model="loginData.password" />
+                <input
+                  class="input--style-3"
+                  type="password"
+                  placeholder="Password"
+                  v-model="loginData.password"
+                />
               </div>
               <!-- <div class="input-group">
               <div class="rs-select2 js-select-simple select--no-search">
@@ -76,11 +119,28 @@
               </div>
               </div>-->
               <div class="p-t-10 text-center">
-                <button class="btn btn--pill btn--green" type="submit" @click.prevent="loginMethods">Login</button>
+                <button
+                  class="btn btn--pill btn--green"
+                  type="submit"
+                  @click.prevent="loginMethods"
+                >
+                  Login
+                </button>
+                <g-signin-button
+                  class="btn btn-primary mt-2"
+                  id="googleSign"
+                  :params="googleSignInParams"
+                  @success="onSignInSuccess"
+                  @error="onSignInError"
+                >
+                  Sign in with Google
+                </g-signin-button>
                 <h5
                   class="mt-4 text-center text-tambahan"
                   @click="showRegisterForm"
-                >Dont have account? Get Login</h5>
+                >
+                  Dont have account? Get Login
+                </h5>
               </div>
             </form>
           </div>
@@ -92,53 +152,58 @@
 
 <script>
 export default {
-  name: "RegisterLogin",
+  name: 'RegisterLogin',
   data() {
     return {
       registerData: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        phone: ""
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        phone: ''
       },
       loginData: {
-        email: "",
-        password: ""
+        email: '',
+        password: ''
       },
       loginForm: false,
-      registerForm: true
-    };
+      registerForm: true,
+      googleSignInParams: {
+        client_id:
+          '892121578226-d9gjcnlbr6o3kmlg0e4nnkp9o50pp6rp.apps.googleusercontent.com'
+      }
+    }
   },
   methods: {
     showLoginForm() {
-      this.loginForm = true;
-      this.registerForm = false;
+      this.loginForm = true
+      this.registerForm = false
     },
     showRegisterForm() {
-      this.loginForm = false;
-      this.registerForm = true;
+      this.loginForm = false
+      this.registerForm = true
     },
     registerMethods() {
       axios({
-        method: "post",
+        method: 'post',
         url: `http://localhost:3000/register`,
         data: {
-          firstName:this.registerData.firstName,
+          firstName: this.registerData.firstName,
           lastName: this.registerData.lastName,
           email: this.registerData.email,
           password: this.registerData.password,
           phone: this.registerData.phone
         }
       })
-      .then(({data}) => {
-        console.log(data)
-        this.showLoginForm()
-      }).catch((err) => {
-        console.log(err)
-      })
+        .then(({ data }) => {
+          console.log(data)
+          this.showLoginForm()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
-    loginMethods(){
+    loginMethods() {
       axios({
         method: 'post',
         url: 'http://localhost:3000/login',
@@ -147,17 +212,37 @@ export default {
           password: this.loginData.password
         }
       })
-      .then(({data}) => {
-        // console.log(data.token)
-        localStorage.setItem('token', data.token)
-        this.$emit('login-component', true)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+        .then(({ data }) => {
+          // console.log(data.token)
+          localStorage.setItem('token', data.token)
+          this.$emit('login-component', true)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
+    onSignInSuccess(googleUser) {
+      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      const profile = googleUser.getBasicProfile() // etc etc
+      const id_token = googleUser.getAuthResponse().id_token
+      axios
+        .post('http://localhost:3000/oauthLogin', { id_token: id_token })
+        .then(({ data }) => {
+          // console.log('Login berhasil', data)
+          localStorage.setItem('token', data.token)
+          this.$emit('login-component', true)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    onSignInError(error) {
+      // `error` contains any error occurred.
+      console.log('OH NOES', error)
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -165,7 +250,15 @@ export default {
   color: #ccc;
   cursor: pointer;
 }
-
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background-color: #3c82f7;
+  color: #fff;
+  box-shadow: 0 3px 0 #0f69ff;
+}
 .loginFormNya {
   height: 70vh;
 }
@@ -179,11 +272,11 @@ export default {
 }
 
 .font-robo {
-  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'Roboto', 'Arial', 'Helvetica Neue', sans-serif;
 }
 
 .font-poppins {
-  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'Poppins', 'Arial', 'Helvetica Neue', sans-serif;
 }
 .row {
   display: -webkit-box;
@@ -291,7 +384,7 @@ button {
 }
 
 body {
-  font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'Poppins', 'Arial', 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
 }
@@ -338,7 +431,7 @@ h6 {
 }
 
 .bg-gra-01 {
-  background: url("https://images3.alphacoders.com/853/thumb-1920-85305.jpg")
+  background: url('https://images3.alphacoders.com/853/thumb-1920-85305.jpg')
     top left/cover no-repeat;
 }
 
@@ -386,7 +479,7 @@ h6 {
   display: inline-block;
   line-height: 40px;
   padding: 0 33px;
-  font-family: Poppins, Arial, "Helvetica Neue", sans-serif;
+  font-family: Poppins, Arial, 'Helvetica Neue', sans-serif;
   cursor: pointer;
   color: #fff;
   -webkit-transition: all 0.4s ease;
@@ -420,14 +513,14 @@ td.active {
   background-color: #2c6ed5;
 }
 
-input[type="date" i] {
+input[type='date' i] {
   padding: 14px;
 }
 
 .table-condensed td,
 .table-condensed th {
   font-size: 14px;
-  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+  font-family: 'Roboto', 'Arial', 'Helvetica Neue', sans-serif;
   font-weight: 400;
 }
 
@@ -593,8 +686,8 @@ input {
   .select2-container
   .select2-selection--single
   .select2-selection__arrow:after {
-  font-family: "Material-Design-Iconic-Font";
-  content: "\f2f9";
+  font-family: 'Material-Design-Iconic-Font';
+  content: '\f2f9';
   font-size: 18px;
   color: #ccc;
   -webkit-transition: all 0.4s ease;
@@ -655,7 +748,7 @@ input {
 }
 
 .card-3 .card-heading {
-  background: url("https://images.pexels.com/photos/1591447/pexels-photo-1591447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")
+  background: url('https://images.pexels.com/photos/1591447/pexels-photo-1591447.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')
     top left/cover no-repeat;
   display: table-cell;
   width: 50%;
@@ -665,5 +758,5 @@ input {
   padding: 57px 65px;
   padding-bottom: 65px;
   display: table-cell;
-}
-</style>>
+}</style
+>>

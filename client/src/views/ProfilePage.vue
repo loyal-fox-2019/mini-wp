@@ -8,45 +8,71 @@
           alt="Card image cap"
         />
         <div class="card-body">
-          <h5 class="card-title">Name</h5>
-          <p
-            class="card-text"
-          >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut fugit voluptates laborum magnam quas, unde non deleniti repellat consectetur enim sed reiciendis ipsam molestiae, perferendis soluta qui, sint explicabo atque!</p>
+          <h5 class="card-title">{{ firstName }}</h5>
+          <p class="card-text">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut fugit
+            voluptates laborum magnam quas, unde non deleniti repellat
+            consectetur enim sed reiciendis ipsam molestiae, perferendis soluta
+            qui, sint explicabo atque!
+          </p>
           <ul class="list-group list-group-flush text-center">
-            <li class="list-group-item">email@mail.com</li>
-            <li class="list-group-item">FirstName</li>
-            <li class="list-group-item">Last Name</li>
+            <li class="list-group-item">{{ email }}</li>
+            <li class="list-group-item">{{ firstName }}</li>
+            <li class="list-group-item">{{ lastName }}</li>
           </ul>
-          
+
           <!-- <a href="#" class="card-link">Card link</a>
           <a href="#" class="card-link">Another link</a> -->
         </div>
       </div>
       <div class="col">
-        <Usercard v-for="(article, key) in articles" :key="key" :article="article"></Usercard>
+        <Usercard
+          v-for="(article, key) in articles"
+          :key="key"
+          :article="article"
+        ></Usercard>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Usercard from "../components/UserCard";
+import Usercard from '../components/UserCard'
 export default {
-  name: "ProfilePage",
+  name: 'ProfilePage',
   props: ['articles'],
   components: {
     Usercard
   },
-  data(){
+  data() {
     return {
-
+      email: '',
+      firstName: '',
+      lastName: '',
+      phone: ''
     }
   },
-  methods: {
-    
-  },
+  methods: {},
+  created() {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3000/findOneUser',
+      headers: {
+        token: localStorage.getItem('token')
+      }
+    })
+      .then(({ data }) => {
+        ;(this.email = data.email),
+          (this.firstName = data.firstName),
+          (this.lastName = data.lastName),
+          (this.phone = dat.phone)
+        console.log('data hasbeen created ', data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 </script>
 
-<style>
-</style>
+<style></style>
