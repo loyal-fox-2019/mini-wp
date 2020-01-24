@@ -2,7 +2,7 @@
 
 module.exports = function (err, req, res, next) {
     // console.log(err.name)
-    console.log(err.message)
+    console.log(err)
 
     let statusErr, msg
     switch (err.name) {
@@ -18,5 +18,6 @@ module.exports = function (err, req, res, next) {
     }
     // console.log('Masuk sini')
     // console.log(statusErr)
+    // console.log(msg)
     res.status(statusErr).json({message: msg})
 }

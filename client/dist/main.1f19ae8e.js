@@ -118,17 +118,16 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"main.js":[function(require,module,exports) {
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var app = new Vue({
   el: '#app',
-  data: _defineProperty({
+  data: {
     loginStatus: false,
-    register: true,
+    register: false,
     name: null,
     email: null,
-    password: null
-  }, "name", name),
+    password: null,
+    error: null
+  },
   methods: {
     btnLoginRegister: function btnLoginRegister() {
       if (!this.register) {
@@ -136,6 +135,27 @@ var app = new Vue({
       } else {
         this.register = false;
       }
+    },
+    login: function login() {
+      var _this = this;
+
+      axios.post('http://localhost:3000/miniwp/member/login', {
+        email: this.email,
+        password: this.password
+      }).then(function (response) {
+        console.log(response.data, 'masukkk');
+        _this.loginStatus = true, localStorage.setItem('token', response.data);
+      }).catch(function (error) {
+        console.log(error.response.data.message);
+        _this.error = error.response.data.message;
+      });
+    }
+  },
+  created: function created() {
+    if (localStorage.getItem("token")) {
+      this.loginStatus = true;
+    } else {
+      this.loginStatus = false;
     }
   }
 });
@@ -167,7 +187,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38505" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

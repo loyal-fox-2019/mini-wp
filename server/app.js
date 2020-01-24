@@ -12,7 +12,9 @@ const errorHandler = require('./middleware/errorhandler')
 mongoose.connect(process.env.DB_HOST, 
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: true
     }
 )
 const db = mongoose.connection;

@@ -2,14 +2,14 @@ var app = new Vue({
     el: '#app',
     data: {
         loginStatus: false,
-        register: true,
+        register: false,
         name:null,
         email: null,
         password: null,
-        name
+        error: null
     },
     methods: {
-        btnLoginRegister: function(){
+        btnLoginRegister(){
             if(!this.register) {
                 this.register = true
             }
@@ -17,8 +17,28 @@ var app = new Vue({
                 this.register = false    
             }
         },
-        login : function (){
-            axios.()
+        login() {
+            axios.post('http://localhost:3000/miniwp/member/login', {
+                email: this.email,
+                password: this.password
+            })
+            .then(response => {
+                console.log(response.data,'masukkk')
+                this.loginStatus = true,
+                localStorage.setItem('token', response.data)
+            })
+            .catch((error) => {
+                console.log(error.response.data.message)
+                this.error = error.response.data.message
+            })
+        }
+    },
+    created(){
+        if(localStorage.getItem("token")){
+            this.loginStatus = true
+        }
+        else{
+            this.loginStatus = false
         }
     }
 })

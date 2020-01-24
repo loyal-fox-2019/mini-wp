@@ -5,12 +5,11 @@ const jwt =require('jsonwebtoken')
 
 
 class memberController {
-    static signUp (res, req, next) {
-        console.log(req.body)
+    static signUp (req, res, next) {
         const obj = {
             name: req.body.name,
             email: req.body.email,
-            password: req.body.pasword
+            password: req.body.password
         }
         Member.create(obj)
         .then(() => {
@@ -20,11 +19,16 @@ class memberController {
     }
 
     static signIn (req, res, next) {
-        Member.findOne(req.body.username)
+        Member.findOne({
+            email:req.body.email
+        })
         .then(result => {
-            if(!result || result.password !== req.body.password){
+            if(!result){
                 throw ({status:400, message: "please enter a correct username and password"})
             } 
+            else if(result.password !== req.body.password){
+                throw ({status:400, message: "please enter a correct username and password"})
+            }
             else {
                 const token = jwt.sign(result.id, process.env.KEY_TOKEN)
                 res.status(202).json(token)
