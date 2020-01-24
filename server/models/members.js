@@ -13,8 +13,7 @@ const memberSchema = new Schema({
     email: {
         type: String,
         required: [true, "Email address is required"],
-        unique: true,
-        validate: [validateEmail, 'Please fill a valid email address'],
+        unique: [true, "Email is already take"],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     password: {
@@ -24,7 +23,7 @@ const memberSchema = new Schema({
 })
 
 memberSchema.pre('save', function() {
-    this.passwod = bcrypt.hashSync(this.passwod, saltRounds)
+    this.passwod = bcrypt.hashSync(this.password, saltRounds)
 })
 
 module.exports = mongoose.model("Member", memberSchema)

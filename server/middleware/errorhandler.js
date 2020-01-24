@@ -16,7 +16,7 @@ module.exports = function (err, req, res, next) {
             msg= err.message || 'server error'
             break;
     }
-    console.log('Masuk sini')
-    console.log(statusErr)
+    // console.log('Masuk sini')
+    // console.log(statusErr)
     res.status(statusErr).json({message: msg})
 }

@@ -22,8 +22,9 @@ db.once('open', function() {
   console.log('connected!')
 });
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: true }))
+
 app.use(cors())
 app.use('/miniwp', routers)
 app.use(errorHandler)
