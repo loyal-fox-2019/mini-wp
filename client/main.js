@@ -6,7 +6,9 @@ var app = new Vue({
         name:null,
         email: null,
         password: null,
-        error: null
+        error: null,
+        newArticle: false,
+        article: [] 
     },
     methods: {
         btnLoginRegister(){
@@ -36,6 +38,11 @@ var app = new Vue({
     created(){
         if(localStorage.getItem("token")){
             this.loginStatus = true
+            this.error = null
+            axios.get('http://localhost:3000/miniwp/article')
+            .then(response => {
+                this.article = response.data
+            })
         }
         else{
             this.loginStatus = false

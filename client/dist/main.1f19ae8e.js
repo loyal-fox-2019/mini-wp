@@ -126,7 +126,9 @@ var app = new Vue({
     name: null,
     email: null,
     password: null,
-    error: null
+    error: null,
+    newArticle: false,
+    article: []
   },
   methods: {
     btnLoginRegister: function btnLoginRegister() {
@@ -152,8 +154,14 @@ var app = new Vue({
     }
   },
   created: function created() {
+    var _this2 = this;
+
     if (localStorage.getItem("token")) {
       this.loginStatus = true;
+      this.error = null;
+      axios.get('http://localhost:3000/miniwp/article').then(function (response) {
+        _this2.article = response.data;
+      });
     } else {
       this.loginStatus = false;
     }
@@ -187,7 +195,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38505" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35045" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
