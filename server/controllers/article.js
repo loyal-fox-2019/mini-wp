@@ -5,9 +5,11 @@ const Article = require('../models/articles')
 class articleController {
 
     static create(req, res, next){
+        // console.log(req.user)
         const obj = {
             title: req.body.title,
-            content: req.body.content
+            content: req.body.content,
+            userId: req.user
         }
 
         Article.create(obj)
@@ -16,17 +18,34 @@ class articleController {
         })
         .catch(next)
     }
+    static showOne(req, res, next) {
+        Article.findOne({
+            _id: req.params.id
+        })
+        .then(result => {
+            if(!result) {
+                throw ({status: 404, message:"article not found"})
+            }
+            else {
+                res.status(200).json(result)
+            }
+        })
+        .catch(next)
+    }
 
     static showAll(req, res, next) {
+        const userId = req.user
         Article.find()
         .then(result => {
-            res.status(200).json(result)
+            res.status(200).json({articles: result, userId: userId})
         })
         .catch(next)
     }
 
     static delete(req, res, next){
-        Article.findByIdAndDelete(req.params.id)
+        const id = req.params.id
+        console.log(id, 'ini id params d controller')
+        Article.findByIdAndRemove(id)
         .then(result => {
             if(!result){
                 throw ({status: 404, message:'article not found'})
@@ -39,11 +58,15 @@ class articleController {
     }
 
     static update(req, res, next){
+        console.log('masuk update controller')
+        
         const obj = {
             title: req.body.title,
-            content: req.body. content
+            content: req.body.content
         }
-        Article.findByIdAndUpdate(obj)
+        const id = req.params.id
+        console.log(id, 'ini id params d controllers')
+        Article.findByIdAndUpdate(id, obj)
         .then(result => {
             if(!result){
                 throw ({status: 404, message:'article not found'})

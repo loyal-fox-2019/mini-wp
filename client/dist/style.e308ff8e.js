@@ -117,175 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-var app = new Vue({
-  el: '#app',
-  data: {
-    loginStatus: false,
-    register: false,
-    name: null,
-    email: null,
-    password: null,
-    title: null,
-    content: null,
-    error: null,
-    statusArticle: false,
-    statusEdit: false,
-    articles: [],
-    user: null,
-    titleEdit: null,
-    contentEdit: null,
-    titleEditForm: null,
-    contentEditForm: null,
-    idArticle: null
-  },
-  methods: {
-    btnLoginRegister: function btnLoginRegister() {
-      if (!this.register) {
-        this.register = true;
-        this.name = null;
-        this.email = null;
-        this.password = null;
-      } else {
-        this.register = false;
-      }
-    },
-    login: function login() {
-      var _this = this;
+})({"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-      axios.post('http://localhost:3000/miniwp/member/login', {
-        email: this.email,
-        password: this.password
-      }).then(function (response) {
-        _this.loginStatus = true, localStorage.setItem('token', response.data.token);
-        _this.user = response.data.userId;
-        _this.email = null;
-        _this.password = null;
-
-        _this.cekLogin();
-      }).catch(function (error) {
-        console.log(error.response.data.message);
-        _this.error = error.response.data.message;
-        _this.email = null;
-        _this.password = null;
-      });
-    },
-    createMember: function createMember() {
-      var _this2 = this;
-
-      axios.post('http://localhost:3000/miniwp/member/register', {
-        name: this.name,
-        email: this.email,
-        password: this.password
-      }).then(function (response) {
-        _this2.register = false;
-        _this2.name = null;
-        _this2.email = null;
-        _this2.password = null;
-      }).catch(function (error) {
-        _this2.error = error.response.data.message;
-      });
-    },
-    createArticle: function createArticle() {
-      var _this3 = this;
-
-      axios.post('http://localhost:3000/miniwp/article/new', {
-        title: this.title,
-        content: this.content
-      }, {
-        headers: {
-          Authorization: localStorage.getItem('token')
-        }
-      }).then(function (response) {
-        _this3.statusArticle = false;
-
-        _this3.cekLogin();
-      }).catch(function (error) {
-        _this3.error = error.response.data.message;
-      });
-    },
-    newArticle: function newArticle() {
-      this.statusArticle = !this.statusArticle;
-    },
-    logOut: function logOut() {
-      localStorage.removeItem("token");
-      this.user = null;
-      this.cekLogin();
-    },
-    cekLogin: function cekLogin() {
-      var _this4 = this;
-
-      if (localStorage.getItem("token")) {
-        axios.get('http://localhost:3000/miniwp/article', {
-          headers: {
-            Authorization: localStorage.getItem('token')
-          }
-        }).then(function (response) {
-          _this4.articles = response.data.articles;
-          _this4.user = response.data.userId;
-          _this4.loginStatus = true;
-          _this4.error = null;
-        }).catch(function (error) {
-          _this4.error = error.response.data.message;
-        });
-      } else {
-        this.loginStatus = false;
-      }
-    },
-    editArticle: function editArticle(id) {
-      var _this5 = this;
-
-      axios.get("http://localhost:3000/miniwp/article/".concat(id)).then(function (response) {
-        console.log(response);
-        _this5.statusArticle = false;
-        _this5.statusEdit = true;
-        _this5.titleEdit = response.data.title;
-        _this5.contentEdit = response.data.content;
-        _this5.idArticle = response.data._id;
-      });
-    },
-    saveEdit: function saveEdit() {
-      var _this6 = this;
-
-      axios.put("http://localhost:3000/miniwp/article/".concat(this.idArticle), {
-        title: this.titleEditForm,
-        content: this.contentEditForm
-      }, {
-        headers: {
-          Authorization: localStorage.getItem('token')
-        }
-      }).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        _this6.error = error.response.data.message;
-      });
-    },
-    listArticle: function listArticle() {
-      this.statusArticle = false;
-      this.statusEdit = false;
-    },
-    deleteArticle: function deleteArticle(id) {
-      var _this7 = this;
-
-      console.log(id);
-      axios.delete("http://localhost:3000/miniwp/article/".concat(id), {
-        headers: {
-          Authorization: localStorage.getItem('token')
-        }
-      }).then(function (response) {
-        console.log(response);
-
-        _this7.checkLogin();
-      }).catch(function (error) {
-        console.log(error); // this.error = error.response.data.message
-      });
-    }
-  },
-  created: function created() {
-    this.cekLogin();
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-});
-},{}],"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -489,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["../../../../../../../usr/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/style.e308ff8e.js.map

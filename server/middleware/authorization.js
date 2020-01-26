@@ -3,12 +3,24 @@
 const Article = require('../models/articles')
 
 module.exports = function(req, res, next) {
-    const userId = req.decode.userId
-    Article.findOne(req.params.id)
+    const userId = req.user
+    // console.log(userId)
+    console.log(req.params.id, 'ini id params di authorization')
+    Article.findById({
+        _id: req.params.id
+    })
     .then(result => {
-        if(result.id !== userId) {
+        console.log(result)
+        if(!result){
+            throw {status: 404, message: "article not found"}
+        }
+        if(result.userId !== userId) {
             throw {status: 403, message: "forbidden"}
         }
-        next()
+        else {
+
+            next()
+        }
     })
+    .catch(next)
 }

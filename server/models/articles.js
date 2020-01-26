@@ -11,6 +11,10 @@ const articleSchema = new Schema({
         content: {
             type: String,
             required: [true, 'the content field cannot be empty']
+        },
+        userId: {
+            type: String,
+            required: true
         }
     },
     {

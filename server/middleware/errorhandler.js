@@ -1,9 +1,6 @@
 'use strict'
 
 module.exports = function (err, req, res, next) {
-    // console.log(err.name)
-    console.log(err)
-
     let statusErr, msg
     switch (err.name) {
         case 'ValidationError':
@@ -15,9 +12,6 @@ module.exports = function (err, req, res, next) {
             statusErr= err.status || 500
             msg= err.message || 'server error'
             break;
-    }
-    // console.log('Masuk sini')
-    // console.log(statusErr)
-    // console.log(msg)
+    }   
     res.status(statusErr).json({message: msg})
 }
