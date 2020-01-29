@@ -1,0 +1,8 @@
+.d-flex[data-v-cc6922] {
+    display: flex;
+}
+.list-article[data-v-cc6922] {
+    display: flex;
+    flex-direction: column;
+    width: 100vh;
+}

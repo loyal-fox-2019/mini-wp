@@ -1,0 +1,1 @@
+{"version":3,"sources":["wysiwygEditor.js"],"names":["quill","Quill","theme"],"mappings":";;;;;;AAAA,IAAIA,KAAK,GAAG,IAAIC,KAAJ,CAAU,SAAV,EAAqB;AAC7BC,EAAAA,KAAK,EAAE;AADsB,CAArB,CAAZ;eAGeF","file":"wysiwygEditor.12c044ce.js","sourceRoot":"..","sourcesContent":["var quill = new Quill('#editor', {\n    theme: 'snow'\n  });\nexport default quill"]}

@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
         _id: req.params.id
     })
     .then(result => {
-        console.log(result)
+        // console.log(result)
         if(!result){
             throw {status: 404, message: "article not found"}
         }
