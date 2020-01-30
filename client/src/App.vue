@@ -1,7 +1,7 @@
 <template>
 <div>
-     <div v-if="!isLogin">
-         <FrontPage></FrontPage>
+     <div v-if="!statusLogin">
+         <FrontPage v-on:isLogins="isLogin" v-on:userData="userData"></FrontPage>
     </div>
     <div v-else>
         <MainPage></MainPage>
@@ -15,7 +15,18 @@ import MainPage from './view/MainPage'
 export default {
     data(){
         return{
-            isLogin: false
+            statusLogin: false,
+            user: null
+        }
+    },
+    methods:{
+        isLogin(payload){
+            this.statusLogin = payload
+        },
+        userData(payload){
+            console.log(payload)
+            localStorage.setItem('id', payload.id)
+            localStorage.setItem('name', payload.name)
         }
     },
     components: {
@@ -30,14 +41,14 @@ export default {
                 }
             })
             .then(response => {
-                this.isLogin = true
+                this.statusLogin = true
             })
             .catch(error => {
                 this.error = error.response.data.message
             })
         }
         else{
-            this.loginStatus = false
+            this.statusLogin = false
         }
     }
 }

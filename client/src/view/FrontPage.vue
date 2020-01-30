@@ -1,7 +1,7 @@
 <template>
     <div>
-        <Login v-if="!showRegister"></Login>
-        <Register v-else></Register>
+        <Login v-if="!statusRegister" v-on:isLogin="isLogin" v-on:userData="userData" v-on:showRegister='showRegister'></Login>
+        <Register v-else v-on:showLogin='showLogin'></Register>
     </div>
 </template>
 
@@ -12,7 +12,21 @@ import Register from '../component/register'
 export default {
     data(){
         return{
-            showRegister: false
+            statusRegister: false
+        }
+    },
+    methods:{
+        isLogin(payload){
+            this.$emit('isLogin', payload)
+        },
+        showRegister(payload){
+            this.statusRegister= payload
+        },
+        showLogin(payload){
+            this.statusRegister= payload
+        },
+        userData(payload){
+            this.$emit('userData', payload)
         }
     },
     components: {

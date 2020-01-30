@@ -5,11 +5,11 @@
                 <form v-on:submit.prevent="update">
                     <div class="form-group">
                         <label for="imputTitle">Title:</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" v-model="title">
+                        <input type="text" class="form-control" id="exampleInputPassword1" v-model="articleEdit.title">
                     </div>
                     <div class="form-group">
-                        <label for="demo">Content</label>
-                        <textarea class="form-control" rows="3" v-model="contentEdit"></textarea>
+                        <label for="demo">Content</label
+                        <wysiwyg v-model="articleEdit.content" />
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
@@ -22,14 +22,21 @@ export default {
         return {
             title: null,
             content: null,
-            idArticle: null
+            idArticle: null,
+            dataArticle: null
+        }
+    },
+    props: {
+        
+        articleEdit: {
+            type: Object
         }
     },
     methods: {
         update(){
-            axios.put(`http://localhost:3000/miniwp/article/${this.idArticle}`, {
-                title: this.titleEdit,
-                content: this.contentEdit
+            axios.put(`http://localhost:3000/miniwp/article/${this.articleEdit._id}`, {
+                title: this.articleEdit.title,
+                content: this.articleEdit.content
             },
             {
                 headers:{
@@ -39,7 +46,7 @@ export default {
             )
             .then(response => {
                 console.log(response)
-                this.listArticle()
+                this.$emit('showArticle', 'listArticle')
             })
             .catch(error => {
                 this.error = error.response.data.message

@@ -48,7 +48,7 @@
                                 </section>
                                 <section class="col-sm-12 form-group">
                                     <a class="btn btn-primary" >Register</a>
-                                    <a class="btn btn-outline-primary" v-on:click="btnLoginRegister">back</a>
+                                    <a class="btn btn-outline-primary" v-on:click="showLogin">back</a>
                                 </section>
                             </form>
                         </div>
@@ -84,6 +84,9 @@ export default {
             .catch(error => {
                 this.error = error.response.data.message
             })
+        },
+        showLogin(){
+            this.$emit('showLogin', false)
         }
     }
 }

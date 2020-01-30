@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form class="mt-3 container" v-on:click.prevent="login">
+        <form class="mt-3 container" v-on:submit.prevent="login">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="card bg-light">
@@ -20,8 +20,8 @@
                                 </div>
                                 <!-- <button class="btn btn-primary" v-on:click="checkLogin">Login</button> -->
                                 <div class="col-sm-12 form-group">
-                                    <a class="btn btn-primary" href="#" >login</a>
-                                    <a class="btn btn-outline-primary" href="#">register</a>
+                                    <button type="submit" class="btn btn-primary">login</button>
+                                    <a class="btn btn-outline-primary" href="#" v-on:click="showRegister">register</a>
                                 </div>
                             </div>
                         </div>
@@ -36,9 +36,9 @@
 export default {
     data(){
         return{
-            email: null,
-            password: null,
-            error: null
+            error: null,
+            email: "",
+            password: ""
         }
     },
     methods:{
@@ -49,8 +49,12 @@ export default {
             })
             .then(response => {
                 localStorage.setItem('token', response.data.token)
-                this.email = null
-                this.password = null
+                const user= {
+                    id: response.data.userId,
+                    name: response.data.name
+                }
+                this.$emit('isLogin', true)
+                this.$emit('userData', user)
             })
             .catch((error) => {
                 console.log(error.response.data.message)
@@ -58,6 +62,9 @@ export default {
                 this.email = null
                 this.password = null
             })
+        },
+        showRegister(){
+            this.$emit('showRegister', true)
         }
     }
 }

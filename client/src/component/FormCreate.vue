@@ -6,9 +6,13 @@
                 <label for="imputTitle">Title:</label>
                 <input type="text" class="form-control" id="exampleInputPassword1" placeholder="title" v-model="title">
             </div>
+             <div class="form-group">
+                <label for="exampleFormControlFile1">Example file input</label>
+                <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div>
             <div class="form-group">
                 <label for="editor">Content</label>   
-                <textarea class="form-control" rows="3" v-model="content"></textarea>
+                <wysiwyg v-model="content" />
             </div>
             <button type="submit" class="btn btn-primary" >Submit</button>
         </form>
@@ -21,7 +25,8 @@ export default {
     data(){
         return {
             title: null,
-            content: null
+            content: null,
+            imageFile: null
         }
     },
     methods: {
@@ -38,6 +43,7 @@ export default {
                 }
             })
             .then(response => {
+                this.$emit('backHome', 'listArticle')
             })
             .catch(error => {
                 this.error = error.response.data.message

@@ -3,22 +3,28 @@
         <a class="navbar-brand" href="#">mini-wp</a>
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
         </div>
-        <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                <a class="btn btn-outline-primary ml-sm-2" href="#" v-on:click='logout'>log out</a>
-        </form>
+        <span class="mr-sm-3">welcome back {{userName}}</span>
+        <a class="btn btn-outline-primary ml-sm-2" href="#" v-on:click='logout'>log out</a>
+        
     </nav>
 </template>
 
 <script>
 export default {
+    data(){
+        return{
+            userName: localStorage.getItem('name'),
+            searchFilter:''
+        }
+    },
     methods: {
         logout(){
             localStorage.removeItem("token")
-            this.user = null //emit
-            this.cekLogin()
+        },
+        searchWord(){
+            this.$emit('searchFilter', this.searchFilter)
         }
     }
 }
