@@ -11386,7 +11386,7 @@ var _default = {
 
         _this.$emit('timeline-detail', _this.article._id);
       }).catch(function (err) {
-        console.log(err);
+        console.log(err.response.data);
       }).finally(function () {
         _this.comment = '';
       });
@@ -35768,7 +35768,7 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = _axios.default.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: 'http://35.198.208.136//'
 });
 
 exports.default = _default;
@@ -49713,7 +49713,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37471" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44223" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

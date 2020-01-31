@@ -73,7 +73,7 @@ export default {
           this.$emit('timeline-detail', this.article._id)
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response.data)
         })
         .finally(() => {
           this.comment = ''

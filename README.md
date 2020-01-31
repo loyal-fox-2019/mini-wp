@@ -1,6 +1,6 @@
 # mini-wp
 
-<!-- link deploy -->
+http://miniwp.alvinatjia.com/
 
 ---
 
