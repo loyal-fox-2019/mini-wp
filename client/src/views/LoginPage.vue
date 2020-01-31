@@ -152,13 +152,36 @@ export default {
         });
     },
     onSuccess(googleUser) {
-      console.log(googleUser);
-<<<<<<< HEAD
-=======
+      let id_token = googleUser.getAuthResponse().id_token;
+      axios({
+        method: "post",
+        url: "http://localhost:3000/users/loginGoogle",
+        data: {
+          id_token: id_token
+        },
+        validateStatus: function(status) {
+          return status < 404; // Reject only if the status code is greater than or equal to 500
+        }
+      })
+        .then(login => {
+          alert("masuk sini");
+          if (login.status === 400) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: login.data.message
+            });
+          } else {
+            localStorage.setItem("token", login.data);
+            this.$emit("login", "login");
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    onFailure(googleUser){
-      consoe.log(googleUser)
->>>>>>> 42ef47347d1edd14c0ce025033ce434973c7abbc
+    onFailure(googleUser) {
+      console.log(googleUser);
     }
   }
 };
