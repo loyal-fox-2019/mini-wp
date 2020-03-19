@@ -10,11 +10,17 @@
     </div>
     <h2
       class="w-full max-w-xs text-center mt-64 mx-auto text-4xl font-bold bg-white p-3 rounded-t-lg"
-    >LOGIN</h2>
+    >
+      LOGIN
+    </h2>
     <div class="w-full max-w-xs mx-auto">
       <form class="bg-white px-8 pt-6 pb-8 mb-4 rounded-b-lg">
         <div class="mb-4">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Email</label>
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+            >Email</label
+          >
           <input
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
@@ -25,7 +31,11 @@
           />
         </div>
         <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="password"
+            >Password</label
+          >
           <input
             class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
@@ -40,7 +50,9 @@
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
             @click.prevent="login"
-          >Sign In</button>
+          >
+            Sign In
+          </button>
           <p>or</p>
           <b-button v-b-modal.modal-center>Register Here</b-button>
 
@@ -106,7 +118,8 @@
             :params="googleSignInParams"
             @success="onSignInSuccess"
             @error="onSignInError"
-          >Sign in with Google</g-signin-button>
+            >Sign in with Google</g-signin-button
+          >
         </div>
       </form>
     </div>
@@ -230,8 +243,7 @@ export default {
     onSignInError(error) {
       // `error` contains any error occurred.
       console.log("OH NOES", error);
-    },
-    onSignIn(googleUser) {}
+    }
   }
 };
 </script>

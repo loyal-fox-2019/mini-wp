@@ -17,7 +17,7 @@
 
           <!-- Create Articles -->
           <div v-else-if="navMenu.onCreateArticle">
-            <CreateArticle @toDashboard="toDashboard" :updateArticle="upcomingUpdateArticle"></CreateArticle>
+            <CreateArticle @toDashboard="toDashboard"></CreateArticle>
           </div>
           <!-- End of create articles -->
 
@@ -29,7 +29,10 @@
 
           <!-- Edit Article -->
           <div v-else-if="navMenu.onEditArticle">
-            <EditArticle :articleData="upcomingUpdateArticle"></EditArticle>
+            <EditArticle
+              :upcomingUpdate="articleToUpdate"
+              @toMyArticles="toMyArticles"
+            ></EditArticle>
           </div>
           <!-- End of Edit Article -->
         </div>
@@ -57,7 +60,7 @@ export default {
         onMyArticles: false,
         onEditArticle: false
       },
-      upcomingUpdateArticle: null
+      articleToUpdate: null
     };
   },
   components: {
@@ -91,13 +94,12 @@ export default {
     // End of navMenu
     // update article
     toUpdateArticle(value) {
-      this.upcomingUpdateArticle = value;
+      this.articleToUpdate = value;
 
       this.navMenu.onCreateArticle = false;
       this.navMenu.onDashboard = false;
       this.navMenu.onMyArticles = false;
       this.navMenu.onEditArticle = true;
-      // console.log(this.upcomingUpdateArticle);
     },
     // end of update article
     // logout
@@ -108,5 +110,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

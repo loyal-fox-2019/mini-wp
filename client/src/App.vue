@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       token: localStorage.getItem("token"),
-      isLoggedIn: false
+      isLoggedIn: false,
+      deleteId: null
     };
   },
   components: {
@@ -34,10 +35,12 @@ export default {
   methods: {
     login(value) {
       this.isLoggedIn = value;
+    },
+    toDeleteArticle(value) {
+      this.deleteId = value;
     }
   }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

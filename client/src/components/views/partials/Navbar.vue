@@ -19,7 +19,12 @@
           </button>
         </div>
         <div class="col">
-          <button class="btn btn-danger font-weight-bold w-full" @click="logout">Logout</button>
+          <button
+            class="btn btn-danger font-weight-bold w-full"
+            @click="logout"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </nav>
@@ -37,14 +42,14 @@ export default {
     logout() {
       localStorage.removeItem("token");
       const auth2 = gapi.auth2.getAuthInstance();
+      this.$emit("loggedIn", false);
       auth2.signOut().then(function() {
         console.log("User signed out.");
+        auth2.disconnect();
       });
-      this.$emit("loggedIn", false);
     }
   }
 };
 </script>
 
-<style>
-</style>
+<style></style>
