@@ -8,7 +8,7 @@ $ npm install
 $ npm start
 $ npm run dev    
 ```
-access the API via `http://localhost:3000/api` or `http://example.com`
+access the API via `http://localhost:3000/api` or `http://35.187.247.95:8080/`
 
 ## User
 
