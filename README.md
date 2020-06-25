@@ -1,6 +1,12 @@
 # mini-wp
- Rest full api mini-wp built with Express and Mongoose
- ## usage app
+ mini-wp built with Express, Mongoose and Vue
+
+## Usage app client
+1. visit http://mini-wp.dzakki.com/
+2. login or register
+3. welcome!
+
+## Usage app
 
 ### run in your computer
 ```
@@ -8,7 +14,7 @@ $ npm install
 $ npm start
 $ npm run dev    
 ```
-access the API via `http://localhost:3000/api` or `http://35.187.247.95:8080/`
+access the API via `http://localhost:3000` or `https://dz-mini-wp.herokuapp.com`
 
 ## User
 
