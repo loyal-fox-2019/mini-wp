@@ -3,7 +3,12 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mini-wp', {useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true});
+let urlDB = 'mongodb://localhost/mini-wp'
+if (process.env.NODE_ENV == "production") {
+    urlDB = `mongodb+srv://mydb:${process.env.MONGO_PASSWORD}@cluster0-x8shq.gcp.mongodb.net/${process.env.MONGO_NAME}?retryWrites=true&w=majority`;
+}
+
+mongoose.connect(urlDB, {useNewUrlParser: true,  useUnifiedTopology: true, useCreateIndex: true});
 
 const express = require('express')
 const app = express()

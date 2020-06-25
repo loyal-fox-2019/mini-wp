@@ -8,7 +8,7 @@ import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import routes from './routes/index'
 
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = 'http://35.187.247.95:8080/';
+Vue.axios.defaults.baseURL = 'http://localhost:3000'; //doc
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
