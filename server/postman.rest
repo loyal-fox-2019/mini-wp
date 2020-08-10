@@ -1,0 +1,42 @@
+@baseUrl = http://localhost:3000
+@user1 = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZTIzYjJjMWNmYzVjNzdlMjA2ZTAzOGIiLCJpYXQiOjE1NzkzOTc4MjZ9.efg7tRPXEG8Z_34K6_sdfda_w2DjCIaZA-l-L_97PZw
+@article1=5e23bdb0e60f021e381627a5
+
+
+### REGISTER
+POST {{baseUrl}}/users/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "markus@email.com",
+  "password": "12345"
+}
+
+### LOG IN
+POST {{baseUrl}}/users/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "markus@email.com",
+  "password": "12345"
+}
+
+### READ ONE
+GET {{baseUrl}}/users/ HTTP/1.1
+token: {{user1}}
+
+### CREATE ARTICLE -- PAKAI POSTMAN
+
+### READ ALL ARTICLES
+GET {{baseUrl}}/articles HTTP/1.1
+token: {{user1}}
+
+### READ ONE ARTICLES
+GET {{baseUrl}}/articles/{{article1}} HTTP/1.1
+token: {{user1}}
+
+### UPDATE ONE ARTICLE -- PAKAI POSTMAN
+
+### DELETE ONE ARTICLE
+DELETE  {{baseUrl}}/articles/{{article1}} HTTP/1.1
+token: {{user1}}

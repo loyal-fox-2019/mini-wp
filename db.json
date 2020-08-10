@@ -1,0 +1,11 @@
+{
+  "user": [
+    { "id": "1", "firstName": "Markus", "lastName": "Suwignyo" }
+  ],
+  "post": [
+    { "id": "1", "title": "Tips Mencari Jodoh", "content": "" },
+    { "id": "2", "title": "Jodoh Ada Di Tangan Tuhan", "content": "" },
+    { "id": "3", "title": "Coolness is rare", "content": "" },
+    { "id": "4", "title": "Pursuit Happyness", "content": "{\"ops\":[{\"insert\":\"Hello World!\nSome initial \"},{\"attributes\":{\"bold\":true},\"insert\":\"bold\"},{\"insert\":\" text\n\n\"}]}" }
+  ]
+}
