@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+}
+
+.loading-box {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2B7FC3;
+    left: 50%;
+    top: 10%;
+    position: absolute;
+    transform: translate(-50%);
+    text-align: center;
+}
+
+.loading-box img {
+    /*border: solid 1px black;*/
+    max-width: 650px;
+}
+
+.loading-box h2 {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%);
+}
+
+#bg-404 img {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
