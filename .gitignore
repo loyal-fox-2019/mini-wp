@@ -1,0 +1,6 @@
+server/.env
+server/node_modules
+server/mini-wp-783dbf433195.json
+client/.cache
+client/node_modules
+server/mini-wp-783dbf433195.json
