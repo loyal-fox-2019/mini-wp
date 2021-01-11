@@ -1,0 +1,38 @@
+{
+  "article": [
+    {
+      "title": "how to create pages",
+      "content": "content how to create pages",
+      "created_at": "1/14/2020",
+      "id": 1
+    },
+    {
+      "title": "how to create article",
+      "content": "content how to create article",
+      "created_at": "1/14/2020",
+      "id": 2
+    },
+    {
+      "title": "coba",
+      "content": "fafefawfw",
+      "created_at": "1/14/2020",
+      "id": 3
+    },
+    {
+      "title": "coba 2",
+      "content": "ini coba 2",
+      "created_at": "1/14/2020",
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

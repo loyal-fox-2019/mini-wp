@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 14px;
+    background-color: #f6f7f7;
+}
+
+/* header */
+header .navbar-brand {
+    background-color: #002c40;
+    padding: 15px;
+}
+
+header .site-name {
+    font-size: 14px;
+}
+
+header .bg-wp {
+    background-color: #006088;
+}
+
+header .right-menu {
+    padding: 15px;
+}
+
+/* nav-left */
+#nav-left .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #0a4b78;
+    background-color: #c5d9ed;
+}
+
+#nav-left .nav-pills .nav-link {
+    border-radius: 0;
+}
+
+#nav-left a {
+    color: #2c3338;
+}
+
+#v-pills-tabContent .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #f6f7f7;
+    color: #646970;
+    border-bottom-color: 2px solid #3c434a;
+}
+
+#v-pills-tabContent a {
+    color: #2271b1;
+}
+
+#content-right .page-title a {
+    font-size: 18px;
+    color: #3c434a;
+    font-weight: 700;
+}
