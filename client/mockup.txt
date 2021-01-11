@@ -1,0 +1,32 @@
+* login page
+
+* homepage :
+  - view all article from all user 
+  - sorted by createdAt
+  - user bisa langsung edit articlenya sendiri kalo udah ketemu
+  - tombol edit hanya muncul untuk corresponding user, v-if localstorage.username = article.author.username
+
+* user personal page :
+   - accessed from link on navbar "my articles"
+   - access from link of username under the card "<username>"
+   - access from url
+
+   - contained all articles created by user, editable if article.Author._id === localstorage._id
+
+
+* create / edit page/modal :
+   - kasih WHYSIWYG
+
+* ada fitur cari tag
+  - kalau di klik akan memunculkan semua article dari semua user yang memilki tag tersebut
+
+
+
+
+Note for Documentation
+==========================
+User role admin hanya bisa dicreate server side
+
+kenapa find all article by user id dikirimnya lewat req.body?
+- soalnya belom pake router, jadi blom pake req.params.id
+- soalnya kalo pake req.decodedUser._id, bearti cuma bisa find all article sendiri, sedangkan disini ada fitur buat find all article by user idnya orang laen
